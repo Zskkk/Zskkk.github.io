@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    
+    <title>
+        
+            抓包进阶之SSL unpinning |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/head.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/brands.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066cc","logo":"/images/head.svg","favicon":"/images/head.svg","avatar":"/images/head.svg","font_size":null,"font_family":null,"hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","font_color":null,"hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"code_block":{"tools":{"enable":false,"style":"mac"},"highlight_theme":"obsidian"},"side_tools":{},"pjax":{"enable":false},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.7"},"waline":{"server_url":null,"reaction":false,"version":2}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"enable":true,"wordcount":true,"min2read":true},"img_align":"left","copyright_info":true},"version":"3.5.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"};
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/head.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+            <div class="article-title">
+                <span class="title-hover-animation">抓包进阶之SSL unpinning</span>
+            </div>
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/head.svg">
+                    </div>
+					
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">zsk</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2021-09-25 12:00:00</span>
+        <span class="mobile">2021-09-25 12:00</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2021-09-25 12:00:00</span>
+    </span>
+    
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%8A%93%E5%8C%85/">抓包</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.8k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>9 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+	
+	
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content keep-markdown-body">
+                <h1 id="SSL-Pinning-Bypass"><a href="#SSL-Pinning-Bypass" class="headerlink" title="SSL Pinning Bypass"></a>SSL Pinning Bypass</h1><p>客户端的证书绑定（pinning）。一种情况没有分析，就是客户端并不会默认信任系统根证书目录中的证书，而是在代码里再加一层校验，这就是证书绑定机制——SSL pinning，如果这段代码的校验过不了，那么客户端还是会报证书错误。<br>两层校验，<br>第一种不信任系统证书，使用自己的证书。<br>第二种在自己证书上再做一层判断<br>● Https客户端代码校验服务器证书<br>案例是自己配置的证书，不是ca机构签发的。这段代码放了自己的证书，一段检验机制</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/01.webp"
+                     
+                ></p>
+<p>打开charles抓包，抓包失败</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/02.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/03.webp"
+                     
+                ></p>
+<p>信任所有证书，都为空表示都信任</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/04.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/05.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/06.webp"
+                     
+                ></p>
+<p>因为图片是https的，修改一下ssl</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/07.webp"
+                     
+                ></p>
+<p>成功抓包<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/08.webp"
+                     
+                ></p>
+<h2 id="让客户端信任系统根证书目录中的证书"><a href="#让客户端信任系统根证书目录中的证书" class="headerlink" title="让客户端信任系统根证书目录中的证书"></a>让客户端信任系统根证书目录中的证书</h2><p>把证书校验重新开起来<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/09.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/10.webp"
+                     
+                ></p>
+<p>hook住checkServerTrusted，将其所有重载都置空；<br>使用spawn模式运行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">        <span class="comment">// 检查一个类是否继承某一个接口</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">checkIsImplementeInterFace</span>(<span class="params">clsName, interface_</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">              <span class="keyword">var</span> cls = <span class="title class_">Java</span>.<span class="title function_">use</span>(clsName)</span><br><span class="line">              <span class="keyword">if</span>(cls.<span class="property">class</span>.<span class="title function_">isInterface</span>())&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span>(cls.<span class="property">class</span> != <span class="literal">undefined</span>)</span><br><span class="line">                <span class="keyword">if</span>(interface_.<span class="property">class</span>.<span class="title function_">isAssignableFrom</span>(cls.<span class="property">class</span>))&#123;</span><br><span class="line">                  <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">              <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">TrustManagerInterface</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;javax.net.ssl.TrustManager&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;okhttp3.CertificatePinner&quot;</span>).<span class="property">check</span>.<span class="title function_">overload</span>(<span class="string">&#x27;java.lang.String&#x27;</span>, <span class="string">&#x27;[Ljava.security.cert.Certificate;&#x27;</span>).<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;CertificatePinner check called!&quot;</span>)</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;okhttp3.CertificatePinner&quot;</span>).<span class="property">check</span>.<span class="title function_">overload</span>(<span class="string">&#x27;java.lang.String&#x27;</span>, <span class="string">&#x27;java.util.List&#x27;</span>).<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;CertificatePinner check called!&quot;</span>)</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">enumerateLoadedClasses</span>(&#123;</span><br><span class="line">            <span class="attr">onMatch</span>: <span class="keyword">function</span>(<span class="params">clsName,handle</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="title function_">checkIsImplementeInterFace</span>(clsName,<span class="title class_">TrustManagerInterface</span>))&#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(clsName)</span><br><span class="line">                    <span class="keyword">var</span> targetClass = <span class="title class_">Java</span>.<span class="title function_">use</span>(clsName)</span><br><span class="line">                    <span class="keyword">var</span> len = targetClass[<span class="string">&quot;checkServerTrusted&quot;</span>].<span class="property">overloads</span>.<span class="property">length</span></span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">                        targetClass[<span class="string">&quot;checkServerTrusted&quot;</span>].<span class="property">overloads</span>[i].<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">                            </span><br><span class="line">                            <span class="variable language_">console</span>.<span class="title function_">log</span>(clsName + i + <span class="string">&quot;checkServerTrusted Called!&quot;</span>)</span><br><span class="line">                            <span class="comment">//return targetClass[&quot;checkServerTrusted&quot;].overloads[i].apply(this,arguments)</span></span><br><span class="line">                            </span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">onComplete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Search Classes Completed!&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p>成功抓到包</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/11.webp"
+                     
+                ></p>
+<h2 id="过检验证书"><a href="#过检验证书" class="headerlink" title="过检验证书"></a>过检验证书</h2><p>把证书检验开启</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/12.webp"
+                     
+                ></p>
+<h2 id="objection绕过检测"><a href="#objection绕过检测" class="headerlink" title="objection绕过检测"></a>objection绕过检测</h2><p>使用objection，直接将SSL pinning给disable掉</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android sslpinning disable</span><br></pre></td></tr></table></figure>
+
+<h1 id="ssl-pinning-服务器检验客户端证书"><a href="#ssl-pinning-服务器检验客户端证书" class="headerlink" title="ssl pinning+服务器检验客户端证书"></a>ssl pinning+服务器检验客户端证书</h1><p>注册页面抓包，证书不信任<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/13.webp"
+                     
+                ></p>
+<p>用frida hook掉他的一些检测，</p>
+<h2 id="ssl-pinning（hook掉证书验证-自定义证书-）"><a href="#ssl-pinning（hook掉证书验证-自定义证书-）" class="headerlink" title="ssl pinning（hook掉证书验证(自定义证书)）"></a>ssl pinning（hook掉证书验证(自定义证书)）</h2><h3 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">        <span class="comment">// 检查一个类是否继承某一个接口</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">checkIsImplementeInterFace</span>(<span class="params">clsName, interface_</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">              <span class="keyword">var</span> cls = <span class="title class_">Java</span>.<span class="title function_">use</span>(clsName)</span><br><span class="line">              <span class="keyword">if</span>(cls.<span class="property">class</span>.<span class="title function_">isInterface</span>())&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span>(cls.<span class="property">class</span> != <span class="literal">undefined</span>)</span><br><span class="line">                <span class="keyword">if</span>(interface_.<span class="property">class</span>.<span class="title function_">isAssignableFrom</span>(cls.<span class="property">class</span>))&#123;</span><br><span class="line">                  <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">              <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">TrustManagerInterface</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;javax.net.ssl.TrustManager&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Java.use(&quot;okhttp3.CertificatePinner&quot;).check.overload(&#x27;java.lang.String&#x27;, &#x27;[Ljava.security.cert.Certificate;&#x27;).implementation = function()&#123;</span></span><br><span class="line">        <span class="comment">//     console.log(&quot;CertificatePinner check called!&quot;)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// Java.use(&quot;okhttp3.CertificatePinner&quot;).check.overload(&#x27;java.lang.String&#x27;, &#x27;java.util.List&#x27;).implementation = function()&#123;</span></span><br><span class="line">        <span class="comment">//     console.log(&quot;CertificatePinner check called!&quot;)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">enumerateLoadedClasses</span>(&#123;</span><br><span class="line">            <span class="attr">onMatch</span>: <span class="keyword">function</span>(<span class="params">clsName,handle</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="title function_">checkIsImplementeInterFace</span>(clsName,<span class="title class_">TrustManagerInterface</span>))&#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(clsName)</span><br><span class="line">                    <span class="keyword">var</span> targetClass = <span class="title class_">Java</span>.<span class="title function_">use</span>(clsName)</span><br><span class="line">                    <span class="keyword">var</span> len = targetClass[<span class="string">&quot;checkServerTrusted&quot;</span>].<span class="property">overloads</span>.<span class="property">length</span></span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">                        targetClass[<span class="string">&quot;checkServerTrusted&quot;</span>].<span class="property">overloads</span>[i].<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">                            </span><br><span class="line">                            <span class="variable language_">console</span>.<span class="title function_">log</span>(clsName + i + <span class="string">&quot;checkServerTrusted Called!&quot;</span>)</span><br><span class="line">                            <span class="comment">//return targetClass[&quot;checkServerTrusted&quot;].overloads[i].apply(this,arguments)</span></span><br><span class="line">                            </span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">onComplete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Search Classes Completed!&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+
+<h3 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">checkIsImplementeInterFace</span>(<span class="params">clsName, interface_</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">              <span class="keyword">var</span> cls = <span class="title class_">Java</span>.<span class="title function_">use</span>(clsName)</span><br><span class="line">              <span class="keyword">if</span>(cls.<span class="property">class</span>.<span class="title function_">isInterface</span>())&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span>(cls.<span class="property">class</span> != <span class="literal">undefined</span>)</span><br><span class="line">                <span class="keyword">if</span>(interface_.<span class="property">class</span>.<span class="title function_">isAssignableFrom</span>(cls.<span class="property">class</span>))&#123;</span><br><span class="line">                  <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">              <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">TrustManagerInterface</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;javax.net.ssl.TrustManager&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Java.use(&quot;okhttp3.CertificatePinner&quot;).check.overload(&#x27;java.lang.String&#x27;, &#x27;[Ljava.security.cert.Certificate;&#x27;).implementation = function()&#123;</span></span><br><span class="line">        <span class="comment">//     console.log(&quot;CertificatePinner check called!&quot;)</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// Java.use(&quot;okhttp3.CertificatePinner&quot;).check.overload(&#x27;java.lang.String&#x27;, &#x27;java.util.List&#x27;).implementation = function()&#123;</span></span><br><span class="line">        <span class="comment">//     console.log(&quot;CertificatePinner check called!&quot;)</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// Java.enumerateClassLoaders(&#123;</span></span><br><span class="line">        <span class="comment">//   onMatch: function(loader)&#123;</span></span><br><span class="line">        <span class="comment">//       try&#123;</span></span><br><span class="line">        <span class="comment">//           if(loader.findClass(&quot;okhttp3.OkHttpClient$Builder&quot;))&#123;</span></span><br><span class="line">        <span class="comment">//             console.log(&quot;Found the really Classloader&quot;)</span></span><br><span class="line">        <span class="comment">//             Java.classFactory.loader = loader</span></span><br><span class="line">        <span class="comment">//           &#125;</span></span><br><span class="line">        <span class="comment">//       &#125;catch(e)&#123;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//       &#125;</span></span><br><span class="line">        <span class="comment">//   &#125;,</span></span><br><span class="line">        <span class="comment">//   onComplete: function()&#123;</span></span><br><span class="line">        <span class="comment">//     console.log(&quot;Search Loaders Completed!&quot;)</span></span><br><span class="line">        <span class="comment">//   &#125;</span></span><br><span class="line">        <span class="comment">// &#125;)</span></span><br><span class="line">        <span class="comment">// Java.use(&quot;okhttp3.OkHttpClient$Builder&quot;).certificatePinner.implementation = function(certificatePinner)&#123;</span></span><br><span class="line">        <span class="comment">//   return this.certificatePinner(Java.use(&quot;okhttp3.CertificatePinner&quot;).DEFAULT.value) //CertificatePinner.DEFAULT</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">enumerateLoadedClasses</span>(&#123;</span><br><span class="line">            <span class="attr">onMatch</span>: <span class="keyword">function</span>(<span class="params">clsName,handle</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="title function_">checkIsImplementeInterFace</span>(clsName,<span class="title class_">TrustManagerInterface</span>))&#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(clsName)</span><br><span class="line">                    <span class="keyword">var</span> targetClass = <span class="title class_">Java</span>.<span class="title function_">use</span>(clsName)</span><br><span class="line">                    <span class="keyword">var</span> len = targetClass[<span class="string">&quot;checkServerTrusted&quot;</span>].<span class="property">overloads</span>.<span class="property">length</span></span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">                      <span class="comment">//console.log(targetClass[&quot;checkServerTrusted&quot;].overloads[i].returnType.name)</span></span><br><span class="line">                      <span class="keyword">if</span>(targetClass[<span class="string">&quot;checkServerTrusted&quot;</span>].<span class="property">overloads</span>[i].<span class="property">returnType</span>.<span class="property">name</span> == <span class="string">&#x27;V&#x27;</span>)&#123;</span><br><span class="line">                        targetClass[<span class="string">&quot;checkServerTrusted&quot;</span>].<span class="property">overloads</span>[i].<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">                          <span class="variable language_">console</span>.<span class="title function_">log</span>(clsName + i + <span class="string">&quot;checkServerTrusted Called!&quot;</span>)</span><br><span class="line">                          <span class="comment">//return targetClass[&quot;checkServerTrusted&quot;].overloads[i].apply(this,arguments)</span></span><br><span class="line">                        &#125;</span><br><span class="line">                      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        targetClass[<span class="string">&quot;checkServerTrusted&quot;</span>].<span class="property">overloads</span>[i].<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">                          <span class="variable language_">console</span>.<span class="title function_">log</span>(clsName + i + <span class="string">&quot;checkServerTrusted Called!&quot;</span>)</span><br><span class="line">                          <span class="comment">//return targetClass[&quot;checkServerTrusted&quot;].overloads[i].apply(this,arguments)</span></span><br><span class="line">                          <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">                        &#125;</span><br><span class="line">                      &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">onComplete</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Search Classes Completed!&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p>现在可以抓到包，证明请求发出去，那就是证书不对<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/14.webp"
+                     
+                ></p>
+<h2 id="dump-证书"><a href="#dump-证书" class="headerlink" title="dump 证书"></a>dump 证书</h2><p>先关掉vpn，让它正常发请求，并用脚本把证书导出</p>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>把证书密码dump出来，手动解压apk搜索证书导入charles即可</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">print_stack</span>(<span class="params">p</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;=====&gt;&quot;</span>, p)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.util.Log&quot;</span>).<span class="title function_">getStackTraceString</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.Exception&quot;</span>).$new()));</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">StringClass</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.String&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">KeyStore</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore&quot;</span>);</span><br><span class="line">        <span class="title class_">KeyStore</span>.<span class="property">load</span>.<span class="title function_">overload</span>(<span class="string">&#x27;java.security.KeyStore$LoadStoreParameter&#x27;</span>).<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params">arg0</span>) &#123;</span><br><span class="line">            <span class="comment">// print_stack(&quot;KeyStore.load1&quot;);</span></span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;KeyStore.load1:&quot;</span>, arg0);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">load</span>(arg0);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="title class_">KeyStore</span>.<span class="property">load</span>.<span class="title function_">overload</span>(<span class="string">&#x27;java.io.InputStream&#x27;</span>, <span class="string">&#x27;[C&#x27;</span>).<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params">arg0, arg1</span>) &#123;</span><br><span class="line">            <span class="comment">// print_stack(&quot;KeyStore.load2&quot;);</span></span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;KeyStore.load2:&quot;</span>, arg0, arg1 ? <span class="title class_">StringClass</span>.$new(arg1) : <span class="literal">null</span>);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">load</span>(arg0, arg1);</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hook_KeyStore_load...&quot;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/15.webp"
+                     
+                ></p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>dump出证书到手机，并修改证书密码 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Enter!&quot;</span>)</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">storeP12</span>(<span class="params">pri, p7, p12Path, p12Password</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> X509Certificate = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.cert.X509Certificate&quot;</span>)</span><br><span class="line">            <span class="keyword">var</span> p7X509 = <span class="title class_">Java</span>.<span class="title function_">cast</span>(p7, X509Certificate);</span><br><span class="line">            <span class="keyword">var</span> chain = <span class="title class_">Java</span>.<span class="title function_">array</span>(<span class="string">&quot;java.security.cert.X509Certificate&quot;</span>, [p7X509])</span><br><span class="line">            <span class="keyword">var</span> ks = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore&quot;</span>).<span class="title function_">getInstance</span>(<span class="string">&quot;PKCS12&quot;</span>, <span class="string">&quot;BC&quot;</span>);</span><br><span class="line">            ks.<span class="title function_">load</span>(<span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">            ks.<span class="title function_">setKeyEntry</span>(<span class="string">&quot;client&quot;</span>, pri, <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&#x27;java.lang.String&#x27;</span>).$new(p12Password).<span class="title function_">toCharArray</span>(), chain);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">              <span class="keyword">var</span> out = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.io.FileOutputStream&quot;</span>).$new(p12Path);</span><br><span class="line">              ks.<span class="title function_">store</span>(out, <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&#x27;java.lang.String&#x27;</span>).$new(p12Password).<span class="title function_">toCharArray</span>())</span><br><span class="line">            &#125; <span class="keyword">catch</span> (exp) &#123;</span><br><span class="line">              <span class="variable language_">console</span>.<span class="title function_">log</span>(exp)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="comment">//在服务器校验客户端的情形下，帮助dump客户端证书，并保存为p12的格式，证书密码为r0ysue</span></span><br><span class="line">          <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore$PrivateKeyEntry&quot;</span>).<span class="property">getPrivateKey</span>.<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> result = <span class="variable language_">this</span>.<span class="title function_">getPrivateKey</span>()</span><br><span class="line">            <span class="keyword">var</span> packageName = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.app.ActivityThread&quot;</span>).<span class="title function_">currentApplication</span>().<span class="title function_">getApplicationContext</span>().<span class="title function_">getPackageName</span>();</span><br><span class="line">            <span class="title function_">storeP12</span>(<span class="variable language_">this</span>.<span class="title function_">getPrivateKey</span>(), <span class="variable language_">this</span>.<span class="title function_">getCertificate</span>(), <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span>, <span class="string">&#x27;r0ysue&#x27;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dumpClinetCertificate=&gt;&quot;</span> + <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span> + <span class="string">&#x27;   pwd: r0ysue&#x27;</span>);            </span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore$PrivateKeyEntry&quot;</span>).<span class="property">getCertificateChain</span>.<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> result = <span class="variable language_">this</span>.<span class="title function_">getCertificateChain</span>()</span><br><span class="line">            <span class="keyword">var</span> packageName = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.app.ActivityThread&quot;</span>).<span class="title function_">currentApplication</span>().<span class="title function_">getApplicationContext</span>().<span class="title function_">getPackageName</span>();</span><br><span class="line">            <span class="title function_">storeP12</span>(<span class="variable language_">this</span>.<span class="title function_">getPrivateKey</span>(), <span class="variable language_">this</span>.<span class="title function_">getCertificate</span>(), <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span>, <span class="string">&#x27;r0ysue&#x27;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dumpClinetCertificate=&gt;&quot;</span> + <span class="string">&#x27;/sdcard/Download/&#x27;</span> + packageName + <span class="string">&#x27;.p12&#x27;</span> + <span class="string">&#x27;   pwd: r0ysue&#x27;</span>);</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">          &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/16.webp"
+                     
+                ></p>
+<h2 id="charles导入证书"><a href="#charles导入证书" class="headerlink" title="charles导入证书"></a>charles导入证书</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull /sdcard/Download/com.ninemax.ncsearchnew.p12 /root/Desktop/</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/17.webp"
+                     
+                ><br>再运行绕过本地校验脚本，成功抓包<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/18.webp"
+                     
+                ></p>
+<h1 id="混淆的okhhtp3抓包"><a href="#混淆的okhhtp3抓包" class="headerlink" title="混淆的okhhtp3抓包"></a>混淆的okhhtp3抓包</h1><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/19.webp"
+                     
+                ></p>
+<p>通过它的官网知道是https，用的ca机构证书。不需要hook证书校验这一步<br>jadx打开搜索 CertificatePinner</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/20.webp"
+                     
+                ></p>
+<p>通过查看的CertificatePinner源码，和该app的代码对比，基本一样的逻辑，证书校验不通过就会抛异常</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/21.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/22.webp"
+                     
+                ></p>
+<p>使用frida对其hook，置空</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;q.g&quot;</span>).<span class="property">a</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;check called!&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p>charles设置443端口<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/23.webp"
+                     
+                ></p>
+<p>成功抓包</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/24.webp"
+                     
+                ></p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul class="copyright-info-content">
+        <li>
+            <span class="type">本文标题</span>：<span class="content">抓包进阶之SSL unpinning</span>
+        </li>
+        <li>
+            <span class="type">本文作者</span>：<span class="content">zsk</span>
+        </li>
+        <li>
+            <span class="type">创建时间</span>：<span class="content">2021-09-25 12:00:00</span>
+        </li>
+        <li class="post-link">
+            <span class="type">本文链接</span>：<span class="content">2021/09/25/抓包进阶之SSL-unpinning/</span>
+        </li>
+        <li>
+            <span class="type">版权声明</span>：<span class="content">本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！</span>
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E6%8A%93%E5%8C%85/">#抓包</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                               rel="prev"
+                               href="/2021/12/12/%E5%8A%A8%E9%9D%99%E6%80%81SO%E5%B1%82%E7%AE%97%E6%B3%95%E8%BF%98%E5%8E%9F%E5%92%8C%E8%84%B1%E6%9C%BA-%E5%90%BE%E7%88%B1%E8%AE%BA%E5%9D%9B2021%E6%98%A5%E8%8A%82%E5%AE%89%E5%8D%93%E9%A2%98%E7%9B%AE/"
+                            >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                                <span class="title flex-center">
+                                <span class="post-nav-title-item">动静态SO层算法还原和脱机(吾爱论坛2021春节安卓题目)</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2021/09/06/%E6%A3%80%E6%B5%8Bvpn%E6%8A%93%E5%8C%85/"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">检测vpn抓包</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+            
+                <div class="comment-container">
+                    
+<div class="comments-container">
+    <div id="comments-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments"></i>&nbsp;评论
+    </div>
+    
+        
+            
+
+    <div class="valine-container">
+        <script  src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script >
+          function loadValine() {
+            new Valine({
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            });
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author';
+                case 'zh-CN':
+                  return '博主';
+                default:
+                  return 'Master';
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+              if (vcards.length > 0) {
+                let author = 'zsk';
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick');
+                    const vnick = vnick_dom.innerHTML;
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer);
+              } else {
+                clearInterval(getValineDomTimer);
+              }
+            }, 2000);
+          }
+
+          if ('false' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine();
+              clearTimeout(loadValineTimeout);
+            }, 1000);
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine);
+          }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSL-Pinning-Bypass"><span class="nav-number">1.</span> <span class="nav-text">SSL Pinning Bypass</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A9%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BF%A1%E4%BB%BB%E7%B3%BB%E7%BB%9F%E6%A0%B9%E8%AF%81%E4%B9%A6%E7%9B%AE%E5%BD%95%E4%B8%AD%E7%9A%84%E8%AF%81%E4%B9%A6"><span class="nav-number">1.1.</span> <span class="nav-text">让客户端信任系统根证书目录中的证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%A3%80%E9%AA%8C%E8%AF%81%E4%B9%A6"><span class="nav-number">1.2.</span> <span class="nav-text">过检验证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#objection%E7%BB%95%E8%BF%87%E6%A3%80%E6%B5%8B"><span class="nav-number">1.3.</span> <span class="nav-text">objection绕过检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ssl-pinning-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%A3%80%E9%AA%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%81%E4%B9%A6"><span class="nav-number">2.</span> <span class="nav-text">ssl pinning+服务器检验客户端证书</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssl-pinning%EF%BC%88hook%E6%8E%89%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%81%E4%B9%A6-%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">ssl pinning（hook掉证书验证(自定义证书)）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="nav-number">2.1.1.</span> <span class="nav-text">方式一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="nav-number">2.1.2.</span> <span class="nav-text">方式二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dump-%E8%AF%81%E4%B9%A6"><span class="nav-number">2.2.</span> <span class="nav-text">dump 证书</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">2.2.1.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">2.2.2.</span> <span class="nav-text">方法二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#charles%E5%AF%BC%E5%85%A5%E8%AF%81%E4%B9%A6"><span class="nav-number">2.3.</span> <span class="nav-text">charles导入证书</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B7%E6%B7%86%E7%9A%84okhhtp3%E6%8A%93%E5%8C%85"><span class="nav-number">3.</span> <span class="nav-text">混淆的okhhtp3抓包</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            
+<footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+                <span>2021</span> -
+            
+            2022
+            
+                &nbsp;<i class="fas fa-heart icon-animate"></i>
+                &nbsp;<a href="/">zsk</a>
+            
+        </div>
+        
+            <script async 
+                    src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                
+                
+                    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.5.2</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/dark-light-toggle.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/code-block.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/post-helper.js"></script>
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/libs/anime.min.js"></script>
+        
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/toc.js"></script>
+        
+    
+</div>
+
+
+
+</body>
+</html>
