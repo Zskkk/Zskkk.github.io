@@ -299,7 +299,7 @@ mjx-container[display="true"] + br {
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-01-31 18:36:46</span>
+        <span class="pc">2023-02-01 03:00:23</span>
     </span>
     
     
@@ -342,7 +342,7 @@ mjx-container[display="true"] + br {
             
 
             <div class="article-content keep-markdown-body">
-                <h4 id="从轮密钥逆推主密钥"><a href="#从轮密钥逆推主密钥" class="headerlink" title="从轮密钥逆推主密钥"></a>从轮密钥逆推主密钥</h4><p>首先讨论AES-128<br>这里用上一篇<a target="_blank" rel="noopener" href="https://www.zskkk.cn/2022/12/27/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95AES%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%88%86%E6%9E%90/"><font color="blue">对称加密算法AES原理及分析</font></a>里面用到的密钥<strong>0123456789abcdef0123456789abcdef</strong>生成的10轮子密钥做分析</p>
+                <h4 id="从轮密钥逆推主密钥"><a href="#从轮密钥逆推主密钥" class="headerlink" title="从轮密钥逆推主密钥"></a>从轮密钥逆推主密钥</h4><p>首先讨论AES-128<br>这里用上上篇<a target="_blank" rel="noopener" href="https://www.zskkk.cn/2022/12/27/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95AES%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%88%86%E6%9E%90/"><font color="blue">对称加密算法AES原理及分析</font></a>里面用到的密钥<strong>0123456789abcdef0123456789abcdef</strong>生成的10轮子密钥做分析</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">K00:0123456789abcdef0123456789abcdef</span><br><span class="line">K01:629e9ac0eb35572fea16124863bddfa7</span><br><span class="line">K02:1a00c63bf13591141b23835c789e5cfb</span><br><span class="line">K03:154ac987e47f5893ff5cdbcf87c28734</span><br><span class="line">K04:385dd190dc228903237e52cca4bcd5f8</span><br><span class="line">K05:4d5e90d9917c19dab2024b1616be9eee</span><br><span class="line">K06:c355b89e5229a144e02bea52f69574bc</span><br><span class="line">K07:a9c7dddcfbee7c981bc596caed50e276</span><br><span class="line">K08:7a5fe58981b199119a740fdb7724edad</span><br><span class="line">K09:570a707cd6bbe96d4ccfe6b63beb0b1b</span><br><span class="line">K10:8821df9e5e9a36f31255d04529bedb5e</span><br></pre></td></tr></table></figure>
 
 <p>假如获取到的是K0，那不用说。如果获取到的是K10呢？<br>8821df9e5e9a36f31255d04529bedb5e，首先我们会到W数组的视图，看W10密钥怎么编排出来的<br><img lazyload="" alt="image" data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230131/01.webp"></p>
@@ -361,7 +361,7 @@ mjx-container[display="true"] + br {
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">hex</span>(<span class="number">0x8821df9e</span>^<span class="number">0x5e9a36f3</span>)</span><br><span class="line"><span class="string">'0xd6bbe96d'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">hex</span>(<span class="number">0x5e9a36f3</span>^<span class="number">0x1255d045</span>)</span><br><span class="line"><span class="string">'0x4ccfe6b6'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">hex</span>(<span class="number">0x1255d045</span>^<span class="number">0x29bedb5e</span>)</span><br><span class="line"><span class="string">'0x3beb0b1b'</span></span><br></pre></td></tr></table></figure>
 
-<p>所以<br>W37 = 0xd6bbe96d<br>W38 = 0x4ccfe6b6<br>W39 = 0x3beb0b1b<br>求出了W37,W38,W39，即W39的后大半部分，和真实情况比对后发现一致。<br>K09:570a707c<strong>d6bbe96d4ccfe6b63beb0b1b</strong><br>那么W36呢？再复习一下g函数吧<br>首先循环左移一字节，3beb0b1b 变成 eb0b1b3b<br>然后逐字节S盒替换，得e92bafe2</p>
+<p>所以<br>W37 = 0xd6bbe96d<br>W38 = 0x4ccfe6b6<br>W39 = 0x3beb0b1b<br>求出了W37,W38,W39，即K9的后大半部分，和真实情况比对后发现一致。<br>K09:570a707c<strong>d6bbe96d4ccfe6b63beb0b1b</strong><br>那么W36呢？再复习一下g函数吧<br>首先循环左移一字节，3beb0b1b 变成 eb0b1b3b<br>然后逐字节S盒替换，得e92bafe2</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>SBox = [</span><br><span class="line"><span class="meta">... </span>    <span class="number">0x63</span>, <span class="number">0x7C</span>, <span class="number">0x77</span>, <span class="number">0x7B</span>, <span class="number">0xF2</span>, <span class="number">0x6B</span>, <span class="number">0x6F</span>, <span class="number">0xC5</span>, <span class="number">0x30</span>, <span class="number">0x01</span>, <span class="number">0x67</span>, <span class="number">0x2B</span>, <span class="number">0xFE</span>, <span class="number">0xD7</span>, <span class="number">0xAB</span>, <span class="number">0x76</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0xCA</span>, <span class="number">0x82</span>, <span class="number">0xC9</span>, <span class="number">0x7D</span>, <span class="number">0xFA</span>, <span class="number">0x59</span>, <span class="number">0x47</span>, <span class="number">0xF0</span>, <span class="number">0xAD</span>, <span class="number">0xD4</span>, <span class="number">0xA2</span>, <span class="number">0xAF</span>, <span class="number">0x9C</span>, <span class="number">0xA4</span>, <span class="number">0x72</span>, <span class="number">0xC0</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0xB7</span>, <span class="number">0xFD</span>, <span class="number">0x93</span>, <span class="number">0x26</span>, <span class="number">0x36</span>, <span class="number">0x3F</span>, <span class="number">0xF7</span>, <span class="number">0xCC</span>, <span class="number">0x34</span>, <span class="number">0xA5</span>, <span class="number">0xE5</span>, <span class="number">0xF1</span>, <span class="number">0x71</span>, <span class="number">0xD8</span>, <span class="number">0x31</span>, <span class="number">0x15</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0x04</span>, <span class="number">0xC7</span>, <span class="number">0x23</span>, <span class="number">0xC3</span>, <span class="number">0x18</span>, <span class="number">0x96</span>, <span class="number">0x05</span>, <span class="number">0x9A</span>, <span class="number">0x07</span>, <span class="number">0x12</span>, <span class="number">0x80</span>, <span class="number">0xE2</span>, <span class="number">0xEB</span>, <span class="number">0x27</span>, <span class="number">0xB2</span>, <span class="number">0x75</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0x09</span>, <span class="number">0x83</span>, <span class="number">0x2C</span>, <span class="number">0x1A</span>, <span class="number">0x1B</span>, <span class="number">0x6E</span>, <span class="number">0x5A</span>, <span class="number">0xA0</span>, <span class="number">0x52</span>, <span class="number">0x3B</span>, <span class="number">0xD6</span>, <span class="number">0xB3</span>, <span class="number">0x29</span>, <span class="number">0xE3</span>, <span class="number">0x2F</span>, <span class="number">0x84</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0x53</span>, <span class="number">0xD1</span>, <span class="number">0x00</span>, <span class="number">0xED</span>, <span class="number">0x20</span>, <span class="number">0xFC</span>, <span class="number">0xB1</span>, <span class="number">0x5B</span>, <span class="number">0x6A</span>, <span class="number">0xCB</span>, <span class="number">0xBE</span>, <span class="number">0x39</span>, <span class="number">0x4A</span>, <span class="number">0x4C</span>, <span class="number">0x58</span>, <span class="number">0xCF</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0xD0</span>, <span class="number">0xEF</span>, <span class="number">0xAA</span>, <span class="number">0xFB</span>, <span class="number">0x43</span>, <span class="number">0x4D</span>, <span class="number">0x33</span>, <span class="number">0x85</span>, <span class="number">0x45</span>, <span class="number">0xF9</span>, <span class="number">0x02</span>, <span class="number">0x7F</span>, <span class="number">0x50</span>, <span class="number">0x3C</span>, <span class="number">0x9F</span>, <span class="number">0xA8</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0x51</span>, <span class="number">0xA3</span>, <span class="number">0x40</span>, <span class="number">0x8F</span>, <span class="number">0x92</span>, <span class="number">0x9D</span>, <span class="number">0x38</span>, <span class="number">0xF5</span>, <span class="number">0xBC</span>, <span class="number">0xB6</span>, <span class="number">0xDA</span>, <span class="number">0x21</span>, <span class="number">0x10</span>, <span class="number">0xFF</span>, <span class="number">0xF3</span>, <span class="number">0xD2</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0xCD</span>, <span class="number">0x0C</span>, <span class="number">0x13</span>, <span class="number">0xEC</span>, <span class="number">0x5F</span>, <span class="number">0x97</span>, <span class="number">0x44</span>, <span class="number">0x17</span>, <span class="number">0xC4</span>, <span class="number">0xA7</span>, <span class="number">0x7E</span>, <span class="number">0x3D</span>, <span class="number">0x64</span>, <span class="number">0x5D</span>, <span class="number">0x19</span>, <span class="number">0x73</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0x60</span>, <span class="number">0x81</span>, <span class="number">0x4F</span>, <span class="number">0xDC</span>, <span class="number">0x22</span>, <span class="number">0x2A</span>, <span class="number">0x90</span>, <span class="number">0x88</span>, <span class="number">0x46</span>, <span class="number">0xEE</span>, <span class="number">0xB8</span>, <span class="number">0x14</span>, <span class="number">0xDE</span>, <span class="number">0x5E</span>, <span class="number">0x0B</span>, <span class="number">0xDB</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0xE0</span>, <span class="number">0x32</span>, <span class="number">0x3A</span>, <span class="number">0x0A</span>, <span class="number">0x49</span>, <span class="number">0x06</span>, <span class="number">0x24</span>, <span class="number">0x5C</span>, <span class="number">0xC2</span>, <span class="number">0xD3</span>, <span class="number">0xAC</span>, <span class="number">0x62</span>, <span class="number">0x91</span>, <span class="number">0x95</span>, <span class="number">0xE4</span>, <span class="number">0x79</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0xE7</span>, <span class="number">0xC8</span>, <span class="number">0x37</span>, <span class="number">0x6D</span>, <span class="number">0x8D</span>, <span class="number">0xD5</span>, <span class="number">0x4E</span>, <span class="number">0xA9</span>, <span class="number">0x6C</span>, <span class="number">0x56</span>, <span class="number">0xF4</span>, <span class="number">0xEA</span>, <span class="number">0x65</span>, <span class="number">0x7A</span>, <span class="number">0xAE</span>, <span class="number">0x08</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0xBA</span>, <span class="number">0x78</span>, <span class="number">0x25</span>, <span class="number">0x2E</span>, <span class="number">0x1C</span>, <span class="number">0xA6</span>, <span class="number">0xB4</span>, <span class="number">0xC6</span>, <span class="number">0xE8</span>, <span class="number">0xDD</span>, <span class="number">0x74</span>, <span class="number">0x1F</span>, <span class="number">0x4B</span>, <span class="number">0xBD</span>, <span class="number">0x8B</span>, <span class="number">0x8A</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0x70</span>, <span class="number">0x3E</span>, <span class="number">0xB5</span>, <span class="number">0x66</span>, <span class="number">0x48</span>, <span class="number">0x03</span>, <span class="number">0xF6</span>, <span class="number">0x0E</span>, <span class="number">0x61</span>, <span class="number">0x35</span>, <span class="number">0x57</span>, <span class="number">0xB9</span>, <span class="number">0x86</span>, <span class="number">0xC1</span>, <span class="number">0x1D</span>, <span class="number">0x9E</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0xE1</span>, <span class="number">0xF8</span>, <span class="number">0x98</span>, <span class="number">0x11</span>, <span class="number">0x69</span>, <span class="number">0xD9</span>, <span class="number">0x8E</span>, <span class="number">0x94</span>, <span class="number">0x9B</span>, <span class="number">0x1E</span>, <span class="number">0x87</span>, <span class="number">0xE9</span>, <span class="number">0xCE</span>, <span class="number">0x55</span>, <span class="number">0x28</span>, <span class="number">0xDF</span>,</span><br><span class="line"><span class="meta">... </span>    <span class="number">0x8C</span>, <span class="number">0xA1</span>, <span class="number">0x89</span>, <span class="number">0x0D</span>, <span class="number">0xBF</span>, <span class="number">0xE6</span>, <span class="number">0x42</span>, <span class="number">0x68</span>, <span class="number">0x41</span>, <span class="number">0x99</span>, <span class="number">0x2D</span>, <span class="number">0x0F</span>, <span class="number">0xB0</span>, <span class="number">0x54</span>, <span class="number">0xBB</span>, <span class="number">0x16</span></span><br><span class="line"><span class="meta">... </span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">hex</span>(SBox[<span class="number">0xeb</span>])</span><br><span class="line"><span class="string">'0xe9'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">hex</span>(SBox[<span class="number">0x0b</span>])</span><br><span class="line"><span class="string">'0x2b'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">hex</span>(SBox[<span class="number">0x1b</span>])</span><br><span class="line"><span class="string">'0xaf'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">hex</span>(SBox[<span class="number">0x3b</span>])</span><br><span class="line"><span class="string">'0xe2'</span></span><br></pre></td></tr></table></figure>
 <p>最后是首字节和Rcon中的一个字节异或，这是最后一次变换，即用0x36</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rcon = [<span class="number">0x01</span>, <span class="number">0x02</span>, <span class="number">0x04</span>, <span class="number">0x08</span>, <span class="number">0x10</span>, <span class="number">0x20</span>, <span class="number">0x40</span>, <span class="number">0x80</span>, <span class="number">0x1B</span>, <span class="number">0x36</span>]</span><br></pre></td></tr></table></figure>
@@ -370,7 +370,7 @@ mjx-container[display="true"] + br {
 <p>g函数的结果即是0xdf2bafe2<br>那上面W36=g(W39) xor W40 = 0xdf2bafe2 xor 0x8821df9e</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">hex</span>(<span class="number">0xdf2bafe2</span>^<span class="number">0x8821df9e</span>)</span><br><span class="line"><span class="string">'0x570a707c'</span></span><br></pre></td></tr></table></figure>
 <p>所以完整的K9：570a707cd6bbe96d4ccfe6b63beb0b1b，就被我们分析出来了，跟一开始的K表里的K9是一致的。可以继续往上推出K0，获得主密钥。即AES可以依靠轮密钥逆推出主密钥。严肃的说，AES-128可以通过一轮轮密钥逆推出主密钥，AES-192需要一轮半，AES-256需要两轮轮密钥。</p>
-<p>接下来讨论另外两个情况<br>1是DES，DES密钥长八字节，在密钥编排时，会舍弃每个字节的最后1比特。因此实际参与密钥编排的是56比特，我们可以验证这一点。<br>假设密钥是</p>
+<p>接下来顺便下讨论DES的<br><br>DES密钥长八字节，在密钥编排时，会舍弃每个字节的最后1比特。因此实际参与密钥编排的是56比特，我们可以验证这一点。<br>假设密钥是</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11</span> <span class="number">22</span> <span class="number">33</span> <span class="number">44</span> <span class="number">55</span> <span class="number">66</span> <span class="number">77</span> <span class="number">88</span> (<span class="built_in">hex</span>)</span><br></pre></td></tr></table></figure>
 <p>二进制即 <br>0001000<strong>1</strong> 0010001<strong>0</strong> 0011001<strong>1</strong> 0100010<strong>0</strong> 0101010<strong>1</strong> 0110011<strong>0</strong> 0111011<strong>1</strong> 1000100<strong>0</strong><br>我们将末尾1比特翻转，即0变1，1变0。如果AES密钥中每个字节的最后一位被“丢弃”，那么翻转后也并不会对程序有任何影响，反之加密结果应该不同。<br>0001000<strong>0</strong> 0010001<strong>1</strong> 0011001<strong>0</strong> 0100010<strong>1</strong> 0101010<strong>0</strong> 0110011<strong>1</strong> 0111011<strong>0</strong> 1000100<strong>1</strong><br>转成十六进制即</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span> <span class="number">23</span> <span class="number">32</span> <span class="number">45</span> <span class="number">54</span> <span class="number">67</span> <span class="number">76</span> <span class="number">89</span> (<span class="built_in">hex</span>)</span><br></pre></td></tr></table></figure>
@@ -584,24 +584,83 @@ mjx-container[display="true"] + br {
 
     
         <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="tools-item flex-center toggle-show-toc">
-                <i class="fas fa-list"></i>
-            </li>
-        
+            $li-border-radius = 0.4rem
+$li-margin-bottom = 0.8rem
 
-        <!-- go comment -->
-        
-            <li class="tools-item flex-center go-to-comments">
-                <i class="fas fa-comment"></i>
-                <span class="post-comments-count"></span>
-            </li>
-        
-    </ul>
-</div>
+.post-tools-container {
+  position relative
+  box-sizing border-box
+  padding-top 2rem
+
+  .tools-list {
+
+    li {
+      position relative
+      box-sizing border-box
+      width $post-tool-button-width
+      height $post-tool-button-width
+      margin-bottom $li-margin-bottom
+      color var(--text-color-3)
+      font-size 1.2rem
+      background var(--background-color-1)
+      border-radius 50%
+      cursor pointer
+
+      i {
+        color var(--text-color-3)
+      }
+
+      &:hover {
+        color var(--background-color-1)
+        background var(--primary-color)
+
+        i {
+          color var(--background-color-1)
+        }
+      }
+
+
+      &:last-child {
+        margin-bottom 0
+      }
+
+
+      hover-style(true, 1.06, 1.06)
+
+      &.toggle-show-toc {
+        display none
+
+        +keep-tablet() {
+          display none !important
+        }
+      }
+
+
+      &.go-to-comments {
+        .post-comments-count {
+          position absolute
+          top 0
+          right -1rem
+          display none
+          align-items center
+          justify-content center
+          box-sizing border-box
+          min-width 1.1rem
+          height 1.1rem
+          padding 0 0.2rem
+          color var(--badge-color)
+          font-size 12px
+          background var(--badge-background-color)
+          border-radius 0.4rem
+
+          +keep-tablet() {
+            display none !important
+          }
+        }
+      }
+    }
+  }
+}
 
         </div>
     
