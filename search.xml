@@ -1089,7 +1089,7 @@ f函数：
 <h4 id="第四步级联明文（-k’⊕ipad-m）-1"><a href="#第四步级联明文（-k’⊕ipad-m）-1" class="headerlink" title="第四步级联明文（(k’⊕ipad)||m）:"></a>第四步级联明文（(k’⊕ipad)||m）:</h4><p>(k’⊕ipad)||m&#x3D;0x2727363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363668656c6c6f776f7264</p>
 <h4 id="第五步级联后进行sha1（H-k’⊕ipad-m-）"><a href="#第五步级联后进行sha1（H-k’⊕ipad-m-）" class="headerlink" title="第五步级联后进行sha1（H((k’⊕ipad)||m)）:"></a>第五步级联后进行sha1（H((k’⊕ipad)||m)）:</h4><p>级联后进行一次sha1（不需要转hex）<br />H((k’⊕ipad)||m)&#x3D;aea39b30d6922fdbb1848fe3a49bd130ed337f77</p>
 <h4 id="第六步（第二步级联第五步后进行sha1，H-k’⊕opad-H-k’⊕ipad-m-）"><a href="#第六步（第二步级联第五步后进行sha1，H-k’⊕opad-H-k’⊕ipad-m-）" class="headerlink" title="第六步（第二步级联第五步后进行sha1，H((k’⊕opad)||H((k’⊕ipad)||m)）"></a>第六步（第二步级联第五步后进行sha1，H((k’⊕opad)||H((k’⊕ipad)||m)）</h4><p>级联(k’⊕opad)||H((k’⊕ipad)||m)&#x3D;0x4d4d5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5caea39b30d6922fdbb1848fe3a49bd130ed337f77<br />4ea30551db501b285a03a197c65fea249131b808</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>第一步k值填充到块长度(md5和sha1是512bit，128hex)称为k’<br />第二步k’与0x36异或后拼接明文的hex，进行原函数哈希（如hmac md5就进行一次md5，hmac sha1就进行一次sha1）<br />第三步k’与0x5c异或后拼接第三步再进行一次原函数哈希</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>第一步k值填充到块长度(md5和sha1是512bit，128hex)称为k’<br />第二步k’与0x36异或后拼接明文的hex，进行原函数哈希（如hmac md5就进行一次md5，hmac sha1就进行一次sha1）<br />第三步k’与0x5c异或后拼接第二步再进行一次原函数哈希</p>
 ]]></content>
       <tags>
         <tag>算法</tag>
@@ -1234,13 +1234,18 @@ f函数：
 <table>
 <thead>
 <tr>
-<th>&amp;</th>
-<th>与</th>
-<th>两个位都为1时，结果才为1</th>
+<th></th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>&amp;#124;</td>
+<td>&amp;</td>
+<td>与</td>
+<td>两个位都为1时，结果才为1</td>
+</tr>
+<tr>
+<td>|</td>
 <td>或</td>
 <td>两个位都为0时，结果才为0</td>
 </tr>
@@ -1335,7 +1340,7 @@ f函数：
   </entry>
   <entry>
     <title>MD5源码分析和魔改</title>
-    <url>/2022/06/20/MD5%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E5%92%8C%E9%AD%94%E6%94%B9/</url>
+    <url>/2022/06/20/MD5%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E5%8F%8A%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="MD5算法实现："><a href="#MD5算法实现：" class="headerlink" title="MD5算法实现："></a>MD5算法实现：</h1><p>输入：不定长度信息（要加密的信息）</p>
 <p>输出：固定长度128-bits。由四个32位分组组成，将这四个32位分组级联后将生成一个128位散列值。</p>
 <p>基本方式为：求余、取余、调整长度、与链接变量进行循环运算。得出结果。</p>
@@ -1400,13 +1405,18 @@ f函数：
 <table>
 <thead>
 <tr>
-<th>&amp;</th>
-<th>与</th>
-<th>两个位都为1时，结果才为1</th>
+<th></th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>&amp;#124;</td>
+<td>&amp;</td>
+<td>与</td>
+<td>两个位都为1时，结果才为1</td>
+</tr>
+<tr>
+<td>|</td>
 <td>或</td>
 <td>两个位都为0时，结果才为0</td>
 </tr>

@@ -291,7 +291,7 @@
 <h4 id="第四步级联明文（-k’⊕ipad-m）-1"><a href="#第四步级联明文（-k’⊕ipad-m）-1" class="headerlink" title="第四步级联明文（(k’⊕ipad)||m）:"></a>第四步级联明文（(k’⊕ipad)||m）:</h4><p>(k’⊕ipad)||m&#x3D;0x2727363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363668656c6c6f776f7264</p>
 <h4 id="第五步级联后进行sha1（H-k’⊕ipad-m-）"><a href="#第五步级联后进行sha1（H-k’⊕ipad-m-）" class="headerlink" title="第五步级联后进行sha1（H((k’⊕ipad)||m)）:"></a>第五步级联后进行sha1（H((k’⊕ipad)||m)）:</h4><p>级联后进行一次sha1（不需要转hex）<br />H((k’⊕ipad)||m)&#x3D;aea39b30d6922fdbb1848fe3a49bd130ed337f77</p>
 <h4 id="第六步（第二步级联第五步后进行sha1，H-k’⊕opad-H-k’⊕ipad-m-）"><a href="#第六步（第二步级联第五步后进行sha1，H-k’⊕opad-H-k’⊕ipad-m-）" class="headerlink" title="第六步（第二步级联第五步后进行sha1，H((k’⊕opad)||H((k’⊕ipad)||m)）"></a>第六步（第二步级联第五步后进行sha1，H((k’⊕opad)||H((k’⊕ipad)||m)）</h4><p>级联(k’⊕opad)||H((k’⊕ipad)||m)&#x3D;0x4d4d5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5caea39b30d6922fdbb1848fe3a49bd130ed337f77<br />4ea30551db501b285a03a197c65fea249131b808</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>第一步k值填充到块长度(md5和sha1是512bit，128hex)称为k’<br />第二步k’与0x36异或后拼接明文的hex，进行原函数哈希（如hmac md5就进行一次md5，hmac sha1就进行一次sha1）<br />第三步k’与0x5c异或后拼接第三步再进行一次原函数哈希</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>第一步k值填充到块长度(md5和sha1是512bit，128hex)称为k’<br />第二步k’与0x36异或后拼接明文的hex，进行原函数哈希（如hmac md5就进行一次md5，hmac sha1就进行一次sha1）<br />第三步k’与0x5c异或后拼接第二步再进行一次原函数哈希</p>
 
             </div>
 
