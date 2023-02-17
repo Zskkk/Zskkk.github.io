@@ -3792,6 +3792,21 @@ II(b ,c ,d ,a ,M9 ,21 ,0xeb86d391 )</br>
                      data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/19.webp"
                      
                 ><br><br />到这里用frida脱壳也成功了。。。</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>壳的种类⾮常多，根据其种类不同，使⽤的技术也不同，这⾥稍微简单分个类：</p>
+<ul>
+<li>⼀代整体型壳：采⽤ Dex 整体加密，动态加载运⾏的机制；</li>
+<li>⼆代函数抽取型壳：粒度更细，将⽅法单独抽取出来，加密保存，解密执⾏；</li>
+<li>三代 VMP、Dex2C 壳：独⽴虚拟机解释执⾏、语义等价语法迁移，强度最⾼。</li>
+</ul>
+<p>先说最难的 Dex2C ⽬前是没有办法还原的，只能跟踪进⾏分析； VMP 虚拟机解释执⾏保护的是映射表，只要⼼思细、功夫深，是可以将映射表还原的；</p>
+<p>⼆代壳函数抽取⽬前是可以从根本上进⾏还原的， dump 出所有的运⾏时的⽅法体，填充到 dump 下来的 dex 中去的，这也是fart的核⼼原理。</p>
+<h3 id="frida-Dexdump"><a href="#frida-Dexdump" class="headerlink" title="frida-Dexdump"></a>frida-Dexdump</h3><p><a class="link"   href="https://github.com/hluwa/FRIDA-DEXDump" >https://github.com/hluwa/FRIDA-DEXDump<i class="fas fa-external-link-alt"></i></a></p>
+<p>利⽤ frida 的搜索内存，通过匹配 DEX ⽂件的特征，例如 DEX ⽂件的 文件头 中的 magic — dex.035 这个特征。 frida-Dexdump 便是这种脱壳⽅法的代表作。</p>
+<ul>
+<li>对于于完整的 dex，采⽤暴⼒搜索 dex035 即可找到。</li>
+<li>⽽对于抹头的 dex，通过匹配⼀些特征来找到，然后⾃动修复⽂件头。</li>
+</ul>
+<p>抽取 -&gt; invoke -&gt; 还原 -&gt; 再抽取</p>
 ]]></content>
       <tags>
         <tag>脱壳</tag>

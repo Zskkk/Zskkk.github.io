@@ -207,12 +207,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>2.2k 字</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.5k 字</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>9 分钟</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>10 分钟</span>
         </span>
     
     
@@ -433,6 +433,21 @@
                      data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/19.webp"
                      
                 ><br><br />到这里用frida脱壳也成功了。。。</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>壳的种类⾮常多，根据其种类不同，使⽤的技术也不同，这⾥稍微简单分个类：</p>
+<ul>
+<li>⼀代整体型壳：采⽤ Dex 整体加密，动态加载运⾏的机制；</li>
+<li>⼆代函数抽取型壳：粒度更细，将⽅法单独抽取出来，加密保存，解密执⾏；</li>
+<li>三代 VMP、Dex2C 壳：独⽴虚拟机解释执⾏、语义等价语法迁移，强度最⾼。</li>
+</ul>
+<p>先说最难的 Dex2C ⽬前是没有办法还原的，只能跟踪进⾏分析； VMP 虚拟机解释执⾏保护的是映射表，只要⼼思细、功夫深，是可以将映射表还原的；</p>
+<p>⼆代壳函数抽取⽬前是可以从根本上进⾏还原的， dump 出所有的运⾏时的⽅法体，填充到 dump 下来的 dex 中去的，这也是fart的核⼼原理。</p>
+<h3 id="frida-Dexdump"><a href="#frida-Dexdump" class="headerlink" title="frida-Dexdump"></a>frida-Dexdump</h3><p><a class="link"   target="_blank" rel="noopener" href="https://github.com/hluwa/FRIDA-DEXDump" >https://github.com/hluwa/FRIDA-DEXDump<i class="fas fa-external-link-alt"></i></a></p>
+<p>利⽤ frida 的搜索内存，通过匹配 DEX ⽂件的特征，例如 DEX ⽂件的 文件头 中的 magic — dex.035 这个特征。 frida-Dexdump 便是这种脱壳⽅法的代表作。</p>
+<ul>
+<li>对于于完整的 dex，采⽤暴⼒搜索 dex035 即可找到。</li>
+<li>⽽对于抹头的 dex，通过匹配⼀些特征来找到，然后⾃动修复⽂件头。</li>
+</ul>
+<p>抽取 -&gt; invoke -&gt; 还原 -&gt; 再抽取</p>
 
             </div>
 
@@ -579,7 +594,7 @@
             <div class="toc-content-container">
                 <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%B8%B8%E8%A7%81%E7%9A%84%E5%A3%B3"><span class="nav-number">1.</span> <span class="nav-text">一、常见的壳</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8A%A0%E5%9B%BA%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">二、加固原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E6%9C%89%E6%B2%A1%E6%9C%89%E5%A3%B3"><span class="nav-number">3.</span> <span class="nav-text">三、如何查看有没有壳</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Hook%E6%8A%80%E6%9C%AF"><span class="nav-number">4.</span> <span class="nav-text">四、Hook技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%84%B1%E5%A3%B3%E5%B7%A5%E5%85%B7"><span class="nav-number">5.</span> <span class="nav-text">五、脱壳工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BC%80%E5%A7%8B%E8%84%B1%E5%A3%B3%EF%BC%88%E7%94%A8FDex2%E8%84%B1%E5%A3%B3%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、开始脱壳（用FDex2脱壳）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%BC%80%E5%A7%8B%E8%84%B1%E5%A3%B3%EF%BC%88%E7%94%A8Frida%E8%84%B1%E5%A3%B3%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">七、开始脱壳（用Frida脱壳）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Frida%E8%84%B1%E5%A3%B3"><span class="nav-number">7.1.</span> <span class="nav-text">Frida脱壳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dex%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">7.2.</span> <span class="nav-text">dex文件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#header"><span class="nav-number">7.3.</span> <span class="nav-text">header</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%B8%B8%E8%A7%81%E7%9A%84%E5%A3%B3"><span class="nav-number">1.</span> <span class="nav-text">一、常见的壳</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8A%A0%E5%9B%BA%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">二、加固原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E6%9C%89%E6%B2%A1%E6%9C%89%E5%A3%B3"><span class="nav-number">3.</span> <span class="nav-text">三、如何查看有没有壳</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Hook%E6%8A%80%E6%9C%AF"><span class="nav-number">4.</span> <span class="nav-text">四、Hook技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%84%B1%E5%A3%B3%E5%B7%A5%E5%85%B7"><span class="nav-number">5.</span> <span class="nav-text">五、脱壳工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BC%80%E5%A7%8B%E8%84%B1%E5%A3%B3%EF%BC%88%E7%94%A8FDex2%E8%84%B1%E5%A3%B3%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、开始脱壳（用FDex2脱壳）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%BC%80%E5%A7%8B%E8%84%B1%E5%A3%B3%EF%BC%88%E7%94%A8Frida%E8%84%B1%E5%A3%B3%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">七、开始脱壳（用Frida脱壳）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Frida%E8%84%B1%E5%A3%B3"><span class="nav-number">7.1.</span> <span class="nav-text">Frida脱壳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dex%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">7.2.</span> <span class="nav-text">dex文件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#header"><span class="nav-number">7.3.</span> <span class="nav-text">header</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">8.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-Dexdump"><span class="nav-number">8.1.</span> <span class="nav-text">frida-Dexdump</span></a></li></ol></li></ol>
     </div>
 </div>
 
