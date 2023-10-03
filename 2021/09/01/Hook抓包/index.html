@@ -237,80 +237,80 @@
 <p>运行一下<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/01.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/01.webp"
                      
                 ></p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这是socket发送http请求的数据包，把数据包写进outputStream后进行发送，outputStream是socket对象的方法，先看一下socket的实现。跟进一下socket的实现</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/02.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/02.webp"
                      
                 ></p>
 <p>这些都是实现的接口，要找到实现的地方，跟进setImpl方法</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/03.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/03.webp"
                      
                 ></p>
 <p>可以看到impl是实例对象，这里有分支，先看一下factory，在该文件搜索factory &#x3D; ，看被什么赋值了，</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/04.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/04.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/05.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/05.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/06.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/06.webp"
                      
                 ><br>看到两次赋值的值都是null，所以走else，跟进 SocksSocketImpl();，这里就到socket实现的地方。</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/07.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/07.webp"
                      
                 ></p>
 <p>进行搜索getOutputStream()方法实现的地方，发现没有找到，那就是存在父类了，跟进父类PlainSocketImpl。<br>再次搜索没有，再跟进它的父类AbstractPlainSocketImpl</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/08.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/08.webp"
                      
                 ></p>
 <p>再搜索，发现找到了getOutputStream()实现的地方，两个if都是抛出异常，看第三个if，跟进SocketOutputStream()，</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/09.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/09.webp"
                      
                 ><br>找到了SocketOutputStream()对象的地方，搜索write()方法，参数是字节</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/10.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/10.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/11.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/11.webp"
                      
                 ><br>跟进socketWrite()，调用了socketWrite0()方法，跟进</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/12.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/12.webp"
                      
                 ><br>可以看到该方法在native层。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/13.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/13.webp"
                      
                 ></p>
 <h3 id="frida抓包"><a href="#frida抓包" class="headerlink" title="frida抓包"></a>frida抓包</h3><p>跟到socketWrite0()这里，应该是java层最底层了，hook socketWrite0尝试下</p>
@@ -318,20 +318,20 @@
 <p>运行frida，运行脚本，成功抓到包<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/14.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/14.webp"
                      
                 ><br>再完善一下，添加请求地址，堆栈</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="comment">//Http request</span></span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.net.SocketOutputStream&quot;</span>).<span class="property">socketWrite0</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params">fd,bytes,off,len</span>)&#123;</span><br><span class="line">            <span class="comment">// 地址</span></span><br><span class="line">            <span class="title function_">printAddress</span>(<span class="variable language_">this</span>.<span class="property">socket</span>, <span class="literal">true</span>)</span><br><span class="line">            <span class="comment">// 请求</span></span><br><span class="line">            <span class="title function_">hexdump</span>(bytes,off,len)</span><br><span class="line">            <span class="comment">// 堆栈</span></span><br><span class="line">            <span class="title function_">showStacks</span>()</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">socketWrite0</span>(fd,bytes,off,len)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">printAddress</span>(<span class="params">socket, isSend</span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> localAddress = socket.<span class="property">value</span>.<span class="title function_">getLocalAddress</span>().<span class="title function_">toString</span>()</span><br><span class="line">            <span class="keyword">var</span> remoteAddress = socket.<span class="property">value</span>.<span class="title function_">getRemoteSocketAddress</span>().<span class="title function_">toString</span>()</span><br><span class="line">            <span class="keyword">if</span>(isSend)&#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(localAddress +<span class="string">&quot;====&gt;&quot;</span>+ remoteAddress)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(remoteAddress +<span class="string">&quot;====&gt;&quot;</span>+ localAddress)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">hexdump</span>(<span class="params">bytearry,offset,length</span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> <span class="title class_">HexDump</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.android.internal.util.HexDump&quot;</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">HexDump</span>.<span class="title function_">dumpHexString</span>(bytearry,offset,length))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">showStacks</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.util.Log&quot;</span>).<span class="title function_">getStackTraceString</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.Exception&quot;</span>).$new()));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
 <p>请求地址，堆栈都打印了<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/15.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/15.webp"
                      
                 ><br>现在知识完成request部分，还有response</p>
 <h2 id="response"><a href="#response" class="headerlink" title="response"></a>response</h2><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>接受数据是InputStream，调用的是socket的getInputStream，getInputStream和getOuputStream是成对出现的，按着刚才的思路可以找到。或者，socketWrite0()是在SocketOutputStream，那么socketRead0()就是在SocketInputStream里。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/16.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/16.webp"
                      
                 ></p>
 <h3 id="frida抓包-1"><a href="#frida抓包-1" class="headerlink" title="frida抓包"></a>frida抓包</h3><p>用Frida hook试试，再之前的代码上添加</p>
@@ -339,7 +339,7 @@
 <p>也是成功抓到返回的数据<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/17.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/17.webp"
                      
                 ><br>HTTP通用的收发包都抓到了，那HTTPS的呢</p>
 <h1 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h1><h2 id="request-1"><a href="#request-1" class="headerlink" title="request"></a>request</h2><p>也是一样，创建一个HTTPS的请求</p>
@@ -347,38 +347,38 @@
 <p>运行之后<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/18.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/18.webp"
                      
                 ></p>
 <h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>这里使用调试，可以快速定位到对象类的位置，<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/19.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/19.webp"
                      
                 ><br>在源码中搜一下ConscryptFileDescriptorSocket<br>网址：<a class="link"   target="_blank" rel="noopener" href="http://aospxref.com/android-8.1.0_r81/" >http://aospxref.com/android-8.1.0_r81/<i class="fas fa-external-link-alt"></i></a><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/20.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/20.webp"
                      
                 ><br>然后在源码文件搜索内部类SSLOutputStream，是继承OutputStream，然后对原来的write方法进行重写<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/21.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/21.webp"
                      
                 ><br>跟踪一下write方法里的ssl.write()<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/22.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/22.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/23.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/23.webp"
                      
                 ><br>再跟踪NativeCrypto.SSL_write()，又到了native层，可以说已经在java层跟到底了<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/24.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/24.webp"
                      
                 ></p>
 <h3 id="frida抓包-2"><a href="#frida抓包-2" class="headerlink" title="frida抓包"></a>frida抓包</h3><p>用frida hook下org.conscrypt.NativeCrypto类下的SSL_write()方法</p>
@@ -386,30 +386,30 @@
 <p>运行会看到报错了，说找不到NativeCrypto这个类<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/25.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/25.webp"
                      
                 ><br>使用objection看一下，内存中是否存在NativeCrypto，多加了com.android前缀，再用frida试一下com.android.org.conscrypt.NativeCrypto<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/26.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/26.webp"
                      
                 ><br>这次成功抓到包<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/27.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/27.webp"
                      
                 ></p>
 <h2 id="response-1"><a href="#response-1" class="headerlink" title="response"></a>response</h2><p>response同理<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/28.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/28.webp"
                      
                 ></p>
 <h3 id="frida抓包-3"><a href="#frida抓包-3" class="headerlink" title="frida抓包"></a>frida抓包</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Https response</span></span><br><span class="line"><span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.android.org.conscrypt.NativeCrypto&quot;</span>).<span class="property">SSL_read</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params">ssl,fd,shc,bytes,off,len,timeout</span>)&#123;</span><br><span class="line">    <span class="title function_">hexdump</span>(bytes,off,len)</span><br><span class="line">    <span class="title function_">showStacks</span>()</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">SSL_read</span>(ssl,fd,shc,bytes,off,len,timeout)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210901/29.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210901/29.webp"
                      
                 ></p>
 <h1 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">function main()&#123;</span><br><span class="line">    Java.perform(function()&#123;</span><br><span class="line">        //Http request</span><br><span class="line">        Java.use(<span class="string">&quot;java.net.SocketOutputStream&quot;</span>).socketWrite0.implementation = function(fd,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)&#123;</span><br><span class="line">            printAddress(this.socket, true)</span><br><span class="line">            hexdump(<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">            showStacks()</span><br><span class="line">            this.socketWrite0(fd,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        //Http response</span><br><span class="line">        Java.use(<span class="string">&quot;java.net.SocketInputStream&quot;</span>).socketRead0.implementation = function(fd,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)&#123;</span><br><span class="line">            printAddress(this.socket, false)</span><br><span class="line">            hexdump(<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">            showStacks()</span><br><span class="line">            <span class="keyword">return</span> this.socketRead0(fd,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //Https request</span><br><span class="line">        Java.use(<span class="string">&quot;com.android.org.conscrypt.NativeCrypto&quot;</span>).SSL_write.implementation = function(sslNativePointer,fd,shc,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)&#123;</span><br><span class="line">            printHttpsAddress(fd)</span><br><span class="line">            hexdump(<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">            showStacks()</span><br><span class="line">            <span class="keyword">return</span> this.SSL_write(sslNativePointer,fd,shc,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)</span><br><span class="line">        &#125;</span><br><span class="line">        //Https response</span><br><span class="line">        Java.use(<span class="string">&quot;com.android.org.conscrypt.NativeCrypto&quot;</span>).SSL_read.implementation = function(sslNativePointer,fd,shc,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)&#123;</span><br><span class="line">            printHttpsAddress(fd)</span><br><span class="line">            hexdump(<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">            showStacks()</span><br><span class="line">            <span class="keyword">return</span> this.SSL_read(sslNativePointer,fd,shc,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        function printHttpsAddress(fd, isSend)&#123;</span><br><span class="line">            var local = Socket.localAddress(fd.getInt$())</span><br><span class="line">            var peer = Socket.peerAddress(fd.getInt$())</span><br><span class="line">            <span class="keyword">if</span>(isSend)&#123;</span><br><span class="line">                console.log(local.ip+<span class="string">&quot;:&quot;</span>+local.port +<span class="string">&quot;====&gt;&quot;</span>+ peer.ip+<span class="string">&quot;:&quot;</span>+peer.port)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                console.log(peer.ip+<span class="string">&quot;:&quot;</span>+peer.port +<span class="string">&quot;====&gt;&quot;</span>+ local.ip+<span class="string">&quot;:&quot;</span>+local.port)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        function printAddress(socket, isSend)&#123;</span><br><span class="line">            var localAddress = socket.value.getLocalAddress().toString()</span><br><span class="line">            var remoteAddress = socket.value.getRemoteSocketAddress().toString()</span><br><span class="line">            <span class="keyword">if</span>(isSend)&#123;</span><br><span class="line">                console.log(localAddress +<span class="string">&quot;====&gt;&quot;</span>+ remoteAddress)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                console.log(remoteAddress +<span class="string">&quot;====&gt;&quot;</span>+ localAddress)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        function hexdump(bytearry,offset,length)&#123;</span><br><span class="line">            var HexDump = Java.use(<span class="string">&quot;com.android.internal.util.HexDump&quot;</span>)</span><br><span class="line">            console.log(HexDump.dumpHexString(bytearry,offset,length))</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        function showStacks() &#123;</span><br><span class="line">            console.log(Java.use(<span class="string">&quot;android.util.Log&quot;</span>).getStackTraceString(Java.use(<span class="string">&quot;java.lang.Exception&quot;</span>).$new()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">setImmediate(main)</span><br></pre></td></tr></table></figure>

@@ -197,11 +197,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Unidbg/">Unidbg</a>&nbsp;
+                        <a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">安卓逆向</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">安卓逆向</a>&nbsp;
+                        | <a href="/tags/Unidbg/">Unidbg</a>&nbsp;
                     </li>
                 
             </ul>
@@ -237,7 +237,7 @@
                 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/000.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/000.webp"
                      
                 ></p>
 <h2 id="Unidbg-模拟执行"><a href="#Unidbg-模拟执行" class="headerlink" title="Unidbg 模拟执行"></a>Unidbg 模拟执行</h2><p> 首先模拟执行，先搭个架子  </p>
@@ -245,7 +245,7 @@
 <p>运行结果<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/01.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/01.webp"
                      
                 ><br /> 报了一个 ”不合法的JNI版本“ 错误，具体出错的原因有很多，一个常见的问题是SO的依赖库缺失。即程 序调用依赖库中某个函数时，因为这个依赖库没加载到Unidbg虚拟内存中，进而发生寻址错误，比如上 图就是 0x1664 地址访问失败。在Unidbg日志的第三行我们看到， libc++_shared.so 加载失败，即库缺失报错。 我们的目标SO依赖了 libc++_shared.so ，这个库是C++的支持库，但不在Unidbg默认支持的SO里。 我们要在apk的lib里把它拷贝出来。<br />在加载so文件前添加这两行，目标so依赖的其他so文件要在其前面加载</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DalvikModule</span> <span class="variable">dm_shared</span> <span class="operator">=</span> vm.loadLibrary(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/libc++_shared.so&quot;</span>), <span class="literal">true</span>);</span><br><span class="line">dm_shared.callJNI_OnLoad(emulator);</span><br></pre></td></tr></table></figure>
@@ -254,7 +254,7 @@
 <p> 运行后直接出结果  <br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/02.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/02.webp"
                      
                 ><br /> 可以发现，结果由四部分组成，前三个参数是我们 input4 传进去的内容，所以需要分析的只有auth的 来源。 多次运行会发现，auth 的值，恒为 3c179e17e8e9b06d7b18c68555b92220，长度 32 位。  </p>
 <h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p> 首先，确认函数执行流的汇编长度，如果行数过多上千万甚至上亿行，就只能放弃。如果几十万行，那就还可以看看。</p>
@@ -262,12 +262,12 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/03.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/03.webp"
                      
                 ><br />运行计数总共九十一万行， 不超过100w行的执行流，要么程序没怎么混淆，要么逻辑不 太复杂。两者任意一个复杂度高一些，都不会只有100w行汇编以内。  <br />使用findcrypt插件再确认一下样本大概使用了哪些加密算法<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/04.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/04.webp"
                      
                 ><br /> SO中至少存在 AES&#x2F;BASE64，至于我们的函数中用了什么？这得具体分析，毕竟Findcrypt只是一个静态 的、加密特征匹配插件。 </p>
 <ul>
@@ -282,17 +282,17 @@
 <p>这让我们可以逆流而上，自结果推来源，分析算法和数据块十分轻松。 <br />重新看运行结果图<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/05.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/05.webp"
                      
                 ><br />运算结果来自于NewStringUTF，这个JString从哪里来的？    <br /> 日志提示调用处在0x336f，这个地址实际上是LR（返回地址），所以NewStringUTF函数调用是 0x336f 的上一条 0x336C。  <br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/06.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/06.webp"
                      
                 ><br><br /> 在 0x336C 下断点  <br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/07.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/07.webp"
                      
                 ><br><br /> 回顾一下NewStringUTF 这个JNI方法，数据来源就是参数二字符数组  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstring <span class="title function_">NewStringUTF</span><span class="params">(JNIEnv *env, const <span class="type">char</span> *bytes)</span>;</span><br></pre></td></tr></table></figure>
@@ -301,7 +301,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/08.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/08.webp"
                      
                 ><br><br /> 从下往上寻找对内存最晚的操作，可以发现，这32个字节的赋值发生在libc里。一般数据在libc里赋值， 指的是调用了libc中memcpy等库函数做拷贝、转换、比较等处理，而非数据生成的第一现场。  <br /> 把Unidbg的libc.so拷贝一份出来，扔到IDA里。搜索0x17d3a，看具体是哪个函数。我们发现 是在strcat函数里，即做字符串拼接。  <br />hook strcat 函数，进行追踪  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *strcat(<span class="type">char</span> *dest, const <span class="type">char</span> *src)</span><br></pre></td></tr></table></figure>
@@ -314,12 +314,12 @@
 <p> 运行，可以发现结果的四个字段就是strcat 逐步拼接的结果  <br /><br> <img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/09.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/09.webp"
                      
                 ><br> <br /> 对来源 0xbffff69b 做traceWrite，千万记得加后缀L。  <br /> 发现依然来自于libc，这不是好事，说明我们还没到第一现场。  <br /><br> <img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/10.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/10.webp"
                      
                 ><br> <br />从IDA跳到地址 0x176dc，看到是在_memcpy_base函数里</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __fastcall <span class="title function_">_memcpy_base</span><span class="params">(<span class="type">int</span> a1, <span class="type">char</span> *a2, unsigned <span class="type">int</span> a3, <span class="type">int</span> a4, <span class="type">int</span> a5,</span></span><br><span class="line"><span class="params"><span class="type">int</span> a6)</span></span><br></pre></td></tr></table></figure>
@@ -336,61 +336,61 @@
 <p> 运行发现，程序逻辑上逐两个字节进行拷贝  <br /><br> <img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/11.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/11.webp"
                      
                 ><br> <br />140处调用。看的头疼，所以我尝试性的搜索了下3c179e17e8e9b06d7b18c68555b92220，期待某次 memcpy可以看到它，那么我们就能找到它的产生之处了。  <br /><br> <img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/12.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/12.webp"
                      
                 ><br> <br /> 打印memcpy的str2时，我采用了Unidbg的Inspect API，它会在 打印内存块时，顺带打印数据的MD5值，这个设计主要是为了比较两个内存块是否全然等值，但这里却 帮到了我们。  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0000</span>: <span class="number">61</span> <span class="number">69</span> <span class="number">64</span> <span class="number">3D</span> <span class="number">61</span> 6E <span class="number">64</span> <span class="number">72</span> <span class="number">6F</span> <span class="number">69</span> <span class="number">64</span> <span class="number">31</span> <span class="number">26</span> <span class="number">63</span> 6C <span class="number">69</span>    aid=android1&amp;cli</span><br><span class="line"><span class="number">0010</span>: <span class="number">65</span> 6E <span class="number">74</span> <span class="number">5F</span> <span class="number">73</span> <span class="number">79</span> <span class="number">73</span> <span class="number">3D</span> <span class="number">61</span> 6E <span class="number">64</span> <span class="number">72</span> <span class="number">6F</span> <span class="number">69</span> <span class="number">64</span> <span class="number">26</span>    ent_sys=android&amp;</span><br><span class="line"><span class="number">0020</span>: <span class="number">74</span> <span class="number">69</span> <span class="number">6D</span> <span class="number">65</span> <span class="number">3D</span> <span class="number">31</span> <span class="number">36</span> <span class="number">37</span> <span class="number">33</span> <span class="number">32</span> <span class="number">33</span> <span class="number">32</span> <span class="number">30</span> <span class="number">31</span> <span class="number">35</span> <span class="number">76</span>    time=1673232015v</span><br><span class="line"><span class="number">0030</span>: <span class="number">71</span> <span class="number">34</span> <span class="number">37</span> <span class="number">48</span> <span class="number">64</span> <span class="number">39</span> 4A <span class="number">55</span> <span class="number">67</span> <span class="number">66</span> <span class="number">44</span> <span class="number">43</span> <span class="number">79</span> <span class="number">74</span> <span class="number">43</span>       q47Hd9JUgfDCytC</span><br></pre></td></tr></table></figure>
 <p>vq47Hd9JUgfDCytC 这十个字节是未知的，其余三个字段是传进来的，我们结合上面的MD5会产生一种 明悟，这不就是加盐MD5吗？传进来的参数拼接后加上”vq47Hd9JUgfDCytC“，MD5后传出去。 <br />那么现在问题就变成了，vq47Hd9JUgfDCytC是哪里来的？  <br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/13.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/13.webp"
                      
                 ><br><br /> 对0xbffff500L 做traceWrite  <br /></p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/14.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/14.webp"
                      
                 ><br><br /> ida打开libmakeurl.so，看一下来源0x8a88，十六个字节都来自这里  <br /></p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/15.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/15.webp"
                      
                 ><br><br /> 前面我们用过Findcrypt，有看到RijnDael_AES_LONG_inv_45FC4，它自动将0x8a9e所位于的函数中，一个数组标记为AES的S逆盒。这告诉我们，十六字节的生成处是AES的运算逻辑。换而言之，这十六字节大概率是AES加密或解密的输出。  <br />可是，样本使用了Ollvm，比如0x8a9e这一行，就是Ollvm中的指令替换。 <br />我们先不要陷入函数的细节里，因为如果是标准AES，那根本不用 分析加密程序的内部，自然也就不用考虑这些混淆了。  <br /> 0x8a88 位于 sub_8228 函数内，Hook sub_8228，顺利断下  <br /> 观察两个参数  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">sub_8228</span><span class="params">(unsigned __int64 a1, _QWORD *a2)</span></span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/16.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/16.webp"
                      
                 ><br><br /> 参数2像是buffer，存放加密结果。blr用于在函数返回处下断点，然后c继续跑，在函数运行结束后再次 查看参数2指向的内存。  <br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/17.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/17.webp"
                      
                 ></p>
 <p>可以发现确实是我们要分析的十六个字节。至于参数1是什么意思，硬看似乎看不出来。 <br />因此可以判断，sub_8228生成了我们要分析的十六个字节，而且它像AES的执行逻辑。 <br />AES 加密还是解密？什么工作模式？明文是什么？Key是什么？一概不知。我们得到sub_8228上层去看看。 <br />重新运行程序，bt 打印调用栈  <br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/18.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/18.webp"
                      
                 ><br />跳到 0x08ba7 看一下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">sub_8B3C</span><span class="params">(const <span class="type">char</span> *a1, <span class="type">int</span> a2, <span class="type">int</span> a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  signed <span class="type">int</span> i; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">int</span> v7; <span class="comment">// r1</span></span><br><span class="line">  <span class="type">int</span> v8; <span class="comment">// r1</span></span><br><span class="line">  signed <span class="type">int</span> v10; <span class="comment">// [sp+4h] [bp-144h]</span></span><br><span class="line">  signed <span class="type">int</span> v11; <span class="comment">// [sp+Ch] [bp-13Ch]</span></span><br><span class="line">  <span class="type">char</span> v12[<span class="number">280</span>]; <span class="comment">// [sp+10h] [bp-138h] BYREF</span></span><br><span class="line">  <span class="type">int</span> v13; <span class="comment">// [sp+128h] [bp-20h]</span></span><br><span class="line"></span><br><span class="line">  v10 = (strlen(a1) + <span class="number">15</span>) &gt;&gt; <span class="number">4</span>;</span><br><span class="line">  sub_72BC(v12, a2, <span class="number">128</span>);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; ; i = v11 + <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    v7 = <span class="number">1590846758</span>;</span><br><span class="line">    <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v8 = v7 &amp; <span class="number">0x7FFFFFFF</span>;</span><br><span class="line">      <span class="keyword">if</span> ( v8 != <span class="number">1590846758</span> )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      v11 = i;</span><br><span class="line">      v7 = <span class="number">131555431</span>;</span><br><span class="line">      <span class="keyword">if</span> ( i &lt; v10 )</span><br><span class="line">        v7 = <span class="number">1574041125</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( v8 == <span class="number">131555431</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">if</span> ( v8 != <span class="number">1574041125</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">        ;</span><br><span class="line">    &#125;</span><br><span class="line">    sub_8228(v12, a3 + <span class="number">16</span> * v11, &amp;a1[<span class="number">16</span> * v11]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> _stack_chk_guard - v13;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 首先我们知道，sub_8228是AES的具体运算程序，刚才Hook确认了这一点。而密钥编排一般发生在具 体运算前面，即早于sub_8228。整个函数体内，就只有sub_72BC 一个函数了，那也可能在sub_8B3C外层。更重要的线索是它的参数3，128。AES 存在128&#x2F;192&#x2F;256 三种密钥的规格，这里就是在指定AES的规格，并生成对应的轮密钥。 char v12[280]; v12是一个较大的数组，用于存放生成轮密钥的结果。<br />那么可以大胆猜测sub_8B3C的a2就是十六字节长的AES-128密钥。进而参数1就是 十六字节的输入。  <br />对 sub_8B3C 进行断点查看参数<br /><br> <img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/19.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/19.webp"
                      
                 ><br> <br />密钥是30292827262524232221000000000000，暂时不知道是加密还是解密，结果是 767134374864394a5567664443797443（vq47Hd9JUgfDCytC）<br />看看加密过程对的上吗<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/20.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/20.webp"
                      
                 ><br> <br />因为aes会对明文进行填充，它会自动按照PKCS7约定，再次填充一个分组的长度，输出也是两个分组的结果。  这里结果a7488462036f15054005472d6f487c67才是对的，后面是填充后的分组加密而来的可以不用管<br />跟我们上面的 sub_8B3C 的参数一是一致的，说明 vq47Hd9JUgfDCytC 是由明文a7488462036f15054005472d6f487c67，密钥30292827262524232221000000000000解密而来的</p>
 <p>我们这里做一个讨论，如何从一个小的线索点，分析出AES的全貌。<br />以 sub_72BC(v12, a2, 128); 为例，我们猜测它是密钥编排函数，那么如何快速验证呢？ <br />我Hook 入参时a2指向的十六字节，以及函数结束后v13指向的176字节（因为是AES-128，所以轮密钥 是4*44）。  </p>
@@ -451,7 +451,7 @@
 <p> <img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230109/21.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/21.webp"
                      
                 ></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = (~A &amp; 0xE9) | (A &amp; 0xE9) ^ 0xC9</span><br></pre></td></tr></table></figure>
@@ -493,11 +493,11 @@
                 <ul class="post-tags-box">
                     
                         <li class="tag-item">
-                            <a href="/tags/Unidbg/">#Unidbg</a>&nbsp;
+                            <a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">#安卓逆向</a>&nbsp;
                         </li>
                     
                         <li class="tag-item">
-                            <a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">#安卓逆向</a>&nbsp;
+                            <a href="/tags/Unidbg/">#Unidbg</a>&nbsp;
                         </li>
                     
                 </ul>

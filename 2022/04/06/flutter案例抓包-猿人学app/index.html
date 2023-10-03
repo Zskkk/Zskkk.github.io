@@ -233,7 +233,7 @@
                 <p>这是猿人学App第七题flutter案例<br />直接抓包看一下，直接抓不到。关闭抓包就正常<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220406/01.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220406/01.webp"
                      
                 ><br /><br>既然说了是flutter，可以参考这两篇文章</p>
 <ul>
@@ -243,29 +243,29 @@
 <p>文章里面也说了Flutter是Google使用Dart语言开发的移动应用开发框架，由于Dart使用Mozilla的NSS库生成并编译自己的Keystore，导致我们就不能通过将代理CA添加到系统CA存储来绕过SSL验证。为了解决这个问题，就必需要研究libflutter.so。<br /><br>写脚本，在运行时将返回函数改为true即可绕过证书链检查实现抓包。<br />文章内容各位就自己看，我们直接上手<br />解压apk，用ida打开libflutter.so<br />在ida中的strings搜索字符串ssl_client<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220406/02.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220406/02.webp"
                      
                 ><br />跟进去可以找到并定位函数为sub_393DA4，也可以按x看它的引用，也是函数sub_393DA4，跟进去<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220406/03.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220406/03.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220406/04.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220406/04.webp"
                      
                 ><br /><br>找到ssl_client的引用位置，往上找到函数sub_393DA4头部字节定位，<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220406/05.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220406/05.webp"
                      
                 ><br /><br>针对64位flutter.so的hook代码示例如下，地址不再需要+1。把上面的头部字节替换到pattern里</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_ssl_verify_result</span>(<span class="params">address</span>) &#123;</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(address, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Disabling SSL validation&quot;</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Retval: &quot;</span> + retval);</span><br><span class="line">            retval.<span class="title function_">replace</span>(<span class="number">0x1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hookFlutter</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> m = <span class="title class_">Process</span>.<span class="title function_">findModuleByName</span>(<span class="string">&quot;libflutter.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> pattern = <span class="string">&quot;FF C3 01 D1 FD 7B 01 A9 FC 6F 02 A9 FA 67 03 A9 F8 5F 04 A9 F6 57 05 A9 F4 4F 06 A9 08 0A 80 52&quot;</span>;</span><br><span class="line">    <span class="keyword">var</span> res = <span class="title class_">Memory</span>.<span class="title function_">scan</span>(m.<span class="property">base</span>, m.<span class="property">size</span>, pattern, &#123;</span><br><span class="line">        <span class="attr">onMatch</span>: <span class="keyword">function</span> (<span class="params">address, size</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;[+] ssl_verify_result found at: &#x27;</span> + address.<span class="title function_">toString</span>());</span><br><span class="line">            <span class="title function_">hook_ssl_verify_result</span>(address);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onError</span>: <span class="keyword">function</span> (<span class="params">reason</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;[!] There was an error scanning memory&#x27;</span>);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onComplete</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;All done&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>开启脚本后，抓包就正常了<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220406/06.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220406/06.webp"
                      
                 ></p>
 

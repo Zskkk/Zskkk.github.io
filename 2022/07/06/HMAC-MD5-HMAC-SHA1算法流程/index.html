@@ -233,7 +233,7 @@
                 <h2 id="每种哈希函数的特征"><a href="#每种哈希函数的特征" class="headerlink" title="每种哈希函数的特征"></a>每种哈希函数的特征</h2><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220706/01.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220706/01.webp"
                      
                 ></p>
 <h3 id="1-MD5"><a href="#1-MD5" class="headerlink" title="1.MD5"></a>1.MD5</h3><p>初始化魔数：<br />A &#x3D; 0x67452301;<br />B &#x3D; 0xEFCDAB89;<br />C &#x3D; 0x98BADCFE;<br />D &#x3D; 0x10325476;<br />K表<br />K1 &#x3D; 0xd76aa478<br />K2 &#x3D; 0xe8c7b756<br />K3 &#x3D; 0x242070db<br />K表来自sin函数<br />输出长度16个字节，或者说32个十六进制数，有时候输出16个十六进制数。</p>
@@ -245,33 +245,33 @@
 <h4 id="公式："><a href="#公式：" class="headerlink" title="公式："></a>公式：</h4><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220706/02.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220706/02.webp"
                      
                 ></p>
 <h4 id="第一步（让密钥的长度达到分组长度）："><a href="#第一步（让密钥的长度达到分组长度）：" class="headerlink" title="第一步（让密钥的长度达到分组长度）："></a>第一步（让密钥的长度达到分组长度）：</h4><p>如果密钥长度超过512bit，先进行一次MD5后：16个字节+00000…<br />k &#x3D; 0x313131313131<br />密钥进行扩展<br />MD5: 512比特–64字节–128hex 分组长度<br />（十六进制，128长度）<br />k’&#x3D;0x31313131313100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</p>
 <h4 id="第二步（k’⊕opad）："><a href="#第二步（k’⊕opad）：" class="headerlink" title="第二步（k’⊕opad）："></a>第二步（k’⊕opad）：</h4><p>先对opad填充到分组长度<br />0x5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c<br />进行异或<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220706/03.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220706/03.webp"
                      
                 ><br><br />k’⊕opad&#x3D;0x6d6d6d6d6d6d5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c</p>
 <h4 id="第三步（k’⊕ipad）："><a href="#第三步（k’⊕ipad）：" class="headerlink" title="第三步（k’⊕ipad）："></a>第三步（k’⊕ipad）：</h4><p>先对ipad填充到分组长度<br />0x36363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636<br />进行异或<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220706/04.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220706/04.webp"
                      
                 ><br><br />k’⊕ipad&#x3D;0x07070707070736363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636</p>
 <h4 id="第四步级联明文（-k’⊕ipad-m）"><a href="#第四步级联明文（-k’⊕ipad-m）" class="headerlink" title="第四步级联明文（(k’⊕ipad)||m）:"></a>第四步级联明文（(k’⊕ipad)||m）:</h4><p>(k’⊕ipad)||m&#x3D;0x07070707070736363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636313233343536</p>
 <h4 id="第五步级联后进行md5（H-k’⊕ipad-m-）"><a href="#第五步级联后进行md5（H-k’⊕ipad-m-）" class="headerlink" title="第五步级联后进行md5（H((k’⊕ipad)||m)）:"></a>第五步级联后进行md5（H((k’⊕ipad)||m)）:</h4><p>级联后进行一次md5（不需要转hex）<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220706/05.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220706/05.webp"
                      
                 ><br />H((k’⊕ipad)||m)&#x3D;873883125b81d8d9b483f29cffeeea37</p>
 <h4 id="第六步（第二步级联第五步后进行md5，H-k’⊕opad-H-k’⊕ipad-m-）"><a href="#第六步（第二步级联第五步后进行md5，H-k’⊕opad-H-k’⊕ipad-m-）" class="headerlink" title="第六步（第二步级联第五步后进行md5，H((k’⊕opad)||H((k’⊕ipad)||m)）"></a>第六步（第二步级联第五步后进行md5，H((k’⊕opad)||H((k’⊕ipad)||m)）</h4><p>0x6d6d6d6d6d6d5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c873883125b81d8d9b483f29cffeeea37<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220706/06.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220706/06.webp"
                      
                 ><br />结果：5542af910b1ff3f554dcdfb7ceccebc8<br />结果跟Cyberchef的HMAC-MD5一致</p>
 <h3 id="HMAC-SHA1"><a href="#HMAC-SHA1" class="headerlink" title="HMAC SHA1"></a>HMAC SHA1</h3><p>Cyberchef<br />HMAC-SHA1<br />明文：helloword(utf-8)<br />密文：1111(hex)<br />结果：4ea30551db501b285a03a197c65fea249131b808</p>
@@ -279,13 +279,13 @@
 <h4 id="第二步（k’⊕opad）：-1"><a href="#第二步（k’⊕opad）：-1" class="headerlink" title="第二步（k’⊕opad）："></a>第二步（k’⊕opad）：</h4><p>异或0x5c<br />先对opad填充到分组长度<br />0x5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c<br />然后进行异或<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220706/07.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220706/07.webp"
                      
                 ><br />k’⊕opad&#x3D;0x4d4d5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c</p>
 <h4 id="第三步（k’⊕ipad）：-1"><a href="#第三步（k’⊕ipad）：-1" class="headerlink" title="第三步（k’⊕ipad）："></a>第三步（k’⊕ipad）：</h4><p>异或0x36<br />先对ipad填充到分组长度<br />0x3636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636<br />进行异或<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220706/08.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220706/08.webp"
                      
                 ><br />k’⊕ipad&#x3D;0x27273636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636</p>
 <h4 id="第四步级联明文（-k’⊕ipad-m）-1"><a href="#第四步级联明文（-k’⊕ipad-m）-1" class="headerlink" title="第四步级联明文（(k’⊕ipad)||m）:"></a>第四步级联明文（(k’⊕ipad)||m）:</h4><p>(k’⊕ipad)||m&#x3D;0x2727363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363668656c6c6f776f7264</p>

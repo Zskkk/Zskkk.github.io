@@ -235,35 +235,35 @@
 <h2 id="二、加固原理"><a href="#二、加固原理" class="headerlink" title="二、加固原理"></a>二、加固原理</h2><p>壳dex 读取源dex文件，加密后，写进一个新的dex文件<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/01.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/01.webp"
                      
                 ></p>
 <p><br />新APK运行 <br />先加载壳APP—&gt;壳APP读Dex文件末尾的源APKD大小—-&gt;在内存中壳APP解密出源APP—&gt;运行源APP 壳APK有自己的Application对象 <br />源APK有自己的Application对象 <br />壳APK启动时 在AndroidMenifest.xml里找源APK的Application 执行它的oncreate方法 启动源APK <br />Dex文件格式：  任何类型的文件都有文件格式，对应的软件按照文件格式来就能解析出类型，.xml .json .jpeg<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/02.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/02.webp"
                      
                 ></p>
 <h2 id="三、如何查看有没有壳"><a href="#三、如何查看有没有壳" class="headerlink" title="三、如何查看有没有壳"></a>三、如何查看有没有壳</h2><p>用<code>apktool</code>对apk进行反编译，或者修改apk的后缀为zip，进行解压。查看解压后的文件下的lib目录，<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/03.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/03.webp"
                      
                 ><br><br />可以看到这两个是用了腾讯的乐加固，或者我们不确定的话可以用jadx打开apk，也是可以发现的<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/04.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/04.webp"
                      
                 ><br><br />都是壳的代码。不过即使怎么加壳，它都会去调源apk的Application，打开<code>AndroidManifest.xml</code>文件，<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/05.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/05.webp"
                      
                 ><br><br />可以看到，上面一个是壳的，下面是源apk的Application。<br />逆向&#x2F;脱壳方法 <br />反编译&#x2F;Hook技术和动态调试 <br />Hook：先取得要Hook函数&#x2F;方法的控制权，不用破坏程序 <br />动态调试：反调试，汇编，计算内存地址</p>
 <h2 id="四、Hook技术"><a href="#四、Hook技术" class="headerlink" title="四、Hook技术"></a>四、Hook技术</h2><p>改变程序执行流程的一种技术 在函数被调用前，通过HOOK技术，先得到该函数的控制权，实现该函数的逻辑改写<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/06.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/06.webp"
                      
                 ><br />Hook可以在在Java层、Native层（.so库） <br />在代码层 寻找要Hook的地方 进行Hook 改下代码逻辑</p>
 <h2 id="五、脱壳工具"><a href="#五、脱壳工具" class="headerlink" title="五、脱壳工具"></a>五、脱壳工具</h2><p><strong>脱壳原理：</strong><br>在壳APK解密源APK后，源APK被加载前，拦截这个过程中的系统函数 把内存种Dex dump出来。<br /></p>
@@ -273,27 +273,27 @@
 <h2 id="六、开始脱壳（用FDex2脱壳）"><a href="#六、开始脱壳（用FDex2脱壳）" class="headerlink" title="六、开始脱壳（用FDex2脱壳）"></a>六、开始脱壳（用FDex2脱壳）</h2><p>首先我们打开<strong>xposed，</strong>把FDex2打开，并选择我们要的app<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/07.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/07.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/08.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/08.webp"
                      
                 ><br />接下来就可以运行app，然后我们去<code>/data/user/0/com.iCitySuzhou.suzhou001</code>该目录下查看，多出来两个dex文件<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/09.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/09.webp"
                      
                 ><br><br />把这两个文件拉到电脑用kadx打开，第一个是壳<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/10.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/10.webp"
                      
                 ><br><br />打开第二个很明显看到这才是源apk的源码，而且可以发现它对源码进行混淆了<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/11.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/11.webp"
                      
                 ><br><br />所以到这里我们的脱壳就成功了。</p>
 <h2 id="七、开始脱壳（用Frida脱壳）"><a href="#七、开始脱壳（用Frida脱壳）" class="headerlink" title="七、开始脱壳（用Frida脱壳）"></a>七、开始脱壳（用Frida脱壳）</h2><h3 id="Frida脱壳"><a href="#Frida脱壳" class="headerlink" title="Frida脱壳"></a>Frida脱壳</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">function_address = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(libname, <span class="keyword">function</span>);</span><br><span class="line"><span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(address, func);</span><br><span class="line"><span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(address,</span><br><span class="line"> <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line"> &#125;,</span><br><span class="line"> <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line"> &#125;</span><br><span class="line">)</span><br><span class="line"><span class="title class_">File</span> 模块 写文件流程</span><br><span class="line"> <span class="keyword">new</span> <span class="title class_">File</span>(filepath, mode)</span><br><span class="line"> <span class="title function_">write</span>(data)</span><br><span class="line"> <span class="title function_">flush</span>()</span><br><span class="line"> <span class="title function_">close</span>()</span><br><span class="line">file = <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;yuanrenxue.dex&quot;</span>, <span class="string">&quot;wb&quot;</span>)</span><br><span class="line"><span class="comment">//data 是字符串或者 arrayBuffer // readByteArray() 返回的arrayBuffer</span></span><br><span class="line">file.<span class="title function_">write</span>(data)</span><br><span class="line">file.<span class="title function_">flush</span>()</span><br><span class="line">file.<span class="title function_">close</span>()</span><br><span class="line"><span class="comment">//把内存里的值转成字符串</span></span><br><span class="line"><span class="title class_">Memory</span>.<span class="title function_">readUtf8String</span>()</span><br><span class="line"><span class="comment">//把内存里的值转换成整型</span></span><br><span class="line"><span class="title class_">Memory</span>.<span class="title function_">readInt</span>()</span><br><span class="line"><span class="comment">//以begin为起始位置，从内存中读length长度的数据出来 返回ArrayBuffer类型</span></span><br><span class="line"><span class="title class_">Memory</span>.<span class="title function_">readByteArray</span>(begin, length)</span><br><span class="line"><span class="comment">//把地址转换成NativePointer类型 frida里操作内存地址需要NativePointer类型</span></span><br><span class="line"><span class="title function_">ptr</span>()</span><br><span class="line"><span class="variable constant_">JS</span> api</span><br><span class="line">#把其它进制转换成<span class="number">10</span>进制</span><br><span class="line"><span class="built_in">parseInt</span>(num, radix)</span><br></pre></td></tr></table></figure>
@@ -392,22 +392,22 @@
 <p>字段太多就不都展示出来，可以看到<code>file_size</code>这个就是我们要找的dex文件,因为源dex解密后会加载进内存，所以我们去Hook加载Dex的函数，把Dex从内存中dump出来。<br />下面这个函数就是把解密后的源dex加载进内存：<br />DexFile::OpenMemory(const uint8_t* base,<br />   size_t size,<br />   const std::string&amp; location, <br />   uint32_t location_checksum, <br />   MemMap* mem_map,&#x2F;&#x2F;nullptr const OatDexFile* oat_dex_file, <br />   std::string* error_msg)<br />OpenMemory()是在安卓系统<code>/system/lib/libart.so</code>里面，然后我们先把这个so文件拉到电脑用IDA打开<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/12.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/12.webp"
                      
                 ><br><br />打开IDA选择静态调试，打开libart.so这个文件<br><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/13.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/13.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/14.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/14.webp"
                      
                 ><br><br />这些就是so文件里面的函数，点击这个框，按ctrl+f进行搜索，输入OpenMemory这个函数，右键进行编辑，<br /><code>_ZN3art7DexFile10OpenMemoryEPKhjRKNSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEjPNS_6MemMapEPKNS_10OatDexFileEPS9_</code><br />这个字符串就是OpenMemory函数在内存中对外的方法名，我们打开IDA就是为了找这个方法名。<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/15.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/15.webp"
                      
                 ></p>
 <p>现在来写脚本：</p>
@@ -415,22 +415,22 @@
 <p>把frida-server运行起来<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/16.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/16.webp"
                      
                 ><br><br /> <br><br />hook需要app运行，先把app打开，再运行脚本，<br><br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/17.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/17.webp"
                      
                 ><br><br />我们去手机<code>/data/data/com.iCitySuzhou.suzhou001</code>目录下查看，会多了几个dex文件<br><br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/18.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/18.webp"
                      
                 ><br><br />把这些dex文件拉到电脑用jadx打开看下，一个个查看后，找到了源dex<br><br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20201029/19.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20201029/19.webp"
                      
                 ><br><br />到这里用frida脱壳也成功了。。。</p>
 <h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>壳的种类⾮常多，根据其种类不同，使⽤的技术也不同，这⾥稍微简单分个类：</p>

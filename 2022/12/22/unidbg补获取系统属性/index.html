@@ -187,7 +187,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2022-12-23 00:22:14</span>
+        <span class="pc">2023-10-03 21:28:12</span>
     </span>
     
     
@@ -233,7 +233,7 @@
                 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/000.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/000.webp"
                      
                 ></p>
 <h2 id="什么叫获取系统属性？"><a href="#什么叫获取系统属性？" class="headerlink" title="什么叫获取系统属性？"></a>什么叫获取系统属性？</h2><h3 id="Build类"><a href="#Build类" class="headerlink" title="Build类"></a>Build类</h3><p>第一种<br /> NDK中最常见的方式是通过JNI调用 ， 通过JNI调用JAVA方法获取本机的属性和信息，是最常见的做法，除了Build类，常见的还有 System.getProperty和Systemproperties.get等API。  <br />  Unidbg补环境过程中，最好补而且不会遗漏的就是这一类，因为Unidbg会给出清楚的报错，你没法对它置之不理。  </p>
@@ -283,19 +283,19 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/02.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/02.webp"
                      
                 ></p>
 <p><br /> 其实下面奇怪的报错就是popen导致的，popen返回的是文件描述符 。<br /> NR &#x3D; 190，190是什么系统调用？Unidbg尚未实现  <br /></p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/03.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/03.webp"
                      
                 ><br><br /> 查一下表 <a class="link"   target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#arm-32_bit_EABI" >https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md#arm-32_bit_EABI<i class="fas fa-external-link-alt"></i></a><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/04.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/04.webp"
                      
                 ><br><br />而Unidbg提供了一种在底层修复和实现popen函数的法子。  <br />接着是 uname -a</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">angler</span>:/ # uname -a</span><br><span class="line"><span class="title class_">Linux</span> localhost <span class="number">3.10</span><span class="number">.73</span>-g33ace82f84b #<span class="number">1</span> <span class="variable constant_">SMP</span> <span class="variable constant_">PREEMPT</span> <span class="title class_">Fri</span> <span class="title class_">Oct</span> <span class="number">13</span> <span class="number">04</span>:<span class="number">41</span>:<span class="number">33</span> <span class="variable constant_">UTC</span> <span class="number">2017</span> aarch64</span><br></pre></td></tr></table></figure>
@@ -309,7 +309,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/05.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/05.webp"
                      
                 ><br /> 直接跑出了结果，但我们的任务其实还没有完成&#x3D; &#x3D;，tag中搜索lilac popen，发现一共调用了三次  </p>
 <blockquote>
@@ -318,7 +318,7 @@
 <p> 我们上面的代码，似乎只处理了uname -a应该返回的值，后面两次呢？怎么在pipe2中根据 popen输入的command返回合适的输出呢？  <br />我们可以使用emulator的全局变量来完成这一点  <br /><br> <img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/06.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/06.webp"
                      
                 ><br> <br /> 对应的qttSyscallHandler代码，其中 cd &#x2F;system&#x2F;bin &amp;&amp; ls -l 和 stat &#x2F;root 的结果来自adb shell，大家 根据自己的测试机情况填入合适的结果。  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">protected int <span class="title function_">pipe2</span>(<span class="params">Emulator&lt;?&gt; emulator</span>) &#123;</span><br><span class="line">    <span class="title class_">EditableArm32RegisterContext</span> context = (<span class="title class_">EditableArm32RegisterContext</span>) emulator.<span class="title function_">getContext</span>();</span><br><span class="line">    <span class="title class_">Pointer</span> pipefd = context.<span class="title function_">getPointerArg</span>(<span class="number">0</span>);</span><br><span class="line">    int flags = context.<span class="title function_">getIntArg</span>(<span class="number">1</span>);</span><br><span class="line">    int write = <span class="title function_">getMinFd</span>();</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fdMap</span>.<span class="title function_">put</span>(write, <span class="keyword">new</span> <span class="title class_">DumpFileIO</span>(write));</span><br><span class="line">    int read = <span class="title function_">getMinFd</span>();</span><br><span class="line">    <span class="title class_">String</span> stdout = <span class="string">&quot;</span></span><br><span class="line"><span class="string">&quot;</span>;</span><br><span class="line">    <span class="comment">// stdout中写入popen command 应该返回的结果</span></span><br><span class="line">    <span class="title class_">String</span> command = emulator.<span class="title function_">get</span>(<span class="string">&quot;command&quot;</span>);</span><br><span class="line">    <span class="keyword">switch</span> (command) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;uname -a&quot;</span>: &#123;</span><br><span class="line">            stdout = <span class="string">&quot;Linux localhost 3.10.73-g33ace82f84b #1 SMP PREEMPT Fri Oct 13 04:41:33 UTC 2017 aarch64</span></span><br><span class="line"><span class="string">&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;cd /system/bin &amp;&amp; ls -l&quot;</span>: &#123;</span><br><span class="line">            stdout = <span class="string">&quot;total 25152</span></span><br><span class="line"><span class="string">&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;-rwxr-xr-x 1 root shell 128688 2009-01-01 08:00 abb</span></span><br><span class="line"><span class="string">&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;lrwxr-xr-x 1 root shell 6 2009-01-01 08:00 acpi -&gt; toybox</span></span><br><span class="line"><span class="string">&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;-rwxr-xr-x 1 root shell 30240 2009-01-01 08:00 adbd</span></span><br><span class="line"><span class="string">&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;-rwxr-xr-x 1 root shell 207 2009-01-01 08:00 am</span></span><br><span class="line"><span class="string">&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;-rwxr-xr-x 1 root shell 456104 2009-01-01 08:00 apexd</span></span><br><span class="line"><span class="string">&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;lrwxr-xr-x 1 root shell 13 2009-01-01 08:00 app_process -&gt; app_process64</span></span><br><span class="line"><span class="string">&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;-rwxr-xr-x 1 root shell 25212 2009-01-01 08:00 app_process32</span></span><br><span class="line"><span class="string">&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;stat /root&quot;</span>: &#123;</span><br><span class="line">            stdout = <span class="string">&quot;stat: &#x27;/root&#x27;: No such file or directory</span></span><br><span class="line"><span class="string">&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">        <span class="attr">default</span>:</span><br><span class="line">            <span class="title class_">System</span>.<span class="property">out</span>.<span class="title function_">println</span>(<span class="string">&quot;command do not match!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">fdMap</span>.<span class="title function_">put</span>(read, <span class="keyword">new</span> <span class="title class_">ByteArrayFileIO</span>(<span class="number">0</span>, <span class="string">&quot;pipe2_read_side&quot;</span>, stdout.<span class="title function_">getBytes</span>()));</span><br><span class="line">    pipefd.<span class="title function_">setInt</span>(<span class="number">0</span>, read);</span><br><span class="line">    pipefd.<span class="title function_">setInt</span>(<span class="number">4</span>, write);</span><br><span class="line">    <span class="title class_">System</span>.<span class="property">out</span>.<span class="title function_">println</span>(<span class="string">&quot;pipe2 pipefd=&quot;</span> + pipefd + <span class="string">&quot;, flags=0x&quot;</span> + flags + <span class="string">&quot;, read=&quot;</span> + read + <span class="string">&quot;, write=&quot;</span> + write + <span class="string">&quot;, stdout=&quot;</span> + stdout);</span><br><span class="line">    context.<span class="title function_">setR0</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -334,13 +334,13 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/07.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/07.webp"
                      
                 ><br /> getValue取不到结果，原因就是getenv没有返回值，那么该怎么办呢？   这里给env返回正确的值有几种办法呢？  </p>
 <h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p> Unidbg提供了对环境变量的初始化，它在 src&#x2F;main&#x2F;java&#x2F;com&#x2F;github&#x2F;unidbg&#x2F;linux&#x2F;AndroidElfLoader.java中。  <br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/08.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/08.webp"
                      
                 ><br /> 我们填上这一个就行，为了辨别不同方法是否生效，我们这里返回1  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.environ = initializeTLS(<span class="keyword">new</span> <span class="title class_">String</span>[] &#123;</span><br><span class="line">        <span class="string">&quot;ANDROID_DATA=/data&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ANDROID_ROOT=/system&quot;</span>,</span><br><span class="line">        <span class="comment">//&quot;PATH=/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin&quot;,</span></span><br><span class="line">        <span class="string">&quot;NO_ADDR_COMPAT_LAYOUT_FIXUP=1&quot;</span>,</span><br><span class="line">        <span class="string">&quot;PATH=1&quot;</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
@@ -356,7 +356,7 @@
 <p> 直接让R0指针指向正确的值，并操纵PC寄存器跳过这条指令  <br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221223/09.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/09.webp"
                      
                 ></p>
 <h4 id="方法五"><a href="#方法五" class="headerlink" title="方法五"></a>方法五</h4><p> 仿照SystemPropertyHook写一下，代码如下  <br />在 vm.loadLibrary 加载so文件之前</p>

@@ -236,7 +236,7 @@
                 <h3 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h3><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220707/01.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220707/01.webp"
                      
                 ></p>
 <h3 id="手算DES"><a href="#手算DES" class="headerlink" title="手算DES"></a>手算DES</h3><p>入参：<br />明文：64比特（16个十六进制数、8个字节）<br />KEY：64比特（16个十六进制数、8个字节）<br />出参：64比特（16个十六进制数、8个字节）</p>
@@ -246,7 +246,7 @@
 <p>根据置换表的索引对明文进行重新排列（例如明文第58的位置放到第一位）<br />明文 0123456789ABCDEF（hex）<br />转为二进制 00000001 00100011 01000101 01100111 10001001 10101011 11001101 11101111<br />重新排列后 11001100 00000000 11001100 11111111 11110000 10101010 11110000 10101010<br />排列顺序如图所示：<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220707/02.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220707/02.webp"
                      
                 ></p>
 <h4 id="2-对密钥进行编排"><a href="#2-对密钥进行编排" class="headerlink" title="2.对密钥进行编排"></a>2.对密钥进行编排</h4><p><strong>PC1（CP_1）（置换选择一表）</strong></p>
@@ -271,7 +271,7 @@ f函数：
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220707/03.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220707/03.webp"
                      
                 ></p>
 </br>
@@ -293,13 +293,13 @@ f函数：
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220707/04.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220707/04.webp"
                      
                 ></p>
 <h3 id="分组密码的填充"><a href="#分组密码的填充" class="headerlink" title="分组密码的填充"></a>分组密码的填充</h3><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220707/05.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220707/05.webp"
                      
                 ><br><br /><br><font color="red">Passing只用于CBC和ECB模式，默认采用PKCS#7进行填充</font><br><br />DES 64比特明文，64比特密钥，结果64比特输出<br />那为什么明文刚好是64比特，如果输入是56比特？20比特？或者什么都不输入呢？<br />明文会切割成每64比特为一组进行des加密，最后一组小于或等于64都会进行填充<br />如果传入的是utf，需先转hex<br /></p>
 <p>小于64比特：<br /><br>123456789（hex）&#x3D;&#x3D;&gt; 1234567809（hex）<br /><br>还差6位hex（3个字节），填充030303：1234567809030303</p>
@@ -311,13 +311,13 @@ f函数：
 <h3 id="分组密码的工作模式"><a href="#分组密码的工作模式" class="headerlink" title="分组密码的工作模式"></a>分组密码的工作模式</h3><h4 id="ECB"><a href="#ECB" class="headerlink" title="ECB"></a>ECB</h4><p>相同的分组输入，计算后的结果是完全一致的，每个分组单独处理，叫ECB工作模式<br />这种模式有很多好处，我们可以直接for 循环，将很长的输入分成对应个数的分组，每个分组得到结果后拼接在一起就行，而且这也意味着可以并行计算。 <br />如果ECB模式是可行的、安全的，那么我们一定选择它，因为最简单和高效。那也就不会出现别的工作模式了，可惜的是它并不安全。<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220707/06.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220707/06.webp"
                      
                 ></p>
 <h4 id="CBC"><a href="#CBC" class="headerlink" title="CBC"></a>CBC</h4><p>最常用的模式<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220707/07.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220707/07.webp"
                      
                 ><br />其实想法也很朴素，每个明文分组在加密前多一个步骤，和上一个分组的密文块进行异或运算。因为第一个明文块没有所谓的“上一个分组的密文块“，所以需要人给一个64比特，或者说8字节的输入，我们叫它初始化向量，IV。<br />在cyberchef中验证一下</p>
 <blockquote>
@@ -331,7 +331,7 @@ f函数：
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220707/08.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220707/08.webp"
                      
                 ></p>
 <h4 id="OFB"><a href="#OFB" class="headerlink" title="OFB"></a>OFB</h4><blockquote>
@@ -344,7 +344,7 @@ f函数：
 <p>直接观察第二个分组759a2c51fb637db5是如何计算出来呢?<br />它是明文和加密两次的IV的异或结果<br />明文：123456789ABCDEF0 加密第一次：85e813540f0ab405 加密第二次 67ae7a2961dfa345f，最后异或 67ae7a2961dfa345f ^ 123456789ABCDEF0 &#x3D; 759a2c51fb637db5<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20220707/09.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220707/09.webp"
                      
                 ></p>
 <h4 id="CTR"><a href="#CTR" class="headerlink" title="CTR"></a>CTR</h4>

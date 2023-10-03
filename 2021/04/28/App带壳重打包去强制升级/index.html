@@ -233,47 +233,47 @@
                 <h3 id="1-查壳"><a href="#1-查壳" class="headerlink" title="1.查壳"></a>1.查壳</h3><p>打开app，弹出强制升级无法取消<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/01.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/01.webp"
                      
                 ><br /><br>用jadx打开apk<br /></p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/02.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/02.webp"
                      
                 ><br><br /><br>搜索包名，可以看到是加壳了<br /></p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/03.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/03.webp"
                      
                 ></p>
 <h3 id="2-使用dexdump进行脱壳"><a href="#2-使用dexdump进行脱壳" class="headerlink" title="2.使用dexdump进行脱壳"></a>2.使用dexdump进行脱壳</h3><p>先打开frida-server，打开objextion并加载dexdump插件，输入plugin  dexdump dump命令进行脱壳，就把dex文件脱出来了<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/04.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/04.webp"
                      
                 ></p>
 <p>进入到dex文件的位置，使用grep -ril “MainActivity” *  命令搜索MainActivity再哪个dex，用jadx打开<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/05.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/05.webp"
                      
                 ></p>
 <h3 id="3-定位到弹窗代码位置"><a href="#3-定位到弹窗代码位置" class="headerlink" title="3.定位到弹窗代码位置"></a>3.定位到弹窗代码位置</h3><p><a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/18e1f518c625" >https://www.jianshu.com/p/18e1f518c625<i class="fas fa-external-link-alt"></i></a><br /><br>根据弹出框的实现方法进行搜索对应的类<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/06.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/06.webp"
                      
                 ><br /><br>打印出所有的类，然后输入<code>cat .objection/objection.log |grep -i window </code>进行搜索<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/07.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/07.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/08.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/08.webp"
                      
                 ></p>
 <p>由于app启动的时候就把弹窗加载出来了，所以要在没加载前hook类<br /><br>使用–startup-command可以重启app并进行hook</p>
@@ -281,78 +281,78 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/09.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/09.webp"
                      
                 ><br /><br>出现很多的window，无法保证加载的类就是弹窗的<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/10.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/10.webp"
                      
                 ></p>
 <p>换一种方式 Dialog<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/11.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/11.webp"
                      
                 ><br /><br>搜索dialog有哪些类，出来两个比较可疑的<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/12.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/12.webp"
                      
                 ></p>
 <p>先对android.app.Dialog<br>进行hook，看有没有反应<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/13.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/13.webp"
                      
                 ><br /><br>查看文档发现setCancelable是不让返回，所以点后退一直没反应<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/14.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/14.webp"
                      
                 >)<br /><br>hook这个类android.app.Dialog.setCancelable 查看调用</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android hooking watch class_method android.app.Dialog.setCancelable --dump-args --dump-backtrace --dump-return</span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/15.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/15.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/16.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/16.webp"
                      
                 ></p>
 <p>用jadx搜索观察cn.net.tokyo.ccg.ui.fragment.dialog.UpdateDialogFragment.onCreateDialog</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/17.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/17.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/18.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/18.webp"
                      
                 ></p>
 <p>加载wallbreaker<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/19.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/19.webp"
                      
                 ><br /><br>搜索该类实例</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugin wallbreaker objectsearch cn.net.tokyo.ccg.ui.fragment.dialog.UpdateDialogFragment</span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/20.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/20.webp"
                      
                 ><br>查看该对象的属性</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugin wallbreaker objectdump --fullname 0x74e</span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/21.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/21.webp"
                      
                 ></p>
 <h3 id="4-查找哪句代码控制弹窗"><a href="#4-查找哪句代码控制弹窗" class="headerlink" title="4.查找哪句代码控制弹窗"></a>4.查找哪句代码控制弹窗</h3><p>查看<code>cn.net.tokyo.ccg.ui.fr agment.dialog.UpdateDialogFragment.b</code> 的调用栈</p>
@@ -360,64 +360,64 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/22.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/22.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/23.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/23.webp"
                      
                 ><br /><br>查看对应smail代码，把eqz改为nez<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/24.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/24.webp"
                      
                 ></p>
 <h3 id="5-把壳脱掉重打包看能不能用"><a href="#5-把壳脱掉重打包看能不能用" class="headerlink" title="5.把壳脱掉重打包看能不能用"></a>5.把壳脱掉重打包看能不能用</h3><p>解包，保留dex文件<br /><br><code>apktool -s d qqc.apk</code><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/25.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/25.webp"
                      
                 ><br /><br>删除class.dex，把脱下来的dex替换进去<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/26.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/26.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/27.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/27.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/28.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/28.webp"
                      
                 ></p>
 <p>修改dex执行的入口<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/29.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/29.webp"
                      
                 ><br /><br><code>vim AndroidManifest.xml </code><br /><br>修改为cn.net.tokyo.ccg.base.App<br><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/30.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/30.webp"
                      
                 ><br /><br>打包，签名<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/31.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/31.webp"
                      
                 ><br /><br>生成签名，keytool -genkey -keystore my-release-key.keystore -alias my_alias -keyalg RSA -keysize 4096 -validity 10000<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/32.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/32.webp"
                      
                 ><br /><br>进行签名，jarsigner -sigalg MD5withRSA -digestalg SHA1 -keystore my-release-key.keystore -signedjar qqc.apk qqc.apk my_alias<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210428/33.webp"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210428/33.webp"
                      
                 ><br /><br>安装，看有没有报错，能不能正常使用</p>
 <h3 id="6-修改smail文件重打包"><a href="#6-修改smail文件重打包" class="headerlink" title="6.修改smail文件重打包"></a>6.修改smail文件重打包</h3><p>找到对应的smail文件<br /><br>tree -NCfhl |grep -i MainActivity<br /><br>把 if -eqz改为if-nez<br /><br>重打包</p>
