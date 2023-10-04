@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+
+    
+    <title>
+        
+            MD5源码分析及流程 |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/head.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/brands.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066cc","logo":"/images/head.svg","favicon":"/images/head.svg","avatar":"/images/head.svg","font_size":null,"font_family":null,"hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","font_color":null,"hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"code_block":{"tools":{"enable":false,"style":"mac"},"highlight_theme":"obsidian"},"side_tools":{},"pjax":{"enable":false},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.7"},"waline":{"server_url":null,"reaction":false,"version":2}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"enable":true,"wordcount":true,"min2read":true},"img_align":"left","copyright_info":true},"version":"3.5.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"};
+  </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/head.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+            <div class="article-title">
+                <span class="title-hover-animation">MD5源码分析及流程</span>
+            </div>
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/head.svg">
+                    </div>
+					
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">zsk</span>
+                            
+                                <span class="author-label">Lv4</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2022-06-20 00:00:00</span>
+        <span class="mobile">2022-06-20 00:00</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2022-06-20 00:00:00</span>
+    </span>
+    
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.2k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>4 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+	
+	
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content keep-markdown-body">
+                <h1 id="MD5算法实现："><a href="#MD5算法实现：" class="headerlink" title="MD5算法实现："></a>MD5算法实现：</h1><p>输入：不定长度信息（要加密的信息）</p>
+<p>输出：固定长度128-bits。由四个32位分组组成，将这四个32位分组级联后将生成一个128位散列值。</p>
+<p>基本方式为：求余、取余、调整长度、与链接变量进行循环运算。得出结果。</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220620/01.webp"
+                     
+                ></p>
+<br>
+
+<h2 id="填充"><a href="#填充" class="headerlink" title="填充"></a>填充</h2><p>在MD5算法中，首先需要对输入信息进行填充，使其位长对512求余的结果等于448，并且填充必须进行，即使其位长对512求余的结果等于448。因此，信息的位长（Bits Length）将被扩展至N*512+448，N为一个非负整数，N可以是零。</p>
+<p>填充的方法如下：</p>
+<ol>
+<li>在信息的后面<font color="red">填充一个1和无数个0</font>，直到满足上面的条件时才停止用0对信息的填充。</li>
+<li>在这个结果后面<font color="red">附加一个以64位二进制表示的填充前信息长度（明文的长度，单位为Bit）</font>，如果二进制表示的填充前信息长度超过64位，则取低64位</li>
+</ol>
+<p>经过这两步的处理，信息的位长&#x3D;N<em>512+448+64&#x3D;(N+1）</em>512，即长度恰好是512的整数倍。这样做的原因是为满足后面处理中对信息长度的要求。</p>
+<br>
+
+<h2 id="初始化变量（变量值一般不变）"><a href="#初始化变量（变量值一般不变）" class="headerlink" title="初始化变量（变量值一般不变）"></a>初始化变量（变量值一般不变）</h2><p>初始的128位值为初试<font color="red">链接变量</font>，这些参数用于第一轮的运算，以<font color="red">大端字节序</font>来表示，他们分别为： </p>
+<p>A&#x3D;0x01234567，</p>
+<p>B&#x3D;0x89ABCDEF，</p>
+<p>C&#x3D;0xFEDCBA98，</p>
+<p>D&#x3D;0x76543210。</p>
+<p>（每一个变量给出的数值是高字节存于内存低地址，低字节存于内存高地址，即大端字节序。在程序中变量A、B、C、D的值分别为0x67452301，0xEFCDAB89，0x98BADCFE，0x10325476）</p>
+<br>
+
+<h2 id="处理分组数据"><a href="#处理分组数据" class="headerlink" title="处理分组数据"></a>处理分组数据</h2><font color="red">
+
+<p>消息分以512位为一分组进行处理，每一个分组进行上述4轮共64次计算后，将A，B，C，D分别加上计算得到的a，b，c，d。当做新的A，B，C，D，并将这4个变量赋值给a,b,c,d再进行下一分组的运算。由于填充后的消息长度为(N+1)*512，则共需计算N+1个分组。计算所有数据分组后，这4个变量为最后的结果，即MD5值。<br></font></p>
+<br>
+
+<p>每一分组的算法流程如下：</p>
+<p>（1）第一分组需要将上面四个链接变量复制到另外四个变量中：A到a，B到b，C到c，D到d。</p>
+<p>（2）从第二分组开始的变量为上一分组的运算结果，即A &#x3D; a， B &#x3D; b， C &#x3D; c， D &#x3D; d。</p>
+<p>主循环有四轮（MD4只有三轮），每轮循环都很相似。第一轮进行16次操作。每次操作对a、b、c和d中的其中三个作一次非线性函数运算，然后将所得结果加上第四个变量，文本的一个子分组和一个常数。再将所得结果向左环移一个不定的数，并加上a、b、c或d中之一。最后用该结果取代a、b、c或d中之一。</p>
+<br>
+
+<p>一个MD5运算由类似的64次循环构成，分成4组16次。</p>
+<p>F ：一个非线性函数，一个函数运算一次</p>
+<p>Mi ：表示一个 32-bits 的输入数据</p>
+<p>Ki：表示一个 32-bits 常数，用来完成每次不同的计算。</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220620/02.webp"
+                     
+                ></p>
+<p>说明：</p>
+<font color="red">
+
+<p>( (a + 线性函数(b,c,d) + Mj + Ki) &lt;&lt; s) + a &#x3D;&#x3D; B<br></font></p>
+<br>
+
+<p>以下是每次操作中用到的四个非线性函数（<font color="red">每轮一个</font>）。</p>
+<p>F( X ,Y ,Z ) &#x3D; ( X &amp; Y ) | ( (~X) &amp; Z )  &#x3D;&#x3D;&gt; If X then Y else Z</p>
+<p>G( X ,Y ,Z ) &#x3D; ( X &amp; Z ) | ( Y &amp; (~Z) )  &#x3D;&#x3D;&gt; If Z then X else Y</p>
+<p>H( X ,Y ,Z ) &#x3D;X ^ Y ^ Z  &#x3D;&#x3D;&gt; If X&#x3D;Y then Z else ~Z</p>
+<p>I( X ,Y ,Z ) &#x3D;Y ^ ( X | (~Z) )</p>
+<p>（&amp;是与（And），|是或（Or），~是非（Not），^是异或（Xor））</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;</td>
+<td>与</td>
+<td>两个位都为1时，结果才为1</td>
+</tr>
+<tr>
+<td>|</td>
+<td>或</td>
+<td>两个位都为0时，结果才为0</td>
+</tr>
+<tr>
+<td>^</td>
+<td>异或</td>
+<td>两个位相同为0，相异为1</td>
+</tr>
+<tr>
+<td>~</td>
+<td>取反</td>
+<td>0变1，1变0</td>
+</tr>
+<tr>
+<td>&lt;&lt;&lt;</td>
+<td>循环左移</td>
+<td>将移出的低位放到该数的高位</td>
+</tr>
+</tbody></table>
+<p><br>循环左移:</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220620/03.webp"
+                     
+                ></p>
+<p>这四个函数的说明：如果X、Y和Z的对应位是独立和均匀的，那么结果的每一位也应是独立和均匀的。</br><br>F是一个逐位运算的函数。即，如果X，那么Y，否则Z。函数H是逐位奇偶操作符。</br><br>假设Mj表示消息的第j个子分组（从0到15），常数ti是4294967296*abs( sin(i) ）的整数部分，i 取值从1到64，单位是弧度。（4294967296&#x3D;2^(32)）</p>
+</br>
+现定义：</br>
+FF(a ,b ,c ,d ,Mj ,s ,ti ) 操作为 a = b + ( (a + F(b,c,d) + Mj + ti) << s)</br>
+GG(a ,b ,c ,d ,Mj ,s ,ti ) 操作为 a = b + ( (a + G(b,c,d) + Mj + ti) << s)</br>
+HH(a ,b ,c ,d ,Mj ,s ,ti) 操作为 a = b + ( (a + H(b,c,d) + Mj + ti) << s)</br>
+II(a ,b ,c ,d ,Mj ,s ,ti) 操作为 a = b + ( (a + I(b,c,d) + Mj + ti) << s)</br>
+<br>
+
+<p><strong><font color="red">注意：“&lt;&lt;&lt;”表示循环左移位，不是左移位</font></strong></p>
+</br>
+
+<p><strong>K表</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0xd76aa478</span>, <span class="number">0xe8c7b756</span>, <span class="number">0x242070db</span>, <span class="number">0xc1bdceee</span>, <span class="number">0xf57c0faf</span>,</span><br><span class="line"> <span class="number">0x4787c62a</span>, <span class="number">0xa8304613</span>, <span class="number">0xfd469501</span>, <span class="number">0x698098d8</span>, <span class="number">0x8b44f7af</span>,</span><br><span class="line"> <span class="number">0xffff5bb1</span>, <span class="number">0x895cd7be</span>, <span class="number">0x6b901122</span>, <span class="number">0xfd987193</span>, <span class="number">0xa679438e</span>,</span><br><span class="line"> <span class="number">0x49b40821</span>, <span class="number">0xf61e2562</span>, <span class="number">0xc040b340</span>, <span class="number">0x265e5a51</span>, <span class="number">0xe9b6c7aa</span>,</span><br><span class="line"> <span class="number">0xd62f105d</span>, <span class="number">0x2441453</span>, <span class="number">0xd8a1e681</span>, <span class="number">0xe7d3fbc8</span>, <span class="number">0x21e1cde6</span>,</span><br><span class="line"> <span class="number">0xc33707d6</span>, <span class="number">0xf4d50d87</span>, <span class="number">0x455a14ed</span>, <span class="number">0xa9e3e905</span>, <span class="number">0xfcefa3f8</span>,</span><br><span class="line"> <span class="number">0x676f02d9</span>, <span class="number">0x8d2a4c8a</span>, <span class="number">0xfffa3942</span>, <span class="number">0x8771f681</span>, <span class="number">0x6d9d6122</span>,</span><br><span class="line"> <span class="number">0xfde5380c</span>, <span class="number">0xa4beea44</span>, <span class="number">0x4bdecfa9</span>, <span class="number">0xf6bb4b60</span>, <span class="number">0xbebfbc70</span>,</span><br><span class="line"> <span class="number">0x289b7ec6</span>, <span class="number">0xeaa127fa</span>, <span class="number">0xd4ef3085</span>, <span class="number">0x4881d05</span>, <span class="number">0xd9d4d039</span>,</span><br><span class="line"> <span class="number">0xe6db99e5</span>, <span class="number">0x1fa27cf8</span>, <span class="number">0xc4ac5665</span>, <span class="number">0xf4292244</span>, <span class="number">0x432aff97</span>,</span><br><span class="line"> <span class="number">0xab9423a7</span>, <span class="number">0xfc93a039</span>, <span class="number">0x655b59c3</span>, <span class="number">0x8f0ccc92</span>, <span class="number">0xffeff47d</span>,</span><br><span class="line"> <span class="number">0x85845dd1</span>, <span class="number">0x6fa87e4f</span>, <span class="number">0xfe2ce6e0</span>, <span class="number">0xa3014314</span>, <span class="number">0x4e0811a1</span>,</span><br><span class="line"> <span class="number">0xf7537e82</span>, <span class="number">0xbd3af235</span>, <span class="number">0x2ad7d2bb</span>, <span class="number">0xeb86d391</span>]</span><br></pre></td></tr></table></figure>
+</br>
+这四轮（共64步）是：</br>
+第一轮</br>
+FF(a ,b ,c ,d ,M0 ,7 ,0xd76aa478 )</br>
+FF(d ,a ,b ,c ,M1 ,12 ,0xe8c7b756 )</br>
+FF(c ,d ,a ,b ,M2 ,17 ,0x242070db )</br>
+FF(b ,c ,d ,a ,M3 ,22 ,0xc1bdceee )</br>
+FF(a ,b ,c ,d ,M4 ,7 ,0xf57c0faf )</br>
+FF(d ,a ,b ,c ,M5 ,12 ,0x4787c62a )</br>
+FF(c ,d ,a ,b ,M6 ,17 ,0xa8304613 )</br>
+FF(b ,c ,d ,a ,M7 ,22 ,0xfd469501)</br>
+FF(a ,b ,c ,d ,M8 ,7 ,0x698098d8 )</br>
+FF(d ,a ,b ,c ,M9 ,12 ,0x8b44f7af )</br>
+FF(c ,d ,a ,b ,M10 ,17 ,0xffff5bb1 )</br>
+FF(b ,c ,d ,a ,M11 ,22 ,0x895cd7be )</br>
+FF(a ,b ,c ,d ,M12 ,7 ,0x6b901122 )</br>
+FF(d ,a ,b ,c ,M13 ,12 ,0xfd987193 )</br>
+FF(c ,d ,a ,b ,M14 ,17 ,0xa679438e )</br>
+FF(b ,c ,d ,a ,M15 ,22 ,0x49b40821 )</br>
+
+</br>
+第二轮</br>
+GG(a ,b ,c ,d ,M1 ,5 ,0xf61e2562 )</br>
+GG(d ,a ,b ,c ,M6 ,9 ,0xc040b340 )</br>
+GG(c ,d ,a ,b ,M11 ,14 ,0x265e5a51 )</br>
+GG(b ,c ,d ,a ,M0 ,20 ,0xe9b6c7aa )</br>
+GG(a ,b ,c ,d ,M5 ,5 ,0xd62f105d )</br>
+GG(d ,a ,b ,c ,M10 ,9 ,0x02441453 )</br>
+GG(c ,d ,a ,b ,M15 ,14 ,0xd8a1e681 )</br>
+GG(b ,c ,d ,a ,M4 ,20 ,0xe7d3fbc8 )</br>
+GG(a ,b ,c ,d ,M9 ,5 ,0x21e1cde6 )</br>
+GG(d ,a ,b ,c ,M14 ,9 ,0xc33707d6 )</br>
+GG(c ,d ,a ,b ,M3 ,14 ,0xf4d50d87 )</br>
+GG(b ,c ,d ,a ,M8 ,20 ,0x455a14ed )</br>
+GG(a ,b ,c ,d ,M13 ,5 ,0xa9e3e905 )</br>
+GG(d ,a ,b ,c ,M2 ,9 ,0xfcefa3f8 )</br>
+GG(c ,d ,a ,b ,M7 ,14 ,0x676f02d9 )</br>
+GG(b ,c ,d ,a ,M12 ,20 ,0x8d2a4c8a} </br>
+</br>
+第三轮</br>
+HH(a ,b ,c ,d ,M5 ,4 ,0xfffa3942 )</br>
+HH(d ,a ,b ,c ,M8 ,11 ,0x8771f681 )</br>
+HH(c ,d ,a ,b ,M11 ,16 ,0x6d9d6122 )</br>
+HH(b ,c ,d ,a ,M14 ,23 ,0xfde5380c )</br>
+HH(a ,b ,c ,d ,M1 ,4 ,0xa4beea44 )</br>
+HH(d ,a ,b ,c ,M4 ,11 ,0x4bdecfa9 )</br>
+HH(c ,d ,a ,b ,M7 ,16 ,0xf6bb4b60 )</br>
+HH(b ,c ,d ,a ,M10 ,23 ,0xbebfbc70 }</br>
+HH(a ,b ,c ,d ,M13 ,4 ,0x289b7ec6 )</br>
+HH(d ,a ,b ,c ,M0 ,11 ,0xeaa127fa )</br>
+HH(c ,d ,a ,b ,M3 ,16 ,0xd4ef3085 )</br>
+HH(b ,c ,d ,a ,M6 ,23 ,0x04881d05 )</br>
+HH(a ,b ,c ,d ,M9 ,4 ,0xd9d4d039 )</br>
+HH(d ,a ,b ,c ,M12 ,11 ,0xe6db99e5 )</br>
+HH(c ,d ,a ,b ,M15 ,16 ,0x1fa27cf8 )</br>
+HH(b ,c ,d ,a ,M2 ,23 ,0xc4ac5665 )</br></br>
+第四轮</br>
+II(a ,b ,c ,d ,M0 ,6 ,0xf4292244 )</br>
+II(d ,a ,b ,c ,M7 ,10 ,0x432aff97 )</br>
+II(c ,d ,a ,b ,M14 ,15 ,0xab9423a7 )</br>
+II(b ,c ,d ,a ,M5 ,21 ,0xfc93a039 )</br>
+II(a ,b ,c ,d ,M12 ,6 ,0x655b59c3 )</br>
+II(d ,a ,b ,c ,M3 ,10 ,0x8f0ccc92 )</br>
+II(c ,d ,a ,b ,M10 ,15 ,0xffeff47d )</br>
+II(b ,c ,d ,a ,M1 ,21 ,0x85845dd1 )</br>
+II(a ,b ,c ,d ,M8 ,6 ,0x6fa87e4f )</br>
+II(d ,a ,b ,c ,M15 ,10 ,0xfe2ce6e0 )</br>
+II(c ,d ,a ,b ,M6 ,15 ,0xa3014314 )</br>
+II(b ,c ,d ,a ,M13 ,21 ,0x4e0811a1 )</br>
+II(a ,b ,c ,d ,M4 ,6 ,0xf7537e82 )</br>
+II(d ,a ,b ,c ,M11 ,10 ,0xbd3af235 )</br>
+II(c ,d ,a ,b ,M2 ,15 ,0x2ad7d2bb )</br>
+II(b ,c ,d ,a ,M9 ,21 ,0xeb86d391 )</br>
+
+</br>
+
+<p>所有这些完成之后，将a、b、c、d分别在原来基础上再加上A、B、C、D。</br><br>即a &#x3D; a + A，b &#x3D; b + B，c &#x3D; c + C，d &#x3D; d + D</br><br>然后用下一分组数据继续运行以上算法。</br></p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>最后的输出是a、b、c和d的<font color="red">大端法</font>级联。</p>
+</br>
+
+<h2 id="例子：123456-进行md5"><a href="#例子：123456-进行md5" class="headerlink" title="例子：123456 进行md5"></a>例子：123456 进行md5</h2><p>123456&#x3D;&#x3D;&gt;ASCII   31 32 33 34 35 36</br><br>转为二进制就是 4*12 &#x3D; 48bit</br><br>31 &#x3D;&#x3D;&gt; 0011 0001</br><br>32 &#x3D;&#x3D;&gt; 0011 0010</br><br>33 &#x3D;&#x3D;&gt; 0011 0011</br><br>34 &#x3D;&#x3D;&gt; 0011 0100</br><br>35 &#x3D;&#x3D;&gt; 0011 0101</br><br>36 &#x3D;&#x3D;&gt; 0011 0110</br></br><br>48bit填充1000….到448bit 填充1个1和399个0</br><br>0011 0001 0011 0010 0011 0011 0011 0100 0011 0101 0011 0110  1000000….</br><br>对应16进制</br><br>31 32 33 34 35 36 80 …..（98个0）</br><br>512bit - 448bit &#x3D; 64bit</br><br>留的那64比特长度，用于填充长度信息，长度单位为比特</br><br>64bit附加长度信息 （就是明文对应16进制的长度）</br><br>00  …. 48（60个0）以<font color="red">小端法</font>存放&#x3D;&#x3D;》 48 00 … 00</br><br>明文48bit+填充（10…）400bit+长度信息（48 00..）64bit &#x3D; 512bit</br><br>31 32 33 34 35 36 80 00 … 30 00 ..</br><br>512bit &#x2F; 4 &#x3D; 128位16进制</br><br>128分16组 &#x3D; 8位 （每组8位）</br><br>M1 &#x3D;&#x3D;&gt; 31 32 33 34 </br><br>M2 &#x3D;&#x3D;&gt; 35 36 80 00</br><br>M3 &#x3D;&#x3D;&gt; 00 00 00 00   </br><br>…</br></br><br>M15 &#x3D;&#x3D;&gt; 30 00 00 00</br><br>M16 &#x3D;&#x3D;&gt; 00 00 00 00</br></br><br>初始值变量</br><br>A&#x3D;0x 01 23 45 67，</br><br>B&#x3D;0x 89 AB CD EF，</br><br>C&#x3D;0x FE DC BA 98，</br><br>D&#x3D;0x 76 54 32 10。</br></br><br>以小端法存储</br><br>A &#x3D;&#x3D;&gt; 0x 67 45 23 01</br><br>B &#x3D;&#x3D;&gt; 0x EF CD AB 89</br><br>C &#x3D;&#x3D;&gt; 0x 98 BA DC FE</br><br>D &#x3D;&#x3D;&gt; 0x 10 32 54 76</br></br><br>二进制</br><br>A &#x3D;&gt; 0110 0111 0100 0101 0011 0010 0000 0001</br><br>B &#x3D;&gt; 1110 1111 1100 1101 1010 1011 1000 1001</br><br>C &#x3D;&gt; 1001 1000 1011 1010 1101 1100 1111 1110</br><br>D &#x3D;&gt; 0001 0000 0011 0010 0101 0100 0111 0110</br></br><br>第一轮第一步</br><br>FF(a ,b ,c ,d ,M0 ,7 ,0xd76aa478 )</br><br>b + ( (a + F(b,c,d) + Mj + Ki) &lt;&lt; s)</br><br>F(b,c,d)  &#x3D;&#x3D; &gt;  ( X &amp; Y ) | ( (~X) &amp; Z )  &#x3D;&#x3D;&gt; If X then Y else Z</br><br></br>F(b,c,d)  &#x3D;&#x3D;&gt; 1001 1000 1011 1010 1101 1100 1111 1110 &#x3D;&#x3D;&gt; 98 BA DC FE</br><br>+a &#x3D;&gt; 98 BA DC FE + 67 45 23 01 &#x3D;&gt; FF FF FF FF</br></p>
+<p>M1 &#x3D; 31 32 33 34 小端法 &#x3D;&gt; 34 33 32 31</br><br>+M1 &#x3D;&gt; FF FF FF FF + 34 33 32 31  &#x3D;&gt; 34 33 32 30 (只保留低8位)</br><br></br><br>+Ki&#x3D;&#x3D;&gt; 34 33 32 30 + D7 6A A4 78 &#x3D;&gt; 0B 9D D6 A8 &#x3D;&#x3D;&gt; 0000 1011 1001 1101 1101 0110 1010 1000</br><br></br><br>&lt;&lt;&lt;s(7)</br><br>&#x3D;&#x3D;&gt; 0011 1011 1010 1101 0101 0000 0001 0111 &#x3D;&#x3D;&gt; CE EB 54 05</br></br></p>
+<p>+b</br><br>&#x3D;&#x3D;&gt; CE EB 54 05 + EF CD AB 89 &#x3D;&#x3D;&gt; BE B8 FF 8E</br></br></p>
+<p>第一轮后</br><br>a &#x3D;&#x3D;&gt; 0x 10 32 54 76</br><br>b &#x3D;&#x3D;&gt; 0x DE B8 FF 8E</br><br>c &#x3D;&#x3D;&gt; 0x EF CD AB 89</br><br>d &#x3D;&#x3D;&gt; 0x 98 BA DC FE</br><br>…</br></br><br>第64轮</br><br>a &#x3D;&#x3D;&gt; 0x  B7 E8 71 AF &#x3D;&#x3D;&gt; 1011 0111 1110 1000 0111 0001 1010 1111</br><br>b &#x3D;&#x3D;&gt; 0x  BF 25 79 C0 &#x3D;&#x3D;&gt; 1011 1111 0010 0101 0111 1001 1100 0000</br><br>c &#x3D;&#x3D;&gt; 0x  2E 55 BB 7C &#x3D;&#x3D;&gt; 0010 1110 0101 0101 1011 1011 0111 1100</br><br>d &#x3D;&#x3D;&gt; 0x  D2 96 E7 E0 &#x3D;&#x3D;&gt; 1101 0010 1001 0110 1110 0111 1110 0000</br><br>b + ( (a + I(b,c,d) + Mj + ti) &lt;&lt; s)</br><br> I(b,c,d)  &#x3D;&#x3D;&gt; I( b ,c ,d ) &#x3D;c ^ ( b | (<del>d) ) &#x3D;&#x3D;&gt; </br><br>(</del>d) &#x3D;&#x3D;&gt; 0010 1101 0110 1001 0001 1000 0001 1111</br></br></p>
+<p>b | (~d) &#x3D;&#x3D;&gt; 1011 1111 0110 1101 0111 1001 1101 1111</br></br></p>
+<p>c ^ ( b | (~d) ) &#x3D;&#x3D;&gt; 1001 0001 0011 1000 1100 0010 1010 0011 &#x3D;&#x3D;&gt; 91 38 C2 A3</br></br></p>
+<p>+a &#x3D;&#x3D;&gt; 0x 49 21 34 52 </br><br>M64 &#x3D; 0</br><br>+M64 &#x3D;&#x3D;&gt; 0x 49 21 34 52 </br><br>K64 &#x3D; 0x EB 86 D3 91</br><br>+K64 &#x3D;&#x3D;&gt; 0x 34 A8 07 E3 &#x3D;&#x3D;&gt; 0011 0100 1010 1000 0000 0111 1110 0011</br><br>s64 &#x3D; 21</br><br>&lt;&lt; s &#x3D;&#x3D;&gt; 1111 1100 0110 0110 1001 0101 0000 0000 &#x3D;&#x3D;&gt; 0x FC 66 95 00</br><br>+b &#x3D;&#x3D;&gt; 0x BB 8C 0E C0</br></br></p>
+<p>a &#x3D;&#x3D; d &#x3D;&#x3D;0x  D2 96 E7 E0</br><br>b &#x3D;&#x3D;0x BB 8C 0E C0</br><br>c &#x3D;&#x3D; b &#x3D;&#x3D;0x  BF 25 79 C0</br><br>d &#x3D;&#x3D; c &#x3D;&#x3D;0x  2E 55 BB 7C</br></br></p>
+<p>将a、b、c、d分别在原来基础上再加上A、B、C、D。</br><br>即a &#x3D; a + A，b &#x3D; b + B，c &#x3D; c + C，d &#x3D; d + D</br><br>a &#x3D; a + A &#x3D;&#x3D;&gt; 0x 39 DC 0A E1 &#x3D;&#x3D;&gt; 0x E1 0A DC 39</br><br>b &#x3D; b + B &#x3D;&#x3D;&gt; 0x AB 59 BA 49 &#x3D;&#x3D;&gt; 0x 49 BA 59 AB</br><br>c &#x3D; c + C &#x3D;&#x3D;&gt; 0x 57 E0 56 BE &#x3D;&#x3D;&gt; 0x BE 56 E0 57</br><br>d &#x3D; d + D &#x3D;&#x3D;&gt;0x 3E 88 0F F2 &#x3D;&#x3D;&gt; 0x F2 0F 88 3E</br></p>
+<p>abcd &#x3D;&#x3D; E1 0A DC 39 49 BA 59 AB BE 56 E0 57 F2 0F 88 3E &#x3D;&gt; e10adc3949ba59abbe56e057f20f883e</br></br></p>
+<h2 id="MD5相对MD4所作的改进："><a href="#MD5相对MD4所作的改进：" class="headerlink" title="MD5相对MD4所作的改进："></a>MD5相对MD4所作的改进：</h2><p>1.增加了第四轮. </br><br>2.每一步均有唯一的加法常数. </br><br>3.为减弱第二轮中函数G的对称性从(X&amp;Y)|(X&amp;Z)|(Y&amp;Z)变为(X&amp;Z)|(Y&amp;(~Z)) </br><br>4.第一步加上了上一步的结果,这将引起更快的雪崩效应. </br><br>5.改变了第二轮和第三轮中访问消息子分组的次序,使其更不相似.</br><br>6.近似优化了每一轮中的循环左移位移量以实现更快的雪崩效应.各轮的位移量互不相同.</br><br></br></p>
+<h2 id="对明文编码"><a href="#对明文编码" class="headerlink" title="对明文编码"></a>对明文编码</h2><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220620/04.webp"
+                     
+                ><br></br></p>
+<h2 id="为什么是这些非线性函数？"><a href="#为什么是这些非线性函数？" class="headerlink" title="为什么是这些非线性函数？"></a><font color="red">为什么是这些非线性函数？</font></h2><p>Ø这没什么最优解，你也可以使用别的非线性函数，或者自己实现时把顺序颠倒</br><br>Ø但这可能会造成算法安全性下降，而且是你无法把控的部分，因为这部分内容的专业性非常强，属于密码学的内容</br></p>
+</br>
+
+<h2 id="为什么K表是这样，sin函数，或者说三角函数，在这儿扮演了怎样的角色？"><a href="#为什么K表是这样，sin函数，或者说三角函数，在这儿扮演了怎样的角色？" class="headerlink" title="为什么K表是这样，sin函数，或者说三角函数，在这儿扮演了怎样的角色？"></a><font color="red">为什么K表是这样，sin函数，或者说三角函数，在这儿扮演了怎样的角色？</font></h2><p>k表的生成是： Ki &#x3D; 2^32 x |sin i|</br><br>截取整数转16进制</br><br>例如：K1 &#x3D; 2^32 x |sin 1| &#x3D; 3614090360.2828…..</br><br>3614090360 &#x3D;&#x3D;&gt; D76AA478</br></br></p>
+<h2 id="循环左移为什么是这样移？这个规定是为什么呢？-随机"><a href="#循环左移为什么是这样移？这个规定是为什么呢？-随机" class="headerlink" title="循环左移为什么是这样移？这个规定是为什么呢？(随机)"></a><font color="red">循环左移为什么是这样移？这个规定是为什么呢？(随机)</font></h2><p>我们只知道，本质上，它是为了更好的扩散和混淆，让明文和密文之间没有明显的对应和关联，但为什么这样做，可能是安全性上的考量</br><br>比如胎死腹中的sha0和被广泛使用的sha1，竟然只通过循环左移1位就解决了安全性的问题</br></br></p>
+<h2 id="为什么是填充1个1和其余都是0，不是都是0"><a href="#为什么是填充1个1和其余都是0，不是都是0" class="headerlink" title="为什么是填充1个1和其余都是0，不是都是0"></a><font color="red">为什么是填充1个1和其余都是0，不是都是0</font></h2><p>加入输入 1000</br><br>填充都是0后 1000 0000</br><br>不知道明文是哪个了</br><br>填充1后 1000 1000</br><br>就可以区分出来</br></br></p>
+<h2 id="大端、小端基础知识"><a href="#大端、小端基础知识" class="headerlink" title="大端、小端基础知识"></a>大端、小端基础知识</h2><p><a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/316347205" >https://zhuanlan.zhihu.com/p/316347205<i class="fas fa-external-link-alt"></i></a></p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20220620/05.webp"
+                     
+                ></p>
+</br>
+
+<h2 id="python-md5"><a href="#python-md5" class="headerlink" title="python md5"></a>python md5</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line"></span><br><span class="line">SV = [<span class="number">0xd76aa478</span>, <span class="number">0xe8c7b756</span>, <span class="number">0x242070db</span>, <span class="number">0xc1bdceee</span>, <span class="number">0xf57c0faf</span>,</span><br><span class="line">      <span class="number">0x4787c62a</span>, <span class="number">0xa8304613</span>, <span class="number">0xfd469501</span>, <span class="number">0x698098d8</span>, <span class="number">0x8b44f7af</span>,</span><br><span class="line">      <span class="number">0xffff5bb1</span>, <span class="number">0x895cd7be</span>, <span class="number">0x6b901122</span>, <span class="number">0xfd987193</span>, <span class="number">0xa679438e</span>,</span><br><span class="line">      <span class="number">0x49b40821</span>, <span class="number">0xf61e2562</span>, <span class="number">0xc040b340</span>, <span class="number">0x265e5a51</span>, <span class="number">0xe9b6c7aa</span>,</span><br><span class="line">      <span class="number">0xd62f105d</span>, <span class="number">0x2441453</span>, <span class="number">0xd8a1e681</span>, <span class="number">0xe7d3fbc8</span>, <span class="number">0x21e1cde6</span>,</span><br><span class="line">      <span class="number">0xc33707d6</span>, <span class="number">0xf4d50d87</span>, <span class="number">0x455a14ed</span>, <span class="number">0xa9e3e905</span>, <span class="number">0xfcefa3f8</span>,</span><br><span class="line">      <span class="number">0x676f02d9</span>, <span class="number">0x8d2a4c8a</span>, <span class="number">0xfffa3942</span>, <span class="number">0x8771f681</span>, <span class="number">0x6d9d6122</span>,</span><br><span class="line">      <span class="number">0xfde5380c</span>, <span class="number">0xa4beea44</span>, <span class="number">0x4bdecfa9</span>, <span class="number">0xf6bb4b60</span>, <span class="number">0xbebfbc70</span>,</span><br><span class="line">      <span class="number">0x289b7ec6</span>, <span class="number">0xeaa127fa</span>, <span class="number">0xd4ef3085</span>, <span class="number">0x4881d05</span>, <span class="number">0xd9d4d039</span>,</span><br><span class="line">      <span class="number">0xe6db99e5</span>, <span class="number">0x1fa27cf8</span>, <span class="number">0xc4ac5665</span>, <span class="number">0xf4292244</span>, <span class="number">0x432aff97</span>,</span><br><span class="line">      <span class="number">0xab9423a7</span>, <span class="number">0xfc93a039</span>, <span class="number">0x655b59c3</span>, <span class="number">0x8f0ccc92</span>, <span class="number">0xffeff47d</span>,</span><br><span class="line">      <span class="number">0x85845dd1</span>, <span class="number">0x6fa87e4f</span>, <span class="number">0xfe2ce6e0</span>, <span class="number">0xa3014314</span>, <span class="number">0x4e0811a1</span>,</span><br><span class="line">      <span class="number">0xf7537e82</span>, <span class="number">0xbd3af235</span>, <span class="number">0x2ad7d2bb</span>, <span class="number">0xeb86d391</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据ascil编码把字符转成对应的二进制</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binvalue</span>(<span class="params">val, bitsize</span>):</span><br><span class="line">    binval = <span class="built_in">bin</span>(val)[<span class="number">2</span>:] <span class="keyword">if</span> <span class="built_in">isinstance</span>(val, <span class="built_in">int</span>) <span class="keyword">else</span> <span class="built_in">bin</span>(<span class="built_in">ord</span>(val))[<span class="number">2</span>:]</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(binval) &gt; bitsize:</span><br><span class="line">        <span class="keyword">raise</span> (<span class="string">&quot;binary value larger than the expected size&quot;</span>)</span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(binval) &lt; bitsize:</span><br><span class="line">        binval = <span class="string">&quot;0&quot;</span> + binval</span><br><span class="line">    <span class="keyword">return</span> binval</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">string_to_bit_array</span>(<span class="params">text</span>):</span><br><span class="line">    array = <span class="built_in">list</span>()</span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> text:</span><br><span class="line">        binval = binvalue(char, <span class="number">8</span>)</span><br><span class="line">        array.extend([<span class="built_in">int</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">list</span>(binval)])</span><br><span class="line">    <span class="keyword">return</span> array</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环左移</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">leftCircularShift</span>(<span class="params">k, bits</span>):</span><br><span class="line">    bits = bits % <span class="number">32</span></span><br><span class="line">    k = k % (<span class="number">2</span> ** <span class="number">32</span>)</span><br><span class="line">    upper = (k &lt;&lt; bits) % (<span class="number">2</span> ** <span class="number">32</span>)</span><br><span class="line">    result = upper | (k &gt;&gt; (<span class="number">32</span> - (bits)))</span><br><span class="line">    <span class="keyword">return</span> (result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分块</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">blockDivide</span>(<span class="params">block, chunks</span>):</span><br><span class="line">    result = []</span><br><span class="line">    size = <span class="built_in">len</span>(block) // chunks</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, chunks):</span><br><span class="line">        result.append(<span class="built_in">int</span>.from_bytes(block[i * size:(i + <span class="number">1</span>) * size], byteorder=<span class="string">&quot;little&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># F函数作用于“比特位”上</span></span><br><span class="line"><span class="comment"># if x then y else z</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">F</span>(<span class="params">X, Y, Z</span>):</span><br><span class="line">    <span class="keyword">return</span> ((X &amp; Y) | ((~X) &amp; Z))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># if z then x else y</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">G</span>(<span class="params">X, Y, Z</span>):</span><br><span class="line">    <span class="keyword">return</span> ((X &amp; Z) | (Y &amp; (~Z)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># if X = Y then Z else ~Z</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">H</span>(<span class="params">X, Y, Z</span>):</span><br><span class="line">    <span class="keyword">return</span> (X ^ Y ^ Z)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">I</span>(<span class="params">X, Y, Z</span>):</span><br><span class="line">    <span class="keyword">return</span> (Y ^ (X | (~Z)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 四个F函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">FF</span>(<span class="params">a, b, c, d, M, s, t</span>):</span><br><span class="line">    result = b + leftCircularShift((a + F(b, c, d) + M + t), s)</span><br><span class="line">    <span class="keyword">return</span> (result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">GG</span>(<span class="params">a, b, c, d, M, s, t</span>):</span><br><span class="line">    result = b + leftCircularShift((a + G(b, c, d) + M + t), s)</span><br><span class="line">    <span class="keyword">return</span> (result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">HH</span>(<span class="params">a, b, c, d, M, s, t</span>):</span><br><span class="line">    result = b + leftCircularShift((a + H(b, c, d) + M + t), s)</span><br><span class="line">    <span class="keyword">return</span> (result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">II</span>(<span class="params">a, b, c, d, M, s, t</span>):</span><br><span class="line">    result = b + leftCircularShift((a + I(b, c, d) + M + t), s)</span><br><span class="line">    <span class="keyword">return</span> (result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据转换</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fmt8</span>(<span class="params">num</span>):</span><br><span class="line">    bighex = <span class="string">&quot;&#123;0:08x&#125;&quot;</span>.<span class="built_in">format</span>(num)</span><br><span class="line">    binver = binascii.unhexlify(bighex)</span><br><span class="line">    result = <span class="string">&quot;&#123;0:08x&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">int</span>.from_bytes(binver, byteorder=<span class="string">&#x27;little&#x27;</span>))</span><br><span class="line">    <span class="keyword">return</span> (result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算比特长度</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bitlen</span>(<span class="params">bitstring</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">len</span>(bitstring) * <span class="number">8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">md5sum</span>(<span class="params">msg</span>):</span><br><span class="line">    <span class="comment"># 计算比特长度，如果内容过长，64个比特放不下。就取低64bit。</span></span><br><span class="line">    msgLen = bitlen(msg) % (<span class="number">2</span> ** <span class="number">64</span>)</span><br><span class="line">    <span class="comment"># 先填充一个0x80，其实是先填充一个1，后面跟对应个数的0，因为一个明文的编码至少需要8比特，所以直接填充 0b10000000即0x80</span></span><br><span class="line">    msg = msg + <span class="string">b&#x27;\x80&#x27;</span>  <span class="comment"># 0x80 = 1000 0000</span></span><br><span class="line">    <span class="comment"># 似乎各种编码，即使是一个字母，都至少得1个字节，即8bit才能表示，所以不会出现原文55bit，pad1就满足的情况？可是不对呀，要是二进制文件呢？</span></span><br><span class="line">    <span class="comment"># 填充0到满足要求为止。</span></span><br><span class="line">    zeroPad = (<span class="number">448</span> - (msgLen + <span class="number">8</span>) % <span class="number">512</span>) % <span class="number">512</span></span><br><span class="line">    zeroPad //= <span class="number">8</span></span><br><span class="line">    msg = msg + <span class="string">b&#x27;\x00&#x27;</span> * zeroPad + msgLen.to_bytes(<span class="number">8</span>, byteorder=<span class="string">&#x27;little&#x27;</span>)</span><br><span class="line">    <span class="comment"># 计算循环轮数，512个为一轮</span></span><br><span class="line">    msgLen = bitlen(msg)</span><br><span class="line">    iterations = msgLen // <span class="number">512</span></span><br><span class="line">    <span class="comment"># 初始化变量</span></span><br><span class="line">    <span class="comment"># 算法魔改的第一个点，也是最明显的点</span></span><br><span class="line">    A = <span class="number">0x67452301</span></span><br><span class="line">    B = <span class="number">0xefcdab89</span></span><br><span class="line">    C = <span class="number">0x98badcfe</span></span><br><span class="line">    D = <span class="number">0x10325476</span></span><br><span class="line">    <span class="comment"># MD5的主体就是对abcd进行n次的迭代，所以得有个初始值，可以随便选，也可以用默认的魔数，这个改起来毫无风险，所以大家爱魔改它，甚至改这个都不算魔改。</span></span><br><span class="line">    <span class="comment"># main loop</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, iterations):</span><br><span class="line">        a = A</span><br><span class="line">        b = B</span><br><span class="line">        c = C</span><br><span class="line">        d = D</span><br><span class="line">        block = msg[i * <span class="number">64</span>:(i + <span class="number">1</span>) * <span class="number">64</span>]</span><br><span class="line">        <span class="comment"># 明文的处理，顺便调整了一下端序</span></span><br><span class="line">        M = blockDivide(block, <span class="number">16</span>)</span><br><span class="line">        <span class="comment"># Rounds</span></span><br><span class="line">        a = FF(a, b, c, d, M[<span class="number">0</span>], <span class="number">7</span>, SV[<span class="number">0</span>])</span><br><span class="line">        d = FF(d, a, b, c, M[<span class="number">1</span>], <span class="number">12</span>, SV[<span class="number">1</span>])</span><br><span class="line">        c = FF(c, d, a, b, M[<span class="number">2</span>], <span class="number">17</span>, SV[<span class="number">2</span>])</span><br><span class="line">        b = FF(b, c, d, a, M[<span class="number">3</span>], <span class="number">22</span>, SV[<span class="number">3</span>])</span><br><span class="line">        a = FF(a, b, c, d, M[<span class="number">4</span>], <span class="number">7</span>, SV[<span class="number">4</span>])</span><br><span class="line">        d = FF(d, a, b, c, M[<span class="number">5</span>], <span class="number">12</span>, SV[<span class="number">5</span>])</span><br><span class="line">        c = FF(c, d, a, b, M[<span class="number">6</span>], <span class="number">17</span>, SV[<span class="number">6</span>])</span><br><span class="line">        b = FF(b, c, d, a, M[<span class="number">7</span>], <span class="number">22</span>, SV[<span class="number">7</span>])</span><br><span class="line">        a = FF(a, b, c, d, M[<span class="number">8</span>], <span class="number">7</span>, SV[<span class="number">8</span>])</span><br><span class="line">        d = FF(d, a, b, c, M[<span class="number">9</span>], <span class="number">12</span>, SV[<span class="number">9</span>])</span><br><span class="line">        c = FF(c, d, a, b, M[<span class="number">10</span>], <span class="number">17</span>, SV[<span class="number">10</span>])</span><br><span class="line">        b = FF(b, c, d, a, M[<span class="number">11</span>], <span class="number">22</span>, SV[<span class="number">11</span>])</span><br><span class="line">        a = FF(a, b, c, d, M[<span class="number">12</span>], <span class="number">7</span>, SV[<span class="number">12</span>])</span><br><span class="line">        d = FF(d, a, b, c, M[<span class="number">13</span>], <span class="number">12</span>, SV[<span class="number">13</span>])</span><br><span class="line">        c = FF(c, d, a, b, M[<span class="number">14</span>], <span class="number">17</span>, SV[<span class="number">14</span>])</span><br><span class="line">        b = FF(b, c, d, a, M[<span class="number">15</span>], <span class="number">22</span>, SV[<span class="number">15</span>])</span><br><span class="line"></span><br><span class="line">        a = GG(a, b, c, d, M[<span class="number">1</span>], <span class="number">5</span>, SV[<span class="number">16</span>])</span><br><span class="line">        d = GG(d, a, b, c, M[<span class="number">6</span>], <span class="number">9</span>, SV[<span class="number">17</span>])</span><br><span class="line">        c = GG(c, d, a, b, M[<span class="number">11</span>], <span class="number">14</span>, SV[<span class="number">18</span>])</span><br><span class="line">        b = GG(b, c, d, a, M[<span class="number">0</span>], <span class="number">20</span>, SV[<span class="number">19</span>])</span><br><span class="line">        a = GG(a, b, c, d, M[<span class="number">5</span>], <span class="number">5</span>, SV[<span class="number">20</span>])</span><br><span class="line">        d = GG(d, a, b, c, M[<span class="number">10</span>], <span class="number">9</span>, SV[<span class="number">21</span>])</span><br><span class="line">        c = GG(c, d, a, b, M[<span class="number">15</span>], <span class="number">14</span>, SV[<span class="number">22</span>])</span><br><span class="line">        b = GG(b, c, d, a, M[<span class="number">4</span>], <span class="number">20</span>, SV[<span class="number">23</span>])</span><br><span class="line">        a = GG(a, b, c, d, M[<span class="number">9</span>], <span class="number">5</span>, SV[<span class="number">24</span>])</span><br><span class="line">        d = GG(d, a, b, c, M[<span class="number">14</span>], <span class="number">9</span>, SV[<span class="number">25</span>])</span><br><span class="line">        c = GG(c, d, a, b, M[<span class="number">3</span>], <span class="number">14</span>, SV[<span class="number">26</span>])</span><br><span class="line">        b = GG(b, c, d, a, M[<span class="number">8</span>], <span class="number">20</span>, SV[<span class="number">27</span>])</span><br><span class="line">        a = GG(a, b, c, d, M[<span class="number">13</span>], <span class="number">5</span>, SV[<span class="number">28</span>])</span><br><span class="line">        d = GG(d, a, b, c, M[<span class="number">2</span>], <span class="number">9</span>, SV[<span class="number">29</span>])</span><br><span class="line">        c = GG(c, d, a, b, M[<span class="number">7</span>], <span class="number">14</span>, SV[<span class="number">30</span>])</span><br><span class="line">        b = GG(b, c, d, a, M[<span class="number">12</span>], <span class="number">20</span>, SV[<span class="number">31</span>])</span><br><span class="line"></span><br><span class="line">        a = HH(a, b, c, d, M[<span class="number">5</span>], <span class="number">4</span>, SV[<span class="number">32</span>])</span><br><span class="line">        d = HH(d, a, b, c, M[<span class="number">8</span>], <span class="number">11</span>, SV[<span class="number">33</span>])</span><br><span class="line">        c = HH(c, d, a, b, M[<span class="number">11</span>], <span class="number">16</span>, SV[<span class="number">34</span>])</span><br><span class="line">        b = HH(b, c, d, a, M[<span class="number">14</span>], <span class="number">23</span>, SV[<span class="number">35</span>])</span><br><span class="line">        a = HH(a, b, c, d, M[<span class="number">1</span>], <span class="number">4</span>, SV[<span class="number">36</span>])</span><br><span class="line">        d = HH(d, a, b, c, M[<span class="number">4</span>], <span class="number">11</span>, SV[<span class="number">37</span>])</span><br><span class="line">        c = HH(c, d, a, b, M[<span class="number">7</span>], <span class="number">16</span>, SV[<span class="number">38</span>])</span><br><span class="line">        b = HH(b, c, d, a, M[<span class="number">10</span>], <span class="number">23</span>, SV[<span class="number">39</span>])</span><br><span class="line">        a = HH(a, b, c, d, M[<span class="number">13</span>], <span class="number">4</span>, SV[<span class="number">40</span>])</span><br><span class="line">        d = HH(d, a, b, c, M[<span class="number">0</span>], <span class="number">11</span>, SV[<span class="number">41</span>])</span><br><span class="line">        c = HH(c, d, a, b, M[<span class="number">3</span>], <span class="number">16</span>, SV[<span class="number">42</span>])</span><br><span class="line">        b = HH(b, c, d, a, M[<span class="number">6</span>], <span class="number">23</span>, SV[<span class="number">43</span>])</span><br><span class="line">        a = HH(a, b, c, d, M[<span class="number">9</span>], <span class="number">4</span>, SV[<span class="number">44</span>])</span><br><span class="line">        d = HH(d, a, b, c, M[<span class="number">12</span>], <span class="number">11</span>, SV[<span class="number">45</span>])</span><br><span class="line">        c = HH(c, d, a, b, M[<span class="number">15</span>], <span class="number">16</span>, SV[<span class="number">46</span>])</span><br><span class="line">        b = HH(b, c, d, a, M[<span class="number">2</span>], <span class="number">23</span>, SV[<span class="number">47</span>])</span><br><span class="line"></span><br><span class="line">        a = II(a, b, c, d, M[<span class="number">0</span>], <span class="number">6</span>, SV[<span class="number">48</span>])</span><br><span class="line">        d = II(d, a, b, c, M[<span class="number">7</span>], <span class="number">10</span>, SV[<span class="number">49</span>])</span><br><span class="line">        c = II(c, d, a, b, M[<span class="number">14</span>], <span class="number">15</span>, SV[<span class="number">50</span>])</span><br><span class="line">        b = II(b, c, d, a, M[<span class="number">5</span>], <span class="number">21</span>, SV[<span class="number">51</span>])</span><br><span class="line">        a = II(a, b, c, d, M[<span class="number">12</span>], <span class="number">6</span>, SV[<span class="number">52</span>])</span><br><span class="line">        d = II(d, a, b, c, M[<span class="number">3</span>], <span class="number">10</span>, SV[<span class="number">53</span>])</span><br><span class="line">        c = II(c, d, a, b, M[<span class="number">10</span>], <span class="number">15</span>, SV[<span class="number">54</span>])</span><br><span class="line">        b = II(b, c, d, a, M[<span class="number">1</span>], <span class="number">21</span>, SV[<span class="number">55</span>])</span><br><span class="line">        a = II(a, b, c, d, M[<span class="number">8</span>], <span class="number">6</span>, SV[<span class="number">56</span>])</span><br><span class="line">        d = II(d, a, b, c, M[<span class="number">15</span>], <span class="number">10</span>, SV[<span class="number">57</span>])</span><br><span class="line">        c = II(c, d, a, b, M[<span class="number">6</span>], <span class="number">15</span>, SV[<span class="number">58</span>])</span><br><span class="line">        b = II(b, c, d, a, M[<span class="number">13</span>], <span class="number">21</span>, SV[<span class="number">59</span>])</span><br><span class="line">        a = II(a, b, c, d, M[<span class="number">4</span>], <span class="number">6</span>, SV[<span class="number">60</span>])</span><br><span class="line">        d = II(d, a, b, c, M[<span class="number">11</span>], <span class="number">10</span>, SV[<span class="number">61</span>])</span><br><span class="line">        c = II(c, d, a, b, M[<span class="number">2</span>], <span class="number">15</span>, SV[<span class="number">62</span>])</span><br><span class="line">        b = II(b, c, d, a, M[<span class="number">9</span>], <span class="number">21</span>, SV[<span class="number">63</span>])</span><br><span class="line">        A = (A + a) % (<span class="number">2</span> ** <span class="number">32</span>)</span><br><span class="line">        B = (B + b) % (<span class="number">2</span> ** <span class="number">32</span>)</span><br><span class="line">        C = (C + c) % (<span class="number">2</span> ** <span class="number">32</span>)</span><br><span class="line">        D = (D + d) % (<span class="number">2</span> ** <span class="number">32</span>)</span><br><span class="line">    result = fmt8(A) + fmt8(B) + fmt8(C) + fmt8(D)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    data = <span class="built_in">str</span>(<span class="string">&quot;123456&quot;</span>).encode(<span class="string">&quot;UTF-8&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;plainText: &quot;</span>, data)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;result: &quot;</span>, md5sum(data))</span><br></pre></td></tr></table></figure>
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul class="copyright-info-content">
+        <li>
+            <span class="type">本文标题</span>：<span class="content">MD5源码分析及流程</span>
+        </li>
+        <li>
+            <span class="type">本文作者</span>：<span class="content">zsk</span>
+        </li>
+        <li>
+            <span class="type">创建时间</span>：<span class="content">2022-06-20 00:00:00</span>
+        </li>
+        <li class="post-link">
+            <span class="type">本文链接</span>：<span class="content">2022/06/20/MD5源码分析及流程/</span>
+        </li>
+        <li>
+            <span class="type">版权声明</span>：<span class="content">本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！</span>
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                               rel="prev"
+                               href="/2022/07/05/SHA1%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90%E5%8F%8A%E6%B5%81%E7%A8%8B/"
+                            >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                                <span class="title flex-center">
+                                <span class="post-nav-title-item">SHA1原理分析及流程</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2022/06/14/Base64%E7%BC%96%E7%A0%81%E4%B8%8E%E8%A7%A3%E7%A0%81%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Base64编码与解码源码分析</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+            
+                <div class="comment-container">
+                    
+<div class="comments-container">
+    <div id="comments-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments"></i>&nbsp;评论
+    </div>
+    
+        
+            
+
+    <div class="valine-container">
+        <script  src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script >
+          function loadValine() {
+            new Valine({
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            });
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author';
+                case 'zh-CN':
+                  return '博主';
+                default:
+                  return 'Master';
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+              if (vcards.length > 0) {
+                let author = 'zsk';
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick');
+                    const vnick = vnick_dom.innerHTML;
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer);
+              } else {
+                clearInterval(getValineDomTimer);
+              }
+            }, 2000);
+          }
+
+          if ('false' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine();
+              clearTimeout(loadValineTimeout);
+            }, 1000);
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine);
+          }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MD5%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">MD5算法实现：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A1%AB%E5%85%85"><span class="nav-number">1.1.</span> <span class="nav-text">填充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%98%E9%87%8F%EF%BC%88%E5%8F%98%E9%87%8F%E5%80%BC%E4%B8%80%E8%88%AC%E4%B8%8D%E5%8F%98%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">初始化变量（变量值一般不变）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%88%86%E7%BB%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">处理分组数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA"><span class="nav-number">1.4.</span> <span class="nav-text">输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90%EF%BC%9A123456-%E8%BF%9B%E8%A1%8Cmd5"><span class="nav-number">1.5.</span> <span class="nav-text">例子：123456 进行md5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MD5%E7%9B%B8%E5%AF%B9MD4%E6%89%80%E4%BD%9C%E7%9A%84%E6%94%B9%E8%BF%9B%EF%BC%9A"><span class="nav-number">1.6.</span> <span class="nav-text">MD5相对MD4所作的改进：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%98%8E%E6%96%87%E7%BC%96%E7%A0%81"><span class="nav-number">1.7.</span> <span class="nav-text">对明文编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%99%E4%BA%9B%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%87%BD%E6%95%B0%EF%BC%9F"><span class="nav-number">1.8.</span> <span class="nav-text">为什么是这些非线性函数？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88K%E8%A1%A8%E6%98%AF%E8%BF%99%E6%A0%B7%EF%BC%8Csin%E5%87%BD%E6%95%B0%EF%BC%8C%E6%88%96%E8%80%85%E8%AF%B4%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%EF%BC%8C%E5%9C%A8%E8%BF%99%E5%84%BF%E6%89%AE%E6%BC%94%E4%BA%86%E6%80%8E%E6%A0%B7%E7%9A%84%E8%A7%92%E8%89%B2%EF%BC%9F"><span class="nav-number">1.9.</span> <span class="nav-text">为什么K表是这样，sin函数，或者说三角函数，在这儿扮演了怎样的角色？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E5%B7%A6%E7%A7%BB%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%99%E6%A0%B7%E7%A7%BB%EF%BC%9F%E8%BF%99%E4%B8%AA%E8%A7%84%E5%AE%9A%E6%98%AF%E4%B8%BA%E4%BB%80%E4%B9%88%E5%91%A2%EF%BC%9F-%E9%9A%8F%E6%9C%BA"><span class="nav-number">1.10.</span> <span class="nav-text">循环左移为什么是这样移？这个规定是为什么呢？(随机)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E5%A1%AB%E5%85%851%E4%B8%AA1%E5%92%8C%E5%85%B6%E4%BD%99%E9%83%BD%E6%98%AF0%EF%BC%8C%E4%B8%8D%E6%98%AF%E9%83%BD%E6%98%AF0"><span class="nav-number">1.11.</span> <span class="nav-text">为什么是填充1个1和其余都是0，不是都是0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E7%AB%AF%E3%80%81%E5%B0%8F%E7%AB%AF%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.12.</span> <span class="nav-text">大端、小端基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-md5"><span class="nav-number">1.13.</span> <span class="nav-text">python md5</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            
+<footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+                <span>2021</span> -
+            
+            2023
+            
+                &nbsp;<i class="fas fa-heart icon-animate"></i>
+                &nbsp;<a href="/">zsk</a>
+            
+        </div>
+        
+            <script async 
+                    src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                
+                
+                    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.5.2</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/dark-light-toggle.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/code-block.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/post-helper.js"></script>
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/libs/anime.min.js"></script>
+        
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/toc.js"></script>
+        
+    
+</div>
+
+
+
+</body>
+</html>
