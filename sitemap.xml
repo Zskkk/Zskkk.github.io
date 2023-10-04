@@ -335,13 +335,6 @@
 
   
   <url>
-    <loc>https://www.zskkk.cn/tags/%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2023-10-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.zskkk.cn/tags/%E8%84%B1%E5%A3%B3/</loc>
     <lastmod>2023-10-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -349,7 +342,7 @@
   </url>
   
   <url>
-    <loc>https://www.zskkk.cn/tags/%E6%8A%93%E5%8C%85/</loc>
+    <loc>https://www.zskkk.cn/tags/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2023-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -363,7 +356,14 @@
   </url>
   
   <url>
-    <loc>https://www.zskkk.cn/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/</loc>
+    <loc>https://www.zskkk.cn/tags/%E6%8A%93%E5%8C%85/</loc>
+    <lastmod>2023-10-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.zskkk.cn/tags/js/</loc>
     <lastmod>2023-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -377,7 +377,7 @@
   </url>
   
   <url>
-    <loc>https://www.zskkk.cn/tags/js/</loc>
+    <loc>https://www.zskkk.cn/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/</loc>
     <lastmod>2023-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
