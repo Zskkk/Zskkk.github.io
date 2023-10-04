@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+
+    
+    <title>
+        
+            某音web端X-Bogus 逆向分析算法 |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/head.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/fontawesome/css/brands.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066cc","logo":"/images/head.svg","favicon":"/images/head.svg","avatar":"/images/head.svg","font_size":null,"font_family":null,"hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","font_color":null,"hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"code_block":{"tools":{"enable":false,"style":"mac"},"highlight_theme":"obsidian"},"side_tools":{},"pjax":{"enable":false},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.7"},"waline":{"server_url":null,"reaction":false,"version":2}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"enable":true,"wordcount":true,"min2read":true},"img_align":"left","copyright_info":true},"version":"3.5.2"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"};
+  </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/head.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+            <div class="article-title">
+                <span class="title-hover-animation">某音web端X-Bogus 逆向分析算法</span>
+            </div>
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/head.svg">
+                    </div>
+					
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">zsk</span>
+                            
+                                <span class="author-label">Lv4</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2023-03-08 02:09:25</span>
+        <span class="mobile">2023-03-08 02:09</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2023-03-08 02:09:25</span>
+    </span>
+    
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/js/">js</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>4.2k 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>19 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+	
+	
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content keep-markdown-body">
+                <p>目标：视频评论接口X-Bogus参数<br />接口地址：’aHR0cHM6Ly93d3cuZG91eWluLmNvbS9hd2VtZS92MS93ZWIvY29tbWVudC9saXN0Lw&#x3D;&#x3D;’</p>
+<h3 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h3><p>该接口是xhr请求，使用xhr下断点，当url中包含X-Bogus时就断下<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/01.png"
+                      alt="image.png"
+                ><br />看调用栈上一层是在webmssdk.es5.js文件里，其实这个文件就是生成参数的，通过查阅知道这就是jsvmp，而且整体上也做了混淆。<br />这里使用v_jstools插件进行变量的压缩计算。<br />还原后使用浏览器的 Overrides 替换功能将 webmssdk.es5.js替换掉。<br />往上跟栈也就是跟到上图的堆栈b那里，X-Bogus参数是在this.openArgs[1]里面，直接打一个条件断点在b那<br /><code>this.openArgs[1].indexOf(&quot;X-Bogus&quot;) != -1</code><br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/02.png"
+                      alt="image.png"
+                ><br />翻页评论重新触发请求，如图所示，到这里就已经生成了X-Bogus<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/03.png"
+                      alt="image.png"
+                ><br />如图所示，$函数这里就已经生成了X-Bogus，this.openArgs[1]就是携带了xb的完整url<br />仔细观察这段代码，有很多三元表达式，当 M 的值为 15 时，就会走到这段逻辑，执行完函数后赋值给K，K 的值生成之后，有一个 O[S] &#x3D; K 的操作。<br />再往上看代码，O初始化的地方<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/04.png"
+                      alt="image.png"
+                ><br />O 是一个数组，单步调试的话会发现代码会一直走这个 if-else 的逻辑，几乎每一步都有 O 数组的参与，不断往里面增删改查值，for 循环里面的 j 值，决定着后续 if 语句的走向，这里也就是插桩的关键所在。</p>
+<h3 id="插桩分析"><a href="#插桩分析" class="headerlink" title="插桩分析"></a>插桩分析</h3><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/05.png"
+                      alt="image.png"
+                ><br />大的 for 循环和 if-else 逻辑有两个地方，为了保证最后的日志更加详细完整，在这两个地方都下个日志断点（右键 Add logpoint），断点内容为：<br />“位置 1”, “索引j”, j, “索引A”, A, “值O: “, JSON.stringify(O, function(key, value) {if (value &#x3D;&#x3D; window) {return undefined} return value})<br />“位置 2”, “索引j”, j, “索引A”, A, “值O: “, JSON.stringify(O, function(key, value) {if (value &#x3D;&#x3D; window) {return undefined} return value})<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/06.png"
+                      alt="image.png"
+                ></p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/07.png"
+                      alt="image.png"
+                ><br />插桩输出 O 的时候为什么要写这么长一串呢？首先 JSON.stringify() 方法的作用是将 JavaScript 值转换为 JSON 字符串，基础语法是 JSON.stringify(value[, replacer [, space]])，如果不将其转换成 JSON，那么 O 的值，输出可能是这样的：[empty, Array(26), 1, Array(0)]，你看不到 Array 数组里面具体的值，该方法有个可选参数 replacer，如果 replacer 为函数，则 JSON.stringify 将调用该函数，并传入每个成员的键和值，在函数中可以对成员进行处理，最后返回处理后的值，如果此函数返回 undefined，则排除该成员。<br />下好日志断点后，注意前面我们下的 XHR 断点不要取消，然后进行翻页出发请求，控制台就开始打印日志了，如果 XHR 断点取消了，日志就会一直打印直到卡死。日志输出完毕后，右键Save as保存下来到本地进行分析<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/08.png"
+                      alt="image.png"
+                ><br />顺便记录下当前已经生成的xb，<code>DFSzswVupV0ANJPItap8URXAIQ5f</code><br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/09.png"
+                      alt="image.png"
+                ><br />xb由DFSzswVupV0ANJPItap8URXAIQ5f这28位字符组成的，现在看是怎么来的，打开刚才的日志，在里面搜索，找到第一次出现的地方。<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/10.png"
+                      alt="image.png"
+                ><br />可以看到是逐个生成的，在9047行，xb后面的元素是null，到了下一行9048就生了下一个字符f，那么在这两步之间就是f的生成逻辑，这个时候我们看第9047行的日志断点是 位置 2 索引j 16 索引A 716，那么我们回到原网页，在位置2，下一个条件断点（右键 Add conditional breakpoint），当 j&#x3D;&#x3D;16 &amp;&amp; A&#x3D;&#x3D;716 &amp;&amp; O[7] &#x3D;&#x3D; 21 时就断下。之所以要加 O[7] 是因为 索引j 16 索引A 716 的位置有很多，多加个限制条件就可以缩小范围，当然有可能加了多个条件仍然有多个位置都满足，就需要自己筛选了，通过断点断下的时候看看控制台前面输出的日志来判断是不是我们想要的位置。<br />继续翻页，断下之后开始单步跟，来到下图所示的地方：<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/11.png"
+                      alt="image.png"
+                ><br />到这里之后，就不要下一步了，再下一步有可能整个语句就执行完毕了，其中的细节你看不到，所以这里我们在控制台挨个输入看看：<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/12.png"
+                      alt="image.png"
+                ><br />可以看到实际上的逻辑就是返回指定位置的字符，w 的值就是 O[5]，m 的值就是 O[4]，经过多次调试发现 m 的值是固定的，P 就是 charAt() 方法。我们再看看我们本地的日志，O[5] 的值为 [16]，charAt() 取值出来就是f，逻辑完全正确。<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/13.png"
+                      alt="image.png"
+                ><br />现在我们还需要知道这个16是怎么来的，继续往上看，找到16第一次出现的地方，在第9046行，那么我们就要使其在上一步断下，也就是第9045行，如下图所示：<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/14.png"
+                      alt="image.png"
+                ><br />第9045行的索引信息为 位置 2 索引j 47 索引A 708，同样的下条件断点观察怎么生成的：<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/15.png"
+                      alt="image.png"
+                ><br />可以看到逻辑是 O[5] &amp; O[6]，再把值赋给O[5]，再看我们之前本地的日志<br />O[5] &#x3D; 5809808<br />O[6] &#x3D; 63<br />5809808 &amp; 63 &#x3D; 16，逻辑正确，16就是这么来的。接下来又开始找 5809808 和 63 是怎么生成的，先看看63是怎么来的，同样在生成的上一步，也就是第9044行下个条件断点，这行的索引为 位置 2 索引j 72 索引A 704。<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/16.png"
+                      alt="image.png"
+                ><br /> <img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/17.png"
+                      alt="image.png"
+                ><br />可以看到 63 是直接 F[A] 生成的，F 是一个大数组，A 就是索引为 704，F 这个大数组怎么来的先不用管，经过几次测试发现是固定的。<br />5809808后面再说，再逐个找倒数的字符串的生成，记录下来<br />xb &#x3D; “DFSzswVupV0ANJPItap8URXAIQ5f”<br />m &#x3D; “Dkdpgh4ZKsQB80&#x2F;Mfvw36XI1R25-WUAlEi7NLboqYTOPuzmFjJnryx9HVGcaStCe&#x3D;”<br />第28字符串 &#x3D;&#x3D;&gt; f&#x3D;m[16]，16&#x3D;5809808&amp;63，63&#x3D;F[704]<br />第27字符串 &#x3D;&#x3D;&gt; 5&#x3D;m[26]，26&#x3D;1664&gt;&gt;6，6&#x3D;F[646]<br />第26字符串 &#x3D;&#x3D;&gt; Q&#x3D;m[10]，10&#x3D;40960&gt;&gt;12，12&#x3D;F[580]<br />第25字符串 &#x3D;&#x3D;&gt; I&#x3D;m[22]，22&#x3D;5767168&gt;&gt;18，18&#x3D;F[510]<br />第24字符串 &#x3D;&#x3D;&gt; A&#x3D;m[30]，30&#x3D;7701854&amp;63，63&#x3D;F[704]<br />第23字符串 &#x3D;&#x3D;&gt; X&#x3D;m[21]，21&#x3D;1344&gt;&gt;6，6&#x3D;F[646]<br />第22字符串 &#x3D;&#x3D;&gt; R&#x3D;m[24]，24&#x3D;98304&gt;&gt;12，12&#x3D;F[580]<br />第21字符串 &#x3D;&#x3D;&gt; U&#x3D;m[29]，29&#x3D;7602176&gt;&gt;18，18&#x3D;F[510]<br />第20字符串 &#x3D;&#x3D;&gt; 8&#x3D;m[12]，12&#x3D;16232652&amp;63，63&#x3D;F[704]</p>
+<p>把xb &#x3D; DFSz swVu pV0A NJPI tap8 URXA IQ5f，将其看成每四个为一组，从上面的规律可以得到，每4个字符串为一组，每组的字符生成流程都是一样的</p>
+<p>就差大数字是怎么来的，搜本地日志5809808第一次出现的位置，x直接定位到第一次出现的地方第8979行的上一行第8978行，位置 2 索引j 48 索引A 454<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/18.png"
+                      alt="image.png"
+                ><br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/19.png"
+                      alt="image.png"
+                ><br />可以看出大数字是O[2]|O[3]计算而来，那我们本地5809808就是5809664|144</p>
+<p>找到144第一次出现的地方，同样的操作<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/20.png"
+                      alt="image.png"
+                ><br />114是由O[4].charCodeAt(O[5])生成，O[4]&#x3D;’\x02ÿ-%.,2\x10^\x8F\x1AÖ÷°cÛ\x85^X¦?’，O[5]&#x3D;20<br />经过几次测试知道乱码字符串是跟url有关，生成过程后面说。用我们本地的O[4]试一下<br />“\u0002ÿ-%.,\u000F^\u001AÖ÷°Ìu^X¦”.charCodeAt(20)<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/25.png"
+                      alt="image.png"
+                ><br />经过后面8位字符的跟进后，记录了一下规则<br />xb &#x3D; “DFSzswVupV0ANJPItap8URXAIQ5f”<br />m &#x3D; “Dkdpgh4ZKsQB80&#x2F;Mfvw36XI1R25-WUAlEi7NLboqYTOPuzmFjJnryx9HVGcaStCe&#x3D;”<br /></p>
+<ul>
+<li><p>第28字符串f：	<br>  f&#x3D;m[16]<br>  16&#x3D;5809808&amp;63<br /> 63&#x3D;F[704]<br />	5809808&#x3D;5809664|144<br />	144&#x3D;”\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(20)<br />	5809664&#x3D;5767168|42496<br /> 42496&#x3D;166&lt;&lt;8<br />	8&#x3D;F[386]<br />	166&#x3D;”\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(19)<br />	5767168&#x3D;88&lt;&lt;16<br />	16&#x3D;F[320]<br />	88&#x3D;”\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(18)<br /></p>
+</li>
+<li><p>第27字符串5：<br />	5&#x3D;m[26]<br />	26&#x3D;1664&gt;&gt;6<br />	6&#x3D;F[646]<br />	1664&#x3D;5809808&amp;4032<br />	4032&#x3D;F[638]<br /></p>
+</li>
+<li><p>第26字符串Q：<br />	Q&#x3D;m[10]<br />	10&#x3D;40960&gt;&gt;12<br />	12&#x3D;F[580]<br />	40960&#x3D;5809808&amp;258048<br />	258048&#x3D;F[568]<br /></p>
+</li>
+<li><p>第25字符串I：<br />	I&#x3D;m[22]<br />	22&#x3D;5767168&gt;&gt;18<br />	18&#x3D;F[510]<br />	5767168&#x3D;5809808&amp;16515072<br />	16515072&#x3D;F[498]</p>
+</li>
+<li><p>第24字符串A:<br />	A&#x3D;m[30]<br />	30&#x3D;7701854&amp;63<br />	63&#x3D;F[704]<br />	7701854&#x3D;7701760|94<br />	94&#x3D;”\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(17)<br />	7701760&#x3D;7667712|34048<br />	34048&#x3D;133&lt;&lt;8<br />	8&#x3D;F[386]<br />	133&#x3D;”\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(16)<br />	7667712&#x3D;117&lt;&lt;16<br />	16&#x3D;F[320]<br />	117&#x3D;”\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(15)<br /></p>
+</li>
+<li><p>第23字符串X：<br />	X&#x3D;m[21]<br />	21&#x3D;1344&gt;&gt;6<br />	6&#x3D;F[646]<br />	1344&#x3D;7701854&amp;4032<br />	4032&#x3D;F[638]<br /></p>
+</li>
+<li><p>第22字符串R：<br />	R&#x3D;m[24]<br />	24&#x3D;98304&gt;&gt;12<br />	12&#x3D;F[580]<br />	98304&#x3D;7701854&amp;258048<br />	258048&#x3D;F[568]<br /></p>
+</li>
+<li><p>第21字符串U：<br />	U&#x3D;m[29]<br />	29&#x3D;7602176&gt;&gt;18<br />	18&#x3D;F[510]<br />	7602176&#x3D;7701854&amp;16515072<br />	16515072&#x3D;F[498]</p>
+</li>
+</ul>
+<p>正序整理了一下，大致的流程就是<br />m &#x3D; “Dkdpgh4ZKsQB80&#x2F;Mfvw36XI1R25-WUAlEi7NLboqYTOPuzmFjJnryx9HVGcaStCe&#x3D;”<br />xb &#x3D; “DFSz swVu pV0A NJPI tap8 URXA IQ5f”<br /><strong>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;第6组 URXA &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</strong><br />“\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(15) &#x3D; 117<br />F[320] &#x3D; 16<br />117 &lt;&lt; 16 &#x3D; 7667712</p>
+<p>“\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(16) &#x3D; 133<br />F[386] &#x3D; 8<br />133 &lt;&lt; 8 &#x3D; 34048<br />7667712|34048 &#x3D; 7701760</p>
+<p>“\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(17) &#x3D; 94<br />7701760 | 94 &#x3D; 7701854</p>
+<p>F[498] &#x3D; 16515072<br />7701854 &amp; 16515072 &#x3D; 7602176<br />F[510] &#x3D; 18<br />7602176 &gt;&gt; 18 &#x3D; 29<br />m.charAt(29) &#x3D; ‘U’</p>
+<p>F[568] &#x3D; 258048<br />7701854 &amp; 258048 &#x3D; 98304<br />F[580] &#x3D; 12<br />98304 &gt;&gt; 12 &#x3D; 24<br />m.charAt(24) &#x3D; ‘R’<br />	<br />F[638] &#x3D; 4032<br />7701854 &amp; 4032 &#x3D; 1344<br />F[646] &#x3D; 6<br />1344 &gt;&gt; 6 &#x3D; 21<br />m.charAt(21) &#x3D; ‘X’</p>
+<p>F[704] &#x3D; 63<br />7701854 &amp; 63 &#x3D; 30<br />m.charAt(30) &#x3D; ‘A’<br />	<br /><strong>&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;第7组 IQ5f &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</strong><br />“\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(18) &#x3D; 88<br />F[320] &#x3D; 16<br />88 &lt;&lt; 16 &#x3D; 5767168</p>
+<p>“\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(19) &#x3D; 166<br />F[386] &#x3D; 8<br />166 &lt;&lt; 8 &#x3D; 42496<br />5767168 | 42496 &#x3D; 5809664</p>
+<p>“\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu^X¦”.charCodeAt(20) &#x3D; 144<br />5809664 | 144 &#x3D; 5809808</p>
+<p>F[498] &#x3D; 16515072<br />5809808 &amp; 16515072 &#x3D; 5767168<br />F[510] &#x3D; 18<br />5767168 &gt;&gt; 18 &#x3D; 22<br />m.charAt(22) &#x3D; ‘I’</p>
+<p>F[568] &#x3D; 258048<br />5809808 &amp; 258048 &#x3D; 40960<br />F[580] &#x3D; 12<br />40960 &gt;&gt; 12 &#x3D; 10<br />m.charAt(10) &#x3D; ‘Q’</p>
+<p>F[638] &#x3D; 4032<br />5809808 &amp; 4032 &#x3D; 1664<br />F[646] &#x3D; 6<br />1664 &gt;&gt; 6 &#x3D; 26<br />m.charAt(26) &#x3D; ‘5’</p>
+<p>F[704] &#x3D; 63<br />5809808 &amp; 63 &#x3D; 16<br />m.charAt(16) &#x3D; ‘f’</p>
+<p>将流程对比一下就可以发现，每个步骤 F 里面的取值都是一样的，这个可以直接写死，不同之处就在于最开始的 charCodeAt() 操作，也就是返回乱码字符串指定位置字符的 Unicode 编码，第7组依次是 18、19、20，第6组依次是15、16、17，以此类推，第1组刚好是0、1、2，如下图所示：<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/21.png"
+                      alt="image.png"
+                ><br />每一组的逻辑都是一样的，依次生成七组字符串，最后拼接成完整的 X-Bogus。</p>
+<h3 id="乱码字符串生成逻辑"><a href="#乱码字符串生成逻辑" class="headerlink" title="乱码字符串生成逻辑"></a>乱码字符串生成逻辑</h3><p>该样本对应的param_url &#x3D; “device_platform&#x3D;webapp&amp;aid&#x3D;6383&amp;channel&#x3D;channel_pc_web&amp;aweme_id&#x3D;7071984856741186853&amp;cursor&#x3D;0&amp;count&#x3D;20&amp;item_type&#x3D;0&amp;insert_ids&#x3D;&amp;rcFT&#x3D;&amp;pc_client_type&#x3D;1&amp;version_code&#x3D;170400&amp;version_name&#x3D;17.4.0&amp;cookie_enabled&#x3D;true&amp;screen_width&#x3D;2048&amp;screen_height&#x3D;1152&amp;browser_language&#x3D;zh-CN&amp;browser_platform&#x3D;Win32&amp;browser_name&#x3D;Chrome&amp;browser_version&#x3D;110.0.0.0&amp;browser_online&#x3D;true&amp;engine_name&#x3D;Blink&amp;engine_version&#x3D;110.0.0.0&amp;os_name&#x3D;Windows&amp;os_version&#x3D;10&amp;cpu_core_num&#x3D;20&amp;device_memory&#x3D;8&amp;platform&#x3D;PC&amp;downlink&#x3D;3.85&amp;effective_type&#x3D;4g&amp;round_trip_time&#x3D;100&amp;webid&#x3D;7206219799877142077&amp;msToken&#x3D;Z9-0y9elP0-Obz51QiLXg2qpd-dyJHammHH_0hNY48UFC3RxAx8bjxf2Hpmxmm52cmDQVfBP0lf1UwzvAtbOcW6RGQuSY_1W-plCkw-lP-OkNH00Ion2DohnZlsySAc&#x3D;”<br />在进行下一步之前，我们要注意两点：</p>
+<ul>
+<li>文章演示有些变量前后不对应，因为每次插桩的值都是会变的，看流程就行了，流程是正确的；</li>
+<li>我们日志输出是经过 JSON.stringify 处理了的，有些步骤是向某个函数传入乱码字符串进行处理，你会发现处理后的结果和日志不一致，这是正常的。</li>
+</ul>
+<p>乱码字符串的生成相对来说稍微复杂一点，但思路仍然一样，这里就不一一截图展示了，直接用日志描述一下关键步骤，注意以下日志是正向的步骤，就不逆着推了，建议自己先逆着把流程走一走，再来看这个步骤就看得懂了。<br /></p>
+<p><strong>Step1</strong>：首先对 URL 后面的参数，也就是 Query String Parameters 进行两次 MD5、两次转 Uint8Array 处理，最后得到的 Uint8Array 对象在后面的步骤中用得到，步骤如下：<br />位置 1 索引j 4 索引A 134：将 URL 后面的参数进行 MD5 加密得到字符串<br />位置 1 索引j 16 索引A 494：将上一步的字符串转换为 Uint8Array 对象<br />位置 1 索引j 4 索引A 134：将上一步的 Uint8Array 对象进行 MD5 加密，得到字符串<br />位置 1 索引j 16 索引A 504：将上一步的字符串转换为 Uint8Array 对象</p>
+<p>上述步骤中，我们将最终得到的结果命名为 uint8Array，md5字符串转uint8Array，跟进到相应位置把函数抠出来即可<br /></p>
+<p><strong>Step2</strong>：生成两个大数，一个是时间戳，我们称之为 fixedString1，另一个调用某个方法生成，我们称之为 fixedString2。<br />fixedString1<br />位置 1 索引j 43 索引A 1032：1677985818608 &#x2F; 1000 &#x3D; 1677985818.608<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/22.png"
+                      alt="image.png"
+                ><br />fixedString2<br />位置 1 索引j 16 索引A 1060：P.apply(null, []) &#x3D; 1489154074<br />上述步骤中，P 对应以下方法，缺失的方法自行补齐：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">_0x17dd8c</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> _0x2fc47d || (_0xeb6638.<span class="property">perf</span> ? -<span class="number">1</span> : _0x2fc47d = <span class="title function_">_0x5bc542</span>(<span class="number">3735928559</span>));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (a) &#123;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">_0x5bc542</span>(<span class="params">a</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> b, c = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;canvas&quot;</span>);</span><br><span class="line">    c.<span class="property">width</span> = <span class="number">48</span>, c.<span class="property">height</span> = <span class="number">16</span>;</span><br><span class="line">    <span class="keyword">var</span> e = c.<span class="title function_">getContext</span>(<span class="string">&quot;2d&quot;</span>);</span><br><span class="line">    e.<span class="property">font</span> = <span class="string">&quot;14px serif&quot;</span>, e.<span class="title function_">fillText</span>(<span class="string">&quot;龘ฑภ경&quot;</span>, <span class="number">2</span>, <span class="number">12</span>), e.<span class="property">shadowBlur</span> = <span class="number">2</span>, e.<span class="property">showOffsetX</span> = <span class="number">1</span>, </span><br><span class="line">    e.<span class="property">showColor</span> = <span class="string">&quot;lime&quot;</span>, e.<span class="title function_">arc</span>(<span class="number">8</span>, <span class="number">8</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">2</span>), e.<span class="title function_">stroke</span>(), b = c.<span class="title function_">toDataURL</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> d = <span class="number">0</span>; d &lt; <span class="number">32</span>; d++) &#123;</span><br><span class="line">        a = <span class="number">65599</span> * a + b.<span class="title function_">charCodeAt</span>(a % b.<span class="property">length</span>) &gt;&gt;&gt; <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Step3</strong>：先后生成两个数组，我们称之为 array1、array2，array2 就是由 array1 的元素位置变换后得来的，严格来讲，array1 不是一个完整的数组，而是一个个数字，这一点可以在日志中体现出来，为了方便我们就直接将其视为一个数组，两个数组都有19个元素，步骤如下：<br />array1[0] 至 array1[3] 为定值  [64,0.00390625,1,8]<br />array1[4]<br />位置 1 索引j 25 索引A 1172：uint8Array[14] &#x3D; 127<br />array1[5]<br />位置 1 索引j 25 索引A 1196：uint8Array[15] &#x3D; 208</p>
+<p>array1[6]、array1[7] 可以直接写死<br /></p>
+<p>array1[8]、array1[9]  与 ua 有关, 可以直接写死<br /></p>
+<p>array1[10]<br />位置 1 索引j 52 索引A 1316：fixedString1 &gt;&gt; 24 &#x3D; 100<br />位置 1 索引j 47 索引A 1324：100 &amp; 255 &#x3D; 100</p>
+<p>array1[11]<br />位置 1 索引j 52 索引A 1348：fixedString1 &gt;&gt; 16 &#x3D; 25604<br />位置 1 索引j 47 索引A 1356：25604 &amp; 255 &#x3D; 4</p>
+<p>array1[12]<br />位置 1 索引j 52 索引A 1380：fixedString1 &gt;&gt; 8 &#x3D; 6554632<br />位置 1 索引j 47 索引A 1388：6554632 &amp; 255 &#x3D; 8</p>
+<p>array1[13]<br />位置 1 索引j 52 索引A 1412：fixedString1 &gt;&gt; 0 &#x3D; 1677985818<br />位置 1 索引j 47 索引A 1420：1677985818 &amp; 255 &#x3D; 26</p>
+<p>array1[14]<br />位置 1 索引j 52 索引A 1444：fixedString2 &gt;&gt; 24 &#x3D; 88<br />位置 1 索引j 47 索引A 1452 ：88 &amp; 255 &#x3D; 88</p>
+<p>array1[15]<br />位置 1 索引j 52 索引A 1476：fixedString2 &gt;&gt; 16 &#x3D; 22722<br />位置 1 索引j 47 索引A 1484：22722 &amp; 255 &#x3D; 194</p>
+<p>array1[16]<br />位置 1 索引j 52 索引A 1508：fixedString2 &gt;&gt; 8 &#x3D; 5817008<br />位置 1 索引j 47 索引A 1516：5817008 &amp; 255 &#x3D; 176</p>
+<p>array1[17]<br />位置 1 索引j 52 索引A 1540：fixedString2 &gt;&gt; 0 &#x3D; 1489154074<br />位置 1 索引j 47 索引A 1548：1489154074 &amp; 255 &#x3D; 26</p>
+<p>array1[18]<br />前面18个字符全部进行亦或<br />位置 1 索引j 49 索引A 1736：array1.reduce(function(a, b) { return a ^ b; }); &#x3D; 96</p>
+<p>array1 完整值如下<br />位置 1 索引j 16 索引A 1932：<br />array1 &#x3D; [64,0.00390625,1,8,127,208,69,63,35,157,100,4,8,26,88,194,176,26,96]<br />array2 由 array1 元素交换位置而来：<br />array2 &#x3D; [array1[0], array1[2], array1[4], array1[6], array1[8], array1[10], array1[12], array1[14], array1[16], array1[18], array1[1], array1[3], array1[5], array1[7], array1[9], array1[11], array1[13], array1[15], array1[17]]<br />array2 完整值如下<br />array2 &#x3D; [64, 1, 127, 69, 35, 100, 8, 88, 176, 96, 0.00390625, 8, 208, 63, 157, 4, 26, 194, 26]</p>
+<p><strong>Step4</strong>：将 Step3 得到的 array2 经过转换得到乱码字符串，步骤如下：<br />位置 1 索引j 16 索引A 1932：<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/23.png"
+                      alt="image.png"
+                ><br />_0x398111.apply(null, array2) &#x3D; ‘@\u0000\u0001\bÐE?#d\u0004\b\u001aXÂ°\u001a&#96;’</p>
+<!-- ```javascript
+function _0x398111(a, b, c, e, d, t, f, r, n, o, i, _, x, u, s, l, v, h, p) {
+    var y = new Uint8Array(19);
+    return y[0] = a, y[1] = i, y[2] = b, y[3] = _, y[4] = c, y[5] = x, y[6] = e, y[7] = u, 
+    y[8] = d, y[9] = s, y[10] = t, y[11] = l, y[12] = f, y[13] = v, y[14] = r, y[15] = h, 
+    y[16] = n, y[17] = p, y[18] = o, String.fromCharCode.apply(null, y);
+}
+``` -->
+
+<p>位置 1 索引j 16 索引A 1986：<br />_0x25788b.apply(null, [‘ÿ’,‘@\x00\x01\bïwE?#\x9Dd\x074\x89XÂ°\x1Aû’]) &#x3D; ‘-%.,\u000f^\u001aÖ÷°Ìu�^X¦’</p>
+<!-- ```javascript
+function _0x25788b(a, b) {
+    for (var c, e = [], d = 0, t = "", f = 0; f < 256; f++) {
+        e[f] = f;
+    }
+    for (var r = 0; r < 256; r++) {
+        d = (d + e[r] + a.charCodeAt(r % a.length)) % 256, c = e[r], e[r] = e[d], e[d] = c;
+    }
+    var n = 0;
+    d = 0;
+    for (var o = 0; o < b.length; o++) {
+        d = (d + e[n = (n + 1) % 256]) % 256, c = e[n], e[n] = e[d], e[d] = c, t += String.fromCharCode(b.charCodeAt(o) ^ e[(e[n] + e[d]) % 256]);
+    }
+    return t;
+}
+``` -->
+<p> <br />位置 1 索引j 16 索引A 2038：<br />_0x94582.apply(null, [2,255,’-%.,\u000f^\u001aÖ÷°Ìu�^X¦’]) &#x3D; “\u0002ÿ-%.,\u000f^\u001aÖ÷°Ìu�^X¦”</p>
+<!-- ```javascript
+function _0x86cb82(a) {
+    return String.fromCharCode(a);
+}
+function _0x94582(a, b, c) {
+    return _0x86cb82(a) + _0x86cb82(b) + c;
+}
+``` -->
+<p>至此乱码字符串的流程就结束了。<br>以上缺的函数根据相应的索引根据到代码位置抠出来即可</p>
+<p>测试成功，我这里把生成方式封装成api接口<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230308/24.png"
+                      alt="image.png"
+                ></p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul class="copyright-info-content">
+        <li>
+            <span class="type">本文标题</span>：<span class="content">某音web端X-Bogus 逆向分析算法</span>
+        </li>
+        <li>
+            <span class="type">本文作者</span>：<span class="content">zsk</span>
+        </li>
+        <li>
+            <span class="type">创建时间</span>：<span class="content">2023-03-08 02:09:25</span>
+        </li>
+        <li class="post-link">
+            <span class="type">本文链接</span>：<span class="content">2023-03-08/某音web端X-Bogus-逆向分析算法.html</span>
+        </li>
+        <li>
+            <span class="type">版权声明</span>：<span class="content">本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！</span>
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/js/">#js</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                               rel="prev"
+                               href="/2023-10-04/ClassLoader%E5%92%8C%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD.html"
+                            >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                                <span class="title flex-center">
+                                <span class="post-nav-title-item">ClassLoader和动态加载</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                               rel="next"
+                               href="/2023-02-11/%E8%B0%B7%E6%AD%8CPixel3%E5%88%B7%E6%9C%BA%E4%BB%A5%E5%8F%8Amagisk%E7%9A%84%E5%AE%89%E8%A3%85.html"
+                            >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">谷歌Pixel3刷机以及magisk的安装</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                                <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+            
+                <div class="comment-container">
+                    
+<div class="comments-container">
+    <div id="comments-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments"></i>&nbsp;评论
+    </div>
+    
+        
+            
+
+    <div class="valine-container">
+        <script  src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script >
+          function loadValine() {
+            new Valine({
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            });
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author';
+                case 'zh-CN':
+                  return '博主';
+                default:
+                  return 'Master';
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+              if (vcards.length > 0) {
+                let author = 'zsk';
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick');
+                    const vnick = vnick_dom.innerHTML;
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer);
+              } else {
+                clearInterval(getValineDomTimer);
+              }
+            }, 2000);
+          }
+
+          if ('false' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine();
+              clearTimeout(loadValineTimeout);
+            }, 1000);
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine);
+          }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%93%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">抓包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E6%A1%A9%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">插桩分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%B1%E7%A0%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%94%9F%E6%88%90%E9%80%BB%E8%BE%91"><span class="nav-number">3.</span> <span class="nav-text">乱码字符串生成逻辑</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            
+<footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+                <span>2021</span> -
+            
+            2023
+            
+                &nbsp;<i class="fas fa-heart icon-animate"></i>
+                &nbsp;<a href="/">zsk</a>
+            
+        </div>
+        
+            <script async 
+                    src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                
+                
+                    总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.5.2</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/dark-light-toggle.js"></script>
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/code-block.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/post-helper.js"></script>
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/libs/anime.min.js"></script>
+        
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/toc.js"></script>
+        
+    
+</div>
+
+
+
+</body>
+</html>
