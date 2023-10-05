@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+    <title>
+        
+            某鱼直播软件使用unidbg算法分析 |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
+    
+        
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/head.svg","first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","server_urls":null,"placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"version":"3.8.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        某鱼直播软件使用unidbg算法分析
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2023-01-09 19:24:29</span>
+                <span class="mobile">2023-01-09 19:24</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Mon Jan 09 2023 19:24:29 GMT+0800">2023-01-09 19:24:29</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">安卓逆向</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Unidbg/">Unidbg</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>6.9k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>34 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+                        <div class="article-aging-tips"
+                             data-update-date="Mon Jan 09 2023 19:24:29 GMT+0800"
+                             data-aging-days="365"
+                        >
+                            <i class="fa-solid fa-circle-exclamation"></i>本文距离上次更新已过去 <span class="days">0</span> 天，部分内容可能已经过时，请注意甄别。
+                        </div>
+                    
+
+                    <p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221223/000.webp"
+                     
+                ></p>
+<h2 id="Unidbg-模拟执行"><a href="#Unidbg-模拟执行" class="headerlink" title="Unidbg 模拟执行"></a>Unidbg 模拟执行</h2><p> 首先模拟执行，先搭个架子  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.douyu;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.AndroidEmulator;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.Module;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidEmulatorBuilder;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidResolver;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.AbstractJni;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.DalvikModule;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.VM;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.memory.Memory;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DouYu</span> <span class="keyword">extends</span> <span class="title class_">AbstractJni</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AndroidEmulator emulator;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> VM vm;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Module <span class="keyword">module</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">DouYu</span><span class="params">()</span>&#123;</span><br><span class="line">        emulator = AndroidEmulatorBuilder.for32Bit().build();</span><br><span class="line">        <span class="type">Memory</span> <span class="variable">memory</span> <span class="operator">=</span> emulator.getMemory();</span><br><span class="line">        memory.setLibraryResolver(<span class="keyword">new</span> <span class="title class_">AndroidResolver</span>(<span class="number">23</span>));</span><br><span class="line">        vm = emulator.createDalvikVM(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/douyu.apk&quot;</span>));</span><br><span class="line">        vm.setVerbose(<span class="literal">true</span>);</span><br><span class="line">        vm.setJni(<span class="built_in">this</span>);</span><br><span class="line">        <span class="type">DalvikModule</span> <span class="variable">dm</span> <span class="operator">=</span> vm.loadLibrary(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/libmakeurl2.5.0.so&quot;</span>), <span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">module</span> = dm.getModule();</span><br><span class="line">        dm.callJNI_OnLoad(emulator);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">DouYu</span> <span class="variable">douYu</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DouYu</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果<br /><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/01.webp"
+                     
+                ><br /> 报了一个 ”不合法的JNI版本“ 错误，具体出错的原因有很多，一个常见的问题是SO的依赖库缺失。即程 序调用依赖库中某个函数时，因为这个依赖库没加载到Unidbg虚拟内存中，进而发生寻址错误，比如上 图就是 0x1664 地址访问失败。在Unidbg日志的第三行我们看到， libc++_shared.so 加载失败，即库缺失报错。 我们的目标SO依赖了 libc++_shared.so ，这个库是C++的支持库，但不在Unidbg默认支持的SO里。 我们要在apk的lib里把它拷贝出来。<br />在加载so文件前添加这两行，目标so依赖的其他so文件要在其前面加载</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DalvikModule</span> <span class="variable">dm_shared</span> <span class="operator">=</span> vm.loadLibrary(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/libc++_shared.so&quot;</span>), <span class="literal">true</span>);</span><br><span class="line">dm_shared.callJNI_OnLoad(emulator);</span><br></pre></td></tr></table></figure>
+<p>再次运行就一切正常了<br />下面就到了今天的主角——native_makeUrl函数，Unidbg中先call它，参数很长，构造的很随意，因为只是学习用途。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.douyu;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.AndroidEmulator;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.Module;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidEmulatorBuilder;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidResolver;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.*;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.array.ArrayObject;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.memory.Memory;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DouYu</span> <span class="keyword">extends</span> <span class="title class_">AbstractJni</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AndroidEmulator emulator;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> VM vm;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Module <span class="keyword">module</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">DouYu</span><span class="params">()</span>&#123;</span><br><span class="line">        emulator = AndroidEmulatorBuilder.for32Bit().build();</span><br><span class="line">        <span class="type">Memory</span> <span class="variable">memory</span> <span class="operator">=</span> emulator.getMemory();</span><br><span class="line">        memory.setLibraryResolver(<span class="keyword">new</span> <span class="title class_">AndroidResolver</span>(<span class="number">23</span>));</span><br><span class="line">        vm = emulator.createDalvikVM(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/douyu.apk&quot;</span>));</span><br><span class="line">        vm.setVerbose(<span class="literal">true</span>);</span><br><span class="line">        vm.setJni(<span class="built_in">this</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">DalvikModule</span> <span class="variable">dm_shared</span> <span class="operator">=</span> vm.loadLibrary(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/libc++_shared.so&quot;</span>), <span class="literal">true</span>);</span><br><span class="line">        dm_shared.callJNI_OnLoad(emulator);</span><br><span class="line"></span><br><span class="line">        <span class="type">DalvikModule</span> <span class="variable">dm</span> <span class="operator">=</span> vm.loadLibrary(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/libmakeurl2.5.0.so&quot;</span>), <span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">module</span> = dm.getModule();</span><br><span class="line"></span><br><span class="line"><span class="comment">//        emulator.traceCode(module.base, module.base + module.size);</span></span><br><span class="line">        dm.callJNI_OnLoad(emulator);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getMakeUrl</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// args list</span></span><br><span class="line">        List&lt;Object&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(<span class="number">10</span>);</span><br><span class="line">        <span class="comment">// arg1 env</span></span><br><span class="line">        list.add(vm.getJNIEnv());</span><br><span class="line">        <span class="comment">// arg2 jobject/jclazz 一般用不到，直接填0</span></span><br><span class="line">        list.add(<span class="number">0</span>);</span><br><span class="line">        DvmObject&lt;?&gt; context = vm.resolveClass(<span class="string">&quot;android/content/Context&quot;</span>).newObject(<span class="literal">null</span>);</span><br><span class="line">        list.add(vm.addLocalObject(context));</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>)));</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input3_1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;aid&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input3_2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;client_sys&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input3_3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;time&quot;</span>);</span><br><span class="line">        vm.addLocalObject(input3_1);</span><br><span class="line">        vm.addLocalObject(input3_2);</span><br><span class="line">        vm.addLocalObject(input3_3);</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">ArrayObject</span>(input3_1, input3_2, input3_3)));</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input4_1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;android1&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input4_2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;android&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input4_3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;1673232015&quot;</span>);</span><br><span class="line">        vm.addLocalObject(input4_1);</span><br><span class="line">        vm.addLocalObject(input4_2);</span><br><span class="line">        vm.addLocalObject(input4_3);</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">ArrayObject</span>(input4_1, input4_2, input4_3)));</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_5</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_6</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_7</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_8</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_9</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_10</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_11</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_12</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_13</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        vm.addLocalObject(input5_1);</span><br><span class="line">        vm.addLocalObject(input5_2);</span><br><span class="line">        vm.addLocalObject(input5_3);</span><br><span class="line">        vm.addLocalObject(input5_4);</span><br><span class="line">        vm.addLocalObject(input5_5);</span><br><span class="line">        vm.addLocalObject(input5_6);</span><br><span class="line">        vm.addLocalObject(input5_7);</span><br><span class="line">        vm.addLocalObject(input5_8);</span><br><span class="line">        vm.addLocalObject(input5_9);</span><br><span class="line">        vm.addLocalObject(input5_10);</span><br><span class="line">        vm.addLocalObject(input5_11);</span><br><span class="line">        vm.addLocalObject(input5_12);</span><br><span class="line">        vm.addLocalObject(input5_13);</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">ArrayObject</span>(input5_1, input5_2, input5_3,input5_4, input5_5, input5_6,input5_7, input5_8, input5_9,input5_10, input5_11, input5_12,input5_13)));</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_5</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_6</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_7</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_8</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_9</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_10</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        vm.addLocalObject(input6_1);</span><br><span class="line">        vm.addLocalObject(input6_2);</span><br><span class="line">        vm.addLocalObject(input6_3);</span><br><span class="line">        vm.addLocalObject(input6_4);</span><br><span class="line">        vm.addLocalObject(input6_5);</span><br><span class="line">        vm.addLocalObject(input6_6);</span><br><span class="line">        vm.addLocalObject(input6_7);</span><br><span class="line">        vm.addLocalObject(input6_8);</span><br><span class="line">        vm.addLocalObject(input6_9);</span><br><span class="line">        vm.addLocalObject(input6_10);</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">ArrayObject</span>(input6_1, input6_2, input6_3,input6_4, input6_5, input6_6,input6_7, input6_8, input6_9,input6_10)));</span><br><span class="line">        list.add(<span class="number">0</span>);</span><br><span class="line">        list.add(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 参数准备完成</span></span><br><span class="line">        <span class="comment">// call function</span></span><br><span class="line">        <span class="type">Number</span> <span class="variable">number</span> <span class="operator">=</span> <span class="keyword">module</span>.callFunction(emulator, <span class="number">0x2f91</span>, list.toArray());</span><br><span class="line">        <span class="keyword">return</span> vm.getObject(number.intValue()).getValue().toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">DouYu</span> <span class="variable">douYu</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DouYu</span>();</span><br><span class="line">        <span class="type">String</span> <span class="variable">makeUrl</span> <span class="operator">=</span> douYu.getMakeUrl();</span><br><span class="line">        System.out.println(<span class="string">&quot;result:&quot;</span>+ makeUrl);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p> 运行后直接出结果  <br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/02.webp"
+                     
+                ><br /> 可以发现，结果由四部分组成，前三个参数是我们 input4 传进去的内容，所以需要分析的只有auth的 来源。 多次运行会发现，auth 的值，恒为 3c179e17e8e9b06d7b18c68555b92220，长度 32 位。  </p>
+<h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p> 首先，确认函数执行流的汇编长度，如果行数过多上千万甚至上亿行，就只能放弃。如果几十万行，那就还可以看看。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">traceLength</span><span class="params">()</span> &#123;</span><br><span class="line">    emulator.getBackend().hook_add_new(<span class="keyword">new</span> <span class="title class_">CodeHook</span>() &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hook</span><span class="params">(Backend backend, <span class="type">long</span> address, <span class="type">int</span> size, Object user)</span> &#123;</span><br><span class="line">            count += <span class="number">1</span>;</span><br><span class="line">            System.out.println(count);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onAttach</span><span class="params">(UnHook unHook)</span> &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">detach</span><span class="params">()</span> &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="keyword">module</span>.base, <span class="keyword">module</span>.size + <span class="keyword">module</span>.base, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/03.webp"
+                     
+                ><br />运行计数总共九十一万行， 不超过100w行的执行流，要么程序没怎么混淆，要么逻辑不 太复杂。两者任意一个复杂度高一些，都不会只有100w行汇编以内。  <br />使用findcrypt插件再确认一下样本大概使用了哪些加密算法<br /><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/04.webp"
+                     
+                ><br /> SO中至少存在 AES&#x2F;BASE64，至于我们的函数中用了什么？这得具体分析，毕竟Findcrypt只是一个静态 的、加密特征匹配插件。 </p>
+<ul>
+<li>目标函数可能用了AES&#x2F;Base64，说“可能”是上述算法可能用于SO中其他函数而非目标函数。 </li>
+<li>目标函数可能用了AES和Base64之外的其他加密算法，因为FIndCrypt提供了静态的、有限的分析，很容易遗漏。</li>
+</ul>
+<p>使用Unidbg处理算法，一般而言，自下而上分析更省时省力，这得益于Unidbg两方面的能力 </p>
+<ul>
+<li><strong><font color="red">强大方便的内存读写监控</font></strong></br> </li>
+<li><strong><font color="red">无地址随机化</font></strong></li>
+</ul>
+<p>这让我们可以逆流而上，自结果推来源，分析算法和数据块十分轻松。 <br />重新看运行结果图<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/05.webp"
+                     
+                ><br />运算结果来自于NewStringUTF，这个JString从哪里来的？    <br /> 日志提示调用处在0x336f，这个地址实际上是LR（返回地址），所以NewStringUTF函数调用是 0x336f 的上一条 0x336C。  <br /><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/06.webp"
+                     
+                ><br><br /> 在 0x336C 下断点  <br /><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/07.webp"
+                     
+                ><br><br /> 回顾一下NewStringUTF 这个JNI方法，数据来源就是参数二字符数组  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstring <span class="title function_">NewStringUTF</span><span class="params">(JNIEnv *env, const <span class="type">char</span> *bytes)</span>;</span><br></pre></td></tr></table></figure>
+<p> 数据从地址0x402d20a0开始，我们要监控auth&#x3D;后面的数据，即从0x402d20a0+len(aid&#x3D;android1&amp;client_sys&#x3D;android&amp;time&#x3D;1638452332&amp;auth&#x3D;)开始，数一下auth的32个字节所处的地址，监控对它的写入。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emulator.traceWrite(<span class="number">0x401D20D5</span>, <span class="number">0x401D20D5</span>+<span class="number">0x20</span>);</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/08.webp"
+                     
+                ><br><br /> 从下往上寻找对内存最晚的操作，可以发现，这32个字节的赋值发生在libc里。一般数据在libc里赋值， 指的是调用了libc中memcpy等库函数做拷贝、转换、比较等处理，而非数据生成的第一现场。  <br /> 把Unidbg的libc.so拷贝一份出来，扔到IDA里。搜索0x17d3a，看具体是哪个函数。我们发现 是在strcat函数里，即做字符串拼接。  <br />hook strcat 函数，进行追踪  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *strcat(<span class="type">char</span> *dest, const <span class="type">char</span> *src)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><font color="red">dest – 指向目标数组，该数组包含了一个 C 字符串，且足够容纳追加后的字符串。</strong></font> </li>
+<li><strong><font color="red">src – 指向要追加的字符串，该字符串不会覆盖目标字符串。</strong></font></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hookStrCat</span><span class="params">()</span>&#123;</span><br><span class="line">    emulator.attach().addBreakPoint(<span class="keyword">module</span>.findSymbolByName(<span class="string">&quot;strcat&quot;</span>,</span><br><span class="line">            <span class="literal">true</span>).getAddress(), <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">            <span class="type">UnidbgPointer</span> <span class="variable">r1</span> <span class="operator">=</span> emulator.getContext().getPointerArg(<span class="number">1</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;strcat:&quot;</span>+ r1);</span><br><span class="line">            System.out.println(r1.getString(<span class="number">0</span>));</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 运行，可以发现结果的四个字段就是strcat 逐步拼接的结果  <br /><br> <img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/09.webp"
+                     
+                ><br> <br /> 对来源 0xbffff69b 做traceWrite，千万记得加后缀L。  <br /> 发现依然来自于libc，这不是好事，说明我们还没到第一现场。  <br /><br> <img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/10.webp"
+                     
+                ><br> <br />从IDA跳到地址 0x176dc，看到是在_memcpy_base函数里</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __fastcall <span class="title function_">_memcpy_base</span><span class="params">(<span class="type">int</span> a1, <span class="type">char</span> *a2, unsigned <span class="type">int</span> a3, <span class="type">int</span> a4, <span class="type">int</span> a5,</span></span><br><span class="line"><span class="params"><span class="type">int</span> a6)</span></span><br></pre></td></tr></table></figure>
+<p> 它应该是memcpy函数内部的子函数，我们Hook一下memcpy，其原型如下  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *memcpy(<span class="keyword">void</span> *str1, const <span class="keyword">void</span> *str2, size_t n)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><font color="red">str1 – 指向用于存储复制内容的目标数组，类型强制转换为 void* 指针。</strong></font> </li>
+<li><strong><font color="red">str2 – 指向要复制的数据源，类型强制转换为 void* 指针。</strong></font> </li>
+<li><strong><font color="red">n – 要被复制的字节数。</strong></font></li>
+</ul>
+<p> 我们打印str2，长度为n  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hookMemcpy</span><span class="params">()</span>&#123;</span><br><span class="line">    emulator.attach().addBreakPoint(<span class="keyword">module</span>.findSymbolByName(<span class="string">&quot;memcpy&quot;</span>,</span><br><span class="line">            <span class="literal">true</span>).getAddress(), <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">            <span class="type">UnidbgPointer</span> <span class="variable">r1</span> <span class="operator">=</span> emulator.getContext().getPointerArg(<span class="number">1</span>);</span><br><span class="line">            <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> emulator.getContext().getIntArg(<span class="number">2</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;memcpy&quot;</span>);</span><br><span class="line">            Inspector.inspect(r1.getByteArray(<span class="number">0</span>, length), r1.toString());</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 运行发现，程序逻辑上逐两个字节进行拷贝  <br /><br> <img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/11.webp"
+                     
+                ><br> <br />140处调用。看的头疼，所以我尝试性的搜索了下3c179e17e8e9b06d7b18c68555b92220，期待某次 memcpy可以看到它，那么我们就能找到它的产生之处了。  <br /><br> <img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/12.webp"
+                     
+                ><br> <br /> 打印memcpy的str2时，我采用了Unidbg的Inspect API，它会在 打印内存块时，顺带打印数据的MD5值，这个设计主要是为了比较两个内存块是否全然等值，但这里却 帮到了我们。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0000</span>: <span class="number">61</span> <span class="number">69</span> <span class="number">64</span> <span class="number">3D</span> <span class="number">61</span> 6E <span class="number">64</span> <span class="number">72</span> <span class="number">6F</span> <span class="number">69</span> <span class="number">64</span> <span class="number">31</span> <span class="number">26</span> <span class="number">63</span> 6C <span class="number">69</span>    aid=android1&amp;cli</span><br><span class="line"><span class="number">0010</span>: <span class="number">65</span> 6E <span class="number">74</span> <span class="number">5F</span> <span class="number">73</span> <span class="number">79</span> <span class="number">73</span> <span class="number">3D</span> <span class="number">61</span> 6E <span class="number">64</span> <span class="number">72</span> <span class="number">6F</span> <span class="number">69</span> <span class="number">64</span> <span class="number">26</span>    ent_sys=android&amp;</span><br><span class="line"><span class="number">0020</span>: <span class="number">74</span> <span class="number">69</span> <span class="number">6D</span> <span class="number">65</span> <span class="number">3D</span> <span class="number">31</span> <span class="number">36</span> <span class="number">37</span> <span class="number">33</span> <span class="number">32</span> <span class="number">33</span> <span class="number">32</span> <span class="number">30</span> <span class="number">31</span> <span class="number">35</span> <span class="number">76</span>    time=1673232015v</span><br><span class="line"><span class="number">0030</span>: <span class="number">71</span> <span class="number">34</span> <span class="number">37</span> <span class="number">48</span> <span class="number">64</span> <span class="number">39</span> 4A <span class="number">55</span> <span class="number">67</span> <span class="number">66</span> <span class="number">44</span> <span class="number">43</span> <span class="number">79</span> <span class="number">74</span> <span class="number">43</span>       q47Hd9JUgfDCytC</span><br></pre></td></tr></table></figure>
+<p>vq47Hd9JUgfDCytC 这十个字节是未知的，其余三个字段是传进来的，我们结合上面的MD5会产生一种 明悟，这不就是加盐MD5吗？传进来的参数拼接后加上”vq47Hd9JUgfDCytC“，MD5后传出去。 <br />那么现在问题就变成了，vq47Hd9JUgfDCytC是哪里来的？  <br /><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/13.webp"
+                     
+                ><br><br /> 对0xbffff500L 做traceWrite  <br /></p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/14.webp"
+                     
+                ><br><br /> ida打开libmakeurl.so，看一下来源0x8a88，十六个字节都来自这里  <br /></p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/15.webp"
+                     
+                ><br><br /> 前面我们用过Findcrypt，有看到RijnDael_AES_LONG_inv_45FC4，它自动将0x8a9e所位于的函数中，一个数组标记为AES的S逆盒。这告诉我们，十六字节的生成处是AES的运算逻辑。换而言之，这十六字节大概率是AES加密或解密的输出。  <br />可是，样本使用了Ollvm，比如0x8a9e这一行，就是Ollvm中的指令替换。 <br />我们先不要陷入函数的细节里，因为如果是标准AES，那根本不用 分析加密程序的内部，自然也就不用考虑这些混淆了。  <br /> 0x8a88 位于 sub_8228 函数内，Hook sub_8228，顺利断下  <br /> 观察两个参数  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">sub_8228</span><span class="params">(unsigned __int64 a1, _QWORD *a2)</span></span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/16.webp"
+                     
+                ><br><br /> 参数2像是buffer，存放加密结果。blr用于在函数返回处下断点，然后c继续跑，在函数运行结束后再次 查看参数2指向的内存。  <br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/17.webp"
+                     
+                ></p>
+<p>可以发现确实是我们要分析的十六个字节。至于参数1是什么意思，硬看似乎看不出来。 <br />因此可以判断，sub_8228生成了我们要分析的十六个字节，而且它像AES的执行逻辑。 <br />AES 加密还是解密？什么工作模式？明文是什么？Key是什么？一概不知。我们得到sub_8228上层去看看。 <br />重新运行程序，bt 打印调用栈  <br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/18.webp"
+                     
+                ><br />跳到 0x08ba7 看一下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __fastcall <span class="title function_">sub_8B3C</span><span class="params">(const <span class="type">char</span> *a1, <span class="type">int</span> a2, <span class="type">int</span> a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  signed <span class="type">int</span> i; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">int</span> v7; <span class="comment">// r1</span></span><br><span class="line">  <span class="type">int</span> v8; <span class="comment">// r1</span></span><br><span class="line">  signed <span class="type">int</span> v10; <span class="comment">// [sp+4h] [bp-144h]</span></span><br><span class="line">  signed <span class="type">int</span> v11; <span class="comment">// [sp+Ch] [bp-13Ch]</span></span><br><span class="line">  <span class="type">char</span> v12[<span class="number">280</span>]; <span class="comment">// [sp+10h] [bp-138h] BYREF</span></span><br><span class="line">  <span class="type">int</span> v13; <span class="comment">// [sp+128h] [bp-20h]</span></span><br><span class="line"></span><br><span class="line">  v10 = (strlen(a1) + <span class="number">15</span>) &gt;&gt; <span class="number">4</span>;</span><br><span class="line">  sub_72BC(v12, a2, <span class="number">128</span>);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; ; i = v11 + <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    v7 = <span class="number">1590846758</span>;</span><br><span class="line">    <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v8 = v7 &amp; <span class="number">0x7FFFFFFF</span>;</span><br><span class="line">      <span class="keyword">if</span> ( v8 != <span class="number">1590846758</span> )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      v11 = i;</span><br><span class="line">      v7 = <span class="number">131555431</span>;</span><br><span class="line">      <span class="keyword">if</span> ( i &lt; v10 )</span><br><span class="line">        v7 = <span class="number">1574041125</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( v8 == <span class="number">131555431</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">if</span> ( v8 != <span class="number">1574041125</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">        ;</span><br><span class="line">    &#125;</span><br><span class="line">    sub_8228(v12, a3 + <span class="number">16</span> * v11, &amp;a1[<span class="number">16</span> * v11]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> _stack_chk_guard - v13;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 首先我们知道，sub_8228是AES的具体运算程序，刚才Hook确认了这一点。而密钥编排一般发生在具 体运算前面，即早于sub_8228。整个函数体内，就只有sub_72BC 一个函数了，那也可能在sub_8B3C外层。更重要的线索是它的参数3，128。AES 存在128&#x2F;192&#x2F;256 三种密钥的规格，这里就是在指定AES的规格，并生成对应的轮密钥。 char v12[280]; v12是一个较大的数组，用于存放生成轮密钥的结果。<br />那么可以大胆猜测sub_8B3C的a2就是十六字节长的AES-128密钥。进而参数1就是 十六字节的输入。  <br />对 sub_8B3C 进行断点查看参数<br /><br> <img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/19.webp"
+                     
+                ><br> <br />密钥是30292827262524232221000000000000，暂时不知道是加密还是解密，结果是 767134374864394a5567664443797443（vq47Hd9JUgfDCytC）<br />看看加密过程对的上吗<br /><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/20.webp"
+                     
+                ><br> <br />因为aes会对明文进行填充，它会自动按照PKCS7约定，再次填充一个分组的长度，输出也是两个分组的结果。  这里结果a7488462036f15054005472d6f487c67才是对的，后面是填充后的分组加密而来的可以不用管<br />跟我们上面的 sub_8B3C 的参数一是一致的，说明 vq47Hd9JUgfDCytC 是由明文a7488462036f15054005472d6f487c67，密钥30292827262524232221000000000000解密而来的</p>
+<p>我们这里做一个讨论，如何从一个小的线索点，分析出AES的全貌。<br />以 sub_72BC(v12, a2, 128); 为例，我们猜测它是密钥编排函数，那么如何快速验证呢？ <br />我Hook 入参时a2指向的十六字节，以及函数结束后v13指向的176字节（因为是AES-128，所以轮密钥 是4*44）。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hook72bc</span><span class="params">()</span>&#123;</span><br><span class="line">    emulator.attach().addBreakPoint(<span class="keyword">module</span>.base + <span class="number">0x72bc</span>, <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">        UnidbgPointer v12;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">            <span class="type">RegisterContext</span> <span class="variable">registerContext</span> <span class="operator">=</span> emulator.getContext();</span><br><span class="line">            <span class="type">UnidbgPointer</span> <span class="variable">a2</span> <span class="operator">=</span> registerContext.getPointerArg(<span class="number">1</span>);</span><br><span class="line">            v12 = registerContext.getPointerArg(<span class="number">0</span>);</span><br><span class="line">            Inspector.inspect(a2.getByteArray(<span class="number">0</span>, <span class="number">0x10</span>), <span class="string">&quot;key &quot;</span> + a2.toString());</span><br><span class="line">            <span class="comment">// 函数结束对v12hook查看</span></span><br><span class="line">            emulator.attach().addBreakPoint(registerContext.getLRPointer().peer, <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">                    Inspector.inspect(v12.getByteArray(<span class="number">0</span>, <span class="number">176</span>), <span class="string">&quot;Round Key &quot;</span>+v12.toString());</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;-----------------------------------------------------------------------------&lt;</span><br><span class="line">[<span class="number">17</span>:<span class="number">01</span>:<span class="number">35</span> <span class="number">327</span>]key unidbg@<span class="number">0xbffff3d8</span>, md5=037ff8eefc91404afaed9fa22e282e3f, hex=<span class="number">30292827262524232221000000000000</span></span><br><span class="line">size: <span class="number">16</span></span><br><span class="line"><span class="number">0000</span>: <span class="number">30</span> <span class="number">29</span> <span class="number">28</span> <span class="number">27</span> <span class="number">26</span> <span class="number">25</span> <span class="number">24</span> <span class="number">23</span> <span class="number">22</span> <span class="number">21</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    <span class="number">0</span>)(<span class="string">&#x27;&amp;%$#&quot;!......</span></span><br><span class="line"><span class="string">^-----------------------------------------------------------------------------^</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&gt;-----------------------------------------------------------------------------&lt;</span></span><br><span class="line"><span class="string">[17:01:35 336]Round Key unidbg@0xbffff290, md5=159aaceb29acbcbd8d87b091ce103546, hex=0a00000098f2ffbf30292827262524232221000000000000524a4b44746f6f67564e6f67564e6f677fe2cef50b8da1925dc3cef50b8da19226d081de2d5d204c709eeeb97b134f2b535470ff7e0950b30e97be0a7584f1211cf58d6262fcddd16c6b63db19ef92fae3baa0b681467d67ed2d1ebcf4c28c4686defa090798876eeab599d21e771594f387d87bf41f5f151eaac6c700ddd35329e13518ddfe6a0dc354accac3897f99b833db3665cdb13b</span></span><br><span class="line"><span class="string">size: 176</span></span><br><span class="line"><span class="string">0000: 0A 00 00 00 98 F2 FF BF 30 29 28 27 26 25 24 23    ........0)(&#x27;</span>&amp;%$#</span><br><span class="line"><span class="number">0010</span>: <span class="number">22</span> <span class="number">21</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">52</span> 4A 4B <span class="number">44</span> <span class="number">74</span> <span class="number">6F</span> <span class="number">6F</span> <span class="number">67</span>    <span class="string">&quot;!......RJKDtoog</span></span><br><span class="line"><span class="string">0020: 56 4E 6F 67 56 4E 6F 67 7F E2 CE F5 0B 8D A1 92    VNogVNog........</span></span><br><span class="line"><span class="string">0030: 5D C3 CE F5 0B 8D A1 92 26 D0 81 DE 2D 5D 20 4C    ].......&amp;...-] L</span></span><br><span class="line"><span class="string">0040: 70 9E EE B9 7B 13 4F 2B 53 54 70 FF 7E 09 50 B3    p...&#123;.O+STp.~.P.</span></span><br><span class="line"><span class="string">0050: 0E 97 BE 0A 75 84 F1 21 1C F5 8D 62 62 FC DD D1    ....u..!...bb...</span></span><br><span class="line"><span class="string">0060: 6C 6B 63 DB 19 EF 92 FA E3 BA A0 B6 81 46 7D 67    lkc..........F&#125;g</span></span><br><span class="line"><span class="string">0070: ED 2D 1E BC F4 C2 8C 46 86 DE FA 09 07 98 87 6E    .-.....F.......n</span></span><br><span class="line"><span class="string">0080: EA B5 99 D2 1E 77 15 94 F3 87 D8 7B F4 1F 5F 15    .....w.....&#123;.._.</span></span><br><span class="line"><span class="string">0090: 1E AA C6 C7 00 DD D3 53 29 E1 35 18 DD FE 6A 0D    .......S).5...j.</span></span><br><span class="line"><span class="string">00A0: C3 54 AC CA C3 89 7F 99 B8 33 DB 36 65 CD B1 3B    .T.......3.6e..;</span></span><br><span class="line"><span class="string">^-----------------------------------------------------------------------------^</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<p> RoundKey 的结果像是一个结构体，两个int组成，第一个是0x0000000a，即代表了AES-128的十轮运 算，第二个是指针，值为0xbffff298，是v12往后偏移八个字节。  <br /> 我们不妨修改一下hook72bc，看一下0xbffff298具体打印什么  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hook72bc</span><span class="params">()</span>&#123;</span><br><span class="line">    emulator.attach().addBreakPoint(<span class="keyword">module</span>.base + <span class="number">0x72bc</span>, <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">        UnidbgPointer v12;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">            <span class="type">RegisterContext</span> <span class="variable">registerContext</span> <span class="operator">=</span> emulator.getContext();</span><br><span class="line">            <span class="type">UnidbgPointer</span> <span class="variable">a2</span> <span class="operator">=</span> registerContext.getPointerArg(<span class="number">1</span>);</span><br><span class="line">            v12 = registerContext.getPointerArg(<span class="number">0</span>);</span><br><span class="line">            Inspector.inspect(a2.getByteArray(<span class="number">0</span>, <span class="number">0x10</span>), <span class="string">&quot;key &quot;</span> + a2.toString());</span><br><span class="line">            <span class="comment">// 函数结束对v12hook查看</span></span><br><span class="line">            emulator.attach().addBreakPoint(registerContext.getLRPointer().peer, <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">                    <span class="comment">//Inspector.inspect(v12.getByteArray(0, 176), &quot;Round Key &quot;+v12.toString());</span></span><br><span class="line">                    Inspector.inspect(v12.getByteArray(<span class="number">8</span>, <span class="number">176</span>), <span class="string">&quot;Round Key &quot;</span>+v12.toString());</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 结果如下  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">17</span>:<span class="number">20</span>:<span class="number">19</span> <span class="number">949</span>]key unidbg@<span class="number">0xbffff3d8</span>, md5=037ff8eefc91404afaed9fa22e282e3f, hex=<span class="number">30292827262524232221000000000000</span></span><br><span class="line">size: <span class="number">16</span></span><br><span class="line"><span class="number">0000</span>: <span class="number">30</span> <span class="number">29</span> <span class="number">28</span> <span class="number">27</span> <span class="number">26</span> <span class="number">25</span> <span class="number">24</span> <span class="number">23</span> <span class="number">22</span> <span class="number">21</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    <span class="number">0</span>)(<span class="string">&#x27;&amp;%$#&quot;!......</span></span><br><span class="line"><span class="string">^-----------------------------------------------------------------------------^</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&gt;-----------------------------------------------------------------------------&lt;</span></span><br><span class="line"><span class="string">[17:20:19 957]Round Key unidbg@0xbffff290, md5=1a32868f8f948e426e209b5995588178, hex=30292827262524232221000000000000524a4b44746f6f67564e6f67564e6f677fe2cef50b8da1925dc3cef50b8da19226d081de2d5d204c709eeeb97b134f2b535470ff7e0950b30e97be0a7584f1211cf58d6262fcddd16c6b63db19ef92fae3baa0b681467d67ed2d1ebcf4c28c4686defa090798876eeab599d21e771594f387d87bf41f5f151eaac6c700ddd35329e13518ddfe6a0dc354accac3897f99b833db3665cdb13ba6991df165106268</span></span><br><span class="line"><span class="string">size: 176</span></span><br><span class="line"><span class="string">0000: 30 29 28 27 26 25 24 23 22 21 00 00 00 00 00 00    0)(&#x27;</span>&amp;%$#<span class="string">&quot;!......</span></span><br><span class="line"><span class="string">0010: 52 4A 4B 44 74 6F 6F 67 56 4E 6F 67 56 4E 6F 67    RJKDtoogVNogVNog</span></span><br><span class="line"><span class="string">0020: 7F E2 CE F5 0B 8D A1 92 5D C3 CE F5 0B 8D A1 92    ........].......</span></span><br><span class="line"><span class="string">0030: 26 D0 81 DE 2D 5D 20 4C 70 9E EE B9 7B 13 4F 2B    &amp;...-] Lp...&#123;.O+</span></span><br><span class="line"><span class="string">0040: 53 54 70 FF 7E 09 50 B3 0E 97 BE 0A 75 84 F1 21    STp.~.P.....u..!</span></span><br><span class="line"><span class="string">0050: 1C F5 8D 62 62 FC DD D1 6C 6B 63 DB 19 EF 92 FA    ...bb...lkc.....</span></span><br><span class="line"><span class="string">0060: E3 BA A0 B6 81 46 7D 67 ED 2D 1E BC F4 C2 8C 46    .....F&#125;g.-.....F</span></span><br><span class="line"><span class="string">0070: 86 DE FA 09 07 98 87 6E EA B5 99 D2 1E 77 15 94    .......n.....w..</span></span><br><span class="line"><span class="string">0080: F3 87 D8 7B F4 1F 5F 15 1E AA C6 C7 00 DD D3 53    ...&#123;.._........S</span></span><br><span class="line"><span class="string">0090: 29 E1 35 18 DD FE 6A 0D C3 54 AC CA C3 89 7F 99    ).5...j..T......</span></span><br><span class="line"><span class="string">00A0: B8 33 DB 36 65 CD B1 3B A6 99 1D F1 65 10 62 68    .3.6e..;....e.bh</span></span><br><span class="line"><span class="string">^-----------------------------------------------------------------------------^</span></span><br></pre></td></tr></table></figure>
+
+<p> 首先我们就可以确定，这就是密钥编排的结果，这是我们根据AES-128的编排性质推断出来的。 </p>
+<ul>
+<li>轮密钥的前十六个字节就是主密钥，完全符合 </li>
+<li>十六个字节后面的编排规则，以行为单位看的话，前四个字节较为复杂，后十二字节只是简单异 或。如下验证</li>
+</ul>
+<p>密钥 30 29 28 27 26 25 24 23 22 21 00 00 00 00 00 00<br />按照密钥的编排 4个字节一组<br />W0 30 29 28 27<br />W1 26 25 24 23<br />W2 22 21 00 00<br />W3 00 00 00 00<br />根据结果我们也可以看出<br />W4 &#x3D; 52 4A 4B 44<br />W5 &#x3D; 74 6F 6F 67<br />验证可以得到 W4 xor W1 &#x3D; W5</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\zsk&gt;python</span><br><span class="line">Python <span class="number">3.8</span><span class="number">.10</span> (tags/v3<span class="number">.8</span><span class="number">.10</span>:3d8993a, May  <span class="number">3</span> <span class="number">2021</span>, <span class="number">11</span>:<span class="number">48</span>:<span class="number">03</span>) [MSC v<span class="number">.1928</span> <span class="number">64</span> bit (AMD64)] on win32</span><br><span class="line">Type <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> or <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt; hex(<span class="number">0x524A4B44</span>^<span class="number">0x26252423</span>)</span><br><span class="line"><span class="string">&#x27;0x746f6f67&#x27;</span></span><br></pre></td></tr></table></figure>
+<p> 确实符合编排的规律。  <br /><br><strong><font color="red">因此可以认定 72bc 就是密钥编排函数，并确定了密钥。怎么仅从这个线索，推出输入呢？</strong></font></p>
+<ul>
+<li><strong><font color="red">如果是加密，那么对K0做traceRead可以定位到算法的输入，对K10做traceRead，其运算结果就是算法 的输出。</strong></font></li>
+<li><strong><font color="red">如果是解密，那么对K0做traceRead可以定位算法的输出，对K10做traceRead，其运算结果就是算法的 输入。</strong></font></li>
+</ul>
+<p><strong><font color="red">换个情况，如果只知道算法的输入，该怎么确认密钥呢？</strong></font></p>
+<ul>
+<li><strong><font color="red">如果是加密，那么对算法的输入做traceRead，可以定位到K0，在AES-128上意味着主密钥；</strong></font></li>
+<li><strong><font color="red">如果是CBC 模式，那么定位到IV。 如果是解密，那么对算法的输入做traceRead，可以定位到K10，使用stark 逆推主密钥。</strong></font></li>
+</ul>
+<p><strong><font color="red">再换个情况，如果只知道算法的输出，该怎么确认其他要素？</strong></font></p>
+<ul>
+<li><strong><font color="red">如果是加密过程，对算法的输出做traceWrite，运算的双方中有一方是K10。</strong></font> </li>
+<li><strong><font color="red">如果是解密过程，对算法的输出做traceWrite，运算的双方中有一方是K0。</strong></font></li>
+</ul>
+<p>下面考虑Key和密文哪里来的 在sub_8B3C打断点，查看堆栈，发现都位于 sub_A298  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> __fastcall <span class="title">sub_A298</span><span class="params">(<span class="type">void</span> *a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> v1; <span class="comment">// r9</span></span><br><span class="line">    <span class="type">int</span> v3; <span class="comment">// r11</span></span><br><span class="line">    <span class="type">int</span> i; <span class="comment">// r0</span></span><br><span class="line">    <span class="type">int</span> v6; <span class="comment">// [sp+0h] [bp-78h]</span></span><br><span class="line">    <span class="type">int</span> v7; <span class="comment">// [sp+4h] [bp-74h]</span></span><br><span class="line">    _QWORD v8[<span class="number">2</span>]; <span class="comment">// [sp+8h] [bp-70h] BYREF</span></span><br><span class="line">    <span class="type">char</span> v9[<span class="number">20</span>]; <span class="comment">// [sp+18h] [bp-60h] BYREF</span></span><br><span class="line">    _QWORD v10[<span class="number">2</span>]; <span class="comment">// [sp+30h] [bp-48h] BYREF</span></span><br><span class="line">    <span class="type">char</span> v11[<span class="number">20</span>]; <span class="comment">// [sp+40h] [bp-38h] BYREF</span></span><br><span class="line">    <span class="type">int</span> v12; <span class="comment">// [sp+58h] [bp-20h]</span></span><br><span class="line"></span><br><span class="line">    v3 = <span class="number">0</span>;</span><br><span class="line">    v10[<span class="number">0</span>] = unk_45688;</span><br><span class="line">    v10[<span class="number">1</span>] = unk_45690;</span><br><span class="line">    <span class="built_in">strcpy</span>(v11, <span class="string">&quot;                &quot;</span>);</span><br><span class="line">    v8[<span class="number">0</span>] = unk_45CF0;</span><br><span class="line">    v8[<span class="number">1</span>] = unk_45CF8;</span><br><span class="line">    <span class="built_in">strcpy</span>(v9, <span class="string">&quot;                &quot;</span>);</span><br><span class="line">    <span class="built_in">memset</span>(a1, <span class="number">0</span>, <span class="number">0x100</span>u);</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">1282341844</span>; ; i = <span class="number">1282341844</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span> ( i != <span class="number">967467364</span> )</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> ( i == <span class="number">1282341844</span> )</span><br><span class="line">                    &#123;</span><br><span class="line">                        v6 = v3;</span><br><span class="line">                        i = <span class="number">1618205161</span>;</span><br><span class="line">                        <span class="keyword">if</span> ( v3 &lt; <span class="number">32</span> )</span><br><span class="line">                            i = <span class="number">-1314423687</span>;</span><br><span class="line">                        <span class="keyword">if</span> ( i &lt;= <span class="number">967467363</span> )</span><br><span class="line">                            <span class="keyword">goto</span> LABEL_15;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        v1 = <span class="number">0</span>;</span><br><span class="line">                        LABEL_14:</span><br><span class="line">                        i = <span class="number">967467364</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            v7 = v1;</span><br><span class="line">            i = <span class="number">-688078044</span>;</span><br><span class="line">            <span class="keyword">if</span> ( v1 &lt; <span class="number">32</span> )</span><br><span class="line">                i = <span class="number">-1194610101</span>;</span><br><span class="line">            LABEL_15:</span><br><span class="line">            <span class="keyword">if</span> ( i != <span class="number">-1314423687</span> )</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            *((_BYTE *)v8 + v6) = (*((_BYTE *)v8 + v6) &amp; <span class="number">0x8E</span> | ~*((_BYTE *)v8 + v6) &amp; <span class="number">0x71</span>) ^ <span class="number">0x51</span>;</span><br><span class="line">            v3 = v6 + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">if</span> ( i == <span class="number">-1194610101</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        *((_BYTE *)v10 + v7) = (~*((_BYTE *)v10 + v7) &amp; <span class="number">0xE9</span> | *((_BYTE *)v10 + v7) &amp; <span class="number">0x16</span>) ^ <span class="number">0xC9</span>;</span><br><span class="line">        v1 = v7 + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">goto</span> LABEL_14;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sub_8B3C</span>((<span class="type">const</span> <span class="type">char</span> *)v10, (<span class="type">int</span>)v8, (<span class="type">int</span>)a1);</span><br><span class="line">    <span class="keyword">return</span> _stack_chk_guard - v12;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 其中v10 ， 前八个字节来自0x45688，后八个字节来自0x45690。因为这两个八字节是紧连着的，所以可 以一并看。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.rodata:<span class="number">00045688</span> <span class="number">87</span>                            unk_45688 DCB <span class="number">0x87</span>                      ; DATA XREF: sub_A298+E↑o</span><br><span class="line">.rodata:<span class="number">00045688</span>                                                                       ; sub_A298+<span class="number">18</span>↑o</span><br><span class="line">.rodata:<span class="number">00045688</span>                                                                       ; .text:off_A424↑o</span><br><span class="line">.rodata:<span class="number">00045689</span> <span class="number">68</span>                            DCB <span class="number">0x68</span> ; h</span><br><span class="line">.rodata:<span class="number">0004568</span>A A4                            DCB <span class="number">0xA4</span></span><br><span class="line">.rodata:<span class="number">0004568B</span> <span class="number">42</span>                            DCB <span class="number">0x42</span> ; B</span><br><span class="line">.rodata:<span class="number">0004568</span>C <span class="number">23</span>                            DCB <span class="number">0x23</span> ; #</span><br><span class="line">.rodata:<span class="number">0004568</span>D <span class="number">4F</span>                            DCB <span class="number">0x4F</span> ; O</span><br><span class="line">.rodata:<span class="number">0004568</span>E <span class="number">35</span>                            DCB <span class="number">0x35</span> ; <span class="number">5</span></span><br><span class="line">.rodata:<span class="number">0004568F</span> <span class="number">25</span>                            DCB <span class="number">0x25</span> ; %</span><br><span class="line">.rodata:<span class="number">00045690</span> <span class="number">60</span>                            unk_45690 DCB <span class="number">0x60</span> ; `</span><br><span class="line">.rodata:<span class="number">00045691</span> <span class="number">25</span>                            DCB <span class="number">0x25</span> ; %</span><br><span class="line">.rodata:<span class="number">00045692</span> <span class="number">67</span>                            DCB <span class="number">0x67</span> ; g</span><br><span class="line">.rodata:<span class="number">00045693</span> <span class="number">0</span>D                            DCB  <span class="number">0xD</span></span><br><span class="line">.rodata:<span class="number">00045694</span> <span class="number">4F</span>                            DCB <span class="number">0x4F</span> ; O</span><br><span class="line">.rodata:<span class="number">00045695</span> <span class="number">68</span>                            DCB <span class="number">0x68</span> ; h</span><br><span class="line">.rodata:<span class="number">00045696</span> <span class="number">5</span>C                            DCB <span class="number">0x5C</span> ; \</span><br><span class="line">.rodata:<span class="number">00045697</span> <span class="number">47</span>                            DCB <span class="number">0x47</span> ; G</span><br></pre></td></tr></table></figure>
+
+<p> 在逐字节经过如下处理后成为我们的密文  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*((_BYTE *)v10 + v7) = (~*((_BYTE *)v10 + v7) &amp; <span class="number">0xE9</span> | *((_BYTE *)v10 + v7) &amp; <span class="number">0x16</span>) ^ <span class="number">0xC9</span>;</span><br></pre></td></tr></table></figure>
+<p> <br />而密钥也一样，前八个字节来自0x45CF0，后八个字节来自0x45CF8。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">.rodata:<span class="number">00045</span>CF0 <span class="number">10</span>                            unk_45CF0 DCB <span class="number">0x10</span>                      ; DATA XREF: sub_A298+<span class="number">24</span>↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; sub_A298+<span class="number">2</span>C↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; .text:off_A428↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; sub_A430+<span class="number">50</span>↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; sub_A430+<span class="number">5</span>E↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; .text:off_A5D0↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; sub_A5D8+<span class="number">4</span>E↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; sub_A5D8+<span class="number">5</span>C↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; .text:off_A770↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; sub_A778+<span class="number">4</span>E↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; sub_A778+<span class="number">5</span>C↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; .text:off_A910↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; sub_A918+<span class="number">50</span>↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; sub_A918+<span class="number">5</span>E↑o</span><br><span class="line">.rodata:<span class="number">00045</span>CF0                                                                       ; .text:off_AAA4↑o ...</span><br><span class="line">.rodata:<span class="number">00045</span>CF1 <span class="number">09</span>                            DCB    <span class="number">9</span></span><br><span class="line">.rodata:<span class="number">00045</span>CF2 <span class="number">08</span>                            DCB    <span class="number">8</span></span><br><span class="line">.rodata:<span class="number">00045</span>CF3 <span class="number">07</span>                            DCB    <span class="number">7</span></span><br><span class="line">.rodata:<span class="number">00045</span>CF4 <span class="number">06</span>                            DCB    <span class="number">6</span></span><br><span class="line">.rodata:<span class="number">00045</span>CF5 <span class="number">05</span>                            DCB    <span class="number">5</span></span><br><span class="line">.rodata:<span class="number">00045</span>CF6 <span class="number">04</span>                            DCB    <span class="number">4</span></span><br><span class="line">.rodata:<span class="number">00045</span>CF7 <span class="number">03</span>                            DCB    <span class="number">3</span></span><br><span class="line">.rodata:<span class="number">00045</span>CF8 <span class="number">02</span>                            unk_45CF8 DCB    <span class="number">2</span></span><br><span class="line">.rodata:<span class="number">00045</span>CF9 <span class="number">01</span>                            DCB    <span class="number">1</span></span><br><span class="line">.rodata:<span class="number">00045</span>CFA <span class="number">20</span>                            DCB <span class="number">0x20</span></span><br><span class="line">.rodata:<span class="number">00045</span>CFB <span class="number">20</span>                            DCB <span class="number">0x20</span></span><br><span class="line">.rodata:<span class="number">00045</span>CFC <span class="number">20</span>                            DCB <span class="number">0x20</span></span><br><span class="line">.rodata:<span class="number">00045</span>CFD <span class="number">20</span>                            DCB <span class="number">0x20</span></span><br><span class="line">.rodata:<span class="number">00045</span>CFE <span class="number">20</span>                            DCB <span class="number">0x20</span></span><br><span class="line">.rodata:<span class="number">00045</span>CFF <span class="number">20</span>                            DCB <span class="number">0x20</span></span><br></pre></td></tr></table></figure>
+<p> 它经过了如下逐字节的处理  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*((_BYTE *)v8 + v6) = (*((_BYTE *)v8 + v6) &amp; <span class="number">0x8E</span> | ~*((_BYTE *)v8 + v6) &amp; <span class="number">0x71</span>) ^ <span class="number">0x51</span>;</span><br></pre></td></tr></table></figure>
+<p> 看起来有些云里雾里的，这是Ollvm中指令替换的功劳。  <br /> 真正功能上而言，只是SO中硬编码的两串十六进制字节，在异或0x20后，就成为了密文和Key，在运行 时AES解密出明文，作为MD5的盐。  <br /> 我们以Key为例，它的完整流程如下（下面均为十六进制字节）  <br /> 首先，Key是 30 29 28 27 26 25 24 23 22 21 00 00 00 00 00 00，开发者不希望硬编码在SO里，所以先 将它异或0x20，在SO中硬编码即 10 09 08 07 06 05 04 03 02 01 20 20 20 20 20 20。  <br /> 然后在使用时，将这么一串异或0x20，因为异或两次等于自身，所以Key重新变成30 29 28 27 26 25 24 23 22 21 00 00 00 00 00 00，正常参与运算。  </p>
+<p> 那么下面这两种运算，其功能都等价于单字节异或0x20，怎么变成这个样子了呢？  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*((_BYTE *)v10 + v7) = (~*((_BYTE *)v10 + v7) &amp; <span class="number">0xE9</span> | *((_BYTE *)v10 + v7) &amp; <span class="number">0x16</span>) ^ <span class="number">0xC9</span>;</span><br><span class="line">*((_BYTE *)v8 + v6) = (*((_BYTE *)v8 + v6) &amp; <span class="number">0x8E</span> | ~*((_BYTE *)v8 + v6) &amp; <span class="number">0x71</span>) ^ <span class="number">0x51</span>;</span><br></pre></td></tr></table></figure>
+<p> <br />这就是指令替换的目的，将简单的加减乘除、异或、与等运算，替换成等价但更复杂的指令序列。  <br />演示一下这个过程 <br />S &#x3D; A ^ B <br />异或0不影响结果 <br />S &#x3D; A ^ B ^ 0 <br />0可以展开成C ^ C <br />S &#x3D; A ^ B ^ C ^ C <br />做一下简单的分配 <br />S &#x3D; (A^C)^(B^C) <br />两数异或时可以等价替换如下，可以自行验证。  <br /> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a ^ b =&gt; (~a &amp; b) | (a &amp; ~b) </span><br></pre></td></tr></table></figure>
+<p>那么</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = (~A &amp; C) | (A &amp; ~C) ^ (~B &amp; C) | (B &amp; ~C)</span><br></pre></td></tr></table></figure>
+<br />  
+ 回到 S = A ^ B，假设A 就是我们的待处理数据，B是0x20，即将数据和0x20异或，我们再选择C为0xE9 
+ 
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = (~A &amp; 0xE9) | (A &amp; ~0xE9) ^ (~0x20 &amp; 0xE9) | (0x20 &amp; ~0xE9)</span><br></pre></td></tr></table></figure>
+<p> <br /> 0xE9 在取反后即 0x16，而异或的另外一方，因为不存在未知数，编译器会直接优化计算出结果  <br /></p>
+<p> <img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20230109/21.webp"
+                     
+                ></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = (~A &amp; 0xE9) | (A &amp; 0xE9) ^ 0xC9</span><br></pre></td></tr></table></figure>
+<p>  <br /> A 代入 *((_BYTE *)v10 + v7) 不就是 <br /></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*((_BYTE *)v10 + v7) = (~*((_BYTE *)v10 + v7) &amp; 0xE9) | (*((_BYTE *)v10 + v7) &amp; 0xE9) ^ 0xC9</span><br></pre></td></tr></table></figure>
+<p>A 代入 *((_BYTE *)v8 + v6) ，C 为0x71时，就是 另一个式子。 <br />本质上，两者都是逐字节与0x20异或。  </p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.douyu;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.AndroidEmulator;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.Emulator;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.Module;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.arm.backend.Backend;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.arm.backend.CodeHook;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.arm.backend.UnHook;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.arm.context.RegisterContext;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.debugger.BreakPointCallback;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidEmulatorBuilder;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidResolver;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.*;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.array.ArrayObject;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.memory.Memory;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.pointer.UnidbgPointer;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.utils.Inspector;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DouYu</span> <span class="keyword">extends</span> <span class="title class_">AbstractJni</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AndroidEmulator emulator;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> VM vm;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Module <span class="keyword">module</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">DouYu</span><span class="params">()</span>&#123;</span><br><span class="line">        emulator = AndroidEmulatorBuilder.for32Bit().build();</span><br><span class="line">        <span class="type">Memory</span> <span class="variable">memory</span> <span class="operator">=</span> emulator.getMemory();</span><br><span class="line">        memory.setLibraryResolver(<span class="keyword">new</span> <span class="title class_">AndroidResolver</span>(<span class="number">23</span>));</span><br><span class="line">        vm = emulator.createDalvikVM(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/douyu.apk&quot;</span>));</span><br><span class="line">        vm.setVerbose(<span class="literal">true</span>);</span><br><span class="line">        vm.setJni(<span class="built_in">this</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">DalvikModule</span> <span class="variable">dm_shared</span> <span class="operator">=</span> vm.loadLibrary(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/libc++_shared.so&quot;</span>), <span class="literal">true</span>);</span><br><span class="line">        dm_shared.callJNI_OnLoad(emulator);</span><br><span class="line"></span><br><span class="line">        <span class="type">DalvikModule</span> <span class="variable">dm</span> <span class="operator">=</span> vm.loadLibrary(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/demo/douyu/libmakeurl2.5.0.so&quot;</span>), <span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">module</span> = dm.getModule();</span><br><span class="line">        dm.callJNI_OnLoad(emulator);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// NewStringUTF断点</span></span><br><span class="line">        <span class="comment">//emulator.attach().addBreakPoint(module.base + 0x336c);</span></span><br><span class="line">        <span class="comment">// 监控地址写入, auth的32个字节所处的地址， 401d20a0 + len(aid=android1&amp;client_sys=android&amp;time=1638452332&amp;auth=)</span></span><br><span class="line">        <span class="comment">//emulator.traceWrite(0x401D20D5, 0x401D20D5+0x20);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 监控strcat函数，看结果是在哪里写入的</span></span><br><span class="line">        <span class="comment">//emulator.traceWrite(0xbffff69bL, 0xbffff69bL+0x20);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对 vq47Hd9JUgfDCytC 做traceWrite</span></span><br><span class="line">        <span class="comment">//emulator.traceWrite(0xbffff500L, 0xbffff69bL+0x20);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对 vq47Hd9JUgfDCytC 出现的位置函数 sub_8228(unsigned __int64 a1, _QWORD *a2) 进行断点</span></span><br><span class="line">        <span class="comment">//emulator.attach().addBreakPoint(module.base + 0x8228);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对调用生成 vq47Hd9JUgfDCytC 函数的上一级断点</span></span><br><span class="line">        emulator.attach().addBreakPoint(<span class="keyword">module</span>.base + <span class="number">0x8B3C</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getMakeUrl</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// args list</span></span><br><span class="line">        List&lt;Object&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(<span class="number">10</span>);</span><br><span class="line">        <span class="comment">// arg1 env</span></span><br><span class="line">        list.add(vm.getJNIEnv());</span><br><span class="line">        <span class="comment">// arg2 jobject/jclazz 一般用不到，直接填0</span></span><br><span class="line">        list.add(<span class="number">0</span>);</span><br><span class="line">        DvmObject&lt;?&gt; context = vm.resolveClass(<span class="string">&quot;android/content/Context&quot;</span>).newObject(<span class="literal">null</span>);</span><br><span class="line">        list.add(vm.addLocalObject(context));</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>)));</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input3_1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;aid&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input3_2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;client_sys&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input3_3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;time&quot;</span>);</span><br><span class="line">        vm.addLocalObject(input3_1);</span><br><span class="line">        vm.addLocalObject(input3_2);</span><br><span class="line">        vm.addLocalObject(input3_3);</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">ArrayObject</span>(input3_1, input3_2, input3_3)));</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input4_1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;android1&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input4_2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;android&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input4_3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;1673232015&quot;</span>);</span><br><span class="line">        vm.addLocalObject(input4_1);</span><br><span class="line">        vm.addLocalObject(input4_2);</span><br><span class="line">        vm.addLocalObject(input4_3);</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">ArrayObject</span>(input4_1, input4_2, input4_3)));</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_5</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_6</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_7</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_8</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_9</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_10</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_11</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_12</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input5_13</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        vm.addLocalObject(input5_1);</span><br><span class="line">        vm.addLocalObject(input5_2);</span><br><span class="line">        vm.addLocalObject(input5_3);</span><br><span class="line">        vm.addLocalObject(input5_4);</span><br><span class="line">        vm.addLocalObject(input5_5);</span><br><span class="line">        vm.addLocalObject(input5_6);</span><br><span class="line">        vm.addLocalObject(input5_7);</span><br><span class="line">        vm.addLocalObject(input5_8);</span><br><span class="line">        vm.addLocalObject(input5_9);</span><br><span class="line">        vm.addLocalObject(input5_10);</span><br><span class="line">        vm.addLocalObject(input5_11);</span><br><span class="line">        vm.addLocalObject(input5_12);</span><br><span class="line">        vm.addLocalObject(input5_13);</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">ArrayObject</span>(input5_1, input5_2, input5_3,input5_4, input5_5, input5_6,input5_7, input5_8, input5_9,input5_10, input5_11, input5_12,input5_13)));</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_5</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_6</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_7</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_8</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_9</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">StringObject</span> <span class="variable">input6_10</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        vm.addLocalObject(input6_1);</span><br><span class="line">        vm.addLocalObject(input6_2);</span><br><span class="line">        vm.addLocalObject(input6_3);</span><br><span class="line">        vm.addLocalObject(input6_4);</span><br><span class="line">        vm.addLocalObject(input6_5);</span><br><span class="line">        vm.addLocalObject(input6_6);</span><br><span class="line">        vm.addLocalObject(input6_7);</span><br><span class="line">        vm.addLocalObject(input6_8);</span><br><span class="line">        vm.addLocalObject(input6_9);</span><br><span class="line">        vm.addLocalObject(input6_10);</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">ArrayObject</span>(input6_1, input6_2, input6_3,input6_4, input6_5, input6_6,input6_7, input6_8, input6_9,input6_10)));</span><br><span class="line">        list.add(<span class="number">0</span>);</span><br><span class="line">        list.add(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 参数准备完成</span></span><br><span class="line">        <span class="comment">// call function</span></span><br><span class="line">        <span class="type">Number</span> <span class="variable">number</span> <span class="operator">=</span> <span class="keyword">module</span>.callFunction(emulator, <span class="number">0x2f91</span>, list.toArray());</span><br><span class="line">        <span class="keyword">return</span> vm.getObject(number.intValue()).getValue().toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">traceLength</span><span class="params">()</span> &#123;</span><br><span class="line">        emulator.getBackend().hook_add_new(<span class="keyword">new</span> <span class="title class_">CodeHook</span>() &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hook</span><span class="params">(Backend backend, <span class="type">long</span> address, <span class="type">int</span> size, Object user)</span> &#123;</span><br><span class="line">                count += <span class="number">1</span>;</span><br><span class="line">                System.out.println(count);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onAttach</span><span class="params">(UnHook unHook)</span> &#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">detach</span><span class="params">()</span> &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="keyword">module</span>.base, <span class="keyword">module</span>.size + <span class="keyword">module</span>.base, <span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hookStrCat</span><span class="params">()</span>&#123;</span><br><span class="line">        emulator.attach().addBreakPoint(<span class="keyword">module</span>.findSymbolByName(<span class="string">&quot;strcat&quot;</span>,</span><br><span class="line">                <span class="literal">true</span>).getAddress(), <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">                <span class="type">UnidbgPointer</span> <span class="variable">r1</span> <span class="operator">=</span> emulator.getContext().getPointerArg(<span class="number">1</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;strcat:&quot;</span>+ r1);</span><br><span class="line">                System.out.println(r1.getString(<span class="number">0</span>));</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hookMemcpy</span><span class="params">()</span>&#123;</span><br><span class="line">        emulator.attach().addBreakPoint(<span class="keyword">module</span>.findSymbolByName(<span class="string">&quot;memcpy&quot;</span>, <span class="literal">true</span>).getAddress(), <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">                <span class="type">UnidbgPointer</span> <span class="variable">r1</span> <span class="operator">=</span> emulator.getContext().getPointerArg(<span class="number">1</span>);</span><br><span class="line">                <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> emulator.getContext().getIntArg(<span class="number">2</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;memcpy&quot;</span>);</span><br><span class="line">                Inspector.inspect(r1.getByteArray(<span class="number">0</span>, length), r1.toString());</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hook72bc</span><span class="params">()</span>&#123;</span><br><span class="line">        emulator.attach().addBreakPoint(<span class="keyword">module</span>.base + <span class="number">0x72bc</span>, <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">            UnidbgPointer v12;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">                <span class="type">RegisterContext</span> <span class="variable">registerContext</span> <span class="operator">=</span> emulator.getContext();</span><br><span class="line">                <span class="type">UnidbgPointer</span> <span class="variable">a2</span> <span class="operator">=</span> registerContext.getPointerArg(<span class="number">1</span>);</span><br><span class="line">                v12 = registerContext.getPointerArg(<span class="number">0</span>);</span><br><span class="line">                Inspector.inspect(a2.getByteArray(<span class="number">0</span>, <span class="number">0x10</span>), <span class="string">&quot;key &quot;</span> + a2.toString());</span><br><span class="line">                <span class="comment">// 函数结束对v12hook查看</span></span><br><span class="line">                emulator.attach().addBreakPoint(registerContext.getLRPointer().peer, <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">                        <span class="comment">//Inspector.inspect(v12.getByteArray(0, 176), &quot;Round Key &quot;+v12.toString());</span></span><br><span class="line">                        Inspector.inspect(v12.getByteArray(<span class="number">8</span>, <span class="number">176</span>), <span class="string">&quot;Round Key &quot;</span>+v12.toString());</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">DouYu</span> <span class="variable">douYu</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DouYu</span>();</span><br><span class="line">        <span class="comment">//douYu.traceLength();</span></span><br><span class="line">        <span class="comment">//douYu.hookStrCat();</span></span><br><span class="line">        <span class="comment">//douYu.hookMemcpy();</span></span><br><span class="line">        <span class="comment">//douYu.hook72bc();</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">makeUrl</span> <span class="operator">=</span> douYu.getMakeUrl();</span><br><span class="line">        System.out.println(<span class="string">&quot;result:&quot;</span>+ makeUrl);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                某鱼直播软件使用unidbg算法分析
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/57348/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2023-01-09 19:24</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">安卓逆向</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Unidbg/">Unidbg</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/17732/"
+                                   title="AES知道某一轮次密钥反推主密钥"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">AES知道某一轮次密钥反推主密钥</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/57259/"
+                                   title="对称加密算法AES的原理及分析"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">对称加密算法AES的原理及分析</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Unidbg-%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">Unidbg 模拟执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">完整代码</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2023
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">71.4k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Unidbg-%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">Unidbg 模拟执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">完整代码</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/local-search.js"></script>
+
+
+<!-- code-block -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/code-block.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/lazyload.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
+
+        <!-- toc -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
+        
+    
+
+    <!-- category-page -->
+    
+
+    <!-- links-page -->
+    
+</div>
+
+<!-- pjax -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+
+</body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+    <title>
+        
+            ClassLoader和动态加载 |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
+    
+        
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/head.svg","first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","server_urls":null,"placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"version":"3.8.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        ClassLoader和动态加载
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2023-10-04 02:49:07</span>
+                <span class="mobile">2023-10-04 02:49</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Wed Oct 04 2023 02:49:07 GMT+0800">2023-10-04 02:49:07</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E8%84%B1%E5%A3%B3/">脱壳</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.3k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>10 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <h3 id="三层类加载器"><a href="#三层类加载器" class="headerlink" title="三层类加载器"></a>三层类加载器</h3><h4 id="1-启动类加载器-Bootstrap-ClassLoader"><a href="#1-启动类加载器-Bootstrap-ClassLoader" class="headerlink" title="1. 启动类加载器  Bootstrap ClassLoader"></a>1. 启动类加载器  Bootstrap ClassLoader</h4><p>负责加载存在放<JAVA_HOME>\lib目录或者-Xbootclasspath指定的路径中存放的类库。比如java.lang、java.uti等这些系统类。<br>启动类加载器无法被java程序直接引用，但可以通过在自定义类加载器时将getClassLoader的返回值设为null  将加载请求委派给启动类加载器处理。</p>
+<h4 id="2-扩展类加载器-Extensions-ClassLoader"><a href="#2-扩展类加载器-Extensions-ClassLoader" class="headerlink" title="2. 扩展类加载器  Extensions ClassLoader"></a>2. 扩展类加载器  Extensions ClassLoader</h4><p>它负责加载<JAVA_HOME>\lib\ext目录中或者java.ext.dirs指定的路径下的类库。Java中实现类为ExtClassLoader，提供了除了系统类之外的额外功能，可以在java里获取。</p>
+<h4 id="3-应用程序类加载器-Application-ClassLoader"><a href="#3-应用程序类加载器-Application-ClassLoader" class="headerlink" title="3.应用程序类加载器  Application ClassLoader"></a>3.应用程序类加载器  Application ClassLoader</h4><p>负责加载用户类路径上的所有类库。该加载器可以通过ClassLoader的静态方法getSystemLoader获得。<br />java中的实现类为AppClassLoader，与我们接触最多的类加载器，也可以通过ClassLoader.getSystemClassLoader返回。<br /></p>
+<h4 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h4><p>需要通过继承java.lang.ClassLoader类的方式来实现自己的类加载器即可。<br>加载顺序Bootstrap ClassLoader、Extention ClassLoader、AppClassLoader。</p>
+<h3 id="双亲委派模式"><a href="#双亲委派模式" class="headerlink" title="双亲委派模式"></a>双亲委派模式</h3><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20231004/01.webp"
+                     
+                ></p>
+<p>双亲委派模式的工作原理是如果一个类加载器收到了累加器的请求，他并不会自己先去加载，而是把这个请求委托给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达顶层的启动类加载器，如果父类加载器可以完成加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派模式。<br /><br>好处：<br>1.避免重复加载，如果已经加载过一次class，可以直接读取已经加载的class。<br>2.更加安全，无法自定义类来替代系统的类，可以防止核心api库被随意篡改。</p>
+<p>这种机制天生就给java类划分了带优先级的层次关系，bootstrap classloader优先级最高。假设用户自己写了一个java.lang.object类，在加载时会加载请求会委派给bootstrap classloader，它会去<JAVA_HOME>\lib目录下加载jdk自带的java.lang.object类，这样不管用哪个类加载器去加载java.lang.object都会是同一个类。如果没有双亲委派的话，出现不同的java.lang.object类型，那么java类型体系中最基础的行为都无法保证。</p>
+<h3 id="Android系统中的ClassLoader的继承关系"><a href="#Android系统中的ClassLoader的继承关系" class="headerlink" title="Android系统中的ClassLoader的继承关系"></a>Android系统中的ClassLoader的继承关系</h3><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20231004/02.webp"
+                     
+                ></p>
+<p>Android系统中与ClassLoader相关的一共有8个：<br><strong>ClassLoader</strong>为抽象类。<br><strong>BootClassLoader</strong>预加载常用类继承自<strong>ClassLoader</strong>，单例模式。与Java中的<strong>BootClassLoader</strong>不同，并不是由C&#x2F;C++代码实现，而是由Java实现的。<br><strong>BaseDexClassLoader</strong>是<strong>PathCLassLoader</strong>、<strong>DexCLassLoader</strong>、<strong>InMemoryCLassLoader</strong>的父类，类加载器的主要逻辑都是在<strong>BaseDexClassLoader</strong>完成的。<br><strong>SecureClassLoader</strong>继承了抽象类<strong>CLassLoader</strong>，扩展了<strong>ClassLoader</strong>类加入了权限方面的功能，加强了安全性，其子类<strong>URLClassLOader</strong>是用URl路径和jar文件中加载类和资源。<br>其中重点关注<strong>PathCLassLoader</strong>、<strong>DexCLassLoader</strong><br><strong>PathClassLoader</strong>是Android默认使用的类加载器，一个apk中的Activity等类便是在其中加载。<br><strong>DexCLassLoader</strong>可以加载任意目录下的dex&#x2F;jar&#x2F;apl&#x2F;zip文件，比<strong>PathClassLoader</strong>更灵活，是实现插件化，热修复，以及dex加壳的重点。<br>Android8.0新引入<strong>InMemoryDexClassloader</strong>，从名字看出是直接从内存中加载dex<br /></p>
+<p>通过查看Android8.0的源码，ClassLoader是一个抽象类，里面还有个parent变量，这是实现双亲委派机制的关键。对于每个继承的ClassLoader的类，都有parent来表示父节点。还定义了final，只能进行一次赋值。对于实现插件化，热修复parent是一个关键的变量。<br>不带参的默认ClassLoader构造函数会将parent指定为systemClassLoader,也就是说在不指定 &lt;父&gt;classloader的情况下，而是每个加载器内部都有一个parent，代表它的父classloader。只有bootstrap classloader的parent为null。</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://github.com/Zskkk/blog-images/raw/master/20231004/03.webp"
+                     
+                ></p>
+<p>看下面PathCLassLoader、DexCLassLoader、InMemoryCLassLoader的源码都很少，主要逻辑都是在父类BaseDexClassLoader里。<br><strong>DexClassLoader</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DexClassLoader</span> <span class="keyword">extends</span> <span class="title class_">BaseDexClassLoader</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Creates a &#123;<span class="doctag">@code</span> DexClassLoader&#125; that finds interpreted and native</span></span><br><span class="line"><span class="comment">     * code.  Interpreted classes are found in a set of DEX files contained</span></span><br><span class="line"><span class="comment">     * in Jar or APK files.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;The path lists are separated using the character specified by the</span></span><br><span class="line"><span class="comment">     * &#123;<span class="doctag">@code</span> path.separator&#125; system property, which defaults to &#123;<span class="doctag">@code</span> :&#125;.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dexPath the list of jar/apk files containing classes and</span></span><br><span class="line"><span class="comment">     *     resources, delimited by &#123;<span class="doctag">@code</span> File.pathSeparator&#125;, which</span></span><br><span class="line"><span class="comment">     *     defaults to &#123;<span class="doctag">@code</span> &quot;:&quot;&#125; on Android</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> optimizedDirectory directory where optimized dex files</span></span><br><span class="line"><span class="comment">     *     should be written; must not be &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> librarySearchPath the list of directories containing native</span></span><br><span class="line"><span class="comment">     *     libraries, delimited by &#123;<span class="doctag">@code</span> File.pathSeparator&#125;; may be</span></span><br><span class="line"><span class="comment">     *     &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> parent the parent class loader</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">DexClassLoader</span><span class="params">(String dexPath, String optimizedDirectory,</span></span><br><span class="line"><span class="params">                          String librarySearchPath, ClassLoader parent)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(dexPath, <span class="keyword">new</span> <span class="title class_">File</span>(optimizedDirectory), librarySearchPath, parent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>PathClassLoader</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PathClassLoader</span> <span class="keyword">extends</span> <span class="title class_">BaseDexClassLoader</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Creates a &#123;<span class="doctag">@code</span> PathClassLoader&#125; that operates on a given list of files</span></span><br><span class="line"><span class="comment">     * and directories. This method is equivalent to calling</span></span><br><span class="line"><span class="comment">     * &#123;<span class="doctag">@link</span> #PathClassLoader(String, String, ClassLoader)&#125; with a</span></span><br><span class="line"><span class="comment">     * &#123;<span class="doctag">@code</span> null&#125; value for the second argument (see description there).</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dexPath the list of jar/apk files containing classes and</span></span><br><span class="line"><span class="comment">     * resources, delimited by &#123;<span class="doctag">@code</span> File.pathSeparator&#125;, which</span></span><br><span class="line"><span class="comment">     * defaults to &#123;<span class="doctag">@code</span> &quot;:&quot;&#125; on Android</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> parent the parent class loader</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">PathClassLoader</span><span class="params">(String dexPath, ClassLoader parent)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(dexPath, <span class="literal">null</span>, <span class="literal">null</span>, parent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Creates a &#123;<span class="doctag">@code</span> PathClassLoader&#125; that operates on two given</span></span><br><span class="line"><span class="comment">     * lists of files and directories. The entries of the first list</span></span><br><span class="line"><span class="comment">     * should be one of the following:</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * &lt;ul&gt;</span></span><br><span class="line"><span class="comment">     * &lt;li&gt;JAR/ZIP/APK files, possibly containing a &quot;classes.dex&quot; file as</span></span><br><span class="line"><span class="comment">     * well as arbitrary resources.</span></span><br><span class="line"><span class="comment">     * &lt;li&gt;Raw &quot;.dex&quot; files (not inside a zip file).</span></span><br><span class="line"><span class="comment">     * &lt;/ul&gt;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * The entries of the second list should be directories containing</span></span><br><span class="line"><span class="comment">     * native library files.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dexPath the list of jar/apk files containing classes and</span></span><br><span class="line"><span class="comment">     * resources, delimited by &#123;<span class="doctag">@code</span> File.pathSeparator&#125;, which</span></span><br><span class="line"><span class="comment">     * defaults to &#123;<span class="doctag">@code</span> &quot;:&quot;&#125; on Android</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> librarySearchPath the list of directories containing native</span></span><br><span class="line"><span class="comment">     * libraries, delimited by &#123;<span class="doctag">@code</span> File.pathSeparator&#125;; may be</span></span><br><span class="line"><span class="comment">     * &#123;<span class="doctag">@code</span> null&#125;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> parent the parent class loader</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">PathClassLoader</span><span class="params">(String dexPath, String librarySearchPath, ClassLoader parent)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(dexPath, <span class="literal">null</span>, librarySearchPath, parent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>InMemoryDexClassLoader</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">InMemoryDexClassLoader</span> <span class="keyword">extends</span> <span class="title class_">BaseDexClassLoader</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Create an in-memory DEX class loader with the given dex buffers.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dexBuffers array of buffers containing DEX files between</span></span><br><span class="line"><span class="comment">     *                       &lt;tt&gt;buffer.position()&lt;/tt&gt; and &lt;tt&gt;buffer.limit()&lt;/tt&gt;.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> parent the parent class loader for delegation.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@hide</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">InMemoryDexClassLoader</span><span class="params">(ByteBuffer[] dexBuffers, ClassLoader parent)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(dexBuffers, parent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Creates a new in-memory DEX class loader.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dexBuffer buffer containing DEX file contents between</span></span><br><span class="line"><span class="comment">     *                       &lt;tt&gt;buffer.position()&lt;/tt&gt; and &lt;tt&gt;buffer.limit()&lt;/tt&gt;.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> parent the parent class loader for delegation.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">InMemoryDexClassLoader</span><span class="params">(ByteBuffer dexBuffer, ClassLoader parent)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>(<span class="keyword">new</span> <span class="title class_">ByteBuffer</span>[] &#123; dexBuffer &#125;, parent);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="代码验证"><a href="#代码验证" class="headerlink" title="代码验证"></a>代码验证</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testClassLoader</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">ClassLoader</span> <span class="variable">thisClassloader</span> <span class="operator">=</span> MainActivity.class.getClassLoader();</span><br><span class="line">    Log.i(<span class="string">&quot;ClassLoaderTag&quot;</span>, <span class="string">&quot;thisClassLoader: &quot;</span> + thisClassloader);</span><br><span class="line">    <span class="type">ClassLoader</span> <span class="variable">tmpClassloader</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="type">ClassLoader</span> <span class="variable">parentClassloader</span> <span class="operator">=</span> thisClassloader.getParent();</span><br><span class="line">    <span class="keyword">while</span> (parentClassloader != <span class="literal">null</span>) &#123;</span><br><span class="line">        Log.i(<span class="string">&quot;ClassLoaderTag&quot;</span>, <span class="string">&quot;this:&quot;</span> + thisClassloader + <span class="string">&quot;---&quot;</span> + parentClassloader);</span><br><span class="line">        tmpClassloader = parentClassloader.getParent();</span><br><span class="line">        thisClassloader = parentClassloader;</span><br><span class="line">        parentClassloader = tmpClassloader;</span><br><span class="line">    &#125;</span><br><span class="line">    Log.i(<span class="string">&quot;ClassLoaderTag&quot;</span>, <span class="string">&quot;root:&quot;</span> + thisClassloader);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// thisClassLoader: dalvik.system.PathClassLoader</span></span><br><span class="line"><span class="comment">// this:dalvik.system.PathClassLoader---java.lang.BootClassLoader@e2f9b5c</span></span><br><span class="line"><span class="comment">// root:java.lang.BootClassLoader@e2f9b5c</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="动态加载dex，调用dex的函数"><a href="#动态加载dex，调用dex的函数" class="headerlink" title="动态加载dex，调用dex的函数"></a>动态加载dex，调用dex的函数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestClass</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testFunc</span><span class="params">()</span>&#123;</span><br><span class="line">        Log.i(<span class="string">&quot;DexTestTag&quot;</span>, <span class="string">&quot;i am from com.example.test01.TestClass.testFunc&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新建个项目编写个测试类，打包apk进行解压把里面的class.dex文件push到&#x2F;sdcard&#x2F;1.dex 命名为1.dex<br>再新建个项目用于加载上面dex文件里面的testFunc函数，用DexClassLoader类去加载dex文件、</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// DexClassLoader方法参数：</span><br><span class="line">// dexPath：目标所在的apk或者jar文件的路径，装载器将从路径中寻找指定的目标类。</span><br><span class="line">// dexOutputDir：由于dex文件在apk或者jar文件中，所以在装载前面前先要从里面解压出dex文件，这个路径就是dex存放的路径，在android系统中，一个应用程序对应一个linux用户id，应用程序只对自己的数据目录有写的权限，所以存放在这个路径。</span><br><span class="line">// libPath：目标类中使用的C/C++库。</span><br><span class="line">// 最后一个参数是该装载器的父装载器，一般为当前类执行的装载器。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> dalvik.system.DexClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        <span class="type">Context</span> <span class="variable">appContext</span> <span class="operator">=</span> <span class="built_in">this</span>.getApplicationContext();</span><br><span class="line">        testDesClassLoader(appContext,  <span class="string">&quot;/sdcard/1.dex&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testDesClassLoader</span><span class="params">(Context context, String dexFilePath)</span>&#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">optFile</span> <span class="operator">=</span> context.getDir(<span class="string">&quot;opt_path&quot;</span>, <span class="number">0</span>);  <span class="comment">// 用于存放优化的dex文件</span></span><br><span class="line">        <span class="type">File</span> <span class="variable">libFile</span> <span class="operator">=</span> context.getDir(<span class="string">&quot;lib_path&quot;</span>, <span class="number">0</span>);  <span class="comment">// 用于存放优化的dex文件</span></span><br><span class="line">        <span class="comment">// ClassLoader parentClassLoader = MainActivity.class.getClassLoader();  // 获取当前的类加载器</span></span><br><span class="line">        <span class="comment">// ClassLoader tmpClassLoader = context.getClassLoader();  // 获取当前的类加载器</span></span><br><span class="line">        <span class="comment">// 指定了它的双亲为mainactivety的classloader,这样就可以访问到mainactivety的类</span></span><br><span class="line">        <span class="type">DexClassLoader</span> <span class="variable">dexClassLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DexClassLoader</span>(dexFilePath, optFile.getAbsolutePath(), libFile.getAbsolutePath(), MainActivity.class.getClassLoader());  <span class="comment">// 创建类加载器</span></span><br><span class="line">        Class&lt;?&gt; clazz = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clazz = dexClassLoader.loadClass(<span class="string">&quot;com.example.test01.TestClass&quot;</span>);  <span class="comment">// 加载类</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (clazz != <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">Method</span> <span class="variable">testFuncMethod</span> <span class="operator">=</span> clazz.getDeclaredMethod(<span class="string">&quot;testFunc&quot;</span>);  <span class="comment">// 通过反射获取方法</span></span><br><span class="line">                <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> clazz.newInstance();  <span class="comment">// 创建对象</span></span><br><span class="line">                testFuncMethod.invoke(obj);  <span class="comment">// 调用方法</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// I/DexTestTag: i am from com.example.test01.TestClass.testFunc</span></span><br></pre></td></tr></table></figure>
+<p>还要在AndroidMainfest.xml文件里添加读写sd卡的权限,并在手机设置给应用增加读取文件权限</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.READ_EXTERNAL_STORAGE&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">uses-permission</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">uses-permission</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样就实现了dex通过ClassLoader加载进行调用，并指定了MainActivity.class.getClassLoader()，也就是PathClassLoader作为父节点。</p>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                ClassLoader和动态加载
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/23195/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2023-10-04 02:49</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E8%84%B1%E5%A3%B3/">脱壳</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/16537/"
+                                   title="某音web端X-Bogus 逆向分析算法"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">某音web端X-Bogus 逆向分析算法</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%B1%82%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">三层类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8-Bootstrap-ClassLoader"><span class="nav-number">1.1.</span> <span class="nav-text">1. 启动类加载器  Bootstrap ClassLoader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%89%A9%E5%B1%95%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8-Extensions-ClassLoader"><span class="nav-number">1.2.</span> <span class="nav-text">2. 扩展类加载器  Extensions ClassLoader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8-Application-ClassLoader"><span class="nav-number">1.3.</span> <span class="nav-text">3.应用程序类加载器  Application ClassLoader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">自定义类加载器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">双亲委派模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84ClassLoader%E7%9A%84%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">Android系统中的ClassLoader的继承关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%AA%8C%E8%AF%81"><span class="nav-number">3.1.</span> <span class="nav-text">代码验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDdex%EF%BC%8C%E8%B0%83%E7%94%A8dex%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">动态加载dex，调用dex的函数</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2023
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">71.4k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%B1%82%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">三层类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8-Bootstrap-ClassLoader"><span class="nav-number">1.1.</span> <span class="nav-text">1. 启动类加载器  Bootstrap ClassLoader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%89%A9%E5%B1%95%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8-Extensions-ClassLoader"><span class="nav-number">1.2.</span> <span class="nav-text">2. 扩展类加载器  Extensions ClassLoader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8-Application-ClassLoader"><span class="nav-number">1.3.</span> <span class="nav-text">3.应用程序类加载器  Application ClassLoader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">自定义类加载器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">双亲委派模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84ClassLoader%E7%9A%84%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">Android系统中的ClassLoader的继承关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%AA%8C%E8%AF%81"><span class="nav-number">3.1.</span> <span class="nav-text">代码验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BDdex%EF%BC%8C%E8%B0%83%E7%94%A8dex%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">动态加载dex，调用dex的函数</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/local-search.js"></script>
+
+
+<!-- code-block -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/code-block.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/lazyload.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
+
+        <!-- toc -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
+        
+    
+
+    <!-- category-page -->
+    
+
+    <!-- links-page -->
+    
+</div>
+
+<!-- pjax -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+
+</body>
+</html>
