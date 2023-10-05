@@ -28,7 +28,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.xml"};
-    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066cc","logo":"/images/head.svg","favicon":"/images/head.svg","avatar":"/images/head.svg","font_size":null,"font_family":null,"hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","font_color":null,"hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"code_block":{"tools":{"enable":false,"style":"mac"},"highlight_theme":"obsidian"},"side_tools":{},"pjax":{"enable":false},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.7"},"waline":{"server_url":null,"reaction":false,"version":2}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"enable":true,"wordcount":true,"min2read":true},"img_align":"left","copyright_info":true},"version":"3.5.2"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066cc","logo":"/images/head.svg","favicon":"/images/head.svg","avatar":"/images/head.svg","font_size":null,"font_family":null,"hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","font_color":null,"hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"code_block":{"tools":{"enable":false,"style":"mac"},"highlight_theme":"obsidian"},"side_tools":{},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.7"},"waline":{"server_url":null,"reaction":false,"version":2}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"enable":true,"wordcount":true,"min2read":true},"img_align":"left","copyright_info":true},"version":"3.5.2"};
     KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
     KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"};
   </script>
@@ -42,6 +42,9 @@
         <span class="scroll-progress-bar"></span>
     
 
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
     
 </div>
 
@@ -592,9 +595,9 @@
             
 
     <div class="valine-container">
-        <script  src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
         <div id="vcomments"></div>
-        <script >
+        <script data-pjax>
           function loadValine() {
             new Valine({
               el: '#vcomments',
@@ -640,7 +643,7 @@
             }, 2000);
           }
 
-          if ('false' === 'true') {
+          if ('true' === 'true') {
             const loadValineTimeout = setTimeout(() => {
               loadValine();
               clearTimeout(loadValineTimeout);
@@ -697,7 +700,7 @@
             
         </div>
         
-            <script async 
+            <script async data-pjax
                     src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
             <div class="website-count info-item">
                 
@@ -839,7 +842,7 @@
     <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/lazyload.js"></script>
 
 
-<div class="post-scripts">
+<div class="post-scripts pjax">
     
         <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/post-helper.js"></script>
         
@@ -850,6 +853,38 @@
         
     
 </div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.5.2/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
 
 
 
