@@ -270,13 +270,13 @@
 <p>明文限制的长度是30，检测函数在nativel-lib文件里<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/01.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/01.webp"
                      
                 ></p>
 <p>解压apk并用ida打开so文件<br />大概分析一下，传进来的参数判断是否为30位，然后进入sub_B90进行处理后，再进入sub_D90处理，结果为v9，最后v9和v19作比较，相等返回1，不等返回0；<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/02.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/02.webp"
                      
                 ></p>
 <h4 id="用ida动态调试"><a href="#用ida动态调试" class="headerlink" title="用ida动态调试"></a>用ida动态调试</h4><p>调试前先把ida目录下的dbgsrv、android-server拷贝到手机上<br />并修改权限 777<br />这里需要开启frida去获取so的基址+sub_B90的偏移量&#x3D;sub_B90的绝对地址<br />先运行frida，再运行android-server<br />frida代码</p>
@@ -284,94 +284,94 @@
 <p>打印结果<br />so基址： 0x7613313000<br />0x7613313000+8AC<br />所以需要在动调调试的时候在位置打上断点<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/03.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/03.webp"
                      
                 ><br><br />没显示汇编按空格<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/04.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/04.webp"
                      
                 ></p>
 <p>以go方式打开ida</p>
 <p>选择Debugger–》Attach–》Remote ARM Linux&#x2F;Android debugger<br />输入手机IP，选择进程<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/05.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/05.webp"
                      
                 ><br><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/06.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/06.webp"
                      
                 ><br><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/07.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/07.webp"
                      
                 ></p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/08.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/08.webp"
                      
                 ><br><br />加载好后跳到指定位置，或者快捷键G<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/09.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/09.webp"
                      
                 ></p>
 <p>打上断点后，点击绿色小箭头继续运行，app点击验证，会断到当前位置<br />可以转为汇编跟静态ida的作比较，Edit–》Code，或者快捷键C<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/10.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/10.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/11.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/11.webp"
                      
                 ><br /><br>按F8单步调试<br />打开寄存器，进入<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/12.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/12.webp"
                      
                 ><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/13.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/13.webp"
                      
                 ></p>
 <h4 id="用Frida"><a href="#用Frida" class="headerlink" title="用Frida"></a>用Frida</h4><p>这里直接用fridahook 函数，sub_B90<br />sub_B90的偏移量为B90<br />这就是第一轮加密后的<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/14.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/14.webp"
                      
                 ></p>
 <p>hook 第二个函数<br />这是明文经两轮加密后的结果<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/15.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/15.webp"
                      
                 ></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_KeyStore_load</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> addr_libnatuve = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libnative-lib.so&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span>(addr_libnatuve) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;so基址：&quot;</span>, addr_libnatuve)</span><br><span class="line">            <span class="keyword">var</span> sub_B90 = addr_libnatuve.<span class="title function_">add</span>(<span class="number">0xB90</span>)</span><br><span class="line">            <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(sub_B90, &#123;</span><br><span class="line">                <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">arg0</span> = args[<span class="number">0</span>]</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">arg1</span> = args[<span class="number">1</span>]</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">arg2</span> = args[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// console.log(&quot;</span></span><br><span class="line"><span class="string">&quot;,hexdump(this.arg0))</span></span><br><span class="line"><span class="string">                    // console.log(&quot;</span></span><br><span class="line"><span class="string">&quot;,this.arg1);</span></span><br><span class="line"><span class="string">                    // console.log(&quot;</span></span><br><span class="line"><span class="string">&quot;,hexdump(this.arg2));</span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>参数一：<span class="string">&quot;,Memory.readCString(this.arg0))</span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>参数二：<span class="string">&quot;,this.arg1.toInt32());</span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>参数三<span class="string">&quot;,Memory.readCString(this.arg2))</span></span><br><span class="line"><span class="string">                &#125;,</span></span><br><span class="line"><span class="string">                onLeave: function(retval)&#123;</span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>sub_B90 onLeave<span class="string">&quot;);</span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>运算结果<span class="string">&quot;);</span></span><br><span class="line"><span class="string">                    console.log(Memory.readByteArray(this.arg0, 30)); // 这里把结果赋值给了第一个参数</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string">            &#125;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            var sub_D90 = addr_libnatuve.add(0xD90)</span></span><br><span class="line"><span class="string">            Interceptor.attach(sub_D90, &#123;</span></span><br><span class="line"><span class="string">                onEnter: function(args)&#123;</span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>sub_D90 onEnter<span class="string">&quot;);</span></span><br><span class="line"><span class="string">                    this.arg0 = args[0]</span></span><br><span class="line"><span class="string">                    this.arg1 = args[1]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>参数一：<span class="string">&quot;,Memory.readByteArray(args[0], 30))</span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>参数二：<span class="string">&quot;, this.arg1.toInt32())</span></span><br><span class="line"><span class="string">                &#125;,</span></span><br><span class="line"><span class="string">                onLeave: function(retval)&#123;</span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>sub_D90 onLeave<span class="string">&quot;);</span></span><br><span class="line"><span class="string">                    console.log(&quot;</span>运算结果<span class="string">&quot;);</span></span><br><span class="line"><span class="string">                    console.log(Memory.readCString(retval));</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string">            &#125;)</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &#125;);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">setImmediate(hook_KeyStore_load)</span></span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/16.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/16.webp"
                      
                 ></p>
 <h4 id="主动调用"><a href="#主动调用" class="headerlink" title="主动调用"></a>主动调用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"># -*- <span class="attr">coding</span>: <span class="variable constant_">UTF</span>-<span class="number">8</span> -*-</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> frida, sys</span><br><span class="line"> </span><br><span class="line">jscode = <span class="string">&#x27;&#x27;</span><span class="string">&#x27;</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">var destAddr = &#x27;</span><span class="string">&#x27;;  //定位xsp地址</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">function inline_hook() &#123;</span></span><br><span class="line"><span class="string">    var so_addr = Module.findBaseAddress(&quot;libnative-lib.so&quot;);</span></span><br><span class="line"><span class="string">     </span></span><br><span class="line"><span class="string">     </span></span><br><span class="line"><span class="string">    if (so_addr) &#123;</span></span><br><span class="line"><span class="string">        console.log(&quot;so_addr:&quot;, so_addr);</span></span><br><span class="line"><span class="string">         </span></span><br><span class="line"><span class="string">        var addr_b90 = so_addr.add(0xB90);</span></span><br><span class="line"><span class="string">        var sub_b90 = new NativeFunction(addr_b90 , &#x27;</span>int<span class="string">&#x27;, [&#x27;</span>pointer<span class="string">&#x27;, &#x27;</span>int<span class="string">&#x27;, &#x27;</span>pointer<span class="string">&#x27;]);</span></span><br><span class="line"><span class="string">        Interceptor.attach(sub_b90, &#123;</span></span><br><span class="line"><span class="string">            onEnter: function(args)</span></span><br><span class="line"><span class="string">            &#123; </span></span><br><span class="line"><span class="string">            destAddr = args[0];</span></span><br><span class="line"><span class="string">            console.log(&#x27;</span>onEnter <span class="variable constant_">B90</span><span class="string">&#x27;);</span></span><br><span class="line"><span class="string">            &#125;,</span></span><br><span class="line"><span class="string">            //在hook函数之后执行的语句</span></span><br><span class="line"><span class="string">            onLeave:function(retval)</span></span><br><span class="line"><span class="string">            &#123;</span></span><br><span class="line"><span class="string">            console.log(&#x27;</span>onLeave <span class="variable constant_">B90</span><span class="string">&#x27;);</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;);</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">      </span></span><br><span class="line"><span class="string">        var addr_b2c = so_addr.add(0xb2c);</span></span><br><span class="line"><span class="string">        console.log(&quot;The addr_b2c:&quot;, addr_b2c);</span></span><br><span class="line"><span class="string">        Java.perform(function() &#123;</span></span><br><span class="line"><span class="string">            Interceptor.attach(addr_b2c, &#123;</span></span><br><span class="line"><span class="string">                onEnter: function(args) &#123;</span></span><br><span class="line"><span class="string">                console.log(&quot;addr_b2c OnEnter :&quot;,  Memory.readByteArray(destAddr.sub(0x38),64) );</span></span><br><span class="line"><span class="string">                &#125;</span></span><br><span class="line"><span class="string">            &#125;)</span></span><br><span class="line"><span class="string">        &#125;)</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">setImmediate(inline_hook)</span></span><br><span class="line"><span class="string">   </span></span><br><span class="line"><span class="string">   </span></span><br><span class="line"><span class="string">&#x27;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">def <span class="title function_">on_message</span>(message, data):</span><br><span class="line">    <span class="keyword">if</span> message[<span class="string">&#x27;type&#x27;</span>] == <span class="string">&#x27;send&#x27;</span>:</span><br><span class="line">        <span class="title function_">print</span>(<span class="string">&quot; &#123;0&#125;&quot;</span>.<span class="title function_">format</span>(message[<span class="string">&#x27;payload&#x27;</span>]))</span><br><span class="line">    <span class="attr">else</span>:</span><br><span class="line">        <span class="title function_">print</span>(message)</span><br><span class="line">pass</span><br><span class="line">#<span class="title function_">print</span>(frida.<span class="title function_">enumerate_devices</span>())</span><br><span class="line"># 查找<span class="variable constant_">USB</span>设备并附加到目标进程</span><br><span class="line">device =  frida.<span class="title function_">get_usb_device</span>()</span><br><span class="line">#pid = device.<span class="title function_">spawn</span>([<span class="string">&quot;com.live.xctv&quot;</span>])</span><br><span class="line">  </span><br><span class="line">#session = device.<span class="title function_">attach</span>(pid)</span><br><span class="line">session =device.<span class="title function_">attach</span>(<span class="string">&#x27;cn.pojie52.cm01&#x27;</span>) #这里是要注入的apk包名</span><br><span class="line"># 在目标进程里创建脚本</span><br><span class="line">script = session.<span class="title function_">create_script</span>(jscode)</span><br><span class="line"># 注册消息回调</span><br><span class="line">script.<span class="title function_">on</span>(<span class="string">&#x27;message&#x27;</span>, on_message)</span><br><span class="line"><span class="title function_">print</span>(<span class="string">&#x27; Start attach&#x27;</span>)</span><br><span class="line"># 加载创建好的javascript脚本</span><br><span class="line">script.<span class="title function_">load</span>()</span><br><span class="line"># 读取系统输入</span><br><span class="line">sys.<span class="property">stdin</span>.<span class="title function_">read</span>()</span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/17.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/17.webp"
                      
                 ></p>
 <h4 id="异或"><a href="#异或" class="headerlink" title="异或"></a>异或</h4><p>大概分析一下sub_b90，是根据传入的第三个参数s把v20进行了一个初始化，然后再把参数a1和v20进行了异或运算，主要看这个异或运算，先设想一下，如果是把a1进行了异或，那么得到的结果和a1之前的数据再异或就可以计算出异或的key，这里我们把它叫做xorkey，那么先看一下我们传入的参数，是30个1，也就是30个0x31 ，然后看结果，第一位是0xe0，0x31^0xe0 &#x3D; 209，然后把参数改为30个2，即0x32，得出首位的结果是0xe3，0xe3^0x32结果也是209，证明我们的思路是正确的，然后依次求出所有的xorkey，</p>
 <p>这里的值是输入，30个1加密后异或来的<br />明文 ^ 密钥 &#x3D; 密文<br /># 拿到密钥<br />明文 ^ 密文 &#x3D; 密钥<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/18.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/18.webp"
                      
                 ></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>,</span><br><span class="line">     <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>, <span class="number">0x31</span>]</span><br><span class="line">b = [<span class="number">0xe0</span>, <span class="number">0x6b</span>, <span class="number">0x37</span>, <span class="number">0xa1</span>, <span class="number">0x75</span>, <span class="number">0xd7</span>, <span class="number">0xf6</span>, <span class="number">0xd4</span>, <span class="number">0xef</span>, <span class="number">0x19</span>, <span class="number">0xc6</span>, <span class="number">0xc3</span>, <span class="number">0x57</span>, <span class="number">0xa0</span>, <span class="number">0xf9</span>, <span class="number">0xb4</span>, <span class="number">0x73</span>, <span class="number">0xee</span>, <span class="number">0xc8</span>,</span><br><span class="line">     <span class="number">0xd1</span>, <span class="number">0xb3</span>, <span class="number">0x30</span>, <span class="number">0x1a</span>, <span class="number">0x0a</span>, <span class="number">0x09</span>, <span class="number">0x52</span>, <span class="number">0x06</span>, <span class="number">0x8c</span>, <span class="number">0x1f</span>, <span class="number">0x7c</span>]</span><br><span class="line"></span><br><span class="line">c = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">30</span>):</span><br><span class="line">    c.append(a[i] ^ b[i])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(c)</span><br></pre></td></tr></table></figure>
@@ -382,41 +382,41 @@
 <p>异或的key找到了，现在要找异或后的正确值，才能算出答案明文<br />1.调试<br />![image.png]<img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/20.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/20.webp"
                      
                 ><br />调试到这里，要在寄存器钟拿到v19<br />这里就是判断的地方，偏移量为B2C<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/21.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/21.webp"
                      
                 ><br><br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/22.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/22.webp"
                      
                 ></p>
 <h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>没计算前<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/23.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/23.webp"
                      
                 ><br />计算后<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/24.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/24.webp"
                      
                 ><br><br />这就是要的密文了<br />“5Gh2&#x2F;y6Poq2&#x2F;WIeLJfmh6yesnK7ndnJeWREFjRx8”</p>
 <h4 id="另一种方式hook寄存器"><a href="#另一种方式hook寄存器" class="headerlink" title="另一种方式hook寄存器"></a>另一种方式hook寄存器</h4><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/25.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/25.webp"
                      
                 ><br />基地址加B30就是结果寄存器的位置，同时我们需要的是x9寄存器的值</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_KeyStore_load</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> addr_libnatuve = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libnative-lib.so&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span>(addr_libnatuve) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;so基址：&quot;</span>, addr_libnatuve)</span><br><span class="line">            <span class="keyword">var</span> <span class="variable constant_">LDRB</span> = addr_libnatuve.<span class="title function_">add</span>(<span class="number">0xB30</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;LDRB&quot;</span>, <span class="variable constant_">LDRB</span>)</span><br><span class="line">            <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="variable constant_">LDRB</span>, &#123;</span><br><span class="line">                <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Memory</span>.<span class="title function_">readCString</span>(<span class="variable language_">this</span>.<span class="property">context</span>.<span class="property">x9</span>))  <span class="comment">// 上下文获取x9寄存器</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;运算结果&quot;</span>);</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Memory</span>.<span class="title function_">readCString</span>(retval)); </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(hook_KeyStore_load)</span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20211212/26.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20211212/26.webp"
                      
                 ></p>
 <h4 id="异或出答案"><a href="#异或出答案" class="headerlink" title="异或出答案"></a>异或出答案</h4><p>密钥：[‘0xd1’, ‘0x5a’, ‘0x6’, ‘0x90’, ‘0x44’, ‘0xe6’, ‘0xc7’, ‘0xe5’, ‘0xde’, ‘0x28’, ‘0xf7’, ‘0xf2’, ‘0x66’, ‘0x91’, ‘0xc8’, ‘0x85’, ‘0x42’, ‘0xdf’, ‘0xf9’, ‘0xe0’, ‘0x82’, ‘0x1’, ‘0x2b’, ‘0x3b’, ‘0x38’, ‘0x63’, ‘0x37’, ‘0xbd’, ‘0x2e’, ‘0x4d’]<br />结果：“5Gh2&#x2F;y6Poq2&#x2F;WIeLJfmh6yesnK7ndnJeWREFjRx8”<br />结果^密钥&#x3D;答案<br /></p>

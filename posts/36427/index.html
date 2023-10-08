@@ -266,60 +266,60 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/01.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/01.webp"
                      
                 ></p>
 <p>打开charles抓包，抓包失败</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/02.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/02.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/03.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/03.webp"
                      
                 ></p>
 <p>信任所有证书，都为空表示都信任</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/04.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/04.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/05.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/05.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/06.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/06.webp"
                      
                 ></p>
 <p>因为图片是https的，修改一下ssl</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/07.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/07.webp"
                      
                 ></p>
 <p>成功抓包<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/08.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/08.webp"
                      
                 ></p>
 <h2 id="让客户端信任系统根证书目录中的证书"><a href="#让客户端信任系统根证书目录中的证书" class="headerlink" title="让客户端信任系统根证书目录中的证书"></a>让客户端信任系统根证书目录中的证书</h2><p>把证书校验重新开起来<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/09.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/09.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/10.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/10.webp"
                      
                 ></p>
 <p>hook住checkServerTrusted，将其所有重载都置空；<br>使用spawn模式运行</p>
@@ -328,14 +328,14 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/11.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/11.webp"
                      
                 ></p>
 <h2 id="过检验证书"><a href="#过检验证书" class="headerlink" title="过检验证书"></a>过检验证书</h2><p>把证书检验开启</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/12.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/12.webp"
                      
                 ></p>
 <h2 id="objection绕过检测"><a href="#objection绕过检测" class="headerlink" title="objection绕过检测"></a>objection绕过检测</h2><p>使用objection，直接将SSL pinning给disable掉</p>
@@ -344,7 +344,7 @@
 <h1 id="ssl-pinning-服务器检验客户端证书"><a href="#ssl-pinning-服务器检验客户端证书" class="headerlink" title="ssl pinning+服务器检验客户端证书"></a>ssl pinning+服务器检验客户端证书</h1><p>注册页面抓包，证书不信任<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/13.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/13.webp"
                      
                 ></p>
 <p>用frida hook掉他的一些检测，</p>
@@ -354,7 +354,7 @@
 <p>现在可以抓到包，证明请求发出去，那就是证书不对<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/14.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/14.webp"
                      
                 ></p>
 <h2 id="dump-证书"><a href="#dump-证书" class="headerlink" title="dump 证书"></a>dump 证书</h2><p>先关掉vpn，让它正常发请求，并用脚本把证书导出</p>
@@ -363,7 +363,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/15.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/15.webp"
                      
                 ></p>
 <h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>dump出证书到手机，并修改证书密码 </p>
@@ -371,44 +371,44 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/16.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/16.webp"
                      
                 ></p>
 <h2 id="charles导入证书"><a href="#charles导入证书" class="headerlink" title="charles导入证书"></a>charles导入证书</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull /sdcard/Download/com.ninemax.ncsearchnew.p12 /root/Desktop/</span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/17.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/17.webp"
                      
                 ><br>再运行绕过本地校验脚本，成功抓包<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/18.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/18.webp"
                      
                 ></p>
 <h1 id="混淆的okhhtp3抓包"><a href="#混淆的okhhtp3抓包" class="headerlink" title="混淆的okhhtp3抓包"></a>混淆的okhhtp3抓包</h1><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/19.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/19.webp"
                      
                 ></p>
 <p>通过它的官网知道是https，用的ca机构证书。不需要hook证书校验这一步<br>jadx打开搜索 CertificatePinner</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/20.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/20.webp"
                      
                 ></p>
 <p>通过查看的CertificatePinner源码，和该app的代码对比，基本一样的逻辑，证书校验不通过就会抛异常</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/21.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/21.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/22.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/22.webp"
                      
                 ></p>
 <p>使用frida对其hook，置空</p>
@@ -416,14 +416,14 @@
 <p>charles设置443端口<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/23.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/23.webp"
                      
                 ></p>
 <p>成功抓包</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20210925/24.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210925/24.webp"
                      
                 ></p>
 

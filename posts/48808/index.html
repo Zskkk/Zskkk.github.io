@@ -215,7 +215,7 @@
 
             <span class="meta-info-item article-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Fri Oct 06 2023 03:21:38 GMT+0800">2023-10-06 03:21:38</span>
+                <span class="pc" data-updated="Sun Oct 08 2023 21:25:02 GMT+0800">2023-10-08 21:25:02</span>
             </span>
         
 
@@ -268,21 +268,21 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221127/01.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221127/01.webp"
                       alt="01"
                 ></p>
 <p>当前报错位置已经断下来了，输入bt查看调用栈</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221127/02.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221127/02.webp"
                      
                 ></p>
 <p>用ida打开样本so，跳到 0x092b8 地址</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221127/03.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221127/03.webp"
                      
                 ></p>
 <p>先分析一下，查看GetObjectClass的文档</p>
@@ -293,27 +293,27 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221127/04.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221127/04.webp"
                      
                 ></p>
 <p>ida跳到0x0a554，转为汇编代码后，可以看到object是v24，也就是入参a2，</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221127/05.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221127/05.webp"
                      
                 ></p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221127/06.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221127/06.webp"
                      
                 ></p>
 <p>查看该函数的地址为0xa2ac，这跟我们一开始调用的地址一样的，在看当时传递的第二个object，确实传的0</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://github.com/Zskkk/blog-images/raw/master/20221127/07.webp"
+                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20221127/07.webp"
                      
                 ></p>
 <p>可以通过jadx查看正确的对象</p>
