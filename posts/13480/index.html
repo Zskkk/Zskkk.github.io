@@ -275,12 +275,12 @@
                     <h3 id="什么是protobuf"><a href="#什么是protobuf" class="headerlink" title="什么是protobuf"></a>什么是protobuf</h3><p>一拿到网站，F12查看是否有相关数据的请求接口<br />请求体是这样的<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/01.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/01.webp"
                      
                 ><br /><br>请求头的类型也非常见的<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/02.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/02.webp"
                      
                 ></p>
 <ul>
@@ -292,13 +292,13 @@
 <p>通过查询知道这是protobuf<br />参考文章：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/dideng7039/article/details/101869819" >https://blog.csdn.net/dideng7039/article/details/101869819<i class="fas fa-external-link-alt"></i></a><br />总结在图下了<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/03.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/03.webp"
                      
                 ></p>
 <h3 id="那如何使用protobuf？"><a href="#那如何使用protobuf？" class="headerlink" title="那如何使用protobuf？"></a>那如何使用protobuf？</h3><p>开发者需要先编写proto文件，在proto文件中编写预期的数据类型、数据字段、默认值等<br />然后，通过编译器生成，编程语言对应的开发包！开发时调开发包中的对应方法进行序列化和反序列化。<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/04.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/04.webp"
                      
                 ><br /><br>所以请求的时候需要参数是序列化的字节序列，对接收到的返回值进行反序列化<br />而要实现序列化，就必须要有开发包，可是开发包是js版本的。而开发包是由proto编译而来，只要能拿到proto文件，就可以编译成任意编程的语言版本。<br />那就是需要通过编译好的包反编译出proto，再编译为python版本的</p>
 <p>这里先写一个简单proto，在编译成js版本，看看里面大概的结构长什么样<br />下载编译器：<a class="link"   target="_blank" rel="noopener" href="https://github.com/protocolbuffers/protobuf/releases/" >https://github.com/protocolbuffers/protobuf/releases/<i class="fas fa-external-link-alt"></i></a><br />解压后把bin目录路径添加到环境变量，就可以全局使用<br />注意，下载低于3.21.0 的proto版本，因为原项目已将它独立出来，下载最新版本的protoc，运行js_out会缺少插件<br />proto除了一些基础字段，还有一些特殊字段</p>
@@ -353,7 +353,7 @@
 <p>两条语句都可以，第一条会拆分成多个文件，第二条是合并成一个，推荐使用第二条<br />头部就能看到定义好的几个大的对象<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/05.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/05.webp"
                      
                 ><br />可以大概看下代码，截一段比较重要的</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Serializes the given message to binary data (in protobuf wire</span></span><br><span class="line"><span class="comment"> * format), writing to the given BinaryWriter.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">!proto.Student</span>&#125; <span class="variable">message</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">!jspb.BinaryWriter</span>&#125; <span class="variable">writer</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@suppress</span> &#123;<span class="type">unusedLocalVariables</span>&#125; f is only used for nested messages</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">proto.<span class="property">Student</span>.<span class="property">serializeBinaryToWriter</span> = <span class="keyword">function</span>(<span class="params">message, writer</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> f = <span class="literal">undefined</span>;</span><br><span class="line">  f = message.<span class="title function_">getName</span>();</span><br><span class="line">  <span class="keyword">if</span> (f.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    writer.<span class="title function_">writeString</span>(</span><br><span class="line">      <span class="number">1</span>,</span><br><span class="line">      f</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  f = message.<span class="title function_">getAge</span>();</span><br><span class="line">  <span class="keyword">if</span> (f !== <span class="number">0</span>) &#123;</span><br><span class="line">    writer.<span class="title function_">writeInt32</span>(</span><br><span class="line">      <span class="number">2</span>,</span><br><span class="line">      f</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  f = message.<span class="title function_">getGender</span>();</span><br><span class="line">  <span class="keyword">if</span> (f !== <span class="number">0.0</span>) &#123;</span><br><span class="line">    writer.<span class="title function_">writeEnum</span>(</span><br><span class="line">      <span class="number">3</span>,</span><br><span class="line">      f</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  f = message.<span class="title function_">getSubjectList</span>();</span><br><span class="line">  <span class="keyword">if</span> (f.<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    writer.<span class="title function_">writeRepeatedMessage</span>(</span><br><span class="line">      <span class="number">4</span>,</span><br><span class="line">      f,</span><br><span class="line">      proto.<span class="property">Student</span>.<span class="property">Subject</span>.<span class="property">serializeBinaryToWriter</span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -373,12 +373,12 @@
 <h3 id="调试JS反写proto"><a href="#调试JS反写proto" class="headerlink" title="调试JS反写proto"></a>调试JS反写proto</h3><p>目标网站：aHR0cHM6Ly9zLndhbmZhbmdkYXRhLmNvbS5jbi9wYXBlcj9xPXB5dGhvbg&#x3D;&#x3D;<br />将接口的请求地址复制 &#x2F;SearchService.SearchService&#x2F;search ，打 XHR&#x2F;fetch 断点<br />断住后查看堆栈，有SearchService跟进去打断点看看<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/06.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/06.webp"
                      
                 ><br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/07.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/07.webp"
                      
                 ><br />看下这些方法的命名，序列化（serialize）、反序列化（deserialize），基本断定就在这个js文件里，但是这个js有几万行代码，不可能仔细去看也没必要。<br />看到明显的prototype字样，直接搜proto的特征</p>
 <blockquote>
@@ -387,57 +387,57 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/08.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/08.webp"
                      
                 ><br />可以肯定就是proto了<br />一步步跟进后，到序列化发包的位置<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/09.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/09.webp"
                      
                 ><br />在这里，直接就可以看出其基本结构</p>
 <figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message </span><span class="title class_">SearchService</span> &#123;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">SearchRequest</span> &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>继续调试。<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/10.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/10.webp"
                      
                 ><br />这里可以看出SearchRequest定义了两个变量，分别是序号为1的message类型的CommonRequest和序号为2的enum类型的InterfaceType。<br />根据SearchService.CommonRequest可知，CommonRequest定义在SearchService中<br />所以，proto文件现在是这样的：</p>
 <figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>; <span class="comment">// 定义proto的版本</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">message </span><span class="title class_">SearchService</span> &#123;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">SearchRequest</span> &#123;</span><br><span class="line">    CommonRequest commonRequest = <span class="number">1</span>; <span class="comment">// 任意变量名</span></span><br><span class="line">    InterfaceType interfaceType = <span class="number">2</span>; <span class="comment">// 任意变量名</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">CommonRequest</span> &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">enum </span><span class="title class_">InterfaceType</span>&#123;</span><br><span class="line">    DEFAULT = <span class="number">0</span>;  <span class="comment">// 定义了什么不知道，但是enum必须有一个值就是0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font color="red">关于变量名是什么，这个其实不重要</font><br />继续往下调试，进入到了CommonRequest<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/11.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/11.webp"
                      
                 ><br />根据方法名，直接就可以反写出CommonRequest</p>
 <figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">message </span><span class="title class_">SearchRequest</span> &#123;</span><br><span class="line">    CommonRequest commonRequest = <span class="number">1</span>; <span class="comment">// 任意变量名</span></span><br><span class="line">    InterfaceType interfaceType = <span class="number">2</span>; <span class="comment">// 任意变量名</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">CommonRequest</span> &#123;</span><br><span class="line">    <span class="type">string</span> searchType = <span class="number">1</span>;</span><br><span class="line">    <span class="type">string</span> searchWord = <span class="number">2</span>;</span><br><span class="line">    SearchSort searchSort = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">repeated</span> Second second = <span class="number">4</span>;</span><br><span class="line">    <span class="type">int32</span> currentPage = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int32</span> pageSize = <span class="number">6</span>;</span><br><span class="line">    SearchScope searchScope = <span class="number">7</span>;</span><br><span class="line">    <span class="keyword">repeated</span> SearchFilter searchFilter = <span class="number">8</span>;</span><br><span class="line">    <span class="type">bool</span> languageExpand = <span class="number">9</span>;</span><br><span class="line">    <span class="type">bool</span> topicExpand = <span class="number">10</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">SearchSort</span> &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">Second</span> &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">enum </span><span class="title class_">InterfaceType</span>&#123;</span><br><span class="line">    TypeDefault = <span class="number">0</span>;  <span class="comment">// 定义了什么不知道，但是enum必须有一个值就是0</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">enum </span><span class="title class_">SearchScope</span>&#123;</span><br><span class="line">    ScopeDefault = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">enum </span><span class="title class_">SearchFilter</span> &#123;</span><br><span class="line">      FilterDefault = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>SearchSort和Second都是在SearchService定义的，Ctrl + F搜索<br />SearchService.SearchSort.serializeBinaryToWriter<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/12.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/12.webp"
                      
                 ><br />SearchService.Second.serializeBinaryToWriter<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/13.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/13.webp"
                      
                 ><br />补齐字段，请求接口的proto文件就算写完了</p>
 <figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">syntax = <span class="string">&quot;proto3&quot;</span>; <span class="comment">// 定义proto的版本</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">message </span><span class="title class_">SearchService</span> &#123;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">SearchRequest</span> &#123;</span><br><span class="line">    CommonRequest commonRequest = <span class="number">1</span>; <span class="comment">// 任意变量名</span></span><br><span class="line">    InterfaceType interfaceType = <span class="number">2</span>; <span class="comment">// 任意变量名</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">CommonRequest</span> &#123;</span><br><span class="line">    <span class="type">string</span> searchType = <span class="number">1</span>;</span><br><span class="line">    <span class="type">string</span> searchWord = <span class="number">2</span>;</span><br><span class="line">    SearchSort searchSort = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">repeated</span> Second second = <span class="number">4</span>;</span><br><span class="line">    <span class="type">int32</span> currentPage = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int32</span> pageSize = <span class="number">6</span>;</span><br><span class="line">    SearchScope searchScope = <span class="number">7</span>;</span><br><span class="line">    <span class="keyword">repeated</span> SearchFilter searchFilter = <span class="number">8</span>;</span><br><span class="line">    <span class="type">bool</span> languageExpand = <span class="number">9</span>;</span><br><span class="line">    <span class="type">bool</span> topicExpand = <span class="number">10</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">SearchSort</span> &#123;</span><br><span class="line">    <span class="type">string</span> field = <span class="number">1</span>;</span><br><span class="line">    Order order = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">enum </span><span class="title class_">Order</span> &#123;</span><br><span class="line">      OrderDefault = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">message </span><span class="title class_">Second</span> &#123;</span><br><span class="line">    <span class="type">string</span> field = <span class="number">1</span>;</span><br><span class="line">    <span class="type">string</span> value = <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">enum </span><span class="title class_">InterfaceType</span>&#123;</span><br><span class="line">    TypeDefault = <span class="number">0</span>;  <span class="comment">// 定义了什么不知道，但是enum必须有一个值就是0</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">enum </span><span class="title class_">SearchScope</span>&#123;</span><br><span class="line">    ScopeDefault = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">enum </span><span class="title class_">SearchFilter</span> &#123;</span><br><span class="line">    FilterDefault = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><font color="red">对于所有的enum枚举类，至少填充一个默认值0，且变量名唯一</font><br />有的情况，枚举类含有哪些字段，可以在代码中直接看到，就照抄写进去。<br />看不到的，给个唯一变量名，默认值为0即可<br />现在还差一个源数据，即我们需要知道待编译的源数据是什么样子的？<br />使用fiddler进行抓包查看请求参数<br />抓到包后查看HexView，黑色部分就是请求体，里面也可以看到我们搜素的关键词python<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/14.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/14.webp"
                      
                 ><br />选中，右键保存为字节文件也就是bin后缀，这里要注意，前5个字节表示请求体的长度，从第6个字节开始到结束刚好就是0x1A<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/15.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/15.webp"
                      
                 ><br /><font color="red">字节数据是可以通过protoc编译器解码出来的</font></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;protoc --decode_raw &lt; get_req.bin</span><br><span class="line">1 &#123;</span><br><span class="line">  1: &quot;paper&quot;</span><br><span class="line">  2: &quot;python&quot;</span><br><span class="line">  5: 2</span><br><span class="line">  6: 20</span><br><span class="line">  8: &quot;\000&quot;</span><br><span class="line">&#125;</span><br><span class="line">2: 1</span><br></pre></td></tr></table></figure>
 <p>与上面编写好的proto文件进行对比<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/16.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/16.webp"
                      
                 ><br />像有些没包含到的字段，是请求的时候页面没做一些条件筛选，就没触发到某些字段<br />实际传输时，简单的看，键就是proto中定义的序号，这就是之前提到的 变量名是什么根本不重要，变量名只是方便开发者开发时便于理解与调用。（传输一个数字远比传输一个字符串更有效率）<br />完全还原proto文件是不需要的，构造出这个请求参数，获取这个接口的响应内容就可以了</p>
 <h3 id="实现请求"><a href="#实现请求" class="headerlink" title="实现请求"></a>实现请求</h3><p>编译proto为python包，构建参数，序列化参数，发送请求</p>
@@ -447,7 +447,7 @@
 <p>至此，请求参数的序列化已经是完成了<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/17.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/17.webp"
                      
                 ><br />发送请求完整代码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> search_pb2 <span class="keyword">as</span> pb  <span class="comment"># 导入包</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">search_request = pb.SearchService.SearchRequest()  <span class="comment"># 实例化对象</span></span><br><span class="line"><span class="comment"># 按上面解析数据，按照对应的属性设置值</span></span><br><span class="line"><span class="comment"># 字符串，数字型的都是直接赋值</span></span><br><span class="line">search_request.commonRequest.searchType = <span class="string">&#x27;paper&#x27;</span></span><br><span class="line">search_request.commonRequest.searchWord = <span class="string">&#x27;python&#x27;</span></span><br><span class="line">search_request.commonRequest.currentPage = <span class="number">2</span></span><br><span class="line">search_request.commonRequest.pageSize = <span class="number">20</span></span><br><span class="line"><span class="comment"># repeated修饰的messsage类型和enum类型，则需要稍微多几个步骤</span></span><br><span class="line">search_request.commonRequest.searchFilter.append(<span class="number">0</span>)</span><br><span class="line">search_request.interfaceType = <span class="number">1</span></span><br><span class="line">form_data = search_request.SerializeToString()</span><br><span class="line"><span class="built_in">print</span>(form_data)</span><br><span class="line"><span class="comment"># 保存数据玮bin文件供后续对比使用</span></span><br><span class="line"><span class="comment"># with open(&#x27;me.bin&#x27;, mode=&quot;wb&quot;) as f:</span></span><br><span class="line"><span class="comment">#     f.write(form_data)</span></span><br><span class="line"><span class="comment"># print(search_request.SerializeToString().decode())</span></span><br><span class="line"></span><br><span class="line">bytes_head = <span class="built_in">bytes</span>([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="built_in">len</span>(form_data)])</span><br><span class="line"><span class="built_in">print</span>(bytes_head+form_data)</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;*/*&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/grpc-web+proto&quot;</span>,</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line">url = <span class="string">&quot;https://*********/SearchService.SearchService/search&quot;</span></span><br><span class="line">response=requests.post(url,headers=headers,data=bytes_head+form_data)</span><br><span class="line"><span class="built_in">print</span>(response.content)</span><br></pre></td></tr></table></figure>
@@ -455,28 +455,28 @@
 <h3 id="响应处理"><a href="#响应处理" class="headerlink" title="响应处理"></a>响应处理</h3><p>我们构造了请求的proto文件，并成功用python发包获得了数据，但是得到的数据和f12得到的数据是一样的乱码如下图<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/18.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/18.webp"
                      
                 ><br />其实这个也是protobuf格式，发过去的是protobuf格式，收到的也是protobuf格式，只是它是以二进制序列化格式传输的，所以看上去像乱码.<br />接下来会带来两种方法：①直观但有点复杂，②便捷但不太直观</p>
 <h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p><strong>写对应的响应的proto文件，和发包一样。当然可以和发包写在一起。</strong><br />老规矩，还是打断点从堆栈进行分析，根据发包的堆栈主要看app开头的js，因为chunk开头的是基本库，很少在里面做手脚，一般都是在自写的js里面做加密或其他操作。<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/19.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/19.webp"
                      
                 ><br />一步步调试后，<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/20.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/20.webp"
                      
                 ><br />异步然后获得了值去.toObject,这个toObject就是proto文件转js的时候会产生的一个api函数接口，可以简单使用protoc去尝试转化成js看看。<br />这里不好跟进，直接全局搜索一下：proto.SearchService.SearchResponse<br />这里接受响应后需要把二进制数据进行反序列化，那么就会用到下面的api<br /><strong><font color="red">deserializeBinary——deserializeBinaryFromReader</font><strong>（</strong>重点核心</strong>）<br />完整的就是 proto.SearchService.SearchResponse.deserializeBinaryFromReader<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/21.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/21.webp"
                      
                 ><br />一下子就定位到了，和请求的一样理解，只是他现在变成了case语句来表示序号位置，read后面的类型来表示类型。<br />序号4有个message，进去查看<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/22.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/22.webp"
                      
                 ><br />这个返回的数据量太大了，标号也特别的多，有没有什么更好的方法得到proto文件呢？<br />那就是自写ast，然后用ast来处理这种switch语句。这里直接使用渔歌写好的ats插件，文末附上链接，网站js有些小更新，之前的可能有些小报错，小小的修改了一下<br />这里把整个js复制出来命名为test.js，先安装babel解析库在当前目录下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @babel/core --save-dev</span><br></pre></td></tr></table></figure>
@@ -485,17 +485,17 @@
 <p>这个ast代码单纯只是针对这个站点，其他站点也是类似分析。<br />运行后生成了app_proto3.proto文件，打开看一面有一些报错，如下图，渔歌文章也讲清楚了原因，因为对象调用deserializeBinaryFromReader方法的时候，ast代码处理对象无法确定，所以就没加载到。<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/23.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/23.webp"
                      
                 ><br />我们在调试里面，搜索关键词ExportResponse.deserializeBinaryFromReader<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/24.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/24.webp"
                      
                 ><br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/25.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/25.webp"
                      
                 ><br />跟进去就能找到s对象是什么，补上就行，其他的报错也是这样的操作<br />得到了proto文件后进行编译成python </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --python_out=. ./app_proto3.<span class="property">proto</span></span><br></pre></td></tr></table></figure>
@@ -504,13 +504,13 @@
 <p>可以看到很直观，取值也方便。<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/26.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/26.webp"
                      
                 ><br />上面之所以从响应的第六位字节开启取，是跟上面发包一样的，前五个字节表示请求头的长度<br />下面是proto的核心，序列化和反序列化<br /><strong><font color="red">serializeBinary——serializeBinaryFromReader</font><strong>（</strong>重点核心</strong>）<br /><strong><font color="red">deserializeBinary——deserializeBinaryFromReader</font><strong>（</strong>重点核心</strong>）</p>
 <h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><p>使用python应对protobuf的第三方库：blackboxprotobuf<br />安装命令：pip install blackboxprotobuf<br />调用核心函数 ：blackboxprotobuf.decode_message(<strong>Byte类型数据</strong>)，进行解protobuf格式数据<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20230201/27.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230201/27.webp"
                      
                 ><br />上面是数据对应结构位置，下面是类型对应结构位置<br />虽然拿到了数据，只是位置序号加内容，我们其实要靠猜才能知道是什么，这种就不需要去写proto文件<br />两种方式都可以，喜欢哪种用哪种</p>
 <h3 id="相关资料参考"><a href="#相关资料参考" class="headerlink" title="相关资料参考"></a>相关资料参考</h3><p><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/dideng7039/article/details/101869819" >https://blog.csdn.net/dideng7039/article/details/101869819<i class="fas fa-external-link-alt"></i></a><br /><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35491275/article/details/111721639" >https://blog.csdn.net/qq_35491275&#x2F;article&#x2F;details&#x2F;111721639<i class="fas fa-external-link-alt"></i></a><br /><a class="link"   target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/DzCz66_Szc7vfG6bpl956w" >https://mp.weixin.qq.com/s/DzCz66_Szc7vfG6bpl956w<i class="fas fa-external-link-alt"></i></a><br /><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_56881388/article/details/128612717" >https://blog.csdn.net/qq_56881388&#x2F;article&#x2F;details&#x2F;128612717<i class="fas fa-external-link-alt"></i></a></p>
@@ -797,7 +797,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">71.4k</span>
+                    <span class="item-value border-box word">72k</span>
                 </span>
             
 

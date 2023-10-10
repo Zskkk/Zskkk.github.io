@@ -269,7 +269,7 @@
 <h3 id="双亲委派模式"><a href="#双亲委派模式" class="headerlink" title="双亲委派模式"></a>双亲委派模式</h3><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20231004/01.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231004/01.webp"
                      
                 ></p>
 <p>双亲委派模式的工作原理是如果一个类加载器收到了累加器的请求，他并不会自己先去加载，而是把这个请求委托给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达顶层的启动类加载器，如果父类加载器可以完成加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派模式。<br /><br>好处：<br>1.避免重复加载，如果已经加载过一次class，可以直接读取已经加载的class。<br>2.更加安全，无法自定义类来替代系统的类，可以防止核心api库被随意篡改。</p>
@@ -277,7 +277,7 @@
 <h3 id="Android系统中的ClassLoader的继承关系"><a href="#Android系统中的ClassLoader的继承关系" class="headerlink" title="Android系统中的ClassLoader的继承关系"></a>Android系统中的ClassLoader的继承关系</h3><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20231004/02.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231004/02.webp"
                      
                 ></p>
 <p>Android系统中与ClassLoader相关的一共有8个：<br><strong>ClassLoader</strong>为抽象类。<br><strong>BootClassLoader</strong>预加载常用类继承自<strong>ClassLoader</strong>，单例模式。与Java中的<strong>BootClassLoader</strong>不同，并不是由C&#x2F;C++代码实现，而是由Java实现的。<br><strong>BaseDexClassLoader</strong>是<strong>PathCLassLoader</strong>、<strong>DexCLassLoader</strong>、<strong>InMemoryCLassLoader</strong>的父类，类加载器的主要逻辑都是在<strong>BaseDexClassLoader</strong>完成的。<br><strong>SecureClassLoader</strong>继承了抽象类<strong>CLassLoader</strong>，扩展了<strong>ClassLoader</strong>类加入了权限方面的功能，加强了安全性，其子类<strong>URLClassLOader</strong>是用URl路径和jar文件中加载类和资源。<br>其中重点关注<strong>PathCLassLoader</strong>、<strong>DexCLassLoader</strong><br><strong>PathClassLoader</strong>是Android默认使用的类加载器，一个apk中的Activity等类便是在其中加载。<br><strong>DexCLassLoader</strong>可以加载任意目录下的dex&#x2F;jar&#x2F;apl&#x2F;zip文件，比<strong>PathClassLoader</strong>更灵活，是实现插件化，热修复，以及dex加壳的重点。<br>Android8.0新引入<strong>InMemoryDexClassloader</strong>，从名字看出是直接从内存中加载dex<br /></p>
@@ -285,7 +285,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20231004/03.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231004/03.webp"
                      
                 ></p>
 <p>看下面PathCLassLoader、DexCLassLoader、InMemoryCLassLoader的源码都很少，主要逻辑都是在父类BaseDexClassLoader里。<br><strong>DexClassLoader</strong></p>
@@ -408,6 +408,22 @@
 
                 
                     <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/12801/"
+                                   title="IOS逆向系列（一）环境配置"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">IOS逆向系列（一）环境配置</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
                         
                         
                             <div class="article-next">
@@ -571,7 +587,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">71.4k</span>
+                    <span class="item-value border-box word">72k</span>
                 </span>
             
 

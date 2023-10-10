@@ -265,17 +265,17 @@
                     <p>挂上vpn，打开charles抓包可以看到没网络，但是可以抓到包，怀疑是服务器校验客户端证书了<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210902/01.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210902/01.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210902/02.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210902/02.webp"
                      
                 ><br>这里推荐一下肉老师的文章 <a class="link"   target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/197657" >https://www.anquanke.com/post/id/197657<i class="fas fa-external-link-alt"></i></a><br>引用里面一张图<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210902/03.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210902/03.webp"
                      
                 ><br>原本服务器校验的是app的证书，但是挂上charles，服务器校验的是charles的证书，一匹配发现不是app的证书，就返回网络失败，所以我们要将app中内置的证书导入到Charles中去。<br>这个操作通常需要完成两项内容：</p>
 <ol>
@@ -285,29 +285,29 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210902/04.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210902/04.webp"
                      
                 ><br>找证书密码一般解密会调用现成的API，<strong>java.security.KeyStore</strong> ，直接使用frida打印出来，<br>也可以hook系统文件库，这里直接使用现成的代码，</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_KeyStore_load</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">StringClass</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.String&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">KeyStore</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.security.KeyStore&quot;</span>);</span><br><span class="line">        <span class="title class_">KeyStore</span>.<span class="property">load</span>.<span class="title function_">overload</span>(<span class="string">&#x27;java.security.KeyStore$LoadStoreParameter&#x27;</span>).<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params">arg0</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.util.Log&quot;</span>).<span class="title function_">getStackTraceString</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.Throwable&quot;</span>).$new()));</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;KeyStore.load1:&quot;</span>, arg0);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">load</span>(arg0);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="title class_">KeyStore</span>.<span class="property">load</span>.<span class="title function_">overload</span>(<span class="string">&#x27;java.io.InputStream&#x27;</span>, <span class="string">&#x27;[C&#x27;</span>).<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params">arg0, arg1</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.util.Log&quot;</span>).<span class="title function_">getStackTraceString</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.Throwable&quot;</span>).$new()));</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;KeyStore.load2:&quot;</span>, arg0, arg1 ? <span class="title class_">StringClass</span>.$new(arg1) : <span class="literal">null</span>);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">load</span>(arg0, arg1);</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hook_KeyStore_load...&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(hook_KeyStore_load)</span><br></pre></td></tr></table></figure>
 <p>使用spawn的模式启动，密码一下子就吐出来了<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210902/05.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210902/05.webp"
                      
                 ><br>把证书导入到charles，并输入刚才的密码<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210902/06.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210902/06.webp"
                      
                 ><br>再次抓包试试，这次页面跳转了，请求也是正常了<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210902/07.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210902/07.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.staticaly.com/gh/Zskkk/blog-images@master/20210902/08.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210902/08.webp"
                      
                 ></p>
 
@@ -589,7 +589,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">71.4k</span>
+                    <span class="item-value border-box word">72k</span>
                 </span>
             
 

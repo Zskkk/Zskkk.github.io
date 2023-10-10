@@ -10,7 +10,7 @@
     
     <title>
         
-            谷歌Pixel3刷机以及magisk的安装 |
+            IOS逆向系列（一）环境配置 |
         
         zskのblog
     </title>
@@ -180,7 +180,7 @@
             <div class="article-content-bottom border-box">
                 
                     <div class="article-title">
-                        谷歌Pixel3刷机以及magisk的安装
+                        IOS逆向系列（一）环境配置
                     </div>
                 
 
@@ -209,13 +209,13 @@
         
             <span class="meta-info-item article-create-date">
                 <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
-                <span class="pc">2023-02-11 16:41:01</span>
-                <span class="mobile">2023-02-11 16:41</span>
+                <span class="pc">2023-10-10 00:00:00</span>
+                <span class="mobile">2023-10-10 00:00</span>
             </span>
 
             <span class="meta-info-item article-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Sat Feb 11 2023 16:41:01 GMT+0800">2023-02-11 16:41:01</span>
+                <span class="pc" data-updated="Tue Oct 10 2023 00:00:00 GMT+0800">2023-10-10 00:00:00</span>
             </span>
         
 
@@ -226,7 +226,7 @@
                 <i class="icon fas fa-tags"></i>&nbsp;
                 <ul>
                     
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%88%B7%E6%9C%BA/">刷机</a></li>
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/IOS/">IOS</a></li>
                         
                     
                 </ul>
@@ -236,7 +236,7 @@
         
         
             <span class="meta-info-item article-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>532 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>590 字</span>
             </span>
         
         
@@ -262,69 +262,73 @@
                 <div class="article-content keep-markdown-body">
                     
 
-                    <h3 id="一、刷机"><a href="#一、刷机" class="headerlink" title="一、刷机"></a>一、刷机</h3><p>1、首先找到对应自己手机的镜像版本，进行下载，<a class="link"   target="_blank" rel="noopener" href="https://developers.google.cn/android/images#blueline" >https://developers.google.cn/android/images#blueline<i class="fas fa-external-link-alt"></i></a><br /><br><img  
+                    <h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><p>有mac设备可以直接下载checker1n，下载链接：<a class="link"   target="_blank" rel="noopener" href="https://checkra.in/" >https://checkra.in/<i class="fas fa-external-link-alt"></i></a><br>下载后安装打开如果提示身份不明的开发者（如下图），则在 设置-隐私与安全性 进行设置</p>
+<p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/01.webp"
-                      alt="image.png"
-                ><br />新建个文件夹shuaji，下载完解压到刷机里面<br /><br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/02.webp"
-                      alt="image.png"
-                ><br />2、下载刷机工具platform-tools.zip，<a class="link"   target="_blank" rel="noopener" href="https://developer.android.com/studio/releases/platform-tools?hl=zh-cn" >https://developer.android.com/studio/releases/platform-tools?hl=zh-cn<i class="fas fa-external-link-alt"></i></a>，根据操作系统下载，链接需要翻墙才能打开，我也把下载链接放出来，可以直接下载<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/03.webp"
-                      alt="image.png"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231010/01.webp"
+                     
                 ></p>
-<ul>
-<li><a class="link"   target="_blank" rel="noopener" href="https://dl.google.com/android/repository/platform-tools_r33.0.3-windows.zip" >下载适用于 Windows 的 SDK Platform-Tools<i class="fas fa-external-link-alt"></i></a></li>
-<li><a class="link"   target="_blank" rel="noopener" href="https://dl.google.com/android/repository/platform-tools_r33.0.3-darwin.zip" >下载适用于 Mac 的 SDK Platform-Tools<i class="fas fa-external-link-alt"></i></a></li>
-<li><a class="link"   target="_blank" rel="noopener" href="https://dl.google.com/android/repository/platform-tools_r33.0.3-linux.zip" >下载适用于 Linux 的 SDK Platform-Tools<i class="fas fa-external-link-alt"></i></a></li>
-</ul>
-<p>下载完，同样解压到shuaji目录下<br /><img  
+<p>打开后点击 Options，记得先连接手机</p>
+<p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/04.webp"
-                      alt="image.png"
-                ><br />3、手机关机，关机后 长按住 关键键+音量减键（或者开机界面执行adb reboot bootloader），手机进入bootloader<br /><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/05.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231010/02.webp"
                      
-                ><br />4、winfows运行shuaji目录下flash-all.bat，mac则需要运行flash-all.sh文件，整个过程会自动处理完成，伴随着重启几次。<br /> <img  
+                ></p>
+<p>勾选第一个和第三个，然后点 Back 返回</p>
+<p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/06.webp"
-                      alt="image.png"
-                ><br />过了几分钟后，到这里就刷机成功了<br /><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/07.webp"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231010/03.webp"
                      
-                ><br />5.修改手机配置<br />（1）点击English，换成简体中文，然后点击开始，能跳过的则跳过。<br />（2）点击设置，点击关于手机，多次点击版本号，开启开发者模式，在开发者模式开启USB调式。<br />（3）在设置修改手机日期时间为当前日期时间（不弄可能没网）</p>
-<h3 id="二、解锁root"><a href="#二、解锁root" class="headerlink" title="二、解锁root"></a>二、解锁root</h3><p>下载Magisk，<a class="link"   target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/tags" >https://github.com/topjohnwu/Magisk/tags<i class="fas fa-external-link-alt"></i></a>，我这下载的是v24.0的<br /><br>1.usb连接电脑后，使用命令 adb install Magisk-v24.0.apk 进行安装。<br /><br>2.解压上面shuaji文件目录下的image-xxxx.zip，把boot.img 通过adb push到手机&#x2F;sdcard&#x2F;download&#x2F;<br />命令：adb push boot.img &#x2F;sdcard&#x2F;download&#x2F;<br /><img  
+                ></p>
+<p>点击 Start，再点击Next，这时候手机就自动进入恢复模式</p>
+<p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/08.webp"
-                      alt="image.png"
-                ><br /><br>3.手机上如下操作magisk，生成 magisk_patched-24000_xxxxx.img 文件<img  
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231010/04.webp"
+                     
+                ></p>
+<p>等待结束就会到这一步</p>
+<p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/09.webp"
-                      alt="image.png"
-                ><br /><img  
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231010/05.webp"
+                     
+                ></p>
+<p>意思就是，1.先点击Start，2. 点击Start后要按住提示的按键，即侧边键，比如我的是iphone6就是同时按住电源键和home键（机型不同按键稍有差距），同时按住看着那个4秒倒计时完放开电源键，一直按住home键10秒，直到3.上面的倒计时结束放开，然后就会有进度条跑代码开机，显示All Done为成功</p>
+<p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/10.webp"
-                      alt="image.png"
-                ><br />选择刚才上传的boot.img 然后点击开始，接着会在目录下生成带magisk的文件<img  
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231010/06.webp"
+                     
+                ></p>
+<p>越狱成功的话，打开手机桌面上的checkra1n，安装cydia记可成功的越狱。<br /><br>注意：手机重启的话越狱会失效，需要重新越狱。</p>
+<p>win可以使用u盘越狱，教程：<a class="link"   target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/oTm4xlO1b-v3f4y3x_koUA" >https://mp.weixin.qq.com/s/oTm4xlO1b-v3f4y3x_koUA<i class="fas fa-external-link-alt"></i></a><br>工具下载链接：<br>链接：<a class="link"   target="_blank" rel="noopener" href="https://pan.baidu.com/s/1_Rw810In2L9eR0Xsc2WEDA" >https://pan.baidu.com/s/1_Rw810In2L9eR0Xsc2WEDA<i class="fas fa-external-link-alt"></i></a><br>提取码：4511</p>
+<p>越狱后root密码 alpine，输入 passwd 命令后按照提示连续两次输入新密码即可<br>越狱后下载的几个插件&#x2F;工具<br>Vi IMproved<br>htop<br>Filza File Manage<br>Apple File Conduit<br>AppSync Unified (需要添加软件源 cydia.angelxwind.net)<br>MTerminal<br>nano<br>OpenSSH</p>
+<p>frida安装，选择16.0.19，deb后缀的，推到ios上<br>使用命令安装 dpkg -i frida_xxxxxx.deb<br>安装成功可以在cydia看到</p>
+<p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/11.webp"
-                      alt="image.png"
-                ><br />4.把生成的magisk_patched-24000_xxxxx.img 通过 adb pull 到电脑fastboot.exe所在的目录，也就是shuaji目录，命令如下 adb pull &#x2F;sdcard&#x2F;Download&#x2F;magisk_patched-24000_qJQvu.img .<br />5. 执行 adb reboot bootloader 手机进入bootloader<br />6. 执行命令 fastboot flash boot magisk_patched-24000_qJQvu.img 刷magisk fastboot reboot<br />7. 手机点击电源键让手机正常启动，magisk安装成功，root完成</p>
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231010/07.webp"
+                     
+                ></p>
+<h3 id="ios脱壳"><a href="#ios脱壳" class="headerlink" title="ios脱壳"></a>ios脱壳</h3><p>脱壳脚本 <a class="link"   target="_blank" rel="noopener" href="https://github.com/AloneMonkey/frida-ios-dump" >https://github.com/AloneMonkey/frida-ios-dump<i class="fas fa-external-link-alt"></i></a><br /><br>拉取下来后安装README里的要求，下载requirements.txt里的库，端口转发 iproxy 2222 22，ssh链接端口2222，<br><code>ssh root@127.0.0.1 -p 2222</code><br>加壳软件：高考蜂背（爱思助手下载）<br>使用方式：dump.py xxx -uroot -P123456<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231010/08.webp"
+                     
+                ></p>
+<p>不行就多试几次<br>结束后会得到ipa安装包，使用 7z x xxx.ipa进行解压<br>找到最大可执行文件<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231010/09.webp"
+                     
+                ></p>
+<p>可以使用ida打开，ida64 Gkfb</p>
+<h3 id="通过命令行获取设备信息，类似adb"><a href="#通过命令行获取设备信息，类似adb" class="headerlink" title="通过命令行获取设备信息，类似adb"></a>通过命令行获取设备信息，类似adb</h3><p>安装地址：<a class="link"   target="_blank" rel="noopener" href="https://libimobiledevice.org/#get-started" >https://libimobiledevice.org/#get-started<i class="fas fa-external-link-alt"></i></a><br>遇到安装失败，更新一下 apt-get update<br>使用命令查看 <a class="link"   target="_blank" rel="noopener" href="https://github.com/libimobiledevice/libimobiledevice" >https://github.com/libimobiledevice/libimobiledevice<i class="fas fa-external-link-alt"></i></a></p>
+<p>apt install ideviceinstaller<br><a class="link"   target="_blank" rel="noopener" href="https://github.com/libimobiledevice/ideviceinstaller" >https://github.com/libimobiledevice/ideviceinstaller<i class="fas fa-external-link-alt"></i></a><br>其他功能可以查看他的其他项目<br /></p>
 
                 </div>
 
@@ -333,11 +337,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="post-title border-box text-ellipsis">
-                谷歌Pixel3刷机以及magisk的安装
+                IOS逆向系列（一）环境配置
             </div>
 
             <div class="post-link border-box text-ellipsis">
-                posts/36296/
+                posts/12801/
             </div>
         </div>
 
@@ -353,7 +357,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2023-02-11 16:41</div>
+                <div class="content">2023-10-10 00:00</div>
             </div>
 
 
@@ -387,7 +391,7 @@
                             <ul class="post-tags-box border-box">
                                 
                                     <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%88%B7%E6%9C%BA/">刷机</a>
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/IOS/">IOS</a>
                                     </li>
                                 
                             </ul>
@@ -426,31 +430,15 @@
                 
                     <div class="article-nav">
                         
-                            <div class="article-prev">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/posts/16537/"
-                                   title="某音web端X-Bogus 逆向分析算法"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                      <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                            <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">某音web端X-Bogus 逆向分析算法</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="article-next">
                                 <a class="next"
                                    rel="next"
-                                   href="/posts/14763/"
-                                   title="ProtoBuf逆向之某公交app"
+                                   href="/posts/23195/"
+                                   title="ClassLoader和动态加载"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">ProtoBuf逆向之某公交app</span>
+                                        <span class="post-nav-title-item text-ellipsis">ClassLoader和动态加载</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                             <span class="right arrow-icon flex-center">
@@ -558,7 +546,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%B7%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">一、刷机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A7%A3%E9%94%81root"><span class="nav-number">2.</span> <span class="nav-text">二、解锁root</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ios%E8%84%B1%E5%A3%B3"><span class="nav-number">2.</span> <span class="nav-text">ios脱壳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AF%EF%BC%8C%E7%B1%BB%E4%BC%BCadb"><span class="nav-number">3.</span> <span class="nav-text">通过命令行获取设备信息，类似adb</span></a></li></ol>
     </div>
 </div>
 
@@ -747,7 +735,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%B7%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">一、刷机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A7%A3%E9%94%81root"><span class="nav-number">2.</span> <span class="nav-text">二、解锁root</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ios%E8%84%B1%E5%A3%B3"><span class="nav-number">2.</span> <span class="nav-text">ios脱壳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AF%EF%BC%8C%E7%B1%BB%E4%BC%BCadb"><span class="nav-number">3.</span> <span class="nav-text">通过命令行获取设备信息，类似adb</span></a></li></ol>
     </div>
 </div>
 
