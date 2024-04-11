@@ -262,18 +262,17 @@
                 <div class="article-content keep-markdown-body">
                     
 
-                    <p>以下ARM笔记我基于 <a class="link"   target="_blank" rel="noopener" href="https://space.bilibili.com/37877654" >_周壑<i class="fas fa-external-link-alt"></i></a> 大佬在b站的视频教程整理来的，推荐配合视频使用</p>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>arm文档下载链接：<a class="link"   target="_blank" rel="noopener" href="https://documentation-service.arm.com/static/644a406baa78c007af74e6fd?token=" >https://documentation-service.arm.com/static/644a406baa78c007af74e6fd?token=<i class="fas fa-external-link-alt"></i></a></br><br>其中指令集在目录 F5.1 Alphabetical list of T32 and A32 base instruction set instructions。</br><br>在android studio中创建设备，选择api17的，armeabi-v7a架构。</br><br>创建后的设备默认路径在 C:\Users\zsk.android\avd，snapshots保存的是快照</br><br>快捷方式启动设备：</br><br>    创建bat文件，输入D:\Android\Sdk\emulator\emulator.exe -avd Pixel_XL_API_17_2，运行启动设备</br><br>将ida的android-server push到设备上，android-server文件在ida目录下的dbgsrv</br><br>push后修改文件权限为777，运行，端口转发：adb forward tcp:23946 tcp:23946</br><br>运行后就可以在ida选择设备调试，Debugger -&gt; Attach -&gt; Remote ARMLinux&#x2F;Android debugger</br><br>hostname填localhost，没有进行端口转发则需要填手机ip，能看到进程列表则成功</br></p>
-<h2 id="c文件编译成arm运行"><a href="#c文件编译成arm运行" class="headerlink" title="c文件编译成arm运行"></a>c文件编译成arm运行</h2><p>在window下把c文件编译为arm的前置准备</br><br>hello.c</p>
+                    <p><strong>以下ARM笔记我基于 <a class="link"   target="_blank" rel="noopener" href="https://space.bilibili.com/37877654" >_周壑<i class="fas fa-external-link-alt"></i></a> 大佬在b站的视频教程整理来的，推荐配合视频使用</strong></p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>arm文档下载链接：<a class="link"   target="_blank" rel="noopener" href="https://documentation-service.arm.com/static/644a406baa78c007af74e6fd?token=" >https://documentation-service.arm.com/static/644a406baa78c007af74e6fd?token=<i class="fas fa-external-link-alt"></i></a></br>其中指令集在目录 F5.1 Alphabetical list of T32 and A32 base instruction set instructions。</br>在android studio中创建设备，选择api17的，armeabi-v7a架构。</br>创建后的设备默认路径在 C:\Users\zsk.android\avd，snapshots保存的是快照</br>快捷方式启动设备：</br>    创建bat文件，输入D:\Android\Sdk\emulator\emulator.exe -avd Pixel_XL_API_17_2，运行启动设备</br>将ida的android-server push到设备上，android-server文件在ida目录下的dbgsrv</br>push后修改文件权限为777，运行，端口转发：adb forward tcp:23946 tcp:23946</br>运行后就可以在ida选择设备调试，Debugger -&gt; Attach -&gt; Remote ARMLinux&#x2F;Android debugger</br>hostname填localhost，没有进行端口转发则需要填手机ip，能看到进程列表则成功</br></p>
+<h2 id="c文件编译成arm运行"><a href="#c文件编译成arm运行" class="headerlink" title="c文件编译成arm运行"></a>c文件编译成arm运行</h2><p>在window下把c文件编译为arm的前置准备</br>hello.c</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在同级目录下新建Application.mk，Android.mk文件</br><br><a class="link"   target="_blank" rel="noopener" href="https://developer.android.google.cn/ndk/guides/android_mk?hl=zh-cn" >https://developer.android.google.cn/ndk/guides/android_mk?hl&#x3D;zh-cn<i class="fas fa-external-link-alt"></i></a></br></p>
-<p>Application.mk</p>
+<p>在同级目录下新建Application.mk，Android.mk文件</br><a class="link"   target="_blank" rel="noopener" href="https://developer.android.google.cn/ndk/guides/android_mk?hl=zh-cn" >https://developer.android.google.cn/ndk/guides/android_mk?hl&#x3D;zh-cn<i class="fas fa-external-link-alt"></i></a></br><br>Application.mk</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">APP_ABI := armeabi-v7a</span><br><span class="line">APP_BUILD_SCRIPT := Android.mk</span><br><span class="line">APP_PLATFORM := android-16</span><br></pre></td></tr></table></figure>
 <p>Android.mk</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LOCAL_PATH := <span class="variable">$(<span class="built_in">call</span> my-<span class="built_in">dir</span>)</span></span><br><span class="line"><span class="comment">#include $(CLEAR_VARS)</span></span><br><span class="line">LOCAL_ARM_MODE := arm</span><br><span class="line">LOCAL_MODULE := <span class="string">&quot;hello&quot;</span></span><br><span class="line">LOCAL_SRC_FILES := hello.c</span><br><span class="line"><span class="keyword">include</span> <span class="variable">$(BUILD_EXECUTABLE)</span></span><br></pre></td></tr></table></figure>
 <p>编译，可以弄成bat方便执行</br></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=Application.mk</span><br></pre></td></tr></table></figure>
-<p>需要在Android studio中下载ndk工具，下载好后会在sdk下有ndk文件，进入选择随便一个版本路径配置环境变量</br><br>运行显示过程</br><br>[armeabi-v7a] Compile thumb  : hello &lt;&#x3D; hello.c</br><br>[armeabi-v7a] Executable     : hello</br><br>[armeabi-v7a] Install        : hello &#x3D;&gt; libs&#x2F;armeabi-v7a&#x2F;hello</br><br>结束后会在目录生成obj和libs文件，在libs下是hello可执行文件，obj下是debugger版的可执行文件，调试的话就用obj下的。</br><br>将文件push到手机，修改777权限，执行运行</br></p>
+<p>需要在Android studio中下载ndk工具，下载好后会在sdk下有ndk文件，进入选择随便一个版本路径配置环境变量</br>运行显示过程</br>[armeabi-v7a] Compile thumb  : hello &lt;&#x3D; hello.c</br>[armeabi-v7a] Executable     : hello</br>[armeabi-v7a] Install        : hello &#x3D;&gt; libs&#x2F;armeabi-v7a&#x2F;hello</br>结束后会在目录生成obj和libs文件，在libs下是hello可执行文件，obj下是debugger版的可执行文件，调试的话就用obj下的。</br>将文件push到手机，修改777权限，执行运行</br></p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">root@android:/data/local/tmp # chmod 777 hello</span></span><br><span class="line"><span class="section">root@android:/data/local/tmp # ./hello</span></span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
 <p>这样一下子就运行玩完了，没法调试，修改代码让它一直运行</br></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello\n&quot;</span>);</span><br><span class="line">        getchar();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -306,7 +305,7 @@
 </li>
 <li><p>MOV：</br></p>
 <ul>
-<li>用于将一个数值（立即数或寄存器中的值）移动到目标寄存器。</br><br>  MOV R0, #10       ; 将立即数 10 移动到寄存器 </br><br>  R0 MOV R1, R2        ; 将寄存器 R2 中的值移动到寄存器 R1</br></li>
+<li>用于将一个数值（立即数或寄存器中的值）移动到目标寄存器。</br>    MOV R0, #10       ; 将立即数 10 移动到寄存器 </br>    R0 MOV R1, R2        ; 将寄存器 R2 中的值移动到寄存器 R1</br></li>
 </ul>
 </li>
 <li><p>基本运算：</br></p>
@@ -353,9 +352,7 @@
                      alt="image"
                      data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/1.webp"
                      
-                ></br></p>
-<p>条件指令是加在运算符后面的，如何看懂？</br><br>例如机器码为：</br><br>03 00 10 E3	TST</br><br>小端序排序的，前高4位是条件，看最高位也就是E，E的对应的bit为1110，也就是None，无条件，可以说E是出现最多的</br><br>06 00 00 0A	BEQ</br><br>最高位0，0就是EQ，</br><br>03 00 52 21	CMPCS</br><br>最高位为2，2就是0010，CS</br></p>
-<p>指令后缀带S的，表示执行完标志位会改变</br><br>01 00 80 E0	ADD	R0, R0, R1</br><br>01 00 90 E0	ADDS	R0, R0, R1</br><br>01 00 40 E0	SUB		R0, R0, R1</br><br>01 00 50 E0	SUBS	R0, R0, R1</br><br>S是由第20个bit控制，也就是上面的8，9</br><br><img  
+                ></br>条件指令是加在运算符后面的，如何看懂？</br>例如机器码为：</br>03 00 10 E3	TST</br>小端序排序的，前高4位是条件，看最高位也就是E，E的对应的bit为1110，也就是None，无条件，可以说E是出现最多的</br>06 00 00 0A	BEQ</br>最高位0，0就是EQ，</br>03 00 52 21	CMPCS</br>最高位为2，2就是0010，CS</br>指令后缀带S的，表示执行完标志位会改变</br>01 00 80 E0	ADD	R0, R0, R1</br>01 00 90 E0	ADDS	R0, R0, R1</br>01 00 40 E0	SUB		R0, R0, R1</br>01 00 50 E0	SUBS	R0, R0, R1</br>S是由第20个bit控制，也就是上面的8，9</br><br><img  
                      lazyload
                      alt="image"
                      data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/2.webp"
@@ -366,7 +363,7 @@
                      data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/3.webp"
                      
                 ></br></p>
-<p>S位为0就是不带S，为就是S</br><br>大部分算术指令都可以加S，CMP不行，CMP的20位固定为1</br></p>
+<p>S位为0就是不带S，为就是S</br>大部分算术指令都可以加S，CMP不行，CMP的20位固定为1</br></p>
 <ul>
 <li>运算指令可以分为以下三种：</br><ul>
 <li>第一种既要结果又要标志寄存器，subs，adds</br></li>
@@ -375,20 +372,17 @@
 </ul>
 </li>
 </ul>
-<h2 id="MOV指令"><a href="#MOV指令" class="headerlink" title="MOV指令"></a>MOV指令</h2><h3 id="立即数"><a href="#立即数" class="headerlink" title="立即数"></a>立即数</h3><p><strong>Move（immediate）将立即数值写入目标寄存器。</strong><br>mov是不访问内存，没有写内存的功能。那就只有寄存器操作数或者立即操作数</br><br>mov是把第二个操作数（可能是寄存器也可能是立即数）写到第一个操作数，那第一个操作数只能是寄存器操作数</br><br> arm指令是定长32位的，也就是立即数长度肯定不会超过32位</br><br><img  
+<h2 id="MOV指令"><a href="#MOV指令" class="headerlink" title="MOV指令"></a>MOV指令</h2><h3 id="立即数"><a href="#立即数" class="headerlink" title="立即数"></a>立即数</h3><p><strong>Move（immediate）将立即数值写入目标寄存器。</strong><br>mov是不访问内存，没有写内存的功能。那就只有寄存器操作数或者立即操作数</br>mov是把第二个操作数（可能是寄存器也可能是立即数）写到第一个操作数，那第一个操作数只能是寄存器操作数</br>arm指令是定长32位的，也就是立即数长度肯定不会超过32位</br><br><img  
                      lazyload
                      alt="image"
                      data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/4.webp"
                      
-                ><br>这里立即数的位数是imm4+imm12，也就是16位</br><br>例如：</br><br>34 82 01 E3                   MOVW            R8, #0x1234</br><br>如果是超过16位，则写不进。</br><br>第15-12位4位二进制的长度刚好16对应着r0-r15</br></p>
-<p>还有一种A1格式，立即数是可以超过16-32位的</br><br><img  
+                ><br>这里立即数的位数是imm4+imm12，也就是16位</br>例如：</br>34 82 01 E3                   MOVW            R8, #0x1234</br>如果是超过16位，则写不进。</br>第15-12位4位二进制的长度刚好16对应着r0-r15</br>还有一种A1格式，立即数是可以超过16-32位的</br><br><img  
                      lazyload
                      alt="image"
                      data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/5.webp"
                      
-                ></br></p>
-<p>02 81 A0 E3                   MOV             R8, #0x80000000</br><br>虽然这里长度比16位大，但是它的有效位只有最高位的8，这里是把2向右移动1<em>2位， 0010 -&gt;右移2位-&gt; 1000 -&gt; 8(十进制)</br><br>01 81 A0 E3                   MOV             R8, #0x40000000</br><br>把1向右移动1</em>2位，0001 -&gt;右移2位-&gt; 0100 -&gt; 4(十进制)</br><br>02 82 A0 E3                   MOV             R8, #0x20000000</br><br>把2向右移动4位，0010 -&gt;右移4位-&gt; 0010 -&gt; 2(十进制)</br><br>立即数的有效位数比较密集，可以集中在8位范围内还是偶数</br></p>
-<p>如果真要写入32位有效数如何做？</br><br>先写一条指令 mov r0, 0x5678 </br><br>再写 movt r0, 0x1234 写到高16位，ida会两句合成一句伪指令</br><br>78 06 05 E3 34 02 41 E3       MOV             R0, #0x12345678</br></p>
+                ></br><br>02 81 A0 E3                   MOV             R8, #0x80000000</br>虽然这里长度比16位大，但是它的有效位只有最高位的8，这里是把2向右移动1*2位， 0010 -&gt;右移2位-&gt; 1000 -&gt; 8(十进制)</br>01 81 A0 E3                   MOV             R8, #0x40000000</br>把1向右移动1*2位，0001 -&gt;右移2位-&gt; 0100 -&gt; 4(十进制)</br>02 82 A0 E3                   MOV             R8, #0x20000000</br>把2向右移动4位，0010 -&gt;右移4位-&gt; 0010 -&gt; 2(十进制)</br>立即数的有效位数比较密集，可以集中在8位范围内还是偶数</br>如果真要写入32位有效数如何做？</br>先写一条指令 mov r0, 0x5678 </br>再写 movt r0, 0x1234 写到高16位，ida会两句合成一句伪指令</br>78 06 05 E3 34 02 41 E3       MOV             R0, #0x12345678</br></p>
 <h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p><strong>Move（register）将值从寄存器复制到目标寄存器。</strong></br></p>
 <p>上面说的是立即数到寄存器，这个是寄存器到寄存器</br><br><img  
                      lazyload
@@ -396,8 +390,7 @@
                      data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/6.webp"
                      
                 ></br></p>
-<p>除了： 01 00 A0 E1                   MOV             R0, R1</br><br>还能： 01 02 A0 E1                   MOV             R0, R1,LSL#4 （R0是一个操作数，R1,LSL#4整体是一个操作数）R1向左移动4位写到r0里</br><br>看第7-11位，5位的长度也就是2的32次方来表示偏移</br><br>第5-6位，stype2位的长度有4种情况，逻辑左移，逻辑右移，算术右移 ，循环移位（算术左移的逻辑和逻辑左移是一样的，循环移位不区分左右移，比如循环左移1位和循环右移32位是一样的）</br><br>此指令由别名 ASRS (immediate), ASR (immediate), LSLS (immediate), LSL (immediate), LSRS (immediate), LSR (immediate), RORS (immediate), ROR (immediate), RRXS, and RRX使用.</br><br>指令lsl r0, r1,4 的效果跟 R0, R1,LSL#4 是一样的</br><br>所以 ASRS, ASR, LSLS, LSL, LSRS, LSR, RORS, ROR, RRXS, RRX 实际上都可以认为是mov指令的一个宏，另一种写法，在ida中都会翻译成mov指令</br></p>
-<p>常用的也就是逻辑左移，逻辑右移，算术右移，都是一些数组，结构体偏移寻址的</br></p>
+<p>除了： 01 00 A0 E1                   MOV             R0, R1</br>还能： 01 02 A0 E1                   MOV             R0, R1,LSL#4 （R0是一个操作数，R1,LSL#4整体是一个操作数）R1向左移动4位写到r0里</br>看第7-11位，5位的长度也就是2的32次方来表示偏移</br>第5-6位，stype2位的长度有4种情况，逻辑左移，逻辑右移，算术右移 ，循环移位（算术左移的逻辑和逻辑左移是一样的，循环移位不区分左右移，比如循环左移1位和循环右移32位是一样的）</br>此指令由别名 ASRS (immediate), ASR (immediate), LSLS (immediate), LSL (immediate), LSRS (immediate), LSR (immediate), RORS (immediate), ROR (immediate), RRXS, and RRX使用.</br> 指令lsl r0, r1,4 的效果跟 R0, R1,LSL#4 是一样的</br>所以 ASRS, ASR, LSLS, LSL, LSRS, LSR, RORS, ROR, RRXS, RRX 实际上都可以认为是mov指令的一个宏，另一种写法，在ida中都会翻译成mov指令</br>常用的也就是逻辑左移，逻辑右移，算术右移，都是一些数组，结构体偏移寻址的</br></p>
 <h3 id="寄存器移位寄存器"><a href="#寄存器移位寄存器" class="headerlink" title="寄存器移位寄存器"></a>寄存器移位寄存器</h3><p>Move（寄存器移位寄存器）将寄存器移位后的寄存器值复制到目标寄存器。</br><br><img  
                      lazyload
                      alt="image"
@@ -419,7 +412,7 @@
                      data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/9.webp"
                      
                 ></br></p>
-<h3 id="ADR"><a href="#ADR" class="headerlink" title="ADR"></a>ADR</h3><p>将地址加载到寄存器的伪指令。</br>从PC相对地址将立即值添加到PC值以形成PC相对地址，并写入结果发送到目标寄存器。</br>该指令由伪指令ADD（立即，到PC）和SUB（立即，从PC）使用。这个伪指令从来都不是首选的反汇编。</br>例如指令 add, r0, pc, 4（把pc+4赋给r0）会在ida变成</br>04 00 8F E2                   ADR             R0, loc_16FD4</br>从pc+4会涉及到读pc，读pc  要+8，加上4就是12</br>00016FD0 04 00 8F E2                   ADR             R0, loc_16FDC</br><br>00016FDC                               loc_16FDC</br></p>
+<h3 id="ADR"><a href="#ADR" class="headerlink" title="ADR"></a>ADR</h3><p>将地址加载到寄存器的伪指令。</br>从PC相对地址将立即值添加到PC值以形成PC相对地址，并写入结果发送到目标寄存器。</br>该指令由伪指令ADD（立即，到PC）和SUB（立即，从PC）使用。这个伪指令从来都不是首选的反汇编。</br>例如指令 add, r0, pc, 4（把pc+4赋给r0）会在ida变成</br>04 00 8F E2                   ADR             R0, loc_16FD4</br>从pc+4会涉及到读pc，读pc  要+8，加上4就是12</br>00016FD0 04 00 8F E2                   ADR             R0, loc_16FDC</br>00016FDC                               loc_16FDC</br></p>
 <h3 id="SUB"><a href="#SUB" class="headerlink" title="SUB"></a>SUB</h3><p>减法指令。</br>从PC中减去从对齐（PC，4）值减去立即值以形成一个PC相关地址，并将结果写入目标寄存器。</br>02 00 41 E0                   SUB             R0, R1, R2（r0&#x3D;r1-r2）</br></p>
 <h3 id="RSB"><a href="#RSB" class="headerlink" title="RSB"></a>RSB</h3><p>反向减法指令。</br>反向减法指令，反向减法（立即数）从立即数中减去寄存器值，并将结果写入目的地寄存器。</br>08 00 61 E2                   RSB             R0, R1, #8（8-r1的值写入r0）</br>08 00 61 E2                   RSB             R0, R1, R2（r2-r1的值写入r0）</br></p>
 <h3 id="AND"><a href="#AND" class="headerlink" title="AND"></a>AND</h3><p>按位与运算指令。</br>按位与(立即数)对寄存器值和立即数执行位与，并将结果写入到目标寄存器。</br>02 00 01 E0                   AND             R0, R1, R2（r0 &#x3D; r1 &amp; r2）</br></p>
@@ -452,7 +445,7 @@
 </li>
 <li><p>push:</br></p>
 <ul>
-<li>STR             R0, [SP, #-4]!</br>	等同于下面两条</br><br>sub sp, sp, #4       &#x2F;&#x2F; 栈指针递减4个字节 </br>str r0, [sp]         &#x2F;&#x2F; 将寄存器 r0 中的值存储到栈中</br></li>
+<li>STR             R0, [SP, #-4]!</br>	等同于下面两条</br>sub sp, sp, #4       &#x2F;&#x2F; 栈指针递减4个字节 </br>str r0, [sp]         &#x2F;&#x2F; 将寄存器 r0 中的值存储到栈中</br></li>
 </ul>
 </li>
 </ul>
