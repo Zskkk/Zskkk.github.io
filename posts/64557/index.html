@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+    <title>
+        
+            Art中的c++对象内存布局 |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
+    
+        
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/head.svg","first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","server_urls":null,"placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"version":"3.8.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        Art中的c++对象内存布局
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2023-10-24 00:00:00</span>
+                <span class="mobile">2023-10-24 00:00</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Tue Oct 24 2023 00:00:00 GMT+0800">2023-10-24 00:00:00</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E8%84%B1%E5%A3%B3/">脱壳</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.1k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>10 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <p>ART由C++11实现的，C++11中的类所占内存的大小主要是由成员变量（静态变量除外）决定的，成员函数（虚函数除外）是不计算在内的。</br>成员函数的存储是以一般函数的模式进行存储。a.fun()是通过fun(a.this)来调用的，这时候this指针会做为隐藏的第一个参数传入成员函数，this指针的地址就是对象的地址。所谓成员函数只是名义上是在类里的。而成员函数的大小并不在类的对象里面，即同一个类的多个对象共享函数代码，因此可以简单将C++中的类当成C中的结构体即可。对象和成员函数的联系是靠:this指针，也是连接对象与其成员函数的唯一桥梁。</p>
+<p>简单总结：<br>空的类是会占用内存空间的，而且大小是1，原因是c++要求每个实例在内存中都有独一无二的地址。</p>
+<ol>
+<li>类内部的成员变量：<br>普通的变量：是要占用内存的，但是要注意对齐原则（这点和struct类型很相似）。<br>static修饰的静态变量：不占用内存，原因是编辑器将其放在全局变量区。</li>
+<li>类内部的成员函数：<br>普通函数：不占用内存<br>虚函数：要占用4个以上字节，用来指定虚函数的虚函数表的入口地址。所以一个类的虚函数所占用的大小是不变的，和虚函数的个数是没有关系的。 32位下占4字节，64位占8字节。</li>
+<li>多重继承，函数函数覆盖<br>考虑下面情况，三个父类虚函数表中的f()的位置被替换成子类的函数指针。这样就可以任一父类对象指针来指向子类，并调用子类的f()了。也会导致虚函数表的指针增加，继承几个就会增加几个。<br>假设，基类和派生类又如下关系：派生类i中覆盖了基类的虚函数f</li>
+</ol>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/picx-images-hosting@master/20231024/01.webp"
+                     
+                ></p>
+<h3 id="art中的内存布局"><a href="#art中的内存布局" class="headerlink" title="art中的内存布局"></a>art中的内存布局</h3><p>将&#x2F;art&#x2F;runtime&#x2F;dex_file.h下的DexFile类拷贝出来，除去属性外其余都删掉<br>在脱壳过程中拿到DexFile对象后，只需要知道它的begin和size的偏移<br>删除后的DexFile精简代码如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DexFile</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// First Dex format version supporting default methods.</span></span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">uint32_t</span> kDefaultMethodsVersion = <span class="number">37</span>;</span><br><span class="line">    <span class="comment">// First Dex format version enforcing class definition ordering rules.</span></span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">uint32_t</span> kClassDefinitionOrderEnforcedVersion = <span class="number">37</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">uint8_t</span> kDexMagic[];</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">size_t</span> kNumDexVersions = <span class="number">2</span>;</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">size_t</span> kDexVersionLen = <span class="number">4</span>;</span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">uint8_t</span> kDexMagicVersions[kNumDexVersions][kDexVersionLen];</span><br><span class="line"></span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">size_t</span> kSha1DigestSize = <span class="number">20</span>;</span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">uint32_t</span> kDexEndianConstant = <span class="number">0x12345678</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// name of the DexFile entry within a zip archive</span></span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">char</span>* kClassesDex;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The value of an invalid index.</span></span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">uint32_t</span> kDexNoIndex = <span class="number">0xFFFFFFFF</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The value of an invalid index.</span></span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">uint16_t</span> kDexNoIndex16 = <span class="number">0xFFFF</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The separator character in MultiDex locations.</span></span><br><span class="line">    <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">char</span> kMultiDexSeparator = <span class="string">&#x27;:&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Closes a .dex file.</span></span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">DexFile</span>() &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// The base address of the memory mapping.</span></span><br><span class="line">    <span class="type">uint8_t</span>* begin_;</span><br><span class="line">    <span class="comment">// The size of the underlying memory allocation in bytes.</span></span><br><span class="line">    <span class="type">size_t</span> size_;</span><br><span class="line">    std::string location_;</span><br><span class="line">    <span class="type">uint32_t</span> location_checksum_;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>进行调用，分别以32和64位运行</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">JNIEXPORT jstring JNICALL</span></span><br><span class="line"><span class="function"><span class="title">Java_com_example_cpp6_MainActivity_stringFromJNI</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">        JNIEnv* env,</span></span></span><br><span class="line"><span class="params"><span class="function">        jobject <span class="comment">/* this */</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    DexFile dexFile;</span><br><span class="line">    <span class="type">void</span> * beginAddress = (<span class="type">void</span> *) &amp;(dexFile.begin_);</span><br><span class="line">    <span class="type">void</span> * sizeAddress = (<span class="type">void</span> *) &amp;(dexFile.size_);</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> dexFileAddress = <span class="built_in">reinterpret_cast</span>&lt;<span class="type">unsigned</span> <span class="type">long</span>&gt; (&amp;dexFile);  <span class="comment">// 拿到DexFile对象的地址</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> beginOffset = <span class="built_in">reinterpret_cast</span>&lt;<span class="type">unsigned</span> <span class="type">long</span>&gt; (beginAddress)-dexFileAddress;  <span class="comment">// 拿到begin_的偏移量</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> sizeOffset = <span class="built_in">reinterpret_cast</span>&lt;<span class="type">unsigned</span> <span class="type">long</span>&gt; (sizeAddress)-dexFileAddress;  <span class="comment">// 拿到size_的偏移量</span></span><br><span class="line">    __android_log_print(<span class="number">4</span>, <span class="string">&quot;cpp11&quot;</span>, <span class="string">&quot;beginOffset: %lu, sizeOffset: %lu&quot;</span>, beginOffset, sizeOffset);</span><br><span class="line"></span><br><span class="line">    std::string hello = <span class="string">&quot;Hello from C++&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> env-&gt;<span class="built_in">NewStringUTF</span>(hello.<span class="built_in">c_str</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出日志：</br>arm32 com.example.cpp6 I&#x2F;cpp11: beginOffset: 4, sizeOffset: 8</br>arm64 com.example.cpp6 I&#x2F;cpp11: beginOffset: 8, sizeOffset: 16</br>去不去掉前面的static属性，都对内存布局没影响，对于脱壳而言，内存布局从前完后，而我们之关注begin_，size_。可以再把上面的DexFile类精简为结构体</br></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">DexFileStruct</span>&#123;</span><br><span class="line">    <span class="type">void</span>* vptr;  <span class="comment">// 虚函数表指针</span></span><br><span class="line">    <span class="type">void</span>* begin_;</span><br><span class="line">    <span class="type">uint32_t</span> size_;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>先测试一下，在libart.so中随便找一个函数参数有DexFile的，</br>以 art::ClassLinker::LoadMethod(art::DexFile const&amp;, </br>art::ClassDataItemIterator const&amp;, art::Handle<a class="link"   href="art::mirror::Class" >art::mirror::Class<i class="fas fa-external-link-alt"></i></a>, art::ArtMethod *) 为例，使用frida进行hook</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hookart</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> libart_module = <span class="title class_">Process</span>.<span class="title function_">getModuleByName</span>(<span class="string">&quot;libart.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> <span class="title class_">LoadMethodaddr</span> = <span class="literal">null</span>;</span><br><span class="line">    libart_module.<span class="title function_">enumerateExports</span>().<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">symbol</span>)&#123;</span><br><span class="line">        <span class="comment">// _ZN3art11ClassLinker10LoadMethodERKNS_7DexFileERKNS_21ClassDataItemIteratorENS_6HandleINS_6mirror5ClassEEEPNS_9ArtMethodE</span></span><br><span class="line">        <span class="comment">// 在安卓7和8中LoadMethod的参数发生了变化，所以这里直接找函数的特征</span></span><br><span class="line">        <span class="keyword">if</span> (symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;ClassLinker&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp;</span><br><span class="line">            symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;LoadMethod&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">            symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;DexFile&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">            symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;1ClassDataItemIterator&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp;</span><br><span class="line">            symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;ArtMethod&quot;</span>) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(symbol.<span class="property">name</span>, symbol.<span class="property">address</span>);</span><br><span class="line">            <span class="title class_">LoadMethodaddr</span> = symbol.<span class="property">address</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在安卓8.1下 art::ClassLinker::LoadMethod(art::DexFile const&amp;, art::ClassDataItemIterator const&amp;, art::Handle&lt;art::mirror::Class&gt;, art::ArtMethod *)</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">LoadMethodaddr</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;start hook LoadMethodaddr&quot;</span>);</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">LoadMethodaddr</span>, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> dexfileptr = args[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">var</span> dexfilebegin = <span class="title function_">ptr</span>(dexfileptr).<span class="title function_">add</span>(<span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">1</span>).<span class="title function_">readPointer</span>();</span><br><span class="line">                <span class="keyword">var</span> dexfilesize = <span class="title function_">ptr</span>(dexfileptr).<span class="title function_">add</span>(<span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">2</span>).<span class="title function_">readU32</span>();</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&quot;get a dex:size:&quot;</span> + dexfilesize + <span class="string">&quot;---&quot;</span> + <span class="title function_">hexdump</span>(dexfilebegin, &#123;</span><br><span class="line">                    <span class="attr">length</span>: <span class="number">16</span></span><br><span class="line">                &#125;))</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;go into LoadMethodaddr-&gt;&quot;</span> + <span class="title function_">hexdump</span>(dexfileptr, &#123;</span><br><span class="line">                    <span class="attr">length</span>: <span class="number">32</span></span><br><span class="line">                &#125;));</span><br><span class="line">            &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">hookart</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">get a dex:size:730868---             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">7893d1a01c  64 65 78 0a 30 33 35 00 7f 66 c3 d6 bb 9f a5 71  dex.035..f.....q</span><br><span class="line">go into LoadMethodaddr-&gt;             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">78c4c40060  20 5e 11 cd 78 00 00 00 1c a0 d1 93 78 00 00 00   ^..x.......x...</span><br><span class="line">78c4c40070  f4 26 0b 00 00 00 00 00 81 00 00 00 00 00 00 00  .&amp;..............</span><br></pre></td></tr></table></figure>
+<p>可以看到dex的模值dex 037，也验证了dex的内存布局<br>在函数粒度的修复与脱壳中，还需要关注ArtMethod<br>将&#x2F;art&#x2F;runtime&#x2F;art_method.h下的ArtMethod类拷贝出来，除去属性外其余都删掉<br>删除后的ArtMethod精简代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ArtMethod</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="comment">//    GcRoot &lt;mirror::Class&gt; declaring_class_; ==&gt; uint32_t reference_;</span></span><br><span class="line">    uint32_t reference_;</span><br><span class="line">    uint32_t access_flags_;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Offset to the CodeItem.</span></span><br><span class="line">    uint32_t dex_code_item_offset_;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Index into method_ids of the dex file associated with this method.</span></span><br><span class="line">    uint32_t dex_method_index_;</span><br><span class="line"></span><br><span class="line">    uint16_t method_index_;</span><br><span class="line">    uint16_t hotness_count_;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>抽取壳的过程主要关注两个字段，dex_code_item_offset_和dex_method_index_<br>脱壳过程中的应用在脱壳过程中，重点是从内存中提取出被保护或加密的DEX文件，或从已经加载到内存中的DEX文件中提取出方法字节码。这时，dex_code_item_offset_和dex_method_index_就起到了关键作用：</p>
+<ol>
+<li>使用dex_code_item_offset_加上DEX文件基址，可以计算出方法字节码在内存中的实际地址。</li>
+<li>通过dex_method_index_，可以找到该方法在DEX文件中的定义，从而获得方法的名称、所属类及其签名等信息。</br><br>ArtMethod是没有虚函数的，所以在32位或64位下dex_code_item_offset_和dex_method_index_的偏移都是8， 12<br>修改frida代码</br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="title class_">LoadMethodaddr</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;start hook LoadMethodaddr&quot;</span>);</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">LoadMethodaddr</span>, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> dexfileptr = args[<span class="number">1</span>];</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">artmethodptr</span> = args[<span class="number">4</span>];</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">dexfilebegin</span> = <span class="title function_">ptr</span>(dexfileptr).<span class="title function_">add</span>(<span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">1</span>).<span class="title function_">readPointer</span>();</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">dexfilesize</span> = <span class="title function_">ptr</span>(dexfileptr).<span class="title function_">add</span>(<span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">2</span>).<span class="title function_">readU32</span>();</span><br><span class="line">                <span class="comment">// console.warn(&quot;get a dex:size:&quot; + dexfilesize + &quot;---&quot; + hexdump(dexfilebegin, &#123;</span></span><br><span class="line">                <span class="comment">//     length: 16</span></span><br><span class="line">                <span class="comment">// &#125;))</span></span><br><span class="line">                <span class="comment">// console.log(&quot;go into LoadMethodaddr-&gt;&quot; + hexdump(dexfileptr, &#123;</span></span><br><span class="line">                <span class="comment">//     length: 32</span></span><br><span class="line">                <span class="comment">// &#125;));</span></span><br><span class="line">            &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> dex_code_item_offset = <span class="title function_">ptr</span>(<span class="variable language_">this</span>.<span class="property">artmethodptr</span>).<span class="title function_">add</span>(<span class="number">8</span>).<span class="title function_">readU32</span>();  <span class="comment">// 在dex文件中函数的偏移， dexfilebegin+偏移就是函数的绝对地址</span></span><br><span class="line">                <span class="keyword">var</span> dex_method_index = <span class="title function_">ptr</span>(<span class="variable language_">this</span>.<span class="property">artmethodptr</span>).<span class="title function_">add</span>(<span class="number">12</span>).<span class="title function_">readU32</span>();  <span class="comment">// 在dex文件中的方法索引</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">dexfilesize</span> + <span class="string">&quot;--&gt;LoadMethodaddr index:&quot;</span> + dex_method_index, <span class="string">&quot;--&gt;&quot;</span> + <span class="variable language_">this</span>.<span class="property">dexfilebegin</span>.<span class="title function_">add</span>(dex_code_item_offset));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;) </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+日志：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">_ZN3art11ClassLinker10LoadMethodERKNS_7DexFileERKNS_21ClassDataItemIteratorENS_6HandleINS_6mirror5ClassEEEPNS_9ArtMethodE 0x78ccc2868c</span><br><span class="line">start hook LoadMethodaddr</span><br><span class="line">3926232--&gt;LoadMethodaddr index:29945 --&gt;0x78984d1264</span><br><span class="line">3926232--&gt;LoadMethodaddr index:29946 --&gt;0x7898686a3c</span><br><span class="line">3926232--&gt;LoadMethodaddr index:29949 --&gt;0x7898686a54</span><br><span class="line">3926232--&gt;LoadMethodaddr index:29950 --&gt;0x7898686bd0</span><br><span class="line">3926232--&gt;LoadMethodaddr index:29952 --&gt;0x7898686e10</span><br><span class="line">3926232--&gt;LoadMethodaddr index:29947 --&gt;0x7898687000</span><br><span class="line">3926232--&gt;LoadMethodaddr index:29948 --&gt;0x789868711c</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+对app解压，也能看到dex的大小也是3926232，把dex放进010editor查看函数的执行顺序<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct method_id_item method_id[29945]	void s.h.e.l.l.S.&lt;clinit&gt;()	8A5E0h	8h	Fg: Bg:0x008080	Method ID</span><br><span class="line">struct method_id_item method_id[29946]	void s.h.e.l.l.S.&lt;init&gt;()	8A5E8h	8h	Fg: Bg:0x008080	Method ID</span><br><span class="line">struct method_id_item method_id[29949]	void s.h.e.l.l.S.c(java.util.zip.ZipFile, java.util.zip.ZipEntry, java.io.File)	8A600h	8h	Fg: Bg:0x008080	Method ID</span><br><span class="line">struct method_id_item method_id[29950]	long s.h.e.l.l.S.g(java.io.File)	8A608h	8h	Fg: Bg:0x008080	Method ID</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>打开apk的AndroidManifest.xml，跟artmethod打印的顺序是一致的，”s.h.e.l.l.S”是程序的入口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;application android:theme=&quot;0x7f090002&quot; android:label=&quot;0x7f080000&quot; android:icon=&quot;0x7f020029&quot; android:name=&quot;s.h.e.l.l.S&quot; android:debuggable=&quot;true&quot; android:allowBackup=&quot;true&quot; android:largeHeap=&quot;true&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>最先执行的两个函数分别是初始化类和对象，</br><br>当类加载时，JVM会解析类的字节码，并为每个方法生成对应的 ArtMethod 实例。这个过程确保了Java函数和 ArtMethod 是一一对应的关系。每个Java方法都有一个与之对应的 ArtMethod 对象，它负责存储和管理该方法的信息。</br><br>可以说Java函数和 ArtMethod 是一一对应的关系，它们之间的对应关系是固定的，且在类加载和初始化过程中被建立</br></p>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                Art中的c++对象内存布局
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/64557/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2023-10-24 00:00</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E8%84%B1%E5%A3%B3/">脱壳</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/7260/"
+                                   title="Android加壳与脱壳（二）加壳和运行时的机制"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Android加壳与脱壳（二）加壳和运行时的机制</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#art%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="nav-number">1.</span> <span class="nav-text">art中的内存布局</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">86.8k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#art%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="nav-number">1.</span> <span class="nav-text">art中的内存布局</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/local-search.js"></script>
+
+
+<!-- code-block -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/code-block.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/lazyload.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
+
+        <!-- toc -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
+        
+    
+
+    <!-- category-page -->
+    
+
+    <!-- links-page -->
+    
+</div>
+
+<!-- pjax -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+
+</body>
+</html>
