@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+    <title>
+        
+            Art中的函数inline |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
+    
+        
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/head.svg","first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","server_urls":null,"placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"version":"3.8.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        Art中的函数inline
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2023-10-31 00:00:00</span>
+                <span class="mobile">2023-10-31 00:00</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Tue Oct 31 2023 00:00:00 GMT+0800">2023-10-31 00:00:00</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E8%84%B1%E5%A3%B3/">脱壳</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.1k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>9 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <p>在art中有大量的inline内联函数，就先来了解什么是inline</p>
+<h3 id="什么是inline"><a href="#什么是inline" class="headerlink" title="什么是inline"></a>什么是inline</h3><p>inline： 内联函数是一种优化技术，可以减少函数调用的开销，渐少参数压栈时消耗空间，从而提高代码的执行效率。使用inline关键字声明的函数在编译时会被内联展开，即编译器会在每个调用该函数的地方插入该函数的实际代码，而不是生成函数调用。关键字inline必须与函数定于放在一起才能使函数成为内联函数，仅仅将inline放在函数声明前面是不起任何作用。inline对编译器来水只是一种建议，编译器可以选择忽略这个建议，因此有inline不一定就会被编译器内联编译。</br><br>ALWAYS_INLINE: 是强制内联，所有加 inline __attribute__((always_inline))   修饰的函数在被调用的时候不会被编译成函数调用，而是直接扩展到调用函数体内。当含有递归的函数在任何情况下都不会被编译器进行inline 编译。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((always_inline)) <span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum</span><span class="params">(<span class="type">int</span> m)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        result = <span class="built_in">add</span>(result, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在加与不加__attribute__((always_inline))的情况下，编译后的内容如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">sum</span><span class="params">(<span class="type">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">int</span> i; <span class="comment">// [xsp+4h] [xbp-Ch]</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v3; <span class="comment">// [xsp+8h] [xbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v3 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; a1; ++i )</span><br><span class="line">    v3 = <span class="built_in">add</span>(v3, i);</span><br><span class="line">  <span class="keyword">return</span> v3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">__int64 __fastcall <span class="title">add</span><span class="params">(<span class="type">int</span> a1, <span class="type">int</span> a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="type">unsigned</span> <span class="type">int</span>)(a1 + a2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231031/01.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231031/02.webp"
+                     
+                ></p>
+<p>加了__attribute__((always_inline)) 后的sum函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">__int64 __fastcall <span class="title">sum</span><span class="params">(<span class="type">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> i; <span class="comment">// [xsp+Ch] [xbp-14h]</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> v3; <span class="comment">// [xsp+10h] [xbp-10h]</span></span><br><span class="line"></span><br><span class="line">    v3 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; a1; ++i )</span><br><span class="line">        v3 += i;</span><br><span class="line">    <span class="keyword">return</span> v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231031/03.webp"
+                     
+                ></p>
+<p>少了 BL add，相比于原来的，汇编指令减少了，也省去了函数调用时栈空间的花销。</br><br>总结：</br></p>
+<ol>
+<li>内联函数在编译器最终生成的代码中是没有定义的，这个函数是不存在的，也就无法实现对内联函数的hook。</br></li>
+<li>内联函数没有普通函数调用时的额外开销（压栈，跳转，返回等）</br></li>
+<li>内联函数是一种特殊的函数，在源码中具有普通函数的特征。</br></li>
+<li>内联函数是对编译器的一种请求，因此编译器有可能拒绝这种请求。</br></li>
+<li>内联函数由编译器处理，直接将编译后的函数插入调用的地方。</br></li>
+<li>内联和宏的效果很像，但是宏代码是由预处理器处理，进行简单的文本替换，没有任何编译过程</li>
+</ol>
+<h3 id="基于frida版的art"><a href="#基于frida版的art" class="headerlink" title="基于frida版的art"></a>基于frida版的art</h3><p>上一篇写了<a href="https://www.zskkk.cn/posts/64557/4">art下DexFile的内存布局</a>，那如何拿到DexFile的对象呢？</br>通过查看源码发现在ART中获取dexfile对象的函数是个inline，那又要怎么去调用呢</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">const</span> DexFile* <span class="title">ArtMethod::GetDexFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">GetDexCache</span>()-&gt;<span class="built_in">GetDexFile</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当在源码中进行定制ART时，任何inline函数都可以直接访问，只需要注意访问权限即可，那如果是使用frida等hook技术进行ART的定制呢？自然inline函数无法被hook，那当需要这个inline函数的功能时，如何实现inline函数的主动调用呢？</br>两种解决方案：</br>1. 分析inline函数的源码逻辑，自行参考实现即可</br>2. 在源码中添加一个导出函数调用该inline函数，编译后直接参考ida反编译的该函数内容即可</br>实现第二种</br>接下来解决从一个artmethod对象得到一个该对象所属的dexfile对象。</br>在源码 &#x2F;art&#x2F;runtime&#x2F;art_method-inl.h 添加如下代码导出dexfile对象</br></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">const</span> DexFile* <span class="title">getDexFileByMethod</span><span class="params">(ArtMethod* artmethod)</span> <span class="title">SHARED_LOCKS_REQUIRED</span><span class="params">(Locks::mutator_lock_)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> artmethod-&gt;<span class="built_in">GetDexFile</span>();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>重新编译，找到编译好后lib32，lib64下的libart.so，ida打开找到添加的函数片段，在nexus 5 android6和pixel android8下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nexus5 arm32</span></span><br><span class="line"><span class="function"><span class="type">int</span> __fastcall <span class="title">getDexFileByMethod</span><span class="params">(<span class="type">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> *(_DWORD *)(*(_DWORD *)(*(_DWORD *)a1 + <span class="number">16</span>) + <span class="number">32</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pixel arm32</span></span><br><span class="line"><span class="function"><span class="type">int</span> __fastcall <span class="title">GetDexFileByArtMethod</span><span class="params">(<span class="type">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">int</span> result; <span class="comment">// r0</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( *(_DWORD *)(a1 + <span class="number">4</span>) &amp; <span class="number">0x40000</span> )</span><br><span class="line">    result = *((_DWORD *)art::ArtMethod::<span class="built_in">GetObsoleteDexCache</span>((<span class="type">char</span> *)a1) + <span class="number">4</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    result = *(_DWORD *)(*(_DWORD *)(*(_DWORD *)a1 + <span class="number">16</span>) + <span class="number">16</span>);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pixel arm64</span></span><br><span class="line"><span class="function">__int64 __fastcall <span class="title">ArtMethodGetDexFile</span><span class="params">(art::ArtMethod *a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 result; <span class="comment">// x0</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( *((_DWORD *)a1 + <span class="number">1</span>) &amp; <span class="number">0x40000</span> )</span><br><span class="line">    result = *(_QWORD *)(art::ArtMethod::<span class="built_in">GetObsoleteDexCache</span>(a1) + <span class="number">16LL</span>);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    result = *(_QWORD *)(*(<span class="type">unsigned</span> <span class="type">int</span> *)(*(<span class="type">unsigned</span> <span class="type">int</span> *)a1 + <span class="number">0x10</span>LL) + <span class="number">0x10</span>LL);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际是artmethod对象获取dexfile对象inline函数的内联编译生成的片段，</br>现在参考ida反编译的该函数，根据自己的安卓系统版本做调整</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;android/log.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _DWORD uint32_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __int64 long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _QWORD uint64_t</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// #if defined(__arm__)</span></span><br><span class="line"><span class="comment">// typedef uint32_t (GetObsoleteDexCache)(void *a1);</span></span><br><span class="line"><span class="comment">// //arm32 a1=artmethod指针,a2是函数art::ArtMethod::GetObsoleteDexCache(art::ArtMethod *this)的地址</span></span><br><span class="line"><span class="comment">// extern &quot;C&quot; JNIEXPORT uint32_t GetDexFile(void *a1, GetObsoleteDexCache funcptr) &#123;</span></span><br><span class="line"><span class="comment">//     uint32_t result; // r0</span></span><br><span class="line"><span class="comment">//     if (*((_DWORD *) a1 + 1) &amp; 0x40000)</span></span><br><span class="line"><span class="comment">//         result = *(_DWORD *) (funcptr(a1) + 16);</span></span><br><span class="line"><span class="comment">//     else</span></span><br><span class="line"><span class="comment">//         result = *(_DWORD *) (*(_DWORD *) (*(_DWORD *) a1 + 16) + 16);</span></span><br><span class="line"><span class="comment">//     return result;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// #else</span></span><br><span class="line"><span class="comment">// typedef uint64_t (GetObsoleteDexCache)(void *a1);</span></span><br><span class="line"><span class="comment">// //arm64 a1=artmethod指针,a2是函数art::ArtMethod::GetObsoleteDexCache(art::ArtMethod *this)的地址</span></span><br><span class="line"><span class="comment">// extern &quot;C&quot; JNIEXPORT __int64 GetDexFile(void*a1, GetObsoleteDexCache funcptr)</span></span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//     __int64 result; // x0</span></span><br><span class="line"><span class="comment">//     if ( *((_DWORD *)a1 + 1) &amp; 0x40000 )</span></span><br><span class="line"><span class="comment">//         result = *(_QWORD *)(funcptr(a1) + 16LL);</span></span><br><span class="line"><span class="comment">//     else</span></span><br><span class="line"><span class="comment">//         result = *(_QWORD *)(*(unsigned int *)(*(unsigned int *)a1 + 0x10LL) + 0x10LL);</span></span><br><span class="line"><span class="comment">//     return result;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// #endif</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// a1=artmethod指针</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">JNIEXPORT <span class="type">uint32_t</span> <span class="title">GetDexFile</span><span class="params">(<span class="type">void</span>* a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> *(_DWORD *)(*(_DWORD *)(*(_DWORD *)a1 + <span class="number">16</span>) + <span class="number">32</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">JNIEXPORT jstring JNICALL</span></span><br><span class="line"><span class="function"><span class="title">Java_com_example_zsk_MainActivity_stringFromJNI</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">        JNIEnv* env,</span></span></span><br><span class="line"><span class="params"><span class="function">        jobject <span class="comment">/* this */</span>)</span> </span>&#123;</span><br><span class="line">    std::string hello = <span class="string">&quot;Hello from C++&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> env-&gt;<span class="built_in">NewStringUTF</span>(hello.<span class="built_in">c_str</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打包解压，把lib目录下的so推送到手机上，修改777权限</br>编写frida脚本</br></p>
+<ol>
+<li>先加载导入的so，枚举该so的导出函数，找到编写的GetDexFile地址</br></li>
+<li>如果是安卓8及以上，需要枚举libart.so的符号表，找到GetObsoleteDexCache的地址</br></li>
+<li>声明GetDexFile函数</br></li>
+<li>通过反射获取任意类的java层函数，通过$handle获取函数的引用，再由jni的函数</br>fromReflectedMethod转为artmethod对象</br></li>
+<li>将参数传入声明的GetDexFile函数得到dexfile对象</br></li>
+<li>根据art中的DexFile内存布局dump内容</br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getDexFileByMethod</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;go into init,&quot;</span> + <span class="string">&quot;Process.arch:&quot;</span> + <span class="title class_">Process</span>.<span class="property">arch</span>);</span><br><span class="line">        <span class="keyword">var</span> module_libext = <span class="literal">null</span>;</span><br><span class="line">        <span class="comment">// 加载导入的so</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="title class_">Process</span>.<span class="property">arch</span> == <span class="string">&quot;arm64&quot;</span>) &#123;</span><br><span class="line">            module_libext = <span class="title class_">Module</span>.<span class="title function_">load</span>(<span class="string">&quot;/data/local/tmp/libmy_64.so&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="title class_">Process</span>.<span class="property">arch</span> == <span class="string">&quot;arm&quot;</span>) &#123;</span><br><span class="line">            module_libext = <span class="title class_">Module</span>.<span class="title function_">load</span>(<span class="string">&quot;/data/local/tmp/libmy.so&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> getDexFileByMethodFunc = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> getDexFileByMethodAddr = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (module_libext != <span class="literal">null</span>) &#123;</span><br><span class="line">            module_libext.<span class="title function_">enumerateExports</span>().<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">symbol</span>)&#123;</span><br><span class="line">                <span class="comment">// 找到编写的GetDexFile函数</span></span><br><span class="line">                <span class="keyword">if</span> (symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;GetDexFile&quot;</span>) != -<span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(symbol))</span><br><span class="line">                    getDexFileByMethodAddr = symbol.<span class="property">address</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (getDexFileByMethodAddr != <span class="literal">null</span>) &#123;</span><br><span class="line">            getDexFileByMethodFunc = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(getDexFileByMethodAddr, <span class="string">&quot;pointer&quot;</span>, [<span class="string">&quot;pointer&quot;</span>]);</span><br><span class="line">            <span class="comment">// 第一个参数是artmethod，第二个参数是GetObsoleteDexCache</span></span><br><span class="line">            <span class="comment">// getDexFileByMethodFunc = new NativeFunction(getDexFileByMethodAddr, &quot;pointer&quot;, [&quot;pointer&quot;, &quot;pointer&quot;]);</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 找到GetObsoleteDexCache,安卓8及以上才需要</span></span><br><span class="line">        <span class="comment">// var GetObsoleteDexCacheAddr = null;</span></span><br><span class="line">        <span class="comment">// var libartmodule = Process.getModuleByName(&quot;libart.so&quot;);</span></span><br><span class="line">        <span class="comment">// libartmodule.enumerateSymbols().forEach(function(symbol)&#123;</span></span><br><span class="line">        <span class="comment">//     if (symbol.name.indexOf(&quot;GetObsoleteDexCache&quot;) != -1) &#123;</span></span><br><span class="line">        <span class="comment">//         console.log(JSON.stringify(symbol))</span></span><br><span class="line">        <span class="comment">//         GetObsoleteDexCacheAddr = symbol.address;</span></span><br><span class="line">        <span class="comment">//     &#125;</span></span><br><span class="line">        <span class="comment">// &#125;)</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 通过反射获取任意一个java层函数, 再将函数转为artmethod对象</span></span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">MainActivity</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.example.zsk.MainActivity&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> methods = <span class="title class_">MainActivity</span>.<span class="property">class</span>.<span class="title function_">getDeclaredMethods</span>(); <span class="comment">// 枚举所有函数</span></span><br><span class="line">        methods.<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">method</span>) &#123;</span><br><span class="line">            <span class="comment">// console.log(method);</span></span><br><span class="line">            <span class="keyword">var</span> methodhandle = method.<span class="property">$handle</span>;  <span class="comment">// 获取函数引用</span></span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(methodhandle)</span><br><span class="line">            <span class="keyword">var</span> <span class="title class_">ArtMethodPtr</span> = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">tryGetEnv</span>().<span class="title function_">fromReflectedMethod</span>(methodhandle)  <span class="comment">// 将java函数转为artmethod对象</span></span><br><span class="line">            <span class="keyword">if</span> (getDexFileByMethodFunc != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> dexfilePtr = <span class="title function_">getDexFileByMethodFunc</span>(<span class="title class_">ArtMethodPtr</span>);</span><br><span class="line">                <span class="comment">// var dexfilePtr = getDexFileByMethodFunc(ArtMethodPtr, GetObsoleteDexCacheAddr);</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(method.<span class="title function_">toString</span>() + <span class="string">&quot;------&quot;</span> + <span class="title class_">ArtMethodPtr</span> + <span class="string">&quot;------&quot;</span> + dexfilePtr);</span><br><span class="line">                <span class="keyword">var</span> dexfileBegin = <span class="title function_">ptr</span>(dexfilePtr).<span class="title function_">add</span>(<span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">1</span>).<span class="title function_">readPointer</span>();</span><br><span class="line">                <span class="keyword">var</span> dexfileSize = <span class="title function_">ptr</span>(dexfilePtr).<span class="title function_">add</span>(<span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">2</span>).<span class="title function_">readU32</span>();</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&quot;get a dex:size:&quot;</span> + dexfileSize + <span class="string">&quot;---&quot;</span> + <span class="title function_">hexdump</span>(dexfileBegin, &#123;</span><br><span class="line">                    <span class="attr">length</span>: <span class="number">16</span></span><br><span class="line">                &#125;))</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;go into LoadMethodaddr-&gt;&quot;</span> + <span class="title function_">hexdump</span>(dexfilePtr, &#123;</span><br><span class="line">                    <span class="attr">length</span>: <span class="number">32</span></span><br><span class="line">                &#125;));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">getDexFileByMethod</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main);</span><br></pre></td></tr></table></figure>
+打印内容如下<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">go into init,Process.arch:arm</span><br><span class="line">&#123;&quot;type&quot;:&quot;function&quot;,&quot;name&quot;:&quot;GetDexFile&quot;,&quot;address&quot;:&quot;0x9cb9d471&quot;&#125;</span><br><span class="line">0x1004c2</span><br><span class="line">protected void com.example.zsk.MainActivity.onCreate(android.os.Bundle)------0xb0697cf0------0xab0da3c0</span><br><span class="line">get a dex:size:2100---           0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">9fc11078  64 65 78 0a 30 33 35 00 ee 74 d8 e6 95 2a 0a 65  dex.035..t...*.e</span><br><span class="line">go into LoadMethodaddr-&gt;           0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">ab0da3c0  e8 3e c3 b4 78 10 c1 9f 34 08 00 00 41 00 00 00  .&gt;..x...4...A...</span><br><span class="line">ab0da3d0  32 00 00 00 40 b2 53 ab e5 9a 18 6c 00 00 00 00  2...@.S....l....</span><br><span class="line">0x1004de</span><br><span class="line">public native java.lang.String com.example.zsk.MainActivity.stringFromJNI()------0xb0697d18------0xab0da3c0</span><br><span class="line">get a dex:size:2100---           0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">9fc11078  64 65 78 0a 30 33 35 00 ee 74 d8 e6 95 2a 0a 65  dex.035..t...*.e</span><br><span class="line">go into LoadMethodaddr-&gt;           0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">ab0da3c0  e8 3e c3 b4 78 10 c1 9f 34 08 00 00 41 00 00 00  .&gt;..x...4...A...</span><br><span class="line">ab0da3d0  32 00 00 00 40 b2 53 ab e5 9a 18 6c 00 00 00 00  2...@.S....l....</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                Art中的函数inline
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/4035/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2023-10-31 00:00</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E8%84%B1%E5%A3%B3/">脱壳</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/64557/"
+                                   title="Art中的c++对象内存布局"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Art中的c++对象内存布局</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFinline"><span class="nav-number">1.</span> <span class="nav-text">什么是inline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Efrida%E7%89%88%E7%9A%84art"><span class="nav-number">2.</span> <span class="nav-text">基于frida版的art</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">91.6k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFinline"><span class="nav-number">1.</span> <span class="nav-text">什么是inline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Efrida%E7%89%88%E7%9A%84art"><span class="nav-number">2.</span> <span class="nav-text">基于frida版的art</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/local-search.js"></script>
+
+
+<!-- code-block -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/code-block.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/lazyload.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
+
+        <!-- toc -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
+        
+    
+
+    <!-- category-page -->
+    
+
+    <!-- links-page -->
+    
+</div>
+
+<!-- pjax -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+
+</body>
+</html>
