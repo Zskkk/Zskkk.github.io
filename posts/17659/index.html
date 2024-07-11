@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+    <title>
+        
+            修改源码定制ART |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
+    
+        
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/head.svg","first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","server_urls":null,"placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"version":"3.8.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        修改源码定制ART
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2023-11-15 00:00:00</span>
+                <span class="mobile">2023-11-15 00:00</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Wed Nov 15 2023 00:00:00 GMT+0800">2023-11-15 00:00:00</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E8%84%B1%E5%A3%B3/">脱壳</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>5.3k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>26 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <h3 id="ART定制方案比较"><a href="#ART定制方案比较" class="headerlink" title="ART定制方案比较"></a>ART定制方案比较</h3><ol>
+<li>源码修改编译，定制rom<br> 优点：开发简单，可以直接访问ART中的海量的丰富api<br> 缺点：较笨重，首先需要一台性能足够强大的pc，其次，每次修改完代码都需要重新编译，刷机，测试。</li>
+<li>基于frida，xposed等hook框架定制<br> 优点：轻量，快捷，不需要性能强大的pc，也无需经历耗时的编译和刷机测试阶段，往往只需要重启app即可<br> 缺点：往往无法直接复用ART源码中已有的api，只能后使用有限的api</li>
+<li>将修改源码定制rom和frida等hook框架相结合，比如FART和frida相结合，脱壳功能更强大。<br> 优点：结合了frida的轻量，快捷以及修改源码的简单。</li>
+</ol>
+<p>工具使用：<br>    1. 可以使用AndroidStudio导入aosp源码，对framework层相关的java类进行源码阅读和修改定制<br>    2. 可以使用clion等ide利用aosp编译过程中生成的Cmakelists文件，导入ART部分的源码进行阅读和修改定制。</p>
+<p>针对ART进行定制时，对于整个AOSP源码，Java层代码只关心Framework、libcore，因此没有必要全部作为源码导入<br>以下教程用的机型是pixel xl，源码是android 8.1</p>
+<h4 id="第一种：源码修改编译，定制rom"><a href="#第一种：源码修改编译，定制rom" class="headerlink" title="第一种：源码修改编译，定制rom"></a>第一种：源码修改编译，定制rom</h4><h5 id="编译生成AndroidStudio项目配置文件并导入源码"><a href="#编译生成AndroidStudio项目配置文件并导入源码" class="headerlink" title="编译生成AndroidStudio项目配置文件并导入源码"></a>编译生成AndroidStudio项目配置文件并导入源码</h5><ol>
+<li>编译生成idegen.jar在AOSP源码目录下输入以下命令，生成idegen.jar<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source build/envsetup.sh</span><br><span class="line">lunch aosp_marlin-userdebug</span><br><span class="line">mmm development/tools/idegen/</span><br></pre></td></tr></table></figure></li>
+<li>生成android.ipr和android.iml<br>执行idegen.sh脚本，生成即可<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">development/tools/idegen/idegen.sh</span><br></pre></td></tr></table></figure>
+运行完毕上面的命令之后，就在根目录生成了2个文件：android.ipr和android.iml</li>
+<li>排除不必要的模块，提高加载速度<br>打开android.iml，找到excludeFolder属性，我们可以看到默认有一些模块是被排除了，不会被导入的。</br>但实际上，整个AOSP代码中，我们只关心framework模块和libcore模块，因此可以根据自己的需求去掉其它所有模块，只保留framework和libcore，比如将exclude修改为如下内容：</br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/art&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/bionic&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/bootable&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/build&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/cts&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/dalvik&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/developers&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/development&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/device&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/docs&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/external&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/hardware&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/kernel&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/libcore&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/libnativehelper&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/out&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/pdk&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/platform_testing&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/prebuilts&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/sdk&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/system&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/test&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/toolchain&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/tools&quot; /&gt;</span><br><span class="line">&lt;excludeFolder url=&quot;file://$MODULE_DIR$/.repo&quot; /&gt;</span><br></pre></td></tr></table></figure>
+这样修改之后，打开速度会快很多。接下来使用AndroidStudio直接打开android.ipr文件。 &gt; File-Open…，找到android.ipr即可。</br>导入完成之后，就能看到整个AOSP源码了：橘红色的是在上一步exclude排除掉的模块。</br>剩余配置参考以下文章：</br><a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6969508324618272782" >https://juejin.cn/post/6969508324618272782<i class="fas fa-external-link-alt"></i></a></br><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/yanbober/article/details/48846331" >https://blog.csdn.net/yanbober/article/details/48846331<i class="fas fa-external-link-alt"></i></a></br></li>
+</ol>
+<h5 id="Clion导入ART"><a href="#Clion导入ART" class="headerlink" title="Clion导入ART"></a>Clion导入ART</h5><ol>
+<li>编译生成cmakelists文件<br>打开以下两个开关，CMakeLists.txt就会根据编译环境自动生成</br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">source build/envsetup.sh</span><br><span class="line">lunch aosp_marlin-userdebug</span><br><span class="line">export SOONG_GEN_CMAKEFILES=1</span><br><span class="line">export SOONG_GEN_CMAKEFILES_DEBUG=1</span><br></pre></td></tr></table></figure>
+下面开始编译</br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j8</span><br></pre></td></tr></table></figure>
+生成的相关项目的cmakelists文件存放在out目录，不如我们需要导入ART的源码部分对应的路径为：out&#x2F;development&#x2F;ide&#x2F;clion&#x2F;art，可以看到下面还有很多模块，我们选择使用arm32或者arm64的runtime模块即可，对应的cmakelists文件在</br>out&#x2F;development&#x2F;ide&#x2F;clion&#x2F;art&#x2F;runtime&#x2F;libart-arm-android&#x2F;CMakeLists.txt</br>以及</br>out&#x2F;development&#x2F;ide&#x2F;clion&#x2F;art&#x2F;runtime&#x2F;libart-arm64-android&#x2F;CMakeLists.txt</br>然后修改根目录为源码的根目录 Tools &gt; CMake &gt; Change Project Root:</br></li>
+</ol>
+<h5 id="APP运行过程中so加载流程源码分析"><a href="#APP运行过程中so加载流程源码分析" class="headerlink" title="APP运行过程中so加载流程源码分析"></a>APP运行过程中so加载流程源码分析</h5><p>接下来对so的加载流程进行分析，加载so有两种方式</br>System.loadLibrary(“so文件名”);</br>System.load(“so文件相对路径”);</br>loadLibrary通过loader.findLibrary(libraryName)函数找到库文件的绝对路径，后续跟load一样调用doLoad(String name, ClassLoader loader)，最后去调用art下的nativeLoad native函数</br>&#x2F;libcore&#x2F;ojluni&#x2F;src&#x2F;main&#x2F;java&#x2F;java&#x2F;lang&#x2F;Runtime.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> String <span class="title function_">doLoad</span><span class="params">(String name, ClassLoader loader)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">librarySearchPath</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (loader != <span class="literal">null</span> &amp;&amp; loader <span class="keyword">instanceof</span> BaseDexClassLoader) &#123;</span><br><span class="line">        <span class="type">BaseDexClassLoader</span> <span class="variable">dexClassLoader</span> <span class="operator">=</span> (BaseDexClassLoader) loader;</span><br><span class="line">        librarySearchPath = dexClassLoader.getLdLibraryPath();</span><br><span class="line">    &#125;</span><br><span class="line">    java.lang.System.logE(<span class="string">&quot;Runtime doLoad -&gt; &quot;</span> + name + <span class="string">&quot;, classLoader -&gt; &quot;</span> + loader.toString());</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> nativeLoad(name, loader, librarySearchPath);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说doLoad和nativeLoad是所有加载so文件都会调用的函数，那可以在这个函数下添加log信息，这样就可以在Java下监控所有的so</br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.System.logE(<span class="string">&quot;Runtime doLoad -&gt; &quot;</span> + name + <span class="string">&quot;, classLoader -&gt; &quot;</span> + loader.toString());</span><br></pre></td></tr></table></figure>
+
+<p>通过查找源码知道nativeLoad是在xref: &#x2F;libcore&#x2F;ojluni&#x2F;src&#x2F;main&#x2F;native&#x2F;Runtime.c下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT jstring JNICALL</span><br><span class="line"><span class="title function_">Runtime_nativeLoad</span><span class="params">(JNIEnv* env, jclass ignored, jstring javaFilename,</span></span><br><span class="line"><span class="params">                   jobject javaLoader, jstring javaLibrarySearchPath)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> JVM_NativeLoad(env, javaFilename, javaLoader, javaLibrarySearchPath);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后通过调用链找到 nativeLoad -&gt;Runtime_nativeLoad(Runtime.c) -&gt; JVM_NativeLoad(Openjdk_Jvm.cc) -&gt; LoadNativeLibrary(java_vm_ext.cc)</br>最后是LoadNativeLibrary函数，查看函数流程，</br>在函数刚进来的时候添加日志</br></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LOG(ERROR) &lt;&lt; <span class="string">&quot;[java_vm_ext.cc]JavaVMExt::LoadNativeLibrary -&gt; &quot;</span> &lt;&lt; path.c_str();</span><br></pre></td></tr></table></figure>
+<p>在加载本地库的前后添加日志</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//add</span></span><br><span class="line">LOG(ERROR) &lt;&lt; <span class="string">&quot;[java_vm_ext.cc]before call LoadNativeLibrary -&gt; &quot;</span> &lt;&lt; path_str;</span><br><span class="line"><span class="type">void</span>* handle = android::OpenNativeLibrary(env,</span><br><span class="line">                                        runtime_-&gt;GetTargetSdkVersion(),</span><br><span class="line">                                        path_str,</span><br><span class="line">                                        class_loader,</span><br><span class="line">                                        library_path,</span><br><span class="line">                                        &amp;needs_native_bridge,</span><br><span class="line">                                        error_msg); </span><br><span class="line"><span class="comment">//add</span></span><br><span class="line">LOG(ERROR) &lt;&lt; <span class="string">&quot;[java_vm_ext.cc]after call LoadNativeLibrary -&gt; &quot;</span> &lt;&lt; path_str;</span><br></pre></td></tr></table></figure>
+<p>接下来判断是否有JNI_OnLoad，没有则结束函数，有就加载JNI_OnLoad，在加载JNI_OnLoad前后添加日志</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> was_successful = <span class="literal">false</span>;</span><br><span class="line"><span class="type">void</span>* sym = library-&gt;FindSymbol(<span class="string">&quot;JNI_OnLoad&quot;</span>, nullptr);</span><br><span class="line"><span class="keyword">if</span> (sym == nullptr) &#123;</span><br><span class="line">    VLOG(jni) &lt;&lt; <span class="string">&quot;[No JNI_OnLoad found in \&quot;&quot;</span> &lt;&lt; path &lt;&lt; <span class="string">&quot;\&quot;]&quot;</span>;</span><br><span class="line">    was_successful = <span class="literal">true</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Call JNI_OnLoad.  We have to override the current class</span></span><br><span class="line">    <span class="comment">// loader, which will always be &quot;null&quot; since the stuff at the</span></span><br><span class="line">    <span class="comment">// top of the stack is around Runtime.loadLibrary().  (See</span></span><br><span class="line">    <span class="comment">// the comments in the JNI FindClass function.)</span></span><br><span class="line">    ScopedLocalRef&lt;jobject&gt; old_class_loader(env, env-&gt;NewLocalRef(self-&gt;GetClassLoaderOverride()));</span><br><span class="line">    self-&gt;SetClassLoaderOverride(class_loader);</span><br><span class="line"></span><br><span class="line">    VLOG(jni) &lt;&lt; <span class="string">&quot;[Calling JNI_OnLoad in \&quot;&quot;</span> &lt;&lt; path &lt;&lt; <span class="string">&quot;\&quot;]&quot;</span>;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="title function_">int</span> <span class="params">(*JNI_OnLoadFn)</span><span class="params">(JavaVM*, <span class="type">void</span>*)</span>;</span><br><span class="line">    JNI_OnLoadFn jni_on_load = reinterpret_cast&lt;JNI_OnLoadFn&gt;(sym);</span><br><span class="line">    <span class="comment">//add</span></span><br><span class="line">    LOG(ERROR) &lt;&lt; <span class="string">&quot;[java_vm_ext.cc]before call &quot;</span> &lt;&lt; path_str &lt;&lt; <span class="string">&quot;.JNI_Onload&quot;</span>;</span><br><span class="line">    <span class="type">int</span> version = (*jni_on_load)(this, nullptr);</span><br><span class="line">    <span class="comment">//add</span></span><br><span class="line">    LOG(ERROR) &lt;&lt; <span class="string">&quot;[java_vm_ext.cc]after call &quot;</span> &lt;&lt; path_str &lt;&lt; <span class="string">&quot;.JNI_Onload&quot;</span> &lt;&lt; <span class="string">&quot;, returm: &quot;</span> &lt;&lt; version;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (runtime_-&gt;GetTargetSdkVersion() != <span class="number">0</span> &amp;&amp; runtime_-&gt;GetTargetSdkVersion() &lt;= <span class="number">21</span>) &#123;</span><br><span class="line">        <span class="comment">// Make sure that sigchain owns SIGSEGV.</span></span><br><span class="line">        EnsureFrontOfChain(SIGSEGV);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    self-&gt;SetClassLoaderOverride(old_class_loader.get());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (version == JNI_ERR) &#123;</span><br><span class="line">        StringAppendF(error_msg, <span class="string">&quot;JNI_ERR returned from JNI_OnLoad in \&quot;%s\&quot;&quot;</span>, path.c_str());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (JavaVMExt::IsBadJniVersion(version)) &#123;</span><br><span class="line">        StringAppendF(error_msg, <span class="string">&quot;Bad JNI version returned from JNI_OnLoad in \&quot;%s\&quot;: %d&quot;</span>,</span><br><span class="line">                      path.c_str(), version);</span><br><span class="line">        <span class="comment">// It&#x27;s unwise to call dlclose() here, but we can mark it</span></span><br><span class="line">        <span class="comment">// as bad and ensure that future load attempts will fail.</span></span><br><span class="line">        <span class="comment">// We don&#x27;t know how far JNI_OnLoad got, so there could</span></span><br><span class="line">        <span class="comment">// be some partially-initialized stuff accessible through</span></span><br><span class="line">        <span class="comment">// newly-registered native method calls.  We could try to</span></span><br><span class="line">        <span class="comment">// unregister them, but that doesn&#x27;t seem worthwhile.</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        was_successful = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    VLOG(jni) &lt;&lt; <span class="string">&quot;[Returned &quot;</span> &lt;&lt; (was_successful ? <span class="string">&quot;successfully&quot;</span> : <span class="string">&quot;failure&quot;</span>)</span><br><span class="line">    &lt;&lt; <span class="string">&quot; from JNI_OnLoad in \&quot;&quot;</span> &lt;&lt; path &lt;&lt; <span class="string">&quot;\&quot;]&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到这里也能看出来so中的JNI_Onload的函数名必须要c的形式进行编译，还要导出的原因就是这里它需要去查找符号名</br>重新编译，刷入手机</br>运行有加壳的app，查看log</br><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231115/01.webp"
+                     
+                ></p>
+<h4 id="第二种：基于frida，xposed等hook框架定制"><a href="#第二种：基于frida，xposed等hook框架定制" class="headerlink" title="第二种：基于frida，xposed等hook框架定制"></a>第二种：基于frida，xposed等hook框架定制</h4><p>要实现对加载so监控的话，可以结合流程当中的api进行hook来监控so的加载流程，在hook中选择的api层级越底层越好，如果只通过System.load, loadLibrary进行监控的话，可能会遗漏掉通过runtime进行加载的so。</br>上面分析到加载so底层的api是libnativeloader.so下的OpenNativeLibrary和libart.so下的LoadNativeLibrary</br>可以使用frida进行hook，在hook前可以先把libnativeloader.so和libart.so脱出来用ida查看导出表OpenNativeLibrary和LoadNativeLibrary的导出符号</br>&#x2F;system&#x2F;lib&#x2F;libart.so或者&#x2F;system&#x2F;lib64&#x2F;libart.so</br>&#x2F;system&#x2F;lib&#x2F;libnativeloader.so或者&#x2F;system&#x2F;lib64&#x2F;libnativeloader.so</br>OpenNativeLibrary的导出符号：_ZN7android17OpenNativeLibraryEP7_JNIEnviPKcP8_jobjectP8_jstringPbPNSt3__112basic_stringIcNS9_11char_traitsIcEENS9_9allocatorIcEEEE</p>
+<h5 id="使用frida进行hook"><a href="#使用frida进行hook" class="headerlink" title="使用frida进行hook"></a>使用frida进行hook</h5><p>下面就监控OpenNativeLibrary</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// libart.so</span></span><br><span class="line"><span class="comment">// bool JavaVMExt::LoadNativeLibrary(JNIEnv* env,</span></span><br><span class="line"><span class="comment">//     const std::string&amp; path,</span></span><br><span class="line"><span class="comment">//     jobject class_loader,</span></span><br><span class="line"><span class="comment">//     jstring library_path,</span></span><br><span class="line"><span class="comment">//     std::string* error_msg) </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// libnativeloader.so</span></span><br><span class="line"><span class="comment">// void* handle = android::OpenNativeLibrary(env,</span></span><br><span class="line"><span class="comment">//     runtime_-&gt;GetTargetSdkVersion(),</span></span><br><span class="line"><span class="comment">//     path_str,</span></span><br><span class="line"><span class="comment">//     class_loader,</span></span><br><span class="line"><span class="comment">//     library_path,</span></span><br><span class="line"><span class="comment">//     &amp;needs_native_bridge,</span></span><br><span class="line"><span class="comment">//     error_msg);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">tracesoload</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Process</span>.<span class="property">arch</span>);</span><br><span class="line">    <span class="keyword">var</span> libnativeloaderModule = <span class="title class_">Process</span>.<span class="title function_">getModuleByName</span>(<span class="string">&quot;libnativeloader.so&quot;</span>);</span><br><span class="line">    <span class="comment">// OpenNativeLibrary</span></span><br><span class="line">    <span class="keyword">var</span> <span class="title class_">OpenNativeLibraryAddr</span> = libnativeloaderModule.<span class="title function_">getExportByName</span>(<span class="string">&quot;_ZN7android17OpenNativeLibraryEP7_JNIEnviPKcP8_jobjectP8_jstringPbPNSt3__112basic_stringIcNS9_11char_traitsIcEENS9_9allocatorIcEEEE&quot;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">OpenNativeLibraryAddr</span>, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">sopath</span> = <span class="title function_">ptr</span>(args[<span class="number">2</span>]).<span class="title function_">readUtf8String</span>();</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;go into OpenNativeLibrary -&gt; &quot;</span> + <span class="variable language_">this</span>.<span class="property">sopath</span>);</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;leave OpenNativeLibrary -&gt; &quot;</span> + <span class="variable language_">this</span>.<span class="property">sopath</span>, <span class="string">&quot;, return: &quot;</span> + retval);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">tracesoload</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main);</span><br></pre></td></tr></table></figure>
+<p>输出打印</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[AOSP on msm8996::com.iCitySuzhou.suzhou001]-&gt; arm64</span><br><span class="line">go into OpenNativeLibrary -&gt; /data/app/com.iCitySuzhou.suzhou001--s3SCRYsyaFmNLfEq3Pj3g==/lib/arm64/libshell-super.com.iCitySuzhou.suzhou001.so</span><br><span class="line">leave OpenNativeLibrary -&gt; /data/app/com.iCitySuzhou.suzhou001--s3SCRYsyaFmNLfEq3Pj3g==/lib/arm64/libshell-super.com.iCitySuzhou.suzhou001.so</span><br><span class="line">go into OpenNativeLibrary -&gt; /data/app/com.iCitySuzhou.suzhou001--s3SCRYsyaFmNLfEq3Pj3g==/lib/arm64/libjcore230.so</span><br><span class="line">leave OpenNativeLibrary -&gt; /data/app/com.iCitySuzhou.suzhou001--s3SCRYsyaFmNLfEq3Pj3g==/lib/arm64/libjcore230.so</span><br><span class="line">go into OpenNativeLibrary -&gt; /system/app/webview/webview.apk!/lib/arm64-v8a/libwebviewchromium.so</span><br><span class="line">leave OpenNativeLibrary -&gt; /system/app/webview/webview.apk!/lib/arm64-v8a/libwebviewchromium.so</span><br><span class="line">go into OpenNativeLibrary -&gt; /system/lib64/libwebviewchromium_plat_support.so</span><br><span class="line">leave OpenNativeLibrary -&gt; /system/lib64/libwebviewchromium_plat_support.so</span><br></pre></td></tr></table></figure>
+<p>加载so后还会对这个so进行查找是否含有 JNI_OnLoad</br>void* sym &#x3D; library-&gt;FindSymbol(“JNI_OnLoad”, nullptr);</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span>* <span class="title function_">FindSymbol</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; symbol_name, <span class="type">const</span> <span class="type">char</span>* shorty = nullptr)</span></span><br><span class="line">    <span class="title function_">REQUIRES</span><span class="params">(!Locks::mutator_lock_)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> NeedsNativeBridge()</span><br><span class="line">        ? FindSymbolWithNativeBridge(symbol_name.c_str(), shorty)</span><br><span class="line">        : FindSymbolWithoutNativeBridge(symbol_name.c_str());</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// NeedsNativeBridge()判断如果设备的架构与应用的架构不同返回true，所以这里是走FindSymbolWithoutNativeBridge()</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span>* <span class="title function_">FindSymbolWithoutNativeBridge</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; symbol_name)</span></span><br><span class="line">    <span class="title function_">REQUIRES</span><span class="params">(!Locks::mutator_lock_)</span> &#123;</span><br><span class="line">    CHECK(!NeedsNativeBridge());</span><br><span class="line">    <span class="keyword">return</span> dlsym(handle_, symbol_name.c_str());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span>* <span class="title function_">dlsym</span><span class="params">(<span class="type">void</span>* handle, <span class="type">const</span> <span class="type">char</span>* _Nonnull symbol)</span>;</span><br></pre></td></tr></table></figure>
+<p>这里对dlsym进行监控的话，就可以监视接下来对 JNI_OnLoad 的查询的过程</br>dlsym位于libc.so，也使用freida进行hook</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">tracesoload</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Process</span>.<span class="property">arch</span>);</span><br><span class="line">    <span class="keyword">var</span> libnativeloaderModule = <span class="title class_">Process</span>.<span class="title function_">getModuleByName</span>(<span class="string">&quot;libnativeloader.so&quot;</span>);</span><br><span class="line">    <span class="comment">// OpenNativeLibrary</span></span><br><span class="line">    <span class="keyword">var</span> <span class="title class_">OpenNativeLibraryAddr</span> = libnativeloaderModule.<span class="title function_">getExportByName</span>(<span class="string">&quot;_ZN7android17OpenNativeLibraryEP7_JNIEnviPKcP8_jobjectP8_jstringPbPNSt3__112basic_stringIcNS9_11char_traitsIcEENS9_9allocatorIcEEEE&quot;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">OpenNativeLibraryAddr</span>, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">sopath</span> = <span class="title function_">ptr</span>(args[<span class="number">2</span>]).<span class="title function_">readUtf8String</span>();</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;go into OpenNativeLibrary -&gt; &quot;</span> + <span class="variable language_">this</span>.<span class="property">sopath</span>);</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;leave OpenNativeLibrary -&gt; &quot;</span> + <span class="variable language_">this</span>.<span class="property">sopath</span>, <span class="string">&quot;, return: &quot;</span> + retval);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">var</span> dlsymAddr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libc.so&quot;</span>, <span class="string">&quot;dlsym&quot;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(dlsymAddr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">handle</span> = args[<span class="number">0</span>];</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">symbol</span> = <span class="title function_">ptr</span>(args[<span class="number">1</span>]).<span class="title function_">readUtf8String</span>();</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;leave dlsym: handle: &quot;</span> + <span class="variable language_">this</span>.<span class="property">handle</span> + <span class="string">&quot;, symbol: &quot;</span> + <span class="variable language_">this</span>.<span class="property">symbol</span>, <span class="string">&quot;, return: &quot;</span> + retval);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">tracesoload</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main);</span><br></pre></td></tr></table></figure>
+<p>已经看到查找JNI_OnLoad的流程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">leave OpenNativeLibrary -&gt; /data/app/com.iCitySuzhou.suzhou001--s3SCRYsyaFmNLfEq3Pj3g==/lib/arm64/libshell-super.com.iCitySuzhou.suzhou001.so , return: 0x49668d9309b699ed</span><br><span class="line">leave dlsym: handle: 0x49668d9309b699ed, symbol: JNI_OnLoad , return: 0x730a123a5c</span><br><span class="line">leave dlsym: handle: 0xde2d62226fd8b40d, symbol: InitEsxProfile , return: 0x7314e10620</span><br><span class="line">go into OpenNativeLibrary -&gt; /data/app/com.iCitySuzhou.suzhou001--s3SCRYsyaFmNLfEq3Pj3g==/lib/arm64/libjcore230.so</span><br><span class="line">leave OpenNativeLibrary -&gt; /data/app/com.iCitySuzhou.suzhou001--s3SCRYsyaFmNLfEq3Pj3g==/lib/arm64/libjcore230.so , return: 0x513c62ce705a71c5</span><br><span class="line">leave dlsym: handle: 0x513c62ce705a71c5, symbol: JNI_OnLoad , return: 0x7308e5c5bc</span><br><span class="line">leave OpenNativeLibrary -&gt; /system/lib64/libwebviewchromium_plat_support.so , return: 0xef0d55dae65a7f63</span><br><span class="line">leave dlsym: handle: 0xef0d55dae65a7f63, symbol: JNI_OnLoad , return: 0x731ca1e740</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_base_library_1loader_LibraryLoader_nativeLibraryLoaded , return: 0x730ce0dc34</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_base_library_1loader_LibraryLoader_nativeGetVersionNumber , return: 0x730ce0dee0</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_base_TraceEvent_nativeRegisterEnabledObserver , return: 0x730ce10300</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_base_PathService_nativeOverride , return: 0x730ce0ed00</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_android_1webview_AwContentsStatics_nativeGetProductVersion , return: 0x730cdca980</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_android_1webview_AwGLFunctor_nativeGetAwDrawGLFunction , return: 0x730cdcc4e4</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_android_1webview_AwContents_nativeSetAwDrawSWFunctionTable , return: 0x730cdbfcc4</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_android_1webview_AwContents_nativeSetAwDrawGLFunctionTable , return: 0x730cdb714c</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_android_1webview_AwContentsStatics_nativeSetCheckClearTextPermitted , return: 0x730cdcaad4</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_base_CommandLine_nativeHasSwitch , return: 0x730ce08b70</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_android_1webview_AwContentsStatics_nativeSetSafeBrowsingEnabledByManifest , return: 0x730cdcaa24</span><br><span class="line">leave dlsym: handle: 0xe5b5bf72a8b510e7, symbol: Java_org_chromium_base_CommandLine_nativeAppendSwitch , return: 0x730ce08cd8</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<h4 id="第三种：定制rom和frida等hook框架相结合"><a href="#第三种：定制rom和frida等hook框架相结合" class="headerlink" title="第三种：定制rom和frida等hook框架相结合"></a>第三种：定制rom和frida等hook框架相结合</h4><p>在art中一些关键地方可以预留api给frida hook, 以下面跟踪jni函数绑定为例。</p>
+<h3 id="ART定制跟中jni函数绑定"><a href="#ART定制跟中jni函数绑定" class="headerlink" title="ART定制跟中jni函数绑定"></a>ART定制跟中jni函数绑定</h3><p>在上面的日志看到很多symbol的值类似静态注册的JNI函数</br>jni函数的绑定：每一个java层函数在native层都对应一个ArtMethod对象，jni函数在执行前必须完成对jni函数所在类的加载和初始化、以及该jni函数的ArtMethod对象当中属性和so中具体函数地址的绑定</br></p>
+<ol>
+<li>静态注册的jni函数</li>
+<li>动态注册的jni函数</li>
+</ol>
+<h4 id="静态注册的jni函数"><a href="#静态注册的jni函数" class="headerlink" title="静态注册的jni函数"></a>静态注册的jni函数</h4><p>通过源码追踪jni注册流程，首先当一个类中的 JNI 函数被调用的时候，ART 会首先确保该类已经被加载和初始化。这一过程通常通过 class_linker.cc 文件中的 ClassLinker::LoadClass 方法完成。在加载过程中，类的属性和成员函数也会被加载和初始化，这一步由 LoadClassMembers 方法处理。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加载类</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ClassLinker::LoadClass</span><span class="params">(Thread* self,</span></span><br><span class="line"><span class="params">                            <span class="type">const</span> DexFile&amp; dex_file,</span></span><br><span class="line"><span class="params">                            <span class="type">const</span> DexFile::ClassDef&amp; dex_class_def,</span></span><br><span class="line"><span class="params">                            Handle&lt;mirror::Class&gt; klass)</span> &#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">uint8_t</span>* class_data = dex_file.GetClassData(dex_class_def);</span><br><span class="line">  <span class="keyword">if</span> (class_data == nullptr) &#123;</span><br><span class="line">    <span class="keyword">return</span>;  <span class="comment">// no fields or methods - for example a marker interface</span></span><br><span class="line">  &#125;</span><br><span class="line">  LoadClassMembers(self, dex_file, class_data, klass);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 加载类成员和函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ClassLinker::LoadClassMembers</span><span class="params">(Thread* self,</span></span><br><span class="line"><span class="params">                                   <span class="type">const</span> DexFile&amp; dex_file,</span></span><br><span class="line"><span class="params">                                   <span class="type">const</span> <span class="type">uint8_t</span>* class_data,</span></span><br><span class="line"><span class="params">                                   Handle&lt;mirror::Class&gt; klass)</span> &#123;</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// .....部分代码省略.....</span></span><br><span class="line">    <span class="comment">// TODO These should really use the iterators.</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; it.HasNextDirectMethod(); i++, it.Next()) &#123;</span><br><span class="line">      ArtMethod* method = klass-&gt;GetDirectMethodUnchecked(i, image_pointer_size_);</span><br><span class="line">      <span class="comment">// 加载函数</span></span><br><span class="line">      LoadMethod(dex_file, it, klass, method);</span><br><span class="line">      <span class="comment">// 将方法与其实现的代码进行链接</span></span><br><span class="line">      LinkCode(this, method, oat_class_ptr, class_def_method_index);</span><br><span class="line">      <span class="type">uint32_t</span> it_method_index = it.GetMemberIndex();</span><br><span class="line">      <span class="keyword">if</span> (last_dex_method_index == it_method_index) &#123;</span><br><span class="line">        <span class="comment">// duplicate case</span></span><br><span class="line">        method-&gt;SetMethodIndex(last_class_def_method_index);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        method-&gt;SetMethodIndex(class_def_method_index);</span><br><span class="line">        last_dex_method_index = it_method_index;</span><br><span class="line">        last_class_def_method_index = class_def_method_index;</span><br><span class="line">      &#125;</span><br><span class="line">      class_def_method_index++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// .........</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法与其实际实现的代码进行链接</span></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">LinkCode</span><span class="params">(ClassLinker* class_linker,</span></span><br><span class="line"><span class="params">                     ArtMethod* method,</span></span><br><span class="line"><span class="params">                     <span class="type">const</span> OatFile::OatClass* oat_class,</span></span><br><span class="line"><span class="params">                     <span class="type">uint32_t</span> class_def_method_index)</span> <span class="title function_">REQUIRES_SHARED</span><span class="params">(Locks::mutator_lock_)</span> &#123;</span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">// 检查一个方法是否具有 native 属性，返回true则该方法是一个JNI函数</span></span><br><span class="line">  <span class="keyword">if</span> (method-&gt;IsNative()) &#123;</span><br><span class="line">    <span class="comment">// Unregistering restores the dlsym lookup stub.</span></span><br><span class="line">    <span class="comment">// 解除方法的本地链接, 该方法在调用时不再直接执行本地代码，而是通过解释器来处理</span></span><br><span class="line">    method-&gt;UnregisterNative();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (enter_interpreter || quick_code == nullptr) &#123;</span><br><span class="line">      <span class="comment">// We have a native method here without code. Then it should have either the generic JNI</span></span><br><span class="line">      <span class="comment">// trampoline as entrypoint (non-static), or the resolution trampoline (static).</span></span><br><span class="line">      <span class="comment">// <span class="doctag">TODO:</span> this doesn&#x27;t handle all the cases where trampolines may be installed.</span></span><br><span class="line">      <span class="type">const</span> <span class="type">void</span>* entry_point = method-&gt;GetEntryPointFromQuickCompiledCode();</span><br><span class="line">      DCHECK(class_linker-&gt;IsQuickGenericJniStub(entry_point) ||</span><br><span class="line">             class_linker-&gt;IsQuickResolutionStub(entry_point));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 解除方法的本地链接</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ArtMethod::UnregisterNative</span><span class="params">()</span> &#123;</span><br><span class="line">  CHECK(IsNative() &amp;&amp; !IsFastNative()) &lt;&lt; PrettyMethod();</span><br><span class="line">  <span class="comment">// restore stub to lookup native pointer via dlsym</span></span><br><span class="line">  SetEntryPointFromJni(GetJniDlsymLookupStub());</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 用于设置 JNI 方法的入口点</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">SetEntryPointFromJni</span><span class="params">(<span class="type">const</span> <span class="type">void</span>* entrypoint)</span> &#123;</span><br><span class="line">    DCHECK(IsNative());</span><br><span class="line">    SetEntryPointFromJniPtrSize(entrypoint, kRuntimePointerSize);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在需要 JNI 方法解析时，可以方便地获取特定的查找函数指针</span></span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">const</span> <span class="type">void</span>* <span class="title function_">GetJniDlsymLookupStub</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> reinterpret_cast&lt;<span class="type">const</span> <span class="type">void</span>*&gt;(art_jni_dlsym_lookup_stub);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不管是静态注册还是动态注册的jni函数， 当函数所在的类被加载进到 LinkCode 的时候，会进行函数第一次的地址绑定，当这个函数是静态注册的话，在第一次的时候会去调用dlsym查找符号进行绑定，当第二次调用的时候，由于入口的已经被绑定到真正的地址，就不在执行查找的过程，直接发起调用。</br>实际上 art_jni_dlsym_lookup_stub 是汇编代码，通过源码查找 art_jni_dlsym_lookup_stub</br>xref: &#x2F;art&#x2F;runtime&#x2F;arch&#x2F;arm&#x2F;jni_entrypoints_arm.S</p>
+<figure class="highlight arm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &quot;asm_support_arm.S&quot;</span></span><br><span class="line">    <span class="meta">.extern</span> artFindNativeMethod</span><br><span class="line"><span class="symbol">ENTRY</span> art_jni_dlsym_lookup_stub</span><br><span class="line">    <span class="keyword">push</span>   &#123;<span class="built_in">r0</span>, <span class="built_in">r1</span>, <span class="built_in">r2</span>, <span class="built_in">r3</span>, <span class="built_in">lr</span>&#125;           <span class="comment">@ spill regs</span></span><br><span class="line">    .cfi_adjust_cfa_offset <span class="number">20</span></span><br><span class="line">    .cfi_rel_offset <span class="built_in">r0</span>, <span class="number">0</span></span><br><span class="line">    .cfi_rel_offset <span class="built_in">r1</span>, <span class="number">4</span></span><br><span class="line">    .cfi_rel_offset <span class="built_in">r2</span>, <span class="number">8</span></span><br><span class="line">    .cfi_rel_offset <span class="built_in">r3</span>, <span class="number">12</span></span><br><span class="line">    .cfi_rel_offset <span class="built_in">lr</span>, <span class="number">16</span></span><br><span class="line">    <span class="keyword">sub</span>    <span class="built_in">sp</span>, <span class="number">#12</span>                        <span class="comment">@ pad stack pointer to align frame</span></span><br><span class="line">    .cfi_adjust_cfa_offset <span class="number">12</span></span><br><span class="line">    <span class="keyword">blx</span>    artFindNativeMethod</span><br><span class="line">    <span class="keyword">mov</span>    <span class="built_in">r12</span>, <span class="built_in">r0</span>                        <span class="comment">@ save result in r12</span></span><br><span class="line">    <span class="keyword">add</span>    <span class="built_in">sp</span>, <span class="number">#12</span>                        <span class="comment">@ restore stack pointer</span></span><br><span class="line">    .cfi_adjust_cfa_offset -<span class="number">12</span></span><br><span class="line">    <span class="keyword">cbz</span>    <span class="built_in">r0</span>, <span class="number">1</span>f                         <span class="comment">@ is method code null?</span></span><br><span class="line">    <span class="keyword">pop</span>    &#123;<span class="built_in">r0</span>, <span class="built_in">r1</span>, <span class="built_in">r2</span>, <span class="built_in">r3</span>, <span class="built_in">lr</span>&#125;           <span class="comment">@ restore regs</span></span><br><span class="line">    .cfi_adjust_cfa_offset -<span class="number">20</span></span><br><span class="line">    .cfi_restore <span class="built_in">r0</span></span><br><span class="line">    .cfi_restore <span class="built_in">r1</span></span><br><span class="line">    .cfi_restore <span class="built_in">r2</span></span><br><span class="line">    .cfi_restore <span class="built_in">r3</span></span><br><span class="line">    .cfi_restore <span class="built_in">lr</span></span><br><span class="line">    <span class="keyword">bx</span>     <span class="built_in">r12</span>                            <span class="comment">@ if non-null, tail call to method&#x27;s code</span></span><br></pre></td></tr></table></figure>
+<p>无论静态注册还是动态注册，当类加载完就被绑定到art_jni_dlsym_lookup_stub这个桥函数中，会执行这段汇编调用artFindNativeMethod去so查符号地址</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Used by the JNI dlsym stub to find the native method to invoke if none is registered.</span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined(__arm__) || defined(__aarch64__)</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="type">const</span> <span class="type">void</span>* <span class="title function_">artFindNativeMethod</span><span class="params">()</span> &#123;</span><br><span class="line">  Thread* self = Thread::Current();</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="type">const</span> <span class="type">void</span>* <span class="title function_">artFindNativeMethod</span><span class="params">(Thread* self)</span> &#123;</span><br><span class="line">  DCHECK_EQ(self, Thread::Current());</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">  Locks::mutator_lock_-&gt;AssertNotHeld(self);  <span class="comment">// We come here as Native.</span></span><br><span class="line">  ScopedObjectAccess <span class="title function_">soa</span><span class="params">(self)</span>;</span><br><span class="line"></span><br><span class="line">  ArtMethod* method = self-&gt;GetCurrentMethod(nullptr);</span><br><span class="line">  DCHECK(method != nullptr);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Lookup symbol address for method, on failure we&#x27;ll return null with an exception set,</span></span><br><span class="line">  <span class="comment">// otherwise we return the address of the method we found.</span></span><br><span class="line">  <span class="comment">// FindCodeForNativeMethod 查找函数地址</span></span><br><span class="line">  <span class="type">void</span>* native_code = soa.Vm()-&gt;FindCodeForNativeMethod(method);</span><br><span class="line">  <span class="keyword">if</span> (native_code == nullptr) &#123;</span><br><span class="line">    self-&gt;AssertPendingException();</span><br><span class="line">    <span class="keyword">return</span> nullptr;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Register so that future calls don&#x27;t come here</span></span><br><span class="line">  <span class="keyword">return</span> method-&gt;RegisterNative(native_code, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span>* <span class="title function_">JavaVMExt::FindCodeForNativeMethod</span><span class="params">(ArtMethod* m)</span> &#123;</span><br><span class="line">   ......</span><br><span class="line">  Thread* <span class="type">const</span> self = Thread::Current();</span><br><span class="line">  <span class="type">void</span>* native_method = libraries_-&gt;FindNativeMethod(self, m, detail);</span><br><span class="line">   ......</span><br><span class="line">  <span class="keyword">return</span> native_method;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span>* <span class="title function_">FindNativeMethodInternal</span><span class="params">(Thread* self,</span></span><br><span class="line"><span class="params">                                 <span class="type">void</span>* declaring_class_loader_allocator,</span></span><br><span class="line"><span class="params">                                 <span class="type">const</span> <span class="type">char</span>* shorty,</span></span><br><span class="line"><span class="params">                                 <span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; jni_short_name,</span></span><br><span class="line"><span class="params">                                 <span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; jni_long_name)</span></span><br><span class="line">      <span class="title function_">REQUIRES</span><span class="params">(!Locks::jni_libraries_lock_)</span></span><br><span class="line">      <span class="title function_">REQUIRES</span><span class="params">(!Locks::mutator_lock_)</span> &#123;</span><br><span class="line">    MutexLock <span class="title function_">mu</span><span class="params">(self, *Locks::jni_libraries_lock_)</span>;</span><br><span class="line">    <span class="comment">// 遍历加载的so去查找函数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; lib : libraries_) &#123;</span><br><span class="line">      SharedLibrary* <span class="type">const</span> library = lib.second;</span><br><span class="line">      <span class="comment">// Use the allocator address for class loader equality to avoid unnecessary weak root decode.</span></span><br><span class="line">      <span class="keyword">if</span> (library-&gt;GetClassLoaderAllocator() != declaring_class_loader_allocator) &#123;</span><br><span class="line">        <span class="comment">// We only search libraries loaded by the appropriate ClassLoader.</span></span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// Try the short name then the long name...</span></span><br><span class="line">      <span class="type">const</span> <span class="type">char</span>* arg_shorty = library-&gt;NeedsNativeBridge() ? shorty : nullptr;</span><br><span class="line">      <span class="type">void</span>* fn = library-&gt;FindSymbol(jni_short_name, arg_shorty);</span><br><span class="line">      <span class="keyword">if</span> (fn == nullptr) &#123;</span><br><span class="line">        fn = library-&gt;FindSymbol(jni_long_name, arg_shorty);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (fn != nullptr) &#123;</span><br><span class="line">        VLOG(jni) &lt;&lt; <span class="string">&quot;[Found native code for &quot;</span> &lt;&lt; jni_long_name</span><br><span class="line">                  &lt;&lt; <span class="string">&quot; in \&quot;&quot;</span> &lt;&lt; library-&gt;GetPath() &lt;&lt; <span class="string">&quot;\&quot;]&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> fn;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> nullptr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">void</span>* <span class="title function_">FindSymbol</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; symbol_name, <span class="type">const</span> <span class="type">char</span>* shorty = nullptr)</span></span><br><span class="line">      <span class="title function_">REQUIRES</span><span class="params">(!Locks::mutator_lock_)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> NeedsNativeBridge()</span><br><span class="line">        ? FindSymbolWithNativeBridge(symbol_name.c_str(), shorty)</span><br><span class="line">        : FindSymbolWithoutNativeBridge(symbol_name.c_str());</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">void</span>* <span class="title function_">FindSymbolWithoutNativeBridge</span><span class="params">(<span class="type">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; symbol_name)</span></span><br><span class="line">      <span class="title function_">REQUIRES</span><span class="params">(!Locks::mutator_lock_)</span> &#123;</span><br><span class="line">    CHECK(!NeedsNativeBridge());</span><br><span class="line">    <span class="keyword">return</span> dlsym(handle_, symbol_name.c_str());</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>jni_short_name：是本地方法的短名，它的格式通常是 Java_&lt;类的完全限定名&gt;<em>&lt;方法名&gt;，其中类名和方法名中的每个字符（除了字母和数字）都被替换为 <em>。  例如： Java_com_example_MyClass_myMethod<br>jni_long_name：是本地方法的长名，它的格式通常是 Java</em>&lt;类的完全限定名&gt;</em>&lt;方法名&gt;__&lt;参数签名&gt;，其中参数签名部分用 _ 分隔每个参数类型的描述符。  例如： Java_com_example_MyClass_myMethod__ILjava_lang_String_2 </br><br>通过FindCodeForNativeMethod找到的函数地址后，会调用 RegisterNative 才把它的地址绑定到artmethod里面，method-&gt;RegisterNative(native_code, false);</br>回到上面的汇编代码</br></p>
+<figure class="highlight arm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">blx</span>    artFindNativeMethod</span><br><span class="line"><span class="keyword">mov</span>    <span class="built_in">r12</span>, <span class="built_in">r0</span></span><br><span class="line"><span class="keyword">bx</span>     <span class="built_in">r12</span>          </span><br></pre></td></tr></table></figure>
+<p>经过artFindNativeMethod查到绑定后的artmethod地址返回</br>接下来就可以对上面的一些流程添加log打印，在artFindNativeMethod下可以监控静态注册jni函数绑定的流程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> defined(__arm__) || defined(__aarch64__)</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="type">const</span> <span class="type">void</span>* <span class="title function_">artFindNativeMethod</span><span class="params">()</span> &#123;</span><br><span class="line">  Thread* self = Thread::Current();</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="type">const</span> <span class="type">void</span>* <span class="title function_">artFindNativeMethod</span><span class="params">(Thread* self)</span> &#123;</span><br><span class="line">  DCHECK_EQ(self, Thread::Current());</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">  Locks::mutator_lock_-&gt;AssertNotHeld(self);  <span class="comment">// We come here as Native.</span></span><br><span class="line">  ScopedObjectAccess <span class="title function_">soa</span><span class="params">(self)</span>;</span><br><span class="line"></span><br><span class="line">  ArtMethod* method = self-&gt;GetCurrentMethod(nullptr);</span><br><span class="line">  DCHECK(method != nullptr);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Lookup symbol address for method, on failure we&#x27;ll return null with an exception set,</span></span><br><span class="line">  <span class="comment">// otherwise we return the address of the method we found.</span></span><br><span class="line">  <span class="type">void</span>* native_code = soa.Vm()-&gt;FindCodeForNativeMethod(method);</span><br><span class="line">  <span class="keyword">if</span> (native_code == nullptr) &#123;</span><br><span class="line">    self-&gt;AssertPendingException();</span><br><span class="line">    <span class="keyword">return</span> nullptr;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">//add</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">stringstream</span> oss;</span><br><span class="line">    oss &lt;&lt; <span class="string">&quot;[artFindNativeMethod]StaticRegisterJniMethod-&gt;&quot;</span> &lt;&lt; method-&gt;PrettyMethod() &lt;&lt; <span class="string">&quot;, add: &quot;</span> &lt;&lt; native_code;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span> *content = oss.str().c_str();</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">strstr</span>(content, <span class="string">&quot;zsklog&quot;</span>) != nullptr) &#123;</span><br><span class="line">      LOG(ERROR) &lt;&lt; content;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//add</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Register so that future calls don&#x27;t come here</span></span><br><span class="line">  <span class="keyword">return</span> method-&gt;RegisterNative(native_code, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面添加了标识 strstr(content, “zsklog”) 用来让frida可以控制日志打印开关</p>
+<h4 id="动态注册的jni函数"><a href="#动态注册的jni函数" class="headerlink" title="动态注册的jni函数"></a>动态注册的jni函数</h4><p>动态注册的jni函数都是通过 RegisterNatives 去注册绑定地址，定位到源码的位置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> jint <span class="title function_">RegisterNatives</span><span class="params">(JNIEnv* env,</span></span><br><span class="line"><span class="params">                            jclass java_class,</span></span><br><span class="line"><span class="params">                            <span class="type">const</span> JNINativeMethod* methods,</span></span><br><span class="line"><span class="params">                            jint method_count)</span> &#123;</span><br><span class="line">  ......</span><br><span class="line">  CHECK_NON_NULL_ARGUMENT_FN_NAME(<span class="string">&quot;RegisterNatives&quot;</span>, methods, JNI_ERR);</span><br><span class="line">  <span class="keyword">for</span> (jint i = <span class="number">0</span>; i &lt; method_count; ++i) &#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* name = methods[i].name;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* sig = methods[i].signature;</span><br><span class="line">    <span class="type">const</span> <span class="type">void</span>* fnPtr = methods[i].fnPtr;</span><br><span class="line">    <span class="type">bool</span> is_fast = <span class="literal">false</span>;</span><br><span class="line">    ......</span><br><span class="line">    <span class="type">const</span> <span class="type">void</span>* final_function_ptr = m-&gt;RegisterNative(fnPtr, is_fast);</span><br><span class="line">    UNUSED(final_function_ptr);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> JNI_OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历methods，最后跟静态注册jni函数的流程一样去调用 RegisterNative ，静态注册的log已经添加，那在 RegisterNative 里添加log不就能跟踪到动态注册的函数，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">void</span>* <span class="title function_">ArtMethod::RegisterNative</span><span class="params">(<span class="type">const</span> <span class="type">void</span>* native_method, <span class="type">bool</span> is_fast)</span> &#123;</span><br><span class="line">  CHECK(IsNative()) &lt;&lt; PrettyMethod();</span><br><span class="line">  CHECK(!IsFastNative()) &lt;&lt; PrettyMethod();</span><br><span class="line">  CHECK(native_method != nullptr) &lt;&lt; PrettyMethod();</span><br><span class="line">  <span class="keyword">if</span> (is_fast) &#123;</span><br><span class="line">    AddAccessFlags(kAccFastNative);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">void</span>* new_native_method = nullptr;</span><br><span class="line">  Runtime::Current()-&gt;GetRuntimeCallbacks()-&gt;RegisterNativeMethod(this,</span><br><span class="line">                                                                  native_method,</span><br><span class="line">                                                                  <span class="comment">/*out*/</span>&amp;new_native_method);</span><br><span class="line">  <span class="comment">//add</span></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">stringstream</span> oss;</span><br><span class="line">  oss &lt;&lt; <span class="string">&quot;[ArtMethod::RegisterNative]JniMethod-&gt;&quot;</span> &lt;&lt; this-&gt;PrettyMethod() &lt;&lt; <span class="string">&quot;, add: &quot;</span> &lt;&lt; native_method;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> *content = oss.str().c_str();</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">strstr</span>(content, <span class="string">&quot;zsklog&quot;</span>) != nullptr) &#123;</span><br><span class="line">    LOG(ERROR) &lt;&lt; content;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//add</span></span><br><span class="line">  SetEntryPointFromJni(new_native_method);</span><br><span class="line">  <span class="keyword">return</span> new_native_method;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="jni函数的绑定分类总结"><a href="#jni函数的绑定分类总结" class="headerlink" title="jni函数的绑定分类总结"></a>jni函数的绑定分类总结</h5><ol>
+<li>静态函数的jni函数：有两次绑定，第一次是在类加载时，会绑定到ART中的“桥函数”(art_jni_dlsym_lookup_stub) ，第二次绑定是在该jni函数第一次被真正调用时，ART 会通过桥函数查找该函数在本地库中的实际地址，并进行绑定。后续调用将直接使用该地址，避免重复查找。<br> LoadClass -&gt; LoadClassMembers -&gt; SetEntryPointFromJni(GetJniDlsymLookupStub() -&gt;art_jni_dlsym_lookup_stub -&gt; artFindNativeMethod -&gt; FindCodeForNativeMethod(method)</br></li>
+<li>动态注册的jni函数：也是有两次绑定，只不过和静态注册的jni函数的第二次绑定不同之处在于是由开发人员编写的代码主动调用RegeisterNatives进行绑定，而不是由ART“帮助”完成绑定。</br>重新编写后刷入，frida代码<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">traceJniRegiseter</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> libc_module = <span class="title class_">Process</span>.<span class="title function_">getModuleByName</span>(<span class="string">&quot;libc.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> strstr = libc_module.<span class="title function_">getExportByName</span>(<span class="string">&quot;strstr&quot;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(strstr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">thread_id</span> = <span class="title class_">Process</span>.<span class="title function_">getCurrentThreadId</span>();</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">arg0</span> = <span class="title function_">ptr</span>(args[<span class="number">0</span>]).<span class="title function_">readUtf8String</span>();</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">arg1</span> = <span class="title function_">ptr</span>(args[<span class="number">1</span>]).<span class="title function_">readUtf8String</span>();</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">arg1</span> == <span class="string">&quot;zsklog&quot;</span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[&quot;</span> + <span class="variable language_">this</span>.<span class="property">thread_id</span> + <span class="string">&quot;]&quot;</span> + <span class="string">&quot;go into OpenNativeLibrary -&gt; &quot;</span> + <span class="variable language_">this</span>.<span class="property">arg0</span>);</span><br><span class="line">                retval.<span class="title function_">replace</span>(<span class="number">0x100</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">tracesoload</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Process</span>.<span class="property">arch</span>);</span><br><span class="line">    <span class="keyword">var</span> libnativeloaderModule = <span class="title class_">Process</span>.<span class="title function_">getModuleByName</span>(<span class="string">&quot;libnativeloader.so&quot;</span>);</span><br><span class="line">    <span class="comment">// OpenNativeLibrary</span></span><br><span class="line">    <span class="keyword">var</span> <span class="title class_">OpenNativeLibraryAddr</span> = libnativeloaderModule.<span class="title function_">getExportByName</span>(<span class="string">&quot;_ZN7android17OpenNativeLibraryEP7_JNIEnviPKcP8_jobjectP8_jstringPbPNSt3__112basic_stringIcNS9_11char_traitsIcEENS9_9allocatorIcEEEE&quot;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">OpenNativeLibraryAddr</span>, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">sopath</span> = <span class="title function_">ptr</span>(args[<span class="number">2</span>]).<span class="title function_">readUtf8String</span>();</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">thread_id</span> = <span class="title class_">Process</span>.<span class="title function_">getCurrentThreadId</span>();</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[&quot;</span> + <span class="variable language_">this</span>.<span class="property">thread_id</span> + <span class="string">&quot;]&quot;</span> + <span class="string">&quot;go into OpenNativeLibrary -&gt; &quot;</span> + <span class="variable language_">this</span>.<span class="property">sopath</span>);</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[&quot;</span> + <span class="variable language_">this</span>.<span class="property">thread_id</span> + <span class="string">&quot;]&quot;</span> + <span class="string">&quot;leave OpenNativeLibrary -&gt; &quot;</span> + <span class="variable language_">this</span>.<span class="property">sopath</span>, <span class="string">&quot;, return: &quot;</span> + retval);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> dlsymAddr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libc.so&quot;</span>, <span class="string">&quot;dlsym&quot;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(dlsymAddr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">handle</span> = args[<span class="number">0</span>];</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">symbol</span> = <span class="title function_">ptr</span>(args[<span class="number">1</span>]).<span class="title function_">readUtf8String</span>();</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">thread_id</span> = <span class="title class_">Process</span>.<span class="title function_">getCurrentThreadId</span>();</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[&quot;</span> + <span class="variable language_">this</span>.<span class="property">thread_id</span> + <span class="string">&quot;]&quot;</span> + <span class="string">&quot;leave dlsym: handle: &quot;</span> + <span class="variable language_">this</span>.<span class="property">handle</span> + <span class="string">&quot;, symbol: &quot;</span> + <span class="variable language_">this</span>.<span class="property">symbol</span>, <span class="string">&quot;, return: &quot;</span> + retval);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">tracesoload</span>();</span><br><span class="line">    <span class="title function_">traceJniRegiseter</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">arm64</span><br><span class="line">[8007]leave dlsym: handle: 0x2adcc85529763b0b, symbol: oatdata , return: 0x7d1659d000</span><br><span class="line">[8007]leave dlsym: handle: 0x2adcc85529763b0b, symbol: oatlastword , return: 0x7d1659e224</span><br><span class="line">[8007]leave dlsym: handle: 0x2adcc85529763b0b, symbol: oatbss , return: 0x7d1659f000</span><br><span class="line">[8007]leave dlsym: handle: 0x2adcc85529763b0b, symbol: oatbsslastword , return: 0x7d165a2acc</span><br><span class="line">[8007]leave dlsym: handle: 0x2adcc85529763b0b, symbol: oatbssmethods , return: 0x0</span><br><span class="line">[8007]leave dlsym: handle: 0x2adcc85529763b0b, symbol: oatbssroots , return: 0x0</span><br><span class="line">[8007]go into OpenNativeLibrary -&gt; /data/app/com.iCitySuzhou.suzhou001-IqFG3pwpI6PxX176DYv1tw==/lib/arm64/libshell-super.com.iCitySuzhou.suzhou001.so</span><br><span class="line">[8007]leave dlsym: handle: 0xa5c5ee03e19145b9, symbol: mmap , return: 0x7db163acd4</span><br><span class="line">[8007]leave dlsym: handle: 0xa5c5ee03e19145b9, symbol: write , return: 0x7db163b4cc</span><br><span class="line">[8007]leave dlsym: handle: 0xa5c5ee03e19145b9, symbol: close , return: 0x7db15ed138</span><br><span class="line">[8007]leave dlsym: handle: 0xa5c5ee03e19145b9, symbol: fdatasync , return: 0x7db163a8b4</span><br><span class="line">[8007]leave OpenNativeLibrary -&gt; /data/app/com.iCitySuzhou.suzhou001-IqFG3pwpI6PxX176DYv1tw==/lib/arm64/libshell-super.com.iCitySuzhou.suzhou001.so , return: 0x5cd2a12d5c2fc103</span><br><span class="line">[8007]leave dlsym: handle: 0x5cd2a12d5c2fc103, symbol: JNI_OnLoad , return: 0x7d160c6a5c</span><br><span class="line">[8007]go into OpenNativeLibrary -&gt; [ArtMethod::RegisterNative]JniMethod-&gt;void com.wrapper.proxyapplication.WrapperProxyApplication.Ooo0ooO0oO(), add: 0x7d160c8418</span><br><span class="line">[8007]go into OpenNativeLibrary -&gt; [ArtMethod::RegisterNative]JniMethod-&gt;int com.wrapper.proxyapplication.CustomerClassLoader.ShowLogs(java.lang.String, int), add: 0x7d160c648c</span><br><span class="line">......</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                修改源码定制ART
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/17659/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2023-11-15 00:00</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E8%84%B1%E5%A3%B3/">脱壳</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/4035/"
+                                   title="Art中的函数inline"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Art中的函数inline</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ART%E5%AE%9A%E5%88%B6%E6%96%B9%E6%A1%88%E6%AF%94%E8%BE%83"><span class="nav-number">1.</span> <span class="nav-text">ART定制方案比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%EF%BC%9A%E6%BA%90%E7%A0%81%E4%BF%AE%E6%94%B9%E7%BC%96%E8%AF%91%EF%BC%8C%E5%AE%9A%E5%88%B6rom"><span class="nav-number">1.1.</span> <span class="nav-text">第一种：源码修改编译，定制rom</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90AndroidStudio%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%85%A5%E6%BA%90%E7%A0%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">编译生成AndroidStudio项目配置文件并导入源码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clion%E5%AF%BC%E5%85%A5ART"><span class="nav-number">1.1.2.</span> <span class="nav-text">Clion导入ART</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#APP%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B%E4%B8%ADso%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">APP运行过程中so加载流程源码分析</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%EF%BC%9A%E5%9F%BA%E4%BA%8Efrida%EF%BC%8Cxposed%E7%AD%89hook%E6%A1%86%E6%9E%B6%E5%AE%9A%E5%88%B6"><span class="nav-number">1.2.</span> <span class="nav-text">第二种：基于frida，xposed等hook框架定制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8frida%E8%BF%9B%E8%A1%8Chook"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用frida进行hook</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%EF%BC%9A%E5%AE%9A%E5%88%B6rom%E5%92%8Cfrida%E7%AD%89hook%E6%A1%86%E6%9E%B6%E7%9B%B8%E7%BB%93%E5%90%88"><span class="nav-number">1.3.</span> <span class="nav-text">第三种：定制rom和frida等hook框架相结合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ART%E5%AE%9A%E5%88%B6%E8%B7%9F%E4%B8%ADjni%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A"><span class="nav-number">2.</span> <span class="nav-text">ART定制跟中jni函数绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84jni%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">静态注册的jni函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84jni%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">动态注册的jni函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#jni%E5%87%BD%E6%95%B0%E7%9A%84%E7%BB%91%E5%AE%9A%E5%88%86%E7%B1%BB%E6%80%BB%E7%BB%93"><span class="nav-number">2.2.1.</span> <span class="nav-text">jni函数的绑定分类总结</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">96.9k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ART%E5%AE%9A%E5%88%B6%E6%96%B9%E6%A1%88%E6%AF%94%E8%BE%83"><span class="nav-number">1.</span> <span class="nav-text">ART定制方案比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%EF%BC%9A%E6%BA%90%E7%A0%81%E4%BF%AE%E6%94%B9%E7%BC%96%E8%AF%91%EF%BC%8C%E5%AE%9A%E5%88%B6rom"><span class="nav-number">1.1.</span> <span class="nav-text">第一种：源码修改编译，定制rom</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90AndroidStudio%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%85%A5%E6%BA%90%E7%A0%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">编译生成AndroidStudio项目配置文件并导入源码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Clion%E5%AF%BC%E5%85%A5ART"><span class="nav-number">1.1.2.</span> <span class="nav-text">Clion导入ART</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#APP%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B%E4%B8%ADso%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">APP运行过程中so加载流程源码分析</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%EF%BC%9A%E5%9F%BA%E4%BA%8Efrida%EF%BC%8Cxposed%E7%AD%89hook%E6%A1%86%E6%9E%B6%E5%AE%9A%E5%88%B6"><span class="nav-number">1.2.</span> <span class="nav-text">第二种：基于frida，xposed等hook框架定制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8frida%E8%BF%9B%E8%A1%8Chook"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用frida进行hook</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%EF%BC%9A%E5%AE%9A%E5%88%B6rom%E5%92%8Cfrida%E7%AD%89hook%E6%A1%86%E6%9E%B6%E7%9B%B8%E7%BB%93%E5%90%88"><span class="nav-number">1.3.</span> <span class="nav-text">第三种：定制rom和frida等hook框架相结合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ART%E5%AE%9A%E5%88%B6%E8%B7%9F%E4%B8%ADjni%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A"><span class="nav-number">2.</span> <span class="nav-text">ART定制跟中jni函数绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84jni%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">静态注册的jni函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8C%E7%9A%84jni%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">动态注册的jni函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#jni%E5%87%BD%E6%95%B0%E7%9A%84%E7%BB%91%E5%AE%9A%E5%88%86%E7%B1%BB%E6%80%BB%E7%BB%93"><span class="nav-number">2.2.1.</span> <span class="nav-text">jni函数的绑定分类总结</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/local-search.js"></script>
+
+
+<!-- code-block -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/code-block.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/lazyload.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
+
+        <!-- toc -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
+        
+    
+
+    <!-- category-page -->
+    
+
+    <!-- links-page -->
+    
+</div>
+
+<!-- pjax -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+
+</body>
+</html>
