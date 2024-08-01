@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+    <title>
+        
+            iOS逆向系列(二) 反调试与绕过案例实战 |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
+    
+        
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/head.svg","first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","server_urls":null,"placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"version":"3.8.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        iOS逆向系列(二) 反调试与绕过案例实战
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2024-02-01 00:00:00</span>
+                <span class="mobile">2024-02-01 00:00</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Thu Feb 01 2024 00:00:00 GMT+0800">2024-02-01 00:00:00</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/iOS/">iOS</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>4.3k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>23 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <p>项目地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/cherubstar/iOSEnvDetection" >https://github.com/cherubstar/iOSEnvDetection<i class="fas fa-external-link-alt"></i></a><br>根据项目使用Xcode构建app安装到手机上<br>iPhone：iPhone se2(越狱)，iOS 14.4.1</p>
+<h3 id="Frida检测"><a href="#Frida检测" class="headerlink" title="Frida检测"></a>Frida检测</h3><h4 id="端口检测"><a href="#端口检测" class="headerlink" title="端口检测"></a>端口检测</h4><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/01.webp"
+                     
+                ><br>上来先用objection搜索有没有frida相关的类，可以看到其中FridaDetection比较符合，对其hook</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking search classes frida</span><br><span class="line"><span class="title class_">EnvDetection</span>.<span class="property">FridaDetectionViewModel</span></span><br><span class="line">_TtGC7SwiftUIP10$1a5ddeda09BoxVTableVGVS_11StateObjectC12EnvDetection23FridaDetectionViewModel_P10$1a5d8f8983Box_</span><br><span class="line">_TtGC7SwiftUIP10$1a5ddeda09BoxVTableGVS_P10$1a5db422825ObservedObjectPropertyBoxC12EnvDetection23FridaDetectionViewModel__</span><br><span class="line"><span class="title class_">FridaDetection</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Found</span> <span class="number">4</span> classes</span><br><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking list class_methods <span class="title class_">FridaDetection</span></span><br><span class="line">- checkListeningPort27042</span><br><span class="line"></span><br><span class="line"><span class="title class_">Found</span> <span class="number">1</span> methods</span><br></pre></td></tr></table></figure>
+<p>只有 checkListeningPort27042 一个函数，hook查看调用栈返回值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking watch method <span class="string">&quot;*[FridaDetection checkListeningPort27042]&quot;</span> --dump-args --dump-backtrace --dump-<span class="keyword">return</span></span><br><span class="line">(agent) <span class="title class_">Found</span> selector at <span class="number">0x102034000</span> <span class="keyword">as</span> -[<span class="title class_">FridaDetection</span> checkListeningPort27042]</span><br><span class="line">(agent) <span class="title class_">Registering</span> job <span class="number">246950.</span> <span class="title class_">Type</span>: watch-method <span class="attr">for</span>: *[<span class="title class_">FridaDetection</span> checkListeningPort27042]</span><br><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # (agent) [<span class="number">246950</span>] <span class="title class_">Called</span>: *[<span class="title class_">FridaDetection</span> checkListeningPort27042] <span class="number">0</span> <span class="title function_">arguments</span>(<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">246950</span>] *[<span class="title class_">FridaDetection</span> checkListeningPort27042] <span class="title class_">Backtrace</span>:</span><br><span class="line">        <span class="number">0x102051240</span> <span class="title class_">EnvDetection</span>!<span class="title class_">FridaDetectionViewModel</span>.<span class="title function_">checkListeningPort27042</span>()</span><br><span class="line">        <span class="number">0x1020865d4</span> <span class="title class_">EnvDetection</span>!closure #<span class="number">2</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">FridaDetectionView</span>.<span class="property">body</span>.<span class="property">getter</span></span><br><span class="line">        <span class="number">0x1a56f0e30</span> <span class="title class_">SwiftUI</span>!partial apply <span class="keyword">for</span> implicit closure #<span class="number">2</span> <span class="keyword">in</span> implicit closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">WrappedButtonStyle</span>.<span class="property">Body</span>.<span class="property">body</span>.<span class="property">getter</span></span><br><span class="line">        <span class="number">0x1a5a07f28</span> <span class="title class_">SwiftUI</span>!closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">PressableGestureCallbacks</span>.<span class="title function_">dispatch</span>(<span class="attr">phase</span>:<span class="attr">state</span>:)</span><br><span class="line">        <span class="number">0x1a5771b98</span> <span class="title class_">SwiftUI</span>!thunk <span class="keyword">for</span> @escaping @callee_guaranteed () -&gt; ()</span><br><span class="line">        <span class="number">0x1a5771bc0</span> <span class="title class_">SwiftUI</span>!thunk <span class="keyword">for</span> @escaping @callee_guaranteed () -&gt; (@out ())</span><br><span class="line">        <span class="number">0x1a5771b98</span> <span class="title class_">SwiftUI</span>!thunk <span class="keyword">for</span> @escaping @callee_guaranteed () -&gt; ()</span><br><span class="line">        <span class="number">0x1a5760764</span> <span class="title class_">SwiftUI</span>!<span class="keyword">static</span> <span class="title class_">Update</span>.<span class="title function_">end</span>()</span><br><span class="line">        <span class="number">0x1a57b2e6c</span> <span class="title class_">SwiftUI</span>!<span class="title class_">EventBindingManager</span>.<span class="title function_">send</span>(<span class="attr">_</span>:)</span><br><span class="line">        <span class="number">0x1a5c3fe50</span> <span class="title class_">SwiftUI</span>!specialized <span class="title class_">EventBindingBridge</span>.<span class="title function_">send</span>(<span class="attr">_</span>:<span class="attr">source</span>:)</span><br><span class="line">        <span class="number">0x1a5c3df28</span> <span class="title class_">SwiftUI</span>!<span class="title class_">UIKitGestureRecognizer</span>.<span class="title function_">send</span>(<span class="attr">touches</span>:<span class="attr">event</span>:<span class="attr">phase</span>:)</span><br><span class="line">        <span class="number">0x1a5c3ebe0</span> <span class="title class_">SwiftUI</span>!@objc <span class="title class_">UIKitGestureRecognizer</span>.<span class="title function_">touchesBegan</span>(<span class="attr">_</span>:<span class="attr">with</span>:)</span><br><span class="line">        <span class="number">0x1a11cad2c</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIGestureRecognizer</span> <span class="attr">_componentsEnded</span>:<span class="attr">withEvent</span>:]</span><br><span class="line">        <span class="number">0x1a171325c</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITouchesEvent</span> <span class="attr">_sendEventToGestureRecognizer</span>:]</span><br><span class="line">        <span class="number">0x1a11c0bd4</span> <span class="title class_">UIKitCore</span>!__47-[<span class="title class_">UIGestureEnvironment</span> <span class="attr">_updateForEvent</span>:<span class="attr">window</span>:]_block_invoke</span><br><span class="line">        <span class="number">0x1a11c08b4</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIGestureEnvironment</span> <span class="attr">_updateForEvent</span>:<span class="attr">window</span>:]</span><br><span class="line">(agent) [<span class="number">246950</span>] <span class="title class_">Return</span> <span class="title class_">Value</span>: <span class="number">0x1</span></span><br></pre></td></tr></table></figure>
+<p>返回了0x1，那是不是把函数返回值改为0x0，就不会被检测到</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking set return_value <span class="string">&quot;*[FridaDetection checkListeningPort27042]&quot;</span> <span class="number">0x0</span></span><br></pre></td></tr></table></figure>
+<p>再点击检测则过掉了<br>frida代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">ObjC</span>.<span class="property">classes</span>[<span class="string">&quot;FridaDetection&quot;</span>][<span class="string">&quot;- checkListeningPort27042&quot;</span>].<span class="property">implementation</span>, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">ret</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ret =&gt;&quot;</span>, ret);</span><br><span class="line">            ret.<span class="title function_">replace</span>(<span class="keyword">new</span> <span class="title class_">NativePointer</span>(<span class="number">0x0</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<h4 id="文件检测"><a href="#文件检测" class="headerlink" title="文件检测"></a>文件检测</h4><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/02.webp"
+                     
+                ><br>既然是文件检测，那肯定涉及到文件的读取，查资料把文件操作相关的类都用objection查找一遍，最终得到是 NSFileManager 类，进行hook</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking watch <span class="keyword">class</span> <span class="title class_">NSFileManager</span></span><br></pre></td></tr></table></figure>
+<p>手机Frida文件检测刷新一下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # (agent) [<span class="number">703964</span>] <span class="title class_">Called</span>: [<span class="title class_">NSFileManager</span> defaultManager] (<span class="title class_">Kind</span>: <span class="keyword">class</span>) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">703964</span>] <span class="title class_">Called</span>: [<span class="title class_">NSFileManager</span> _registerForUbiquityAccountChangeNotifications] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">703964</span>] <span class="title class_">Called</span>: [<span class="title class_">NSFileManager</span> defaultManager] (<span class="title class_">Kind</span>: <span class="keyword">class</span>) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">703964</span>] <span class="title class_">Called</span>: [<span class="title class_">NSFileManager</span> _registerForUbiquityAccountChangeNotifications] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">703964</span>] <span class="title class_">Called</span>: [<span class="title class_">NSFileManager</span> defaultManager] (<span class="title class_">Kind</span>: <span class="keyword">class</span>) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">703964</span>] <span class="title class_">Called</span>: [<span class="title class_">NSFileManager</span> _registerForUbiquityAccountChangeNotifications] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br></pre></td></tr></table></figure>
+<p>对这两个函数进行hook查看调用栈返回值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking watch method <span class="string">&quot;*[NSFileManager _registerForUbiquityAccountChangeNotifications]&quot;</span> --dump-args --dump-backtrace --dump-<span class="keyword">return</span></span><br><span class="line">(agent) <span class="title class_">Found</span> selector at <span class="number">0x19feee6b0</span> <span class="keyword">as</span> -[<span class="title class_">NSFileManager</span> _registerForUbiquityAccountChangeNotifications]</span><br><span class="line">(agent) <span class="title class_">Registering</span> job <span class="number">536962.</span> <span class="title class_">Type</span>: watch-method <span class="attr">for</span>: *[<span class="title class_">NSFileManager</span> _registerForUbiquityAccountChangeNotifications]</span><br><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking watch method <span class="string">&quot;*[NSFileManager defaultManager]&quot;</span> --dump-args --dump-backtrace --dump-<span class="keyword">return</span></span><br><span class="line">(agent) <span class="title class_">Found</span> selector at <span class="number">0x19feec534</span> <span class="keyword">as</span> +[<span class="title class_">NSFileManager</span> defaultManager]</span><br><span class="line">(agent) <span class="title class_">Registering</span> job <span class="number">371228.</span> <span class="title class_">Type</span>: watch-method <span class="attr">for</span>: *[<span class="title class_">NSFileManager</span> defaultManager]</span><br><span class="line"></span><br><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # (agent) [<span class="number">371228</span>] <span class="title class_">Called</span>: *[<span class="title class_">NSFileManager</span> defaultManager] <span class="number">0</span> <span class="title function_">arguments</span>(<span class="title class_">Kind</span>: <span class="keyword">class</span>) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">371228</span>] *[<span class="title class_">NSFileManager</span> defaultManager] <span class="title class_">Backtrace</span>:</span><br><span class="line">        <span class="number">0x1a000f3d4</span> <span class="title class_">Foundation</span>!standardDefaultCenter</span><br><span class="line">        <span class="number">0x1a199dc5c</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITextEffectsWindow</span> <span class="attr">updateForOrientation</span>:<span class="attr">forceResetTransform</span>:]</span><br><span class="line">        <span class="number">0x1a199e2f0</span> <span class="title class_">UIKitCore</span>!+[<span class="title class_">UITextEffectsWindow</span> <span class="attr">_sharedTextEffectsWindowforWindowScene</span>:<span class="attr">allowHosted</span>:<span class="attr">matchesStatusBarOrientationOnAccess</span>:<span class="attr">shouldCreateIfNecessary</span>:]</span><br><span class="line">        <span class="number">0x1a199e3fc</span> <span class="title class_">UIKitCore</span>!+[<span class="title class_">UITextEffectsWindow</span> <span class="attr">sharedTextEffectsWindowForWindowScene</span>:]</span><br><span class="line">        <span class="number">0x1a10c640c</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIInputResponderController</span> containerWindow]</span><br><span class="line">        <span class="number">0x1a10c651c</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIInputResponderController</span> containerRootController]</span><br><span class="line">        <span class="number">0x1a149a1a8</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIPeripheralHost</span>(<span class="title class_">UIKitInternal</span>) _isTransitioning]</span><br><span class="line">        <span class="number">0x1a0fa219c</span> <span class="title class_">UIKitCore</span>!-[_UINavigationInteractiveTransition <span class="attr">_gestureRecognizer</span>:<span class="attr">shouldReceiveEvent</span>:]</span><br><span class="line">        <span class="number">0x1a11cfd54</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIGestureRecognizer</span> <span class="attr">_delegateShouldReceiveEvent</span>:]</span><br><span class="line">        <span class="number">0x1a11cf3f4</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIGestureRecognizer</span> <span class="attr">_shouldReceiveTouch</span>:<span class="attr">forEvent</span>:<span class="attr">recognizerView</span>:]</span><br><span class="line">        <span class="number">0x1a171234c</span> <span class="title class_">UIKitCore</span>!__72-[<span class="title class_">UITouchesEvent</span> <span class="attr">_addGestureRecognizersForView</span>:<span class="attr">toTouch</span>:<span class="attr">forContinuation</span>:]_block_invoke</span><br><span class="line">        <span class="number">0x1a1711cf8</span> <span class="title class_">UIKitCore</span>!__62-[<span class="title class_">UITouchesEvent</span> <span class="attr">_collectGestureRecognizersForView</span>:<span class="attr">withBlock</span>:]_block_invoke</span><br><span class="line">        <span class="number">0x1a1711784</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITouchesEvent</span> <span class="attr">_collectGestureRecognizersForView</span>:<span class="attr">withBlock</span>:]</span><br><span class="line">        <span class="number">0x1a17121b8</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITouchesEvent</span> <span class="attr">_addGestureRecognizersForView</span>:<span class="attr">toTouch</span>:<span class="attr">forContinuation</span>:]</span><br><span class="line">        <span class="number">0x1a1712074</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITouchesEvent</span> <span class="attr">_addGestureRecognizersForView</span>:<span class="attr">toTouch</span>:]</span><br><span class="line">        <span class="number">0x1a1712690</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITouchesEvent</span> <span class="attr">_addTouch</span>:<span class="attr">forDelayedDelivery</span>:]</span><br><span class="line">(agent) [<span class="number">371228</span>] <span class="title class_">Return</span> <span class="title class_">Value</span>: <span class="number">0x283a77540</span></span><br><span class="line">(agent) [<span class="number">536962</span>] <span class="title class_">Called</span>: *[<span class="title class_">NSFileManager</span> _registerForUbiquityAccountChangeNotifications] <span class="number">0</span> <span class="title function_">arguments</span>(<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">536962</span>] *[<span class="title class_">NSFileManager</span> _registerForUbiquityAccountChangeNotifications] <span class="title class_">Backtrace</span>:</span><br><span class="line">        <span class="number">0x1a000f3e0</span> <span class="title class_">Foundation</span>!standardDefaultCenter</span><br><span class="line">        <span class="number">0x1a199dc5c</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITextEffectsWindow</span> <span class="attr">updateForOrientation</span>:<span class="attr">forceResetTransform</span>:]</span><br><span class="line">        <span class="number">0x1a199e2f0</span> <span class="title class_">UIKitCore</span>!+[<span class="title class_">UITextEffectsWindow</span> <span class="attr">_sharedTextEffectsWindowforWindowScene</span>:<span class="attr">allowHosted</span>:<span class="attr">matchesStatusBarOrientationOnAccess</span>:<span class="attr">shouldCreateIfNecessary</span>:]</span><br><span class="line">        <span class="number">0x1a199e3fc</span> <span class="title class_">UIKitCore</span>!+[<span class="title class_">UITextEffectsWindow</span> <span class="attr">sharedTextEffectsWindowForWindowScene</span>:]</span><br><span class="line">        <span class="number">0x1a10c640c</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIInputResponderController</span> containerWindow]</span><br><span class="line">        <span class="number">0x1a10c651c</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIInputResponderController</span> containerRootController]</span><br><span class="line">        <span class="number">0x1a149a1a8</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIPeripheralHost</span>(<span class="title class_">UIKitInternal</span>) _isTransitioning]</span><br><span class="line">        <span class="number">0x1a0fa219c</span> <span class="title class_">UIKitCore</span>!-[_UINavigationInteractiveTransition <span class="attr">_gestureRecognizer</span>:<span class="attr">shouldReceiveEvent</span>:]</span><br><span class="line">        <span class="number">0x1a11cfd54</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIGestureRecognizer</span> <span class="attr">_delegateShouldReceiveEvent</span>:]</span><br><span class="line">        <span class="number">0x1a11cf3f4</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UIGestureRecognizer</span> <span class="attr">_shouldReceiveTouch</span>:<span class="attr">forEvent</span>:<span class="attr">recognizerView</span>:]</span><br><span class="line">        <span class="number">0x1a171234c</span> <span class="title class_">UIKitCore</span>!__72-[<span class="title class_">UITouchesEvent</span> <span class="attr">_addGestureRecognizersForView</span>:<span class="attr">toTouch</span>:<span class="attr">forContinuation</span>:]_block_invoke</span><br><span class="line">        <span class="number">0x1a1711cf8</span> <span class="title class_">UIKitCore</span>!__62-[<span class="title class_">UITouchesEvent</span> <span class="attr">_collectGestureRecognizersForView</span>:<span class="attr">withBlock</span>:]_block_invoke</span><br><span class="line">        <span class="number">0x1a1711784</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITouchesEvent</span> <span class="attr">_collectGestureRecognizersForView</span>:<span class="attr">withBlock</span>:]</span><br><span class="line">        <span class="number">0x1a17121b8</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITouchesEvent</span> <span class="attr">_addGestureRecognizersForView</span>:<span class="attr">toTouch</span>:<span class="attr">forContinuation</span>:]</span><br><span class="line">        <span class="number">0x1a1712074</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITouchesEvent</span> <span class="attr">_addGestureRecognizersForView</span>:<span class="attr">toTouch</span>:]</span><br><span class="line">        <span class="number">0x1a1712690</span> <span class="title class_">UIKitCore</span>!-[<span class="title class_">UITouchesEvent</span> <span class="attr">_addTouch</span>:<span class="attr">forDelayedDelivery</span>:]</span><br></pre></td></tr></table></figure>
+<p>看了调用栈都是跟系统相关的，底层会去调用libc下的open函数，frida hook open函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_libc_open</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> openAddr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&quot;open&quot;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(openAddr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;path =&gt;&quot;</span>, args[<span class="number">0</span>].<span class="title function_">readCString</span>());</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Thread</span>.<span class="title function_">backtrace</span>(<span class="variable language_">this</span>.<span class="property">context</span>, <span class="title class_">Backtracer</span>.<span class="property">ACCURATE</span>).<span class="title function_">map</span>(<span class="title class_">DebugSymbol</span>.<span class="property">fromAddress</span>).<span class="title function_">join</span>(<span class="string">&quot;\n\t&quot;</span>))</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(retval)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[iOS <span class="title class_">Device</span>::<span class="title class_">EnvDetection</span> ]-&gt; <span class="function"><span class="params">path</span> =&gt;</span> <span class="regexp">/usr/</span>lib/frida/frida-server</span><br><span class="line"><span class="number">0x100486284</span> <span class="title class_">EnvDetection</span>!-[<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByOpen</span>:]</span><br><span class="line">        <span class="number">0x1004d8978</span> <span class="title class_">EnvDetection</span>!<span class="title class_">CommonUtils</span>.<span class="title function_">checkPath</span>(<span class="attr">path</span>:)</span><br><span class="line">        <span class="number">0x1004af724</span> <span class="title class_">EnvDetection</span>!closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">FridaFileDetectionView</span>.<span class="property">body</span>.<span class="property">getter</span></span><br><span class="line">        <span class="number">0x1a5c0a280</span> <span class="title class_">SwiftUI</span>!<span class="title class_">HStack</span>.<span class="title function_">init</span>(<span class="attr">alignment</span>:<span class="attr">spacing</span>:<span class="attr">content</span>:)</span><br><span class="line">        <span class="number">0x1004af280</span> <span class="title class_">EnvDetection</span>!closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">FridaFileDetectionView</span>.<span class="property">body</span>.<span class="property">getter</span></span><br><span class="line">        <span class="number">0x1a5b0ee74</span> <span class="title class_">SwiftUI</span>!<span class="title class_">ForEachChild</span>.<span class="title function_">updateValue</span>()</span><br><span class="line">        <span class="number">0x1a562d7fc</span> <span class="title class_">SwiftUI</span>!partial apply <span class="keyword">for</span> implicit closure #<span class="number">2</span> <span class="keyword">in</span> implicit closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">Attribute</span>.<span class="property">init</span>&lt;A&gt;(<span class="attr">_</span>:)</span><br><span class="line">        <span class="number">0x1c8168a50</span> <span class="title class_">AttributeGraph</span>!<span class="attr">AG</span>::<span class="title class_">Graph</span>::<span class="title class_">UpdateStack</span>::<span class="title function_">update</span>()</span><br><span class="line">        <span class="number">0x1c8168e84</span> <span class="title class_">AttributeGraph</span>!<span class="attr">AG</span>::<span class="title class_">Graph</span>::<span class="title function_">update_attribute</span>(<span class="attr">AG</span>::<span class="attr">data</span>::ptr&lt;<span class="attr">AG</span>::<span class="title class_">Node</span>&gt;, bool)</span><br><span class="line">        <span class="number">0x1c8172088</span> <span class="title class_">AttributeGraph</span>!<span class="attr">AG</span>::<span class="title class_">Subgraph</span>::<span class="title function_">update</span>(unsigned int)</span><br><span class="line">        <span class="number">0x1a5c80cdc</span> <span class="title class_">SwiftUI</span>!<span class="title class_">GraphHost</span>.<span class="title function_">runTransaction</span>()</span><br><span class="line">        <span class="number">0x1a5c83e1c</span> <span class="title class_">SwiftUI</span>!<span class="title class_">GraphHost</span>.<span class="title function_">runTransaction</span>(<span class="attr">_</span>:)</span><br><span class="line">        <span class="number">0x1a5c827a8</span> <span class="title class_">SwiftUI</span>!<span class="title class_">GraphHost</span>.<span class="title function_">flushTransactions</span>()</span><br><span class="line">        <span class="number">0x1a5c83db4</span> <span class="title class_">SwiftUI</span>!closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">GraphHost</span>.<span class="property">asyncTransaction</span>&lt;A&gt;(<span class="attr">_</span>:<span class="attr">mutation</span>:<span class="attr">style</span>:)</span><br><span class="line">        <span class="number">0x1a5752168</span> <span class="title class_">SwiftUI</span>!partial apply <span class="keyword">for</span> closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">ViewGraphDelegate</span>.<span class="property">updateGraph</span>&lt;A&gt;(<span class="attr">body</span>:)</span><br><span class="line">        <span class="number">0x1a5bd5e9c</span> <span class="title class_">SwiftUI</span>!closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">ViewRendererHost</span>.<span class="property">updateViewGraph</span>&lt;A&gt;(<span class="attr">body</span>:)</span><br><span class="line"><span class="number">0xffffffffffffffff</span></span><br></pre></td></tr></table></figure>
+<p>这里调用了open的只有 &#x2F;usr&#x2F;lib&#x2F;frida&#x2F;frida-server 未发现的文件，看它的调用栈上一级[FileAndFolderPathDetection checkPathByOpen:] 很像是检测路径的，objection hook一下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking watch <span class="keyword">class</span> <span class="title class_">FileAndFolderPathDetection</span></span><br><span class="line">(agent) <span class="title class_">Watching</span> <span class="attr">method</span>: - <span class="attr">checkPathByNSFileManager</span>:</span><br><span class="line">(agent) <span class="title class_">Watching</span> <span class="attr">method</span>: - <span class="attr">checkPathByAccess</span>:</span><br><span class="line">(agent) <span class="title class_">Watching</span> <span class="attr">method</span>: - <span class="attr">checkPathByStat</span>:</span><br><span class="line">(agent) <span class="title class_">Watching</span> <span class="attr">method</span>: - <span class="attr">checkPathByLstat</span>:</span><br><span class="line">(agent) <span class="title class_">Watching</span> <span class="attr">method</span>: - <span class="attr">checkPathByStatfs</span>:</span><br><span class="line">(agent) <span class="title class_">Watching</span> <span class="attr">method</span>: - <span class="attr">checkPathByOpen</span>:</span><br><span class="line">(agent) <span class="title class_">Watching</span> <span class="attr">method</span>: - <span class="attr">checkPathByFopen</span>:</span><br><span class="line">(agent) <span class="title class_">Registering</span> job <span class="number">393195.</span> <span class="title class_">Type</span>: watch-<span class="keyword">class</span>-methods <span class="attr">for</span>: <span class="title class_">FileAndFolderPathDetection</span></span><br><span class="line"></span><br><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # (agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByNSFileManager</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByAccess</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByNSFileManager</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByAccess</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByStat</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByLstat</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByStatfs</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByOpen</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByFopen</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByNSFileManager</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByNSFileManager</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByNSFileManager</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByNSFileManager</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByNSFileManager</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">393195</span>] <span class="title class_">Called</span>: [<span class="title class_">FileAndFolderPathDetection</span> <span class="attr">checkPathByNSFileManager</span>:] (<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br></pre></td></tr></table></figure>
+<p>这里使用frida对FileAndFolderPathDetection的所有函数进行hook，打印一下参数返回值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">print_arguments</span>(<span class="params">args</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">var</span> last_arg = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">2</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        <span class="keyword">var</span> arg = (<span class="keyword">new</span> <span class="title class_">ObjC</span>.<span class="title class_">Object</span>(args[i])).<span class="title function_">toString</span>();</span><br><span class="line">        <span class="keyword">if</span> (arg == <span class="string">&#x27;nil&#x27;</span> || arg == last_arg) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        last_arg = arg;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27; args&#x27;</span> + (i-<span class="number">2</span>) + <span class="string">&#x27;: &#x27;</span> + (<span class="keyword">new</span> <span class="title class_">ObjC</span>.<span class="title class_">Object</span>(args[i])).<span class="title function_">toString</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">IosTraceClass</span>(<span class="params">targetClass</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Entering ios hooking =&gt; &quot;</span> + targetClass)</span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">ObjC</span>.<span class="property">classes</span>.<span class="title function_">hasOwnProperty</span>(targetClass)) &#123;</span><br><span class="line">        <span class="keyword">var</span> methods = <span class="title class_">ObjC</span>.<span class="property">classes</span>[targetClass].<span class="property">$ownMethods</span>;</span><br><span class="line">        methods.<span class="title function_">forEach</span>(<span class="keyword">function</span> (<span class="params">method</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hooking &quot;</span> + method);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">ObjC</span>.<span class="property">classes</span>[targetClass][method].<span class="property">implementation</span>, &#123;</span><br><span class="line">                    <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">output</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">output</span> = <span class="variable language_">this</span>.<span class="property">output</span>.<span class="title function_">concat</span>(<span class="string">&quot;[*] Detected call to: &quot;</span> + targetClass + <span class="string">&quot; -&gt; &quot;</span> + method)</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">output</span> = <span class="variable language_">this</span>.<span class="property">output</span>.<span class="title function_">concat</span>(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">output</span> = <span class="variable language_">this</span>.<span class="property">output</span>.<span class="title function_">concat</span>(<span class="title function_">print_arguments</span>(args))</span><br><span class="line">                    &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">ret</span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">output</span> = <span class="variable language_">this</span>.<span class="property">output</span>.<span class="title function_">concat</span>(<span class="string">&quot;\r\nios return value =&gt; &quot;</span>, ret, <span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">output</span>)</span><br><span class="line">                        <span class="comment">// ret.replace(new NativePointer(0x0)); // 修改返回值</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ios hooking failed error is =&gt; &quot;</span>, error)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">traceClass</span>(<span class="params">targetClass</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">ObjC</span>.<span class="property">available</span>) &#123;</span><br><span class="line">        <span class="title class_">IosTraceClass</span>(targetClass)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">traceClass</span>(<span class="string">&quot;FileAndFolderPathDetection&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">[iOS <span class="title class_">Device</span>::<span class="title class_">EnvDetection</span> ]-&gt; [*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByNSFileManager</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>sbin/frida-server</span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x0</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByAccess</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>sbin/frida-server</span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x1</span></span><br><span class="line"> </span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByNSFileManager</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>lib/frida/frida-server</span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x0</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByAccess</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>lib/frida/frida-server</span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x0</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByStat</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>lib/frida/frida-server</span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x0</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByLstat</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>lib/frida/frida-server</span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x0</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByStatfs</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>lib/frida/frida-server</span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x0</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByOpen</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>lib/frida/frida-server</span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x0</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByFopen</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>lib/frida/frida-server</span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x0</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByNSFileManager</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/usr/</span>lib/frida/frida-agent.<span class="property">dylib</span></span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x1</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByNSFileManager</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/Library/</span><span class="title class_">LaunchDaemons</span>/re.<span class="property">frida</span>.<span class="property">server</span>.<span class="property">plist</span></span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x1</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByNSFileManager</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/Library/</span>dpkg/info/re.<span class="property">frida</span>.<span class="property">server</span>.<span class="property">extrainst_</span></span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x1</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByNSFileManager</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/Library/</span>dpkg/info/re.<span class="property">frida</span>.<span class="property">server</span>.<span class="property">list</span></span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x1</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByNSFileManager</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/Library/</span>dpkg/info/re.<span class="property">frida</span>.<span class="property">server</span>.<span class="property">prerm</span></span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x1</span></span><br><span class="line"></span><br><span class="line">[*] <span class="title class_">Detected</span> call <span class="attr">to</span>: <span class="title class_">FileAndFolderPathDetection</span> -&gt; - <span class="attr">checkPathByNSFileManager</span>:</span><br><span class="line"> <span class="attr">args0</span>: <span class="regexp">/Library/</span>dpkg/info/re.<span class="property">frida</span>.<span class="property">server</span>.<span class="property">md5sums</span></span><br><span class="line">ios <span class="keyword">return</span> <span class="function"><span class="params">value</span> =&gt;</span> <span class="number">0x1</span></span><br></pre></td></tr></table></figure>
+<p>跟上面的图对照可以发现返回值是0x1的就是检测到的，所以修改所有函数的返回值为0x0，上面代码30行去掉注释，再次运行就全过掉了。<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/03.webp"
+                     
+                ></p>
+<h3 id="越狱检测"><a href="#越狱检测" class="headerlink" title="越狱检测"></a>越狱检测</h3><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/04.webp"
+                     
+                ><br>其中文件&#x2F;目录检测，插件APP检测也都是同上面frida文件检测，也是同样过掉了。</p>
+<h3 id="代理检测"><a href="#代理检测" class="headerlink" title="代理检测"></a>代理检测</h3><h4 id="代理APP检测"><a href="#代理APP检测" class="headerlink" title="代理APP检测"></a>代理APP检测</h4><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/05.webp"
+                     
+                ><br>我设备下载还打开了Shadowrocket，不知道为什么代理APP检测测出来。<br>也是objection查找类试了好几个关键词 proxy，network出来很多个类，既然它APP检测有Shadowrocket，直接ida打开搜索字符串<br>下载app压缩包：<br><a class="link"   target="_blank" rel="noopener" href="https://github.com/cherubstar/iOSEnvDetection/releases/download/1.3/EnvDetection.app.zip" >https://github.com/cherubstar/iOSEnvDetection/releases/download/1.3/EnvDetection.app.zip<i class="fas fa-external-link-alt"></i></a><br>解压后用ida打开EnvDetection<br>菜单View-&gt;Open subviews-&gt;Strings 查找Shadowrocket会找到 Shadowrocket.app，按x查找引用，跳到引用的地方</p>
+<figure class="highlight arm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005618</span> <span class="built_in">A2</span> <span class="number">03</span> <span class="number">00</span> B0 <span class="number">42</span> <span class="number">20</span> <span class="number">0</span>E <span class="number">91</span>       <span class="keyword">ADRL</span>            X2, cfstr_HttpcatcherApp <span class="comment">; &quot;HttpCatcher.app&quot;</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005620</span> E8 <span class="number">03</span> <span class="number">00</span> <span class="number">91</span>                   <span class="keyword">MOV</span>             X8, <span class="built_in">SP</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005624</span> E8 <span class="number">57</span> <span class="number">00</span> F9                   <span class="keyword">STR</span>             X8, [<span class="built_in">SP</span>,<span class="number">#0x1E0</span>+var_138]</span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005628</span> A9 <span class="number">03</span> <span class="number">00</span> B0 <span class="number">29</span> <span class="built_in">A1</span> <span class="number">0</span>E <span class="number">91</span>       <span class="keyword">ADRL</span>            X9, cfstr_KitsunebiApp  <span class="comment">; &quot;Kitsunebi.app&quot;</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005630</span> <span class="number">09</span> <span class="number">01</span> <span class="number">00</span> F9                   <span class="keyword">STR</span>             X9, [X8,<span class="number">#0x1E0</span>+var_1E0]</span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005634</span> A9 <span class="number">03</span> <span class="number">00</span> B0 <span class="number">29</span> <span class="number">21</span> <span class="number">0</span>F <span class="number">91</span>       <span class="keyword">ADRL</span>            X9, cfstr_PotatsoApp    <span class="comment">; &quot;Potatso.app&quot;</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">000000010000563</span>C <span class="number">09</span> <span class="number">05</span> <span class="number">00</span> F9                   <span class="keyword">STR</span>             X9, [X8,<span class="number">#0x1E0</span>+var_1D8]</span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005640</span> A9 <span class="number">03</span> <span class="number">00</span> B0 <span class="number">29</span> <span class="built_in">A1</span> <span class="number">0</span>F <span class="number">91</span>       <span class="keyword">ADRL</span>            X9, cfstr_QuantumultApp <span class="comment">; &quot;Quantumult.app&quot;</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005648</span> <span class="number">09</span> <span class="number">09</span> <span class="number">00</span> F9                   <span class="keyword">STR</span>             X9, [X8,<span class="number">#0x1E0</span>+var_1D0]</span><br><span class="line"><span class="symbol">__text:</span><span class="number">000000010000564</span>C A9 <span class="number">03</span> <span class="number">00</span> B0 <span class="number">29</span> <span class="number">21</span> <span class="number">10</span> <span class="number">91</span>       <span class="keyword">ADRL</span>            X9, cfstr_QuantumultXApp <span class="comment">; &quot;Quantumult X.app&quot;</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005654</span> <span class="number">09</span> <span class="number">0</span>D <span class="number">00</span> F9                   <span class="keyword">STR</span>             X9, [X8,<span class="number">#0x1E0</span>+var_1C8]</span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005658</span> A9 <span class="number">03</span> <span class="number">00</span> B0 <span class="number">29</span> <span class="built_in">A1</span> <span class="number">10</span> <span class="number">91</span>       <span class="keyword">ADRL</span>            X9, cfstr_ShadowrocketAp <span class="comment">; &quot;Shadowrocket.app&quot;</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005660</span> <span class="number">09</span> <span class="number">11</span> <span class="number">00</span> F9                   <span class="keyword">STR</span>             X9, [X8,<span class="number">#0x1E0</span>+var_1C0]</span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005664</span> A9 <span class="number">03</span> <span class="number">00</span> B0 <span class="number">29</span> <span class="number">21</span> <span class="number">11</span> <span class="number">91</span>       <span class="keyword">ADRL</span>            X9, cfstr_SurgeIosApp   <span class="comment">; &quot;Surge-iOS.app&quot;</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">000000010000566</span>C <span class="number">09</span> <span class="number">15</span> <span class="number">00</span> F9                   <span class="keyword">STR</span>             X9, [X8,<span class="number">#0x1E0</span>+var_1B8]</span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100005670</span> A9 <span class="number">03</span> <span class="number">00</span> B0 <span class="number">29</span> <span class="built_in">A1</span> <span class="number">11</span> <span class="number">91</span>       <span class="keyword">ADRL</span>            X9, cfstr_ThorApp       <span class="comment">; &quot;Thor.app&quot;</span></span><br></pre></td></tr></table></figure>
+<p>按tab跳到代码页面，发现函数名是 -[AgentDetection checkAgentAppIsInstalled](AgentDetection *self, SEL a2)，使用objection hook</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking watch method <span class="string">&quot;-[AgentDetection checkAgentAppIsInstalled]&quot;</span> --dump-args --dump-backtrace --dump-<span class="keyword">return</span></span><br><span class="line">(agent) <span class="title class_">Found</span> selector at <span class="number">0x1026b8f34</span> <span class="keyword">as</span> -[<span class="title class_">AgentDetection</span> checkAgentAppIsInstalled]</span><br><span class="line">(agent) <span class="title class_">Registering</span> job <span class="number">473143.</span> <span class="title class_">Type</span>: watch-method <span class="attr">for</span>: -[<span class="title class_">AgentDetection</span> checkAgentAppIsInstalled]</span><br><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # (agent) [<span class="number">473143</span>] <span class="title class_">Called</span>: -[<span class="title class_">AgentDetection</span> checkAgentAppIsInstalled] <span class="number">0</span> <span class="title function_">arguments</span>(<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">473143</span>] -[<span class="title class_">AgentDetection</span> checkAgentAppIsInstalled] <span class="title class_">Backtrace</span>:</span><br><span class="line">        <span class="number">0x1026da35c</span> <span class="title class_">EnvDetection</span>!<span class="title class_">AgentDetectionViewModel</span>.<span class="title function_">isInstalled</span>()</span><br><span class="line">        <span class="number">0x10270d8ac</span> <span class="title class_">EnvDetection</span>!closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">AgentApplicationDetectionView</span>.<span class="property">body</span>.<span class="property">getter</span></span><br><span class="line">        <span class="number">0x197e23a60</span> <span class="title class_">SwiftUI</span>!<span class="title class_">List</span>&lt;&gt;.<span class="title function_">init</span>(<span class="attr">content</span>:)</span><br><span class="line">        <span class="number">0x10270d3c0</span> <span class="title class_">EnvDetection</span>!<span class="title class_">AgentApplicationDetectionView</span>.<span class="property">body</span>.<span class="property">getter</span></span><br><span class="line">        <span class="number">0x10270ef98</span> <span class="title class_">EnvDetection</span>!protocol witness <span class="keyword">for</span> <span class="title class_">View</span>.<span class="property">body</span>.<span class="property">getter</span> <span class="keyword">in</span> conformance <span class="title class_">AgentApplicationDetectionView</span></span><br><span class="line">        <span class="number">0x197b35b8c</span> <span class="title class_">SwiftUI</span>!partial apply <span class="keyword">for</span> closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">ViewBodyAccessor</span>.<span class="title function_">updateBody</span>(<span class="attr">of</span>:<span class="attr">changed</span>:)</span><br><span class="line">        <span class="number">0x197e8e248</span> <span class="title class_">SwiftUI</span>!closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">BodyAccessor</span>.<span class="title function_">setBody</span>(<span class="attr">_</span>:)</span><br><span class="line">        <span class="number">0x197b2f328</span> <span class="title class_">SwiftUI</span>!<span class="title class_">ViewBodyAccessor</span>.<span class="title function_">updateBody</span>(<span class="attr">of</span>:<span class="attr">changed</span>:)</span><br><span class="line">        <span class="number">0x197e8e6d4</span> <span class="title class_">SwiftUI</span>!<span class="title class_">DynamicBody</span>.<span class="title function_">updateValue</span>()</span><br><span class="line">        <span class="number">0x197b557fc</span> <span class="title class_">SwiftUI</span>!partial apply <span class="keyword">for</span> implicit closure #<span class="number">2</span> <span class="keyword">in</span> implicit closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">Attribute</span>.<span class="property">init</span>&lt;A&gt;(<span class="attr">_</span>:)</span><br><span class="line">        <span class="number">0x1ba690a50</span> <span class="title class_">AttributeGraph</span>!<span class="attr">AG</span>::<span class="title class_">Graph</span>::<span class="title class_">UpdateStack</span>::<span class="title function_">update</span>()</span><br><span class="line">        <span class="number">0x1ba690e84</span> <span class="title class_">AttributeGraph</span>!<span class="attr">AG</span>::<span class="title class_">Graph</span>::<span class="title function_">update_attribute</span>(<span class="attr">AG</span>::<span class="attr">data</span>::ptr&lt;<span class="attr">AG</span>::<span class="title class_">Node</span>&gt;, bool)</span><br><span class="line">        <span class="number">0x1ba696588</span> <span class="title class_">AttributeGraph</span>!<span class="attr">AG</span>::<span class="title class_">Graph</span>::<span class="title function_">input_value_ref_slow</span>(<span class="attr">AG</span>::<span class="attr">data</span>::ptr&lt;<span class="attr">AG</span>::<span class="title class_">Node</span>&gt;, <span class="attr">AG</span>::<span class="title class_">AttributeID</span>, unsigned int, <span class="title class_">AGSwiftMetadata</span> <span class="keyword">const</span>*, bool*, long)</span><br><span class="line">        <span class="number">0x1ba6a85bc</span> <span class="title class_">AttributeGraph</span>!<span class="title class_">AGGraphGetValue</span></span><br><span class="line">        <span class="number">0x197fa11c4</span> <span class="title class_">SwiftUI</span>!<span class="title class_">EnvironmentReadingChild</span>.<span class="title function_">updateValue</span>()</span><br><span class="line">        <span class="number">0x197b557fc</span> <span class="title class_">SwiftUI</span>!partial apply <span class="keyword">for</span> implicit closure #<span class="number">2</span> <span class="keyword">in</span> implicit closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> closure #<span class="number">1</span> <span class="keyword">in</span> <span class="title class_">Attribute</span>.<span class="property">init</span>&lt;A&gt;(<span class="attr">_</span>:)</span><br><span class="line">(agent) [<span class="number">473143</span>] <span class="title class_">Return</span> <span class="title class_">Value</span>: <span class="number">0x281954120</span></span><br></pre></td></tr></table></figure>
+<p>没啥有用的信息，在ida的伪代码找到了调用 AppInfo的listInstalledApps</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v26 = (id)objc_alloc_init(&amp;OBJC_CLASS___AppInfo);</span><br><span class="line">v5 = objc_msgSend(v26, <span class="string">&quot;listInstalledApps&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>直接函数列表过滤查看listInstalledApps的实现，查看代码找到，对其hook</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v2 = -[AppInfo fetchApps](self, <span class="string">&quot;fetchApps&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_fetchApps</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">ObjC</span>.<span class="property">classes</span>[<span class="string">&quot;AppInfo&quot;</span>][<span class="string">&quot;- fetchApps&quot;</span>].<span class="property">implementation</span>, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Thread</span>.<span class="title function_">backtrace</span>(<span class="variable language_">this</span>.<span class="property">context</span>, <span class="title class_">Backtracer</span>.<span class="property">ACCURATE</span>).<span class="title function_">map</span>(<span class="title class_">DebugSymbol</span>.<span class="property">fromAddress</span>).<span class="title function_">join</span>(<span class="string">&quot;\n\t&quot;</span>))</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">ret</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ret value is =&gt; &quot;</span>,ret, <span class="string">&quot;=&gt;&quot;</span>, <span class="title class_">ObjC</span>.<span class="title class_">Object</span>(ret), <span class="string">&quot;=&gt;&quot;</span>, <span class="title class_">ObjC</span>.<span class="title class_">Object</span>(ret).<span class="property">$className</span>);</span><br><span class="line">            <span class="comment">// var emptyNSArray = Objc.classes.NSArray[&#x27;new&#x27;]();</span></span><br><span class="line">            <span class="comment">// ret.replace(emptyNSArray);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用栈里找到了 -[AgentDetection checkAgentAppIsInstalled]，这个返回值是NSArray，返回一份不包含任何关键app的NSArray给它即可。为了通用，直接创建一个空的NSArray返回给fetchApps，Objc.classes.NSArray<a href="">‘new’</a>，去掉7，8行注释即可</p>
+<h4 id="常规代理检测"><a href="#常规代理检测" class="headerlink" title="常规代理检测"></a>常规代理检测</h4><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/06.webp"
+                     
+                ><br>用objection看一下AgentDetection函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # ios hooking list class_methods <span class="title class_">AgentDetection</span></span><br><span class="line">- checkAgentAppIsInstalled</span><br><span class="line">- checkProxyStatusByCFNetworkCopySystemProxySettings</span><br><span class="line">- getCFNetworkCopySystemProxySettingsDetails</span><br><span class="line">- setConnectionProxyDictionary</span><br></pre></td></tr></table></figure>
+<p>看输出的函数名后面3个检测代理的，其中常规代理检测会调用checkProxyStatusByCFNetworkCopySystemProxySettings，直接hook</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # (agent) [<span class="number">237829</span>] <span class="title class_">Called</span>: *[<span class="title class_">AgentDetection</span> checkProxyStatusByCFNetworkCopySystemProxySettings] <span class="number">0</span> <span class="title function_">arguments</span>(<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">237829</span>] <span class="title class_">Return</span> <span class="title class_">Value</span>: <span class="number">0x0</span></span><br><span class="line"><span class="comment">// 开启代理后</span></span><br><span class="line">com.<span class="property">zsk</span>.<span class="property">EnvDetection</span> on (<span class="attr">iPhone</span>: <span class="number">14.4</span><span class="number">.1</span>) [usb] # (agent) [<span class="number">237829</span>] <span class="title class_">Called</span>: *[<span class="title class_">AgentDetection</span> checkProxyStatusByCFNetworkCopySystemProxySettings] <span class="number">0</span> <span class="title function_">arguments</span>(<span class="title class_">Kind</span>: instance) (<span class="title class_">Super</span>: <span class="title class_">NSObject</span>)</span><br><span class="line">(agent) [<span class="number">237829</span>] <span class="title class_">Return</span> <span class="title class_">Value</span>: <span class="number">0x1</span></span><br></pre></td></tr></table></figure>
+<p>则直接修改其返回值为0x0即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_checkSystemProxy</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">ObjC</span>.<span class="property">classes</span>[<span class="string">&quot;AgentDetection&quot;</span>][<span class="string">&quot;- checkProxyStatusByCFNetworkCopySystemProxySettings&quot;</span>].<span class="property">implementation</span>, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">        &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">ret</span>)&#123;</span><br><span class="line">            ret.<span class="title function_">replace</span>(<span class="keyword">new</span> <span class="title class_">NativePointer</span>(<span class="number">0x0</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="设置代理检测变量"><a href="#设置代理检测变量" class="headerlink" title="设置代理检测变量"></a>设置代理检测变量</h4><p>如果使用WiFi 代理抓包，会发现请求发不出去，charles也抓不到任何包<br>如果使用vpn代理的话，以Shadowrocket为例，Shadowrocket 的作用是代理转发，vpn代理是处于网络层的，可以抓到更多的数据包，也可以过掉代理检测。<br>一般抓包也推荐使用vpn代理</p>
+<h3 id="调试检测"><a href="#调试检测" class="headerlink" title="调试检测"></a>调试检测</h3><h4 id="常规反调试函数"><a href="#常规反调试函数" class="headerlink" title="常规反调试函数"></a>常规反调试函数</h4><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/07.webp"
+                     
+                ></p>
+<h5 id="ptrace"><a href="#ptrace" class="headerlink" title="ptrace"></a>ptrace</h5><p>用的是ptrace来检测，一个进程同时只能被另外一个进程调试，所以这里开了ptrace后，其它调试工具xcode，lldb就没法对其进行调试<br>没打开ptrace是可以调试上的<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/08.webp"
+                     
+                ><br>打开后调试则报错了<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/09.webp"
+                     
+                ><br>ptrace 是系统函数，那直接hook</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">ptrace</span><span class="params">(<span class="type">int</span> _request, pid _pid, <span class="type">caddr_t</span> _addr, <span class="type">int</span> _data)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_ptrace</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> ptraceAddr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&#x27;ptrace&#x27;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">replace</span>(ptraceAddr, <span class="keyword">new</span> <span class="title class_">NativeCallback</span>(<span class="keyword">function</span>(<span class="params">i1, i2, i3, i4</span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;ptrace flag is =&gt; &quot;</span>, i1);   </span><br><span class="line">    &#125;, <span class="string">&#x27;void&#x27;</span>, [<span class="string">&#x27;int&#x27;</span>, <span class="string">&#x27;int&#x27;</span>, <span class="string">&#x27;int&#x27;</span>, <span class="string">&#x27;int&#x27;</span>]))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不让ptrace函数执行就行了，直接置空不做任何操作<br>再次打开ptrace用xcode附加调试则没有报错现象了</p>
+<h5 id="ptrace-svc"><a href="#ptrace-svc" class="headerlink" title="ptrace+svc"></a>ptrace+svc</h5><p>在 iOS 反动态调试中,常用 svc #0x80 汇编指令来实现对 ptrace 和 syscall 系统调用的直接调用。通过这种方式,可以规避标准库提供的 ptrace() 函数,直接触发系统调用,增加反调试的难度,使得 lldb 无法正常附加到 app 进程。<br>svc #0x80 指令等同于 syscall() 函数在 C 语言中的使用,都是直接触发系统调用,而不会走标准库函数的包装。<br>当开启ptrace+svc后上面的hook函数没触发，查看它的源码也可以看到</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">void</span>)ori_ptrace &#123;</span><br><span class="line">    ptrace(PT_DENY_ATTACH, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 等价于</span></span><br><span class="line">- (<span class="type">void</span>)svc_ptrace &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __arm64__</span></span><br><span class="line">    __asm__(<span class="string">&quot;mov X0, #31\n&quot;</span></span><br><span class="line">            <span class="string">&quot;mov X1, #0\n&quot;</span></span><br><span class="line">            <span class="string">&quot;mov X2, #0\n&quot;</span></span><br><span class="line">            <span class="string">&quot;mov X3, #0\n&quot;</span></span><br><span class="line">            <span class="string">&quot;mov w16, #26\n&quot;</span></span><br><span class="line">            <span class="string">&quot;svc #0x80&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以用直接ida打开搜索 SVC<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/10.webp"
+                     
+                ><br>搜索结果<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/11.webp"
+                     
+                ><br>跟进查看</p>
+<figure class="highlight arm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006028</span>                               <span class="comment">; void __cdecl -[DebugDetection svc_ptrace](DebugDetection *self, SEL)</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006028</span>                               __DebugDetection_svc_ptrace_            <span class="comment">; DATA XREF: __objc_methlist:0000000100067FEC↓o</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006028</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006028</span>                               var_10= -<span class="number">0x10</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006028</span>                               var_8= -<span class="number">8</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006028</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006028</span> FF <span class="number">43</span> <span class="number">00</span> <span class="built_in">D1</span>                   <span class="keyword">SUB</span>             <span class="built_in">SP</span>, <span class="built_in">SP</span>, <span class="number">#0x10</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">000000010000602</span>C E0 <span class="number">07</span> <span class="number">00</span> F9                   <span class="keyword">STR</span>             X0, [<span class="built_in">SP</span>,<span class="number">#0x10</span>+var_8]</span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006030</span> E1 <span class="number">03</span> <span class="number">00</span> F9                   <span class="keyword">STR</span>             X1, [<span class="built_in">SP</span>,<span class="number">#0x10</span>+var_10]</span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006034</span> E0 <span class="number">03</span> <span class="number">80</span> <span class="built_in">D2</span>                   <span class="keyword">MOV</span>             X0, <span class="number">#0x1F</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006038</span> <span class="number">01</span> <span class="number">00</span> <span class="number">80</span> <span class="built_in">D2</span>                   <span class="keyword">MOV</span>             X1, <span class="number">#0</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">000000010000603</span>C <span class="number">02</span> <span class="number">00</span> <span class="number">80</span> <span class="built_in">D2</span>                   <span class="keyword">MOV</span>             X2, <span class="number">#0</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006040</span> <span class="number">03</span> <span class="number">00</span> <span class="number">80</span> <span class="built_in">D2</span>                   <span class="keyword">MOV</span>             X3, <span class="number">#0</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006044</span> <span class="number">50</span> <span class="number">03</span> <span class="number">80</span> <span class="number">52</span>                   <span class="keyword">MOV</span>             W16, <span class="number">#0x1A</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006048</span> <span class="number">01</span> <span class="number">10</span> <span class="number">00</span> <span class="built_in">D4</span>                   <span class="keyword">SVC</span>             <span class="number">0x80</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">000000010000604</span>C FF <span class="number">43</span> <span class="number">00</span> <span class="number">91</span>                   <span class="keyword">ADD</span>             <span class="built_in">SP</span>, <span class="built_in">SP</span>, <span class="number">#0x10</span></span><br><span class="line"><span class="symbol">__text:</span><span class="number">0000000100006050</span> <span class="built_in">C0</span> <span class="number">03</span> <span class="number">5</span>F <span class="built_in">D6</span>                   RET</span><br></pre></td></tr></table></figure>
+<p>汇编指令跟源码差不多<br>方式一可以使用patch的方式，修改 svc #0x80，在IDA View-A界面中选中svc那一行，点击工具栏Edit–&gt;Patch program–&gt;Change Bytes，弹出修改框，将01 10 00 D4修改为nop的byte码 1F 20 03 D5(如何知道nop的byte码，寻找一个nop，change byte就可以了)<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240201/12.webp"
+                     
+                ><br>将patch修改保存到程序里去，点击工具栏Edit–&gt;Patch program–&gt;Apply patches to input file<br>然后重签名打包安装就可以了<br>方式二直接用frida对 -[DebugDetection svc_ptrace]这个函数置空不执行，这是ObjC的函数，写法跟上面的不一样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_svc_ptrace</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="title class_">DebugDetection</span> = <span class="title class_">ObjC</span>.<span class="property">classes</span>.<span class="property">DebugDetection</span>;</span><br><span class="line">    <span class="keyword">const</span> svc_ptrace = <span class="title class_">DebugDetection</span>[<span class="string">&#x27;- svc_ptrace&#x27;</span>]</span><br><span class="line">    <span class="keyword">const</span> oldImpl = svc_ptrace.<span class="property">implementation</span>;</span><br><span class="line">    svc_ptrace.<span class="property">implementation</span> = <span class="title class_">ObjC</span>.<span class="title function_">implement</span>(svc_ptrace, <span class="function">(<span class="params">handle, selector</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(handle, selector);</span><br><span class="line">        <span class="comment">// oldImpl(handle, selector);  // 旧函数运行</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只要不执行原函数就行了<br>到这里其实都是要找函数位置去hook返回值或者置空达到的反调试效果，那当代码混淆以及代码膨，使得想要快速定位svc 0x80调用并将其patch掉就变得难以实现。<br>可以查看大佬的文章：<a class="link"   target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-273796.htm" >https://bbs.kanxue.com/thread-273796.htm<i class="fas fa-external-link-alt"></i></a></p>
+<h5 id="ptrace-xor"><a href="#ptrace-xor" class="headerlink" title="ptrace+xor"></a>ptrace+xor</h5><p>通过ida查找到对应函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __cdecl -[DebugDetection xor_ptrace](DebugDetection *self, SEL a2)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> v2; <span class="comment">// w8</span></span><br><span class="line">  <span class="type">void</span> *__handle; <span class="comment">// [xsp+10h] [xbp-30h]</span></span><br><span class="line">  <span class="type">void</span> *v4; <span class="comment">// [xsp+18h] [xbp-28h]</span></span><br><span class="line">  _BYTE *i; <span class="comment">// [xsp+20h] [xbp-20h]</span></span><br><span class="line">  _DWORD __symbol[<span class="number">2</span>]; <span class="comment">// [xsp+28h] [xbp-18h] BYREF</span></span><br><span class="line">  SEL v7; <span class="comment">// [xsp+30h] [xbp-10h]</span></span><br><span class="line">  DebugDetection *v8; <span class="comment">// [xsp+38h] [xbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v8 = self;</span><br><span class="line">  v7 = a2;</span><br><span class="line">  __symbol[<span class="number">0</span>] = <span class="number">268633345</span>;</span><br><span class="line">  *(_DWORD *)((<span class="type">char</span> *)__symbol + <span class="number">3</span>) = <span class="number">1897140752</span>;</span><br><span class="line">  <span class="keyword">for</span> ( i = __symbol; ; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    v2 = *i ^ <span class="number">0x71</span>;</span><br><span class="line">    *i = v2;</span><br><span class="line">    <span class="keyword">if</span> ( !v2 )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  __handle = dlopen(<span class="number">0LL</span>, <span class="number">10</span>);</span><br><span class="line">  v4 = dlsym(__handle, (<span class="type">const</span> <span class="type">char</span> *)__symbol);</span><br><span class="line">  ((<span class="type">void</span> (__fastcall *)(__int64, _QWORD, _QWORD))v4)(<span class="number">31LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">  dlclose(__handle);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用了 dlsym() 函数从动态链接库中查找 ptrace 函数的符号地址，进行调用，用上面的hook就可以了<br>查看了它的源码</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">void</span>)xor_ptrace &#123;</span><br><span class="line">    <span class="comment">//A 异或 B 等到 C,C 再异或 A 得到 B,隐藏 ptrace</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> str[] = &#123;</span><br><span class="line">        (<span class="string">&#x27;q&#x27;</span> ^ <span class="string">&#x27;p&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;q&#x27;</span> ^ <span class="string">&#x27;t&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;q&#x27;</span> ^ <span class="string">&#x27;r&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;q&#x27;</span> ^ <span class="string">&#x27;a&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;q&#x27;</span> ^ <span class="string">&#x27;c&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;q&#x27;</span> ^ <span class="string">&#x27;e&#x27;</span>),</span><br><span class="line">        (<span class="string">&#x27;q&#x27;</span> ^ <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> *p = str;</span><br><span class="line">    <span class="keyword">while</span> (((*p) ^= <span class="string">&#x27;q&#x27;</span>) != <span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">        p++;</span><br><span class="line">    <span class="type">int</span> (*ptrace_ptr)(<span class="type">int</span> _request, pid_t _pid, caddr_t _addr, <span class="type">int</span> _data);</span><br><span class="line">    <span class="type">void</span> *handle = dlopen(<span class="number">0</span>, RTLD_GLOBAL | RTLD_NOW);   <span class="comment">// 获得句柄</span></span><br><span class="line">    ptrace_ptr = dlsym(handle, (<span class="keyword">const</span> <span class="type">char</span> *)str);      <span class="comment">// 动态查找 ptrace 符号</span></span><br><span class="line">    ptrace_ptr(PT_DENY_ATTACH, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    dlclose(handle);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义一个 str 数组, 拼接成ptrace字符串，最终会对 ptrace 函数进行调用</p>
+<h5 id="syscall"><a href="#syscall" class="headerlink" title="syscall"></a>syscall</h5><p>ida查看代码后去调用了系统函数syscall</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __cdecl -[DebugDetection ori_syscall](DebugDetection *self, SEL a2)</span><br><span class="line">&#123;</span><br><span class="line">  syscall(<span class="number">26</span>, <span class="number">31LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, a2, self);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>syscall的定义如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">syscall</span><span class="params">(<span class="type">long</span> number, ...)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_syscall</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> syscallAddr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&#x27;syscall&#x27;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">replace</span>(syscallAddr, <span class="keyword">new</span> <span class="title class_">NativeCallback</span>(<span class="keyword">function</span>(<span class="params">i1</span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;syscall flag is =&gt; &quot;</span>, i1);   </span><br><span class="line">    &#125;, <span class="string">&#x27;void&#x27;</span>, [<span class="string">&#x27;int&#x27;</span>]))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="syscall-svc"><a href="#syscall-svc" class="headerlink" title="syscall+svc"></a>syscall+svc</h5><p>ptrace+svc 的hook改一下就可以</p>
+<h5 id="syscall-xor"><a href="#syscall-xor" class="headerlink" title="syscall+xor"></a>syscall+xor</h5><p>同syscall</p>
+<h5 id="sysctl"><a href="#sysctl" class="headerlink" title="sysctl"></a>sysctl</h5><p>同样找到代码位置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __cdecl -[DebugDetection ori_sysctl](DebugDetection *self, SEL a2)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">size_t</span> v3[<span class="number">3</span>]; <span class="comment">// [xsp+18h] [xbp-2C8h] BYREF</span></span><br><span class="line">  <span class="type">char</span> v4[<span class="number">32</span>]; <span class="comment">// [xsp+30h] [xbp-2B0h] BYREF</span></span><br><span class="line">  <span class="type">int</span> v5; <span class="comment">// [xsp+50h] [xbp-290h]</span></span><br><span class="line">  <span class="type">int</span> v6[<span class="number">4</span>]; <span class="comment">// [xsp+2B8h] [xbp-28h] BYREF</span></span><br><span class="line"></span><br><span class="line">  v3[<span class="number">2</span>] = (<span class="type">size_t</span>)self;</span><br><span class="line">  v3[<span class="number">1</span>] = (<span class="type">size_t</span>)a2;</span><br><span class="line">  v6[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  v6[<span class="number">1</span>] = <span class="number">14</span>;</span><br><span class="line">  v6[<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">  v6[<span class="number">3</span>] = getpid();</span><br><span class="line">  v3[<span class="number">0</span>] = <span class="number">648LL</span>;</span><br><span class="line">  v5 = <span class="number">0</span>;</span><br><span class="line">  sysctl(v6, <span class="number">4u</span>, v4, v3, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">  <span class="keyword">return</span> (v5 &amp; <span class="number">0x800</span>) != <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sysctl</span><span class="params">(<span class="type">int</span> *name, <span class="type">int</span> namelen, <span class="type">void</span> *oldval, <span class="type">size_t</span> *oldlenp, <span class="type">void</span> *newval, <span class="type">size_t</span> newlen)</span>;</span><br></pre></td></tr></table></figure>
+<p>hook代码同上面的差不多<br>sysctl+svc和sysctl+xor都跟上面的也差不多</p>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                iOS逆向系列(二) 反调试与绕过案例实战
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/51299/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2024-02-01 00:00</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/iOS/">iOS</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/61783/"
+                                   title="SM4国密算法原理及分析"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">SM4国密算法原理及分析</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/17659/"
+                                   title="修改源码定制ART"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">修改源码定制ART</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Frida%E6%A3%80%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">Frida检测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E6%A3%80%E6%B5%8B"><span class="nav-number">1.1.</span> <span class="nav-text">端口检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%A3%80%E6%B5%8B"><span class="nav-number">1.2.</span> <span class="nav-text">文件检测</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%8A%E7%8B%B1%E6%A3%80%E6%B5%8B"><span class="nav-number">2.</span> <span class="nav-text">越狱检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%A3%80%E6%B5%8B"><span class="nav-number">3.</span> <span class="nav-text">代理检测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%90%86APP%E6%A3%80%E6%B5%8B"><span class="nav-number">3.1.</span> <span class="nav-text">代理APP检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E4%BB%A3%E7%90%86%E6%A3%80%E6%B5%8B"><span class="nav-number">3.2.</span> <span class="nav-text">常规代理检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86%E6%A3%80%E6%B5%8B%E5%8F%98%E9%87%8F"><span class="nav-number">3.3.</span> <span class="nav-text">设置代理检测变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E6%A3%80%E6%B5%8B"><span class="nav-number">4.</span> <span class="nav-text">调试检测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E5%8F%8D%E8%B0%83%E8%AF%95%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">常规反调试函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ptrace"><span class="nav-number">4.1.1.</span> <span class="nav-text">ptrace</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ptrace-svc"><span class="nav-number">4.1.2.</span> <span class="nav-text">ptrace+svc</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ptrace-xor"><span class="nav-number">4.1.3.</span> <span class="nav-text">ptrace+xor</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#syscall"><span class="nav-number">4.1.4.</span> <span class="nav-text">syscall</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#syscall-svc"><span class="nav-number">4.1.5.</span> <span class="nav-text">syscall+svc</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#syscall-xor"><span class="nav-number">4.1.6.</span> <span class="nav-text">syscall+xor</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sysctl"><span class="nav-number">4.1.7.</span> <span class="nav-text">sysctl</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">104.5k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Frida%E6%A3%80%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">Frida检测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E6%A3%80%E6%B5%8B"><span class="nav-number">1.1.</span> <span class="nav-text">端口检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%A3%80%E6%B5%8B"><span class="nav-number">1.2.</span> <span class="nav-text">文件检测</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%8A%E7%8B%B1%E6%A3%80%E6%B5%8B"><span class="nav-number">2.</span> <span class="nav-text">越狱检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%A3%80%E6%B5%8B"><span class="nav-number">3.</span> <span class="nav-text">代理检测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%90%86APP%E6%A3%80%E6%B5%8B"><span class="nav-number">3.1.</span> <span class="nav-text">代理APP检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E4%BB%A3%E7%90%86%E6%A3%80%E6%B5%8B"><span class="nav-number">3.2.</span> <span class="nav-text">常规代理检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86%E6%A3%80%E6%B5%8B%E5%8F%98%E9%87%8F"><span class="nav-number">3.3.</span> <span class="nav-text">设置代理检测变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E6%A3%80%E6%B5%8B"><span class="nav-number">4.</span> <span class="nav-text">调试检测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E5%8F%8D%E8%B0%83%E8%AF%95%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">常规反调试函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ptrace"><span class="nav-number">4.1.1.</span> <span class="nav-text">ptrace</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ptrace-svc"><span class="nav-number">4.1.2.</span> <span class="nav-text">ptrace+svc</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ptrace-xor"><span class="nav-number">4.1.3.</span> <span class="nav-text">ptrace+xor</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#syscall"><span class="nav-number">4.1.4.</span> <span class="nav-text">syscall</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#syscall-svc"><span class="nav-number">4.1.5.</span> <span class="nav-text">syscall+svc</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#syscall-xor"><span class="nav-number">4.1.6.</span> <span class="nav-text">syscall+xor</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sysctl"><span class="nav-number">4.1.7.</span> <span class="nav-text">sysctl</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/local-search.js"></script>
+
+
+<!-- code-block -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/code-block.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/lazyload.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
+
+        <!-- toc -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
+        
+    
+
+    <!-- category-page -->
+    
+
+    <!-- links-page -->
+    
+</div>
+
+<!-- pjax -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+
+</body>
+</html>
