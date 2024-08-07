@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+    <title>
+        
+            绕过libsscronet.so app sslpinning |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
+    
+        
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/head.svg","first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","server_urls":null,"placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"version":"3.8.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        绕过libsscronet.so app sslpinning
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2024-01-02 00:00:00</span>
+                <span class="mobile">2024-01-02 00:00</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Tue Jan 02 2024 00:00:00 GMT+0800">2024-01-02 00:00:00</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%8A%93%E5%8C%85/">抓包</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>10 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <p>下了一个app，抓包后发现有ssl校验<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240102/01.webp"
+                     
+                ></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/WooyunDota/DroidSSLUnpinning/blob/master/ObjectionUnpinningPlus/hooks.js" >https://github.com/WooyunDota/DroidSSLUnpinning/blob/master/ObjectionUnpinningPlus/hooks.js<i class="fas fa-external-link-alt"></i></a><br>试了这个unsslpinning脚本，把常用的网络框架都给hook上了也是没用,dump证书也是一样失败<br>既然都抓不到那试试r0capture从上一层ssl抓包看看, hook了更深层次点的函数SSL_write也发现没有调用<br>这种既没走标准的http框架和系统ssl的请求，再深入一层就到libc的网络库了，SSL_write函数内部会调用libc提供的send、sendmsg或sendto函数来实际完成数据的网络传输，直接hook这三个函数，查看其调用栈</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> sendaddr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&quot;send&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sendaddr: &quot;</span> + sendaddr);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(sendaddr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Thread</span>.<span class="title function_">backtrace</span>(<span class="variable language_">this</span>.<span class="property">context</span>, <span class="title class_">Backtracer</span>.<span class="property">ACCURATE</span>).<span class="title function_">map</span>(<span class="title class_">DebugSymbol</span>.<span class="property">fromAddress</span>).<span class="title function_">join</span>(<span class="string">&quot;\n\t&quot;</span>))</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;send called: &quot;</span> + args[<span class="number">1</span>]);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;send return: &quot;</span> + retval);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> sendmsgaddr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&quot;sendmsg&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sendmsgaddr: &quot;</span> + sendmsgaddr);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(sendmsgaddr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Thread</span>.<span class="title function_">backtrace</span>(<span class="variable language_">this</span>.<span class="property">context</span>, <span class="title class_">Backtracer</span>.<span class="property">ACCURATE</span>).<span class="title function_">map</span>(<span class="title class_">DebugSymbol</span>.<span class="property">fromAddress</span>).<span class="title function_">join</span>(<span class="string">&quot;\n\t&quot;</span>))</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sendmsg called: &quot;</span> + <span class="title function_">hexdump</span>(args[<span class="number">1</span>]), args[<span class="number">2</span>]);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sendmsg return: &quot;</span> + retval);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> sendtoaddr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&quot;sendto&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sendtoaddr: &quot;</span> + sendtoaddr);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(sendtoaddr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Thread</span>.<span class="title function_">backtrace</span>(<span class="variable language_">this</span>.<span class="property">context</span>, <span class="title class_">Backtracer</span>.<span class="property">ACCURATE</span>).<span class="title function_">map</span>(<span class="title class_">DebugSymbol</span>.<span class="property">fromAddress</span>).<span class="title function_">join</span>(<span class="string">&quot;\n\t&quot;</span>))</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sendto called: &quot;</span> + args[<span class="number">1</span>], args[<span class="number">2</span>]);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;sendto return: &quot;</span> + retval);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">sendmsg <span class="attr">called</span>:              <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">7b488320b8  <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  ................</span><br><span class="line">7b488320c8  <span class="number">08</span> <span class="number">21</span> <span class="number">83</span> <span class="number">48</span> 7b <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  .!.<span class="property">H</span>&#123;...........</span><br><span class="line">7b488320d8  f0 <span class="number">20</span> <span class="number">83</span> <span class="number">48</span> 7b <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">18</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  . .<span class="property">H</span>&#123;...........</span><br><span class="line">7b488320e8  <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">14</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  ................</span><br><span class="line">7b488320f8  <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">45</span> <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  ........<span class="property">E</span>.......</span><br><span class="line">7b48832108  a0 <span class="number">21</span> <span class="number">83</span> <span class="number">48</span> 7b <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 0c <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  .!.<span class="property">H</span>&#123;...........</span><br><span class="line">7b48832118  <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  ................</span><br><span class="line">7b48832128  <span class="number">56</span> <span class="number">32</span> 7d 8d a4 6c <span class="number">62</span> 5f <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  <span class="variable constant_">V2</span>&#125;..<span class="property">lb_</span>........</span><br><span class="line">7b48832138  <span class="number">80</span> c9 dd 4d 7b <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">88</span> <span class="number">35</span> <span class="number">83</span> <span class="number">48</span> 7b <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  ...M&#123;...<span class="number">.5</span>.<span class="property">H</span>&#123;...</span><br><span class="line">7b48832148  <span class="number">88</span> <span class="number">35</span> <span class="number">83</span> <span class="number">48</span> 7b <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">68</span> <span class="number">24</span> <span class="number">83</span> <span class="number">48</span> 7b <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  <span class="number">.5</span>.<span class="property">H</span>&#123;...h$.H&#123;...</span><br><span class="line">7b48832158  <span class="number">10</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 7b <span class="number">27</span> 6c 7b <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>  .........&#123;<span class="string">&#x27;l&#123;...</span></span><br><span class="line"><span class="string">7b48832168  45 01 00 00 00 00 00 00 10 22 83 48 7b 00 00 00  E........&quot;.H&#123;...</span></span><br><span class="line"><span class="string">7b48832178  30 a3 6a f8 7b 00 00 00 88 35 83 48 7b 00 00 00  0.j.&#123;....5.H&#123;...</span></span><br><span class="line"><span class="string">7b48832188  88 35 83 48 7b 00 00 00 46 01 00 00 7b 00 00 00  .5.H&#123;...F...&#123;...</span></span><br><span class="line"><span class="string">7b48832198  60 c8 8e 50 7b 00 00 00 01 00 00 00 00 00 00 00  `..P&#123;...........</span></span><br><span class="line"><span class="string">7b488321a8  00 00 00 00 7b 00 00 00 c0 21 83 48 7b 00 00 00  ....&#123;....!.H&#123;... 0x0</span></span><br><span class="line"><span class="string">sendmsg return: 0xc</span></span><br><span class="line"><span class="string">0x7bf86aa0a0 libnetd_client.so!_ZN12FwmarkClient4sendEP13FwmarkCommandiP17FwmarkConnectInfo+0x128</span></span><br><span class="line"><span class="string">        0x7bf86aa0a0 libnetd_client.so!_ZN12FwmarkClient4sendEP13FwmarkCommandiP17FwmarkConnectInfo+0x128</span></span><br><span class="line"><span class="string">        0x7bf86aa42c libnetd_client.so!0x142c</span></span><br><span class="line"><span class="string">        0x7b4afcbd18 libsscronet.so!0x305d18</span></span><br><span class="line"><span class="string">        0x7b4afcbd18 libsscronet.so!0x305d18</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+<p>其中libnetd_client.so是系统库，就只能怀疑请求是从 libsscronet.so 出来的了，好奇既然没用系统的ssl库，那是用了哪里的ssl库？尝试搜了以下app已加载的so库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">marlin</span>:<span class="regexp">/ # cat /</span>proc/<span class="number">12902</span>/maps |grep ssl                                                                                                                                                                                                    </span><br><span class="line">7b23df5000-7b23e49000 r--p <span class="number">00000000</span> <span class="number">103</span>:<span class="number">13</span> <span class="number">134190</span>                        /data/app/com.<span class="property">f100</span>.<span class="property">android</span>-<span class="title class_">Hq36</span>t_d8nNvaQKbyqrIsXA==<span class="regexp">/lib/</span>arm64/libttboringssl.<span class="property">so</span></span><br><span class="line">7b28180000-7b281c8000 r--p <span class="number">00000000</span> <span class="number">103</span>:<span class="number">12</span> <span class="number">210</span>                           /system/lib64/libssl.<span class="property">so</span></span><br><span class="line">7b4b795000-7b4b7e6000 r-xp <span class="number">00000000</span> <span class="number">103</span>:<span class="number">13</span> <span class="number">134190</span>                        /data/app/com.<span class="property">f100</span>.<span class="property">android</span>-<span class="title class_">Hq36</span>t_d8nNvaQKbyqrIsXA==<span class="regexp">/lib/</span>arm64/libttboringssl.<span class="property">so</span></span><br><span class="line">7b4b7e6000-7b4b7e9000 r--p <span class="number">00050000</span> <span class="number">103</span>:<span class="number">13</span> <span class="number">134190</span>                        /data/app/com.<span class="property">f100</span>.<span class="property">android</span>-<span class="title class_">Hq36</span>t_d8nNvaQKbyqrIsXA==<span class="regexp">/lib/</span>arm64/libttboringssl.<span class="property">so</span></span><br><span class="line">7b4b7e9000-7b4b7ea000 rw-p <span class="number">00053000</span> <span class="number">103</span>:<span class="number">13</span> <span class="number">134190</span>                        /data/app/com.<span class="property">f100</span>.<span class="property">android</span>-<span class="title class_">Hq36</span>t_d8nNvaQKbyqrIsXA==<span class="regexp">/lib/</span>arm64/libttboringssl.<span class="property">so</span></span><br><span class="line">7b6d255000-7b6d298000 r-xp <span class="number">00000000</span> <span class="number">103</span>:<span class="number">12</span> <span class="number">210</span>                           /system/lib64/libssl.<span class="property">so</span></span><br><span class="line">7b6d298000-7b6d29b000 r--p <span class="number">00042000</span> <span class="number">103</span>:<span class="number">12</span> <span class="number">210</span>                           /system/lib64/libssl.<span class="property">so</span></span><br><span class="line">7b6d29b000-7b6d29c000 rw-p <span class="number">00045000</span> <span class="number">103</span>:<span class="number">12</span> <span class="number">210</span>                           /system/lib64/libssl.<span class="property">so</span></span><br></pre></td></tr></table></figure>
+<p>查了下这个boringssl是由 Google 开发和维护的 BoringSSL 项目的动态链接库文件，尝试hook boringssl中的SSL_write函数打印调用栈</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_ssl</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> boringssl = <span class="title class_">Process</span>.<span class="title function_">getModuleByName</span>(<span class="string">&quot;libttboringssl.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> SSL_write = boringssl.<span class="title function_">findExportByName</span>(<span class="string">&quot;SSL_write&quot;</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(SSL_write, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Calling SSL_write&quot;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Thread</span>.<span class="title function_">backtrace</span>(<span class="variable language_">this</span>.<span class="property">context</span>, <span class="title class_">Backtracer</span>.<span class="property">ACCURATE</span>).<span class="title function_">map</span>(<span class="title class_">DebugSymbol</span>.<span class="property">fromAddress</span>).<span class="title function_">join</span>(<span class="string">&quot;\n\t&quot;</span>))</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;  ssl:&quot;</span>, <span class="title function_">ptr</span>(args[<span class="number">0</span>]));</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">ssl</span> = args[<span class="number">0</span>].<span class="title function_">toString</span>();</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">buf</span> = <span class="title function_">ptr</span>(args[<span class="number">1</span>]);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;SSL_write returned:&quot;</span>, retval.<span class="title function_">toInt32</span>());</span><br><span class="line">            <span class="comment">// const len = retval.toInt32();</span></span><br><span class="line">            <span class="comment">// if (len &gt; 0) &#123;</span></span><br><span class="line">            <span class="comment">//     console.log(&#x27;SSL_write\n&#x27;, this.buf.readByteArray(len), &#x27;\n&#x27;, &#x27;*&#x27;.repeat(120));</span></span><br><span class="line">            <span class="comment">// &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(hook_ssl)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="title class_">Calling</span> SSL_write</span><br><span class="line"><span class="number">0x7b4af25308</span> libsscronet.<span class="property">so</span>!<span class="number">0x25f308</span></span><br><span class="line">        <span class="number">0x7b4af25308</span> libsscronet.<span class="property">so</span>!<span class="number">0x25f308</span></span><br><span class="line">        <span class="number">0x7b4af25308</span> libsscronet.<span class="property">so</span>!<span class="number">0x25f308</span></span><br><span class="line">  <span class="attr">ssl</span>: <span class="number">0x7b476c9f08</span></span><br><span class="line">SSL_write <span class="attr">returned</span>: <span class="number">2861</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>可以看到 libsscronet.so 调用了 libttboringssl.so 的 SSL_write，到这里证实了上面请求从 libsscronet.so 发出的猜想<br>在cronet库中搜索判断是否有调用boringssl中涉及证书验证的函数<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240102/02.webp"
+                     
+                ><br>有两个函数比较可疑 SSL_CTX_set_custom_verify和SSL_CTX_set_reverify_on_resume<br>定位到了调用的地方</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">sub_25FF94</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> __int64 v0; <span class="comment">// x19</span></span><br><span class="line">  __int64 v1; <span class="comment">// x0</span></span><br><span class="line">  __int64 v2; <span class="comment">// x0</span></span><br><span class="line">  __int64 v3; <span class="comment">// x0</span></span><br><span class="line">  __int64 v4; <span class="comment">// x21</span></span><br><span class="line">  __int64 v5; <span class="comment">// x0</span></span><br><span class="line"></span><br><span class="line">  v0 = <span class="type">atomic_load</span>(&amp;qword_3C07F8);</span><br><span class="line">  <span class="keyword">if</span> ( v0 &lt;= <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( (sub_1ED810(&amp;qword_3C07F8) &amp; <span class="number">1</span>) != <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v0 = sub_22BC9C(<span class="number">24LL</span>);</span><br><span class="line">      *(_QWORD *)(v0 + <span class="number">8</span>) = <span class="number">0LL</span>;</span><br><span class="line">      *(_QWORD *)(v0 + <span class="number">16</span>) = <span class="number">0LL</span>;</span><br><span class="line">      CRYPTO_library_init();</span><br><span class="line">      *(_DWORD *)v0 = SSL_get_ex_new_index(<span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      v1 = TLS_with_buffers_method();</span><br><span class="line">      v2 = SSL_CTX_new(v1);</span><br><span class="line">      sub_149BDC(v0 + <span class="number">8</span>, v2);</span><br><span class="line">      SSL_CTX_set_cert_cb(*(_QWORD *)(v0 + <span class="number">8</span>), sub_260114, <span class="number">0LL</span>);</span><br><span class="line">      SSL_CTX_set_reverify_on_resume();</span><br><span class="line">      SSL_CTX_set_custom_verify(*(_QWORD *)(v0 + <span class="number">8</span>), <span class="number">1LL</span>, sub_25F7E4);</span><br><span class="line">      SSL_CTX_set_session_cache_mode(*(_QWORD *)(v0 + <span class="number">8</span>), <span class="number">769LL</span>);</span><br><span class="line">      SSL_CTX_sess_set_new_cb(*(_QWORD *)(v0 + <span class="number">8</span>), sub_2602E4);</span><br><span class="line">      SSL_CTX_set_timeout(*(_QWORD *)(v0 + <span class="number">8</span>), <span class="number">3600LL</span>);</span><br><span class="line">      v3 = SSL_CTX_set_grease_enabled(*(_QWORD *)(v0 + <span class="number">8</span>), <span class="number">1LL</span>);</span><br><span class="line">      v4 = *(_QWORD *)(v0 + <span class="number">8</span>);</span><br><span class="line">      v5 = sub_2516C4(v3);</span><br><span class="line">      SSL_CTX_set0_buffer_pool(v4, v5);</span><br><span class="line">      SSL_CTX_set_msg_callback(*(_QWORD *)(v0 + <span class="number">8</span>), sub_2604B4);</span><br><span class="line">      SSL_CTX_add_cert_compression_alg(*(_QWORD *)(v0 + <span class="number">8</span>), <span class="number">2LL</span>, <span class="number">0LL</span>, sub_2605F4);</span><br><span class="line">      <span class="keyword">if</span> ( (sub_1E60D4(&amp;off_3B7840) &amp; <span class="number">1</span>) != <span class="number">0</span> )</span><br><span class="line">        SSL_CTX_set1_curves(*(_QWORD *)(v0 + <span class="number">8</span>), &amp;unk_B49B4, <span class="number">4LL</span>);</span><br><span class="line">      sub_1ED89C(&amp;qword_3C07F8, v0, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="type">atomic_load</span>(&amp;qword_3C07F8);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里也去Chrome Code Search搜索（在线的Chrome源码浏览网页，提供了强大的交叉引用和全文搜索功能）<a class="link"   target="_blank" rel="noopener" href="https://source.chromium.org/chromium" >https://source.chromium.org/chromium<i class="fas fa-external-link-alt"></i></a><br>看了SSL_CTX_set_reverify_on_resume源码也没什么</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">SSL_CTX_set_reverify_on_resume</span><span class="params">(SSL_CTX *ctx, <span class="type">int</span> enabled)</span> &#123;</span><br><span class="line">  ctx-&gt;reverify_on_resume = !!enabled;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而且下一行就调用了SSL_CTX_set_custom_verify，所以重点放在SSL_CTX_set_custom_verify上<br>搜索函数名SSL_CTX_set_custom_verify，定位到</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">SSL_CTX_set_custom_verify</span><span class="params">(</span></span><br><span class="line"><span class="params">    SSL_CTX *ctx, <span class="type">int</span> mode,</span></span><br><span class="line"><span class="params">    <span class="keyword">enum</span> <span class="type">ssl_verify_result_t</span> (*callback)(SSL *ssl, <span class="type">uint8_t</span> *out_alert))</span> &#123;</span><br><span class="line">  ctx-&gt;verify_mode = mode;</span><br><span class="line">  ctx-&gt;custom_verify_callback = callback;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一个参数应该是上下文管理SSL&#x2F;TLS的会话指针，<br>第二个参数可以随便找调用 SSL_CTX_set_custom_verify 函数的地方，查看参数<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240102/03.webp"
+                     
+                ></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SSL_VERIFY_NONE, on a client, verifies the server certificate but does not</span></span><br><span class="line"><span class="comment">// make errors fatal. The result may be checked with |SSL_get_verify_result|. On</span></span><br><span class="line"><span class="comment">// a server it does not request a client certificate. This is the default.</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SSL_VERIFY_NONE 0x00</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// SSL_VERIFY_PEER, on a client, makes server certificate errors fatal. On a</span></span><br><span class="line"><span class="comment">// server it requests a client certificate and makes errors fatal. However,</span></span><br><span class="line"><span class="comment">// anonymous clients are still allowed. See</span></span><br><span class="line"><span class="comment">// |SSL_VERIFY_FAIL_IF_NO_PEER_CERT|.</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SSL_VERIFY_PEER 0x01</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// SSL_VERIFY_FAIL_IF_NO_PEER_CERT configures a server to reject connections if</span></span><br><span class="line"><span class="comment">// the client declines to send a certificate. This flag must be used together</span></span><br><span class="line"><span class="comment">// with |SSL_VERIFY_PEER|, otherwise it won&#x27;t work.</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SSL_VERIFY_FAIL_IF_NO_PEER_CERT 0x02</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// SSL_VERIFY_PEER_IF_NO_OBC configures a server to request a client certificate</span></span><br><span class="line"><span class="comment">// if and only if Channel ID is not negotiated.</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SSL_VERIFY_PEER_IF_NO_OBC 0x04</span></span><br></pre></td></tr></table></figure>
+<p>值为0x0时不校验证书，hook修改参数为0即可<br>第三个参数是回调函数，就是上面的 SSL_CTX_set_custom_verify(*(_QWORD *)(v0 + 8), 1LL, sub_25F7E4);<br>跟进刚才的源码enum ssl_verify_result_t，第三个参数回调函数的返回值就只有以下三种类型，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ssl_verify_result_t</span> <span class="title">BORINGSSL_ENUM_INT</span> &#123;</span></span><br><span class="line">  ssl_verify_ok,</span><br><span class="line">  ssl_verify_invalid,</span><br><span class="line">  ssl_verify_retry,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>看了一些调用的地方，ssl_verify_ok的值是0，所以可以hook回调函数修改返回值为0即可，就不用管函数内部在做什么了<br>这个so会在加载后立即进行证书绑定的判断，只执行一次，所以需要在so加载的时候找到它，并且在so执行第一次的时候进行hook<br>frida hook代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> android_dlopen_ext = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&#x27;android_dlopen_ext&#x27;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;android_dlopen_ext: &quot;</span>, android_dlopen_ext)</span><br><span class="line">    <span class="keyword">if</span> (android_dlopen_ext != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(android_dlopen_ext, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">                <span class="keyword">var</span> soName = args[<span class="number">0</span>].<span class="title function_">readCString</span>();</span><br><span class="line">                <span class="comment">// console.log(soName)</span></span><br><span class="line">                <span class="keyword">if</span> (soName.<span class="title function_">indexOf</span>(<span class="string">&quot;libsscronet.so&quot;</span>) != -<span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">hook</span> = <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">hook</span>) &#123;</span><br><span class="line">                    <span class="title function_">hook_cronetssl</span>()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_callback</span>(<span class="params">p</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> fun = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(p, <span class="string">&#x27;int&#x27;</span>, [<span class="string">&#x27;pointer&#x27;</span>, <span class="string">&#x27;pointer&#x27;</span>]);</span><br><span class="line">    <span class="keyword">var</span> new_fun = <span class="keyword">new</span> <span class="title class_">NativeCallback</span>(<span class="keyword">function</span>(<span class="params">arg1, arg2</span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;cononono&quot;</span>, <span class="title function_">fun</span>(arg1, arg2));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;, <span class="string">&#x27;int&#x27;</span>, [<span class="string">&#x27;pointer&#x27;</span>, <span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">replace</span>(fun, new_fun)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_cronetssl</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> cronet = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libsscronet.so&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;cronet: &quot;</span>, cronet)</span><br><span class="line">    <span class="keyword">var</span> verify = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libsscronet.so&quot;</span>, <span class="string">&quot;SSL_CTX_set_custom_verify&quot;</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;verify: &quot;</span>, verify)</span><br><span class="line">    <span class="keyword">var</span> custom_verify = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(verify, <span class="string">&#x27;pointer&#x27;</span>, [<span class="string">&#x27;pointer&#x27;</span>, <span class="string">&#x27;int&#x27;</span>, <span class="string">&#x27;pointer&#x27;</span>]);</span><br><span class="line">    <span class="keyword">var</span> new_fun = <span class="keyword">new</span> <span class="title class_">NativeCallback</span>(<span class="keyword">function</span>(<span class="params">arg1, arg2, arg3</span>) &#123;</span><br><span class="line">        <span class="title function_">hook_callback</span>(arg3)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;SSL_CTX_set_custom_verify called: &quot;</span> + arg1 + <span class="string">&quot; &quot;</span> + arg2 + <span class="string">&quot; &quot;</span> + arg3)</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">custom_verify</span>(arg1, <span class="number">0</span>, arg3)</span><br><span class="line">    &#125;, <span class="string">&#x27;pointer&#x27;</span>, [<span class="string">&#x27;pointer&#x27;</span>, <span class="string">&#x27;int&#x27;</span>, <span class="string">&#x27;pointer&#x27;</span>]);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">replace</span>(verify, new_fun)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p>验证抓包<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240102/04.webp"
+                     
+                ><br>后面通过调用栈和查询发现这是byteDance下的产品，脚本应该是通用的，也有大佬给出了其它方法<br><a class="link"   target="_blank" rel="noopener" href="https://github.com/LanBaiCode/FridaScripts/blob/main/byteDance.js" >https://github.com/LanBaiCode/FridaScripts/blob/main/byteDance.js<i class="fas fa-external-link-alt"></i></a><br></br><br></br><br>大佬文章：<a class="link"   target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-277996-1.htm" >[原创] 更高更妙的抓包——从Chrome源码学习使用Cronet 通讯组件的app的通用抓包方法<i class="fas fa-external-link-alt"></i></a></p>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                绕过libsscronet.so app sslpinning
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/34757/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2024-01-02 00:00</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%8A%93%E5%8C%85/">抓包</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/51299/"
+                                   title="iOS逆向系列(二) 反调试与绕过案例实战"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">iOS逆向系列(二) 反调试与绕过案例实战</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/17659/"
+                                   title="修改源码定制ART"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">修改源码定制ART</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">106.5k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/local-search.js"></script>
+
+
+<!-- code-block -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/code-block.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/lazyload.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
+
+        <!-- toc -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
+        
+    
+
+    <!-- category-page -->
+    
+
+    <!-- links-page -->
+    
+</div>
+
+<!-- pjax -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+
+</body>
+</html>
