@@ -786,7 +786,7 @@ application&#x2F;octet-stream ： 二进制流数据
 
                     <div class="home-article-content keep-markdown-body">
                         
-                            介绍DFA攻击简单来说就是在倒数第一轮列混淆和倒数第二轮列混淆之间（在AES-128中也就是第8轮和第9轮之间，因为最后第10轮不做列混淆，为什么不能在其他轮而且还得在列混淆前？因为经过列混淆一个字节的差异就已经扩散到所有字节上了），修改此时中间结果...
+                            介绍DFA攻击简单来说就是在倒数第一轮列混淆和倒数第二轮列混淆之间（在AES-128中也就是第8轮和第9轮之间，因为最后第10轮不做列混淆），修改此时中间结果的一个字节，会导致最终密文和正确密文有4个字节的不同。通过多次的修改，得到多组错误的密文，然...
                         
                     </div>
 
@@ -960,7 +960,7 @@ application&#x2F;octet-stream ： 二进制流数据
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">108.2k</span>
+                    <span class="item-value border-box word">108.6k</span>
                 </span>
             
 
