@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+    <title>
+        
+            DFA还原白盒AES密钥 |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
+    
+        
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/head.svg","first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","server_urls":null,"placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"version":"3.8.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        DFA还原白盒AES密钥
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2023-01-31 22:00:00</span>
+                <span class="mobile">2023-01-31 22:00</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Tue Jan 31 2023 22:00:00 GMT+0800">2023-01-31 22:00:00</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.7k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>8 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>DFA攻击简单来说就是在倒数第一轮列混淆和倒数第二轮列混淆之间（在AES-128中也就是第8轮和第9轮之间，因为最后第10轮不做列混淆，为什么不能在其他轮而且还得在列混淆前？因为经过列混淆一个字节的差异就已经扩散到所有字节上了），修改此时中间结果的一个字节，会导致最终密文和正确密文有4个字节的不同。通过多次的修改，得到多组错误的密文，然后通过正确密文和这些错误密文能够推算出第10轮的密钥（加密模式下），继而能推算出原始密钥。<br>所以实际应用中，<strong>就需要先找准列混合的函数位置</strong>，然后在他之前去插入缺陷数据。</p>
+<h3 id="通过故障密钥得到第十轮密钥"><a href="#通过故障密钥得到第十轮密钥" class="headerlink" title="通过故障密钥得到第十轮密钥"></a>通过故障密钥得到第十轮密钥</h3><p>标准的AES算法的python代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br></pre></td><td class="code"><pre><span class="line">Sbox = (</span><br><span class="line">    <span class="number">0x63</span>, <span class="number">0x7C</span>, <span class="number">0x77</span>, <span class="number">0x7B</span>, <span class="number">0xF2</span>, <span class="number">0x6B</span>, <span class="number">0x6F</span>, <span class="number">0xC5</span>, <span class="number">0x30</span>, <span class="number">0x01</span>, <span class="number">0x67</span>, <span class="number">0x2B</span>, <span class="number">0xFE</span>, <span class="number">0xD7</span>, <span class="number">0xAB</span>, <span class="number">0x76</span>,</span><br><span class="line">    <span class="number">0xCA</span>, <span class="number">0x82</span>, <span class="number">0xC9</span>, <span class="number">0x7D</span>, <span class="number">0xFA</span>, <span class="number">0x59</span>, <span class="number">0x47</span>, <span class="number">0xF0</span>, <span class="number">0xAD</span>, <span class="number">0xD4</span>, <span class="number">0xA2</span>, <span class="number">0xAF</span>, <span class="number">0x9C</span>, <span class="number">0xA4</span>, <span class="number">0x72</span>, <span class="number">0xC0</span>,</span><br><span class="line">    <span class="number">0xB7</span>, <span class="number">0xFD</span>, <span class="number">0x93</span>, <span class="number">0x26</span>, <span class="number">0x36</span>, <span class="number">0x3F</span>, <span class="number">0xF7</span>, <span class="number">0xCC</span>, <span class="number">0x34</span>, <span class="number">0xA5</span>, <span class="number">0xE5</span>, <span class="number">0xF1</span>, <span class="number">0x71</span>, <span class="number">0xD8</span>, <span class="number">0x31</span>, <span class="number">0x15</span>,</span><br><span class="line">    <span class="number">0x04</span>, <span class="number">0xC7</span>, <span class="number">0x23</span>, <span class="number">0xC3</span>, <span class="number">0x18</span>, <span class="number">0x96</span>, <span class="number">0x05</span>, <span class="number">0x9A</span>, <span class="number">0x07</span>, <span class="number">0x12</span>, <span class="number">0x80</span>, <span class="number">0xE2</span>, <span class="number">0xEB</span>, <span class="number">0x27</span>, <span class="number">0xB2</span>, <span class="number">0x75</span>,</span><br><span class="line">    <span class="number">0x09</span>, <span class="number">0x83</span>, <span class="number">0x2C</span>, <span class="number">0x1A</span>, <span class="number">0x1B</span>, <span class="number">0x6E</span>, <span class="number">0x5A</span>, <span class="number">0xA0</span>, <span class="number">0x52</span>, <span class="number">0x3B</span>, <span class="number">0xD6</span>, <span class="number">0xB3</span>, <span class="number">0x29</span>, <span class="number">0xE3</span>, <span class="number">0x2F</span>, <span class="number">0x84</span>,</span><br><span class="line">    <span class="number">0x53</span>, <span class="number">0xD1</span>, <span class="number">0x00</span>, <span class="number">0xED</span>, <span class="number">0x20</span>, <span class="number">0xFC</span>, <span class="number">0xB1</span>, <span class="number">0x5B</span>, <span class="number">0x6A</span>, <span class="number">0xCB</span>, <span class="number">0xBE</span>, <span class="number">0x39</span>, <span class="number">0x4A</span>, <span class="number">0x4C</span>, <span class="number">0x58</span>, <span class="number">0xCF</span>,</span><br><span class="line">    <span class="number">0xD0</span>, <span class="number">0xEF</span>, <span class="number">0xAA</span>, <span class="number">0xFB</span>, <span class="number">0x43</span>, <span class="number">0x4D</span>, <span class="number">0x33</span>, <span class="number">0x85</span>, <span class="number">0x45</span>, <span class="number">0xF9</span>, <span class="number">0x02</span>, <span class="number">0x7F</span>, <span class="number">0x50</span>, <span class="number">0x3C</span>, <span class="number">0x9F</span>, <span class="number">0xA8</span>,</span><br><span class="line">    <span class="number">0x51</span>, <span class="number">0xA3</span>, <span class="number">0x40</span>, <span class="number">0x8F</span>, <span class="number">0x92</span>, <span class="number">0x9D</span>, <span class="number">0x38</span>, <span class="number">0xF5</span>, <span class="number">0xBC</span>, <span class="number">0xB6</span>, <span class="number">0xDA</span>, <span class="number">0x21</span>, <span class="number">0x10</span>, <span class="number">0xFF</span>, <span class="number">0xF3</span>, <span class="number">0xD2</span>,</span><br><span class="line">    <span class="number">0xCD</span>, <span class="number">0x0C</span>, <span class="number">0x13</span>, <span class="number">0xEC</span>, <span class="number">0x5F</span>, <span class="number">0x97</span>, <span class="number">0x44</span>, <span class="number">0x17</span>, <span class="number">0xC4</span>, <span class="number">0xA7</span>, <span class="number">0x7E</span>, <span class="number">0x3D</span>, <span class="number">0x64</span>, <span class="number">0x5D</span>, <span class="number">0x19</span>, <span class="number">0x73</span>,</span><br><span class="line">    <span class="number">0x60</span>, <span class="number">0x81</span>, <span class="number">0x4F</span>, <span class="number">0xDC</span>, <span class="number">0x22</span>, <span class="number">0x2A</span>, <span class="number">0x90</span>, <span class="number">0x88</span>, <span class="number">0x46</span>, <span class="number">0xEE</span>, <span class="number">0xB8</span>, <span class="number">0x14</span>, <span class="number">0xDE</span>, <span class="number">0x5E</span>, <span class="number">0x0B</span>, <span class="number">0xDB</span>,</span><br><span class="line">    <span class="number">0xE0</span>, <span class="number">0x32</span>, <span class="number">0x3A</span>, <span class="number">0x0A</span>, <span class="number">0x49</span>, <span class="number">0x06</span>, <span class="number">0x24</span>, <span class="number">0x5C</span>, <span class="number">0xC2</span>, <span class="number">0xD3</span>, <span class="number">0xAC</span>, <span class="number">0x62</span>, <span class="number">0x91</span>, <span class="number">0x95</span>, <span class="number">0xE4</span>, <span class="number">0x79</span>,</span><br><span class="line">    <span class="number">0xE7</span>, <span class="number">0xC8</span>, <span class="number">0x37</span>, <span class="number">0x6D</span>, <span class="number">0x8D</span>, <span class="number">0xD5</span>, <span class="number">0x4E</span>, <span class="number">0xA9</span>, <span class="number">0x6C</span>, <span class="number">0x56</span>, <span class="number">0xF4</span>, <span class="number">0xEA</span>, <span class="number">0x65</span>, <span class="number">0x7A</span>, <span class="number">0xAE</span>, <span class="number">0x08</span>,</span><br><span class="line">    <span class="number">0xBA</span>, <span class="number">0x78</span>, <span class="number">0x25</span>, <span class="number">0x2E</span>, <span class="number">0x1C</span>, <span class="number">0xA6</span>, <span class="number">0xB4</span>, <span class="number">0xC6</span>, <span class="number">0xE8</span>, <span class="number">0xDD</span>, <span class="number">0x74</span>, <span class="number">0x1F</span>, <span class="number">0x4B</span>, <span class="number">0xBD</span>, <span class="number">0x8B</span>, <span class="number">0x8A</span>,</span><br><span class="line">    <span class="number">0x70</span>, <span class="number">0x3E</span>, <span class="number">0xB5</span>, <span class="number">0x66</span>, <span class="number">0x48</span>, <span class="number">0x03</span>, <span class="number">0xF6</span>, <span class="number">0x0E</span>, <span class="number">0x61</span>, <span class="number">0x35</span>, <span class="number">0x57</span>, <span class="number">0xB9</span>, <span class="number">0x86</span>, <span class="number">0xC1</span>, <span class="number">0x1D</span>, <span class="number">0x9E</span>,</span><br><span class="line">    <span class="number">0xE1</span>, <span class="number">0xF8</span>, <span class="number">0x98</span>, <span class="number">0x11</span>, <span class="number">0x69</span>, <span class="number">0xD9</span>, <span class="number">0x8E</span>, <span class="number">0x94</span>, <span class="number">0x9B</span>, <span class="number">0x1E</span>, <span class="number">0x87</span>, <span class="number">0xE9</span>, <span class="number">0xCE</span>, <span class="number">0x55</span>, <span class="number">0x28</span>, <span class="number">0xDF</span>,</span><br><span class="line">    <span class="number">0x8C</span>, <span class="number">0xA1</span>, <span class="number">0x89</span>, <span class="number">0x0D</span>, <span class="number">0xBF</span>, <span class="number">0xE6</span>, <span class="number">0x42</span>, <span class="number">0x68</span>, <span class="number">0x41</span>, <span class="number">0x99</span>, <span class="number">0x2D</span>, <span class="number">0x0F</span>, <span class="number">0xB0</span>, <span class="number">0x54</span>, <span class="number">0xBB</span>, <span class="number">0x16</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">Rcon = (<span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x02</span>, <span class="number">0x04</span>, <span class="number">0x08</span>, <span class="number">0x10</span>, <span class="number">0x20</span>, <span class="number">0x40</span>, <span class="number">0x80</span>, <span class="number">0x1B</span>, <span class="number">0x36</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">text2matrix</span>(<span class="params">text</span>):</span><br><span class="line">    matrix = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        byte = (text &gt;&gt; (<span class="number">8</span> * (<span class="number">15</span> - i))) &amp; <span class="number">0xFF</span></span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">4</span> == <span class="number">0</span>:</span><br><span class="line">            matrix.append([byte])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            matrix[i // <span class="number">4</span>].append(byte)</span><br><span class="line">    <span class="keyword">return</span> matrix</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shiftRound</span>(<span class="params">array, num</span>):</span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param array: 需要循环左移的数组</span></span><br><span class="line"><span class="string">    :param num: 循环左移的位数</span></span><br><span class="line"><span class="string">    :return: 使用Python切片，返回循环左移num个单位的array</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="keyword">return</span> array[num:] + array[:num]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">g</span>(<span class="params">array, index</span>):</span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    g 函数</span></span><br><span class="line"><span class="string">    :param array: 待处理的四字节数组</span></span><br><span class="line"><span class="string">    :index:从1-10，每次使用Rcon中不同的数</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment"># 首先循环左移1位</span></span><br><span class="line">    array = shiftRound(array, <span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 字节替换</span></span><br><span class="line">    array = [Sbox[i] <span class="keyword">for</span> i <span class="keyword">in</span> array]</span><br><span class="line">    <span class="comment"># 首字节和rcon中对应元素异或</span></span><br><span class="line">    array = [(Rcon[index] ^ array[<span class="number">0</span>])] + array[<span class="number">1</span>:]</span><br><span class="line">    <span class="keyword">return</span> array</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">xorTwoArray</span>(<span class="params">array1, array2</span>):</span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    返回两个数组逐元素异或的新数组</span></span><br><span class="line"><span class="string">    :param array1: 一个array</span></span><br><span class="line"><span class="string">    :param array2: 另一个array</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(array1) == <span class="built_in">len</span>(array2)</span><br><span class="line">    <span class="keyword">return</span> [array1[i] ^ array2[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(array1))]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">showRoundKeys</span>(<span class="params">round_keys</span>):</span><br><span class="line">    <span class="comment"># 将轮密钥从44*4转成11*16</span></span><br><span class="line">    kList = [[] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">11</span>)]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(round_keys)):</span><br><span class="line">        kList[i // <span class="number">4</span>] += round_keys[i]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(kList)):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"K%02d:"</span> % i + <span class="string">""</span>.join(<span class="string">"%02x"</span> % k <span class="keyword">for</span> k <span class="keyword">in</span> kList[i]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">keyExpand</span>(<span class="params">key</span>):</span><br><span class="line">    master_key = text2matrix(key)</span><br><span class="line">    round_keys = [[<span class="number">0</span>] * <span class="number">4</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">44</span>)]</span><br><span class="line">    <span class="comment"># 规则一(图中红色部分)</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        round_keys[i] = master_key[i]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>, <span class="number">4</span> * <span class="number">11</span>):</span><br><span class="line">        <span class="comment"># 规则二(图中红色部分)</span></span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">4</span> == <span class="number">0</span>:</span><br><span class="line">            round_keys[i] = xorTwoArray(g(round_keys[i - <span class="number">1</span>], i // <span class="number">4</span>), round_keys[i - <span class="number">4</span>])</span><br><span class="line">        <span class="comment"># 规则三(图中橙色部分)</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            round_keys[i] = xorTwoArray(round_keys[i - <span class="number">1</span>], round_keys[i - <span class="number">4</span>])</span><br><span class="line">    showRoundKeys(round_keys)</span><br><span class="line">    <span class="keyword">return</span> round_keys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">AddRoundKeys</span>(<span class="params">state, roundKey</span>):</span><br><span class="line">    result = [[] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>)]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        result[i] = xorTwoArray(state[i], roundKey[i])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">SubBytes</span>(<span class="params">state</span>):</span><br><span class="line">    result = [[] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>)]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        result[i] = [Sbox[i] <span class="keyword">for</span> i <span class="keyword">in</span> state[i]]</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ShiftRows</span>(<span class="params">s</span>):</span><br><span class="line">    s[<span class="number">0</span>][<span class="number">1</span>], s[<span class="number">1</span>][<span class="number">1</span>], s[<span class="number">2</span>][<span class="number">1</span>], s[<span class="number">3</span>][<span class="number">1</span>] = s[<span class="number">1</span>][<span class="number">1</span>], s[<span class="number">2</span>][<span class="number">1</span>], s[<span class="number">3</span>][<span class="number">1</span>], s[<span class="number">0</span>][<span class="number">1</span>]</span><br><span class="line">    s[<span class="number">0</span>][<span class="number">2</span>], s[<span class="number">1</span>][<span class="number">2</span>], s[<span class="number">2</span>][<span class="number">2</span>], s[<span class="number">3</span>][<span class="number">2</span>] = s[<span class="number">2</span>][<span class="number">2</span>], s[<span class="number">3</span>][<span class="number">2</span>], s[<span class="number">0</span>][<span class="number">2</span>], s[<span class="number">1</span>][<span class="number">2</span>]</span><br><span class="line">    s[<span class="number">0</span>][<span class="number">3</span>], s[<span class="number">1</span>][<span class="number">3</span>], s[<span class="number">2</span>][<span class="number">3</span>], s[<span class="number">3</span>][<span class="number">3</span>] = s[<span class="number">3</span>][<span class="number">3</span>], s[<span class="number">0</span>][<span class="number">3</span>], s[<span class="number">1</span>][<span class="number">3</span>], s[<span class="number">2</span>][<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mul_by_02</span>(<span class="params">num</span>):</span><br><span class="line">    <span class="keyword">if</span> num &lt; <span class="number">0x80</span>:</span><br><span class="line">        res = (num &lt;&lt; <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        res = (num &lt;&lt; <span class="number">1</span>) ^ <span class="number">0x1b</span></span><br><span class="line">    <span class="keyword">return</span> res % <span class="number">0x100</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mul_by_03</span>(<span class="params">num</span>):</span><br><span class="line">    <span class="keyword">return</span> mul_by_02(num) ^ num</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">MixColumns</span>(<span class="params">state</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        s0 = mul_by_02(state[i][<span class="number">0</span>]) ^ mul_by_03(state[i][<span class="number">1</span>]) ^ state[i][<span class="number">2</span>] ^ state[i][<span class="number">3</span>]</span><br><span class="line">        s1 = state[i][<span class="number">0</span>] ^ mul_by_02(state[i][<span class="number">1</span>]) ^ mul_by_03(state[i][<span class="number">2</span>]) ^ state[i][<span class="number">3</span>]</span><br><span class="line">        s2 = state[i][<span class="number">0</span>] ^ state[i][<span class="number">1</span>] ^ mul_by_02(state[i][<span class="number">2</span>]) ^ mul_by_03(state[i][<span class="number">3</span>])</span><br><span class="line">        s3 = mul_by_03(state[i][<span class="number">0</span>]) ^ state[i][<span class="number">1</span>] ^ state[i][<span class="number">2</span>] ^ mul_by_02(state[i][<span class="number">3</span>])</span><br><span class="line">        state[i][<span class="number">0</span>] = s0</span><br><span class="line">        state[i][<span class="number">1</span>] = s1</span><br><span class="line">        state[i][<span class="number">2</span>] = s2</span><br><span class="line">        state[i][<span class="number">3</span>] = s3</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">state2Text</span>(<span class="params">state</span>):</span><br><span class="line">    text = <span class="built_in">sum</span>(state, [])</span><br><span class="line">    <span class="keyword">return</span> <span class="string">""</span>.join(<span class="string">"%02x"</span> % k <span class="keyword">for</span> k <span class="keyword">in</span> text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">input_bytes, kList</span>):</span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param input_bytes: 输入的明文</span></span><br><span class="line"><span class="string">    :param kList: K0-K10</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    plainState = text2matrix(input_bytes)</span><br><span class="line">    <span class="comment"># 初始轮密钥加</span></span><br><span class="line">    state = AddRoundKeys(plainState, kList[<span class="number">0</span>:<span class="number">4</span>])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">10</span>):</span><br><span class="line">        state = SubBytes(state)</span><br><span class="line">        state = ShiftRows(state)</span><br><span class="line">        state = MixColumns(state)</span><br><span class="line">        state = AddRoundKeys(state, kList[<span class="number">4</span> * i:<span class="number">4</span> * (i + <span class="number">1</span>)])</span><br><span class="line"></span><br><span class="line">    state = SubBytes(state)</span><br><span class="line">    state = ShiftRows(state)</span><br><span class="line">    state = AddRoundKeys(state, kList[<span class="number">40</span>:<span class="number">44</span>])</span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">input_bytes = <span class="number">0x00112233445566778899aabbccddeeff</span></span><br><span class="line">key = <span class="number">0x2b7e151628aed2a6abf7158809cf4f3c</span></span><br><span class="line">kList = keyExpand(key)</span><br><span class="line">cipherState = encrypt(input_bytes, kList)</span><br><span class="line">cipher = state2Text(cipherState)</span><br><span class="line"><span class="built_in">print</span>(cipher)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码的执行结果为8df4e9aac5c7573a27d8d055d6e4d64b。<br>接下来我们就要去构造故障了，在第九轮加密的行移位和列混合之间修改一个中间结果的数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">input_bytes, kList</span>):</span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    :param input_bytes: 输入的明文</span></span><br><span class="line"><span class="string">    :param kList: K0-K10</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    plainState = text2matrix(input_bytes)</span><br><span class="line">    <span class="comment"># 初始轮密钥加</span></span><br><span class="line">    state = AddRoundKeys(plainState, kList[<span class="number">0</span>:<span class="number">4</span>])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">10</span>):</span><br><span class="line">        state = SubBytes(state)</span><br><span class="line">        state = ShiftRows(state)</span><br><span class="line">        <span class="comment"># 在第9轮改一个字节</span></span><br><span class="line">        <span class="keyword">if</span> i == <span class="number">9</span>:</span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"修改第"</span> + <span class="built_in">str</span>(j) + <span class="string">"个"</span>)</span><br><span class="line">            state[j//<span class="number">4</span>][j%<span class="number">4</span>] = <span class="number">0x10</span></span><br><span class="line">        state = MixColumns(state)</span><br><span class="line">        state = AddRoundKeys(state, kList[<span class="number">4</span> * i:<span class="number">4</span> * (i + <span class="number">1</span>)])</span><br><span class="line"></span><br><span class="line">    state = SubBytes(state)</span><br><span class="line">    state = ShiftRows(state)</span><br><span class="line">    state = AddRoundKeys(state, kList[<span class="number">40</span>:<span class="number">44</span>])</span><br><span class="line">    <span class="keyword">return</span> state</span><br></pre></td></tr></table></figure>
+<p>执行脚本，结果为daf4e9aac5c757c927d85355d637d64b，比对一下：<br><font color="red">8d</font> f4 e9 aa c5 c7 57 <font color="red">3a</font> 27 d8 <font color="red">d0</font> 55 d6 <font color="red">e4</font> d6 4b<br><font color="red">da</font> f4 e9 aa c5 c7 57 <font color="red">c9</font> 27 d8 <font color="red">53</font> 55 d6 <font color="red">37</font> d6 4b<br>确实有4个字节不一样。以此类推，将上述代码中j的值从0到15依次增加，会得到16个不一样的密文</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">daf4e9aac5c757c927d85355d637d64b</span><br><span class="line">47f4e9aac5c7577d27d8a655d61ed64b</span><br><span class="line">79f4e9aac5c7572a27d89855d62ad64b</span><br><span class="line">30f4e9aac5c7570b27d86555d6a5d64b</span><br><span class="line">8d7de9aac8c7573a27d8d09ed6e4be4b</span><br><span class="line">8d5ce9aa43c7573a27d8d04cd6e4054b</span><br><span class="line">8d0de9aaddc7573a27d8d060d6e4234b</span><br><span class="line">8dabe9aacac7573a27d8d009d6e4484b</span><br><span class="line">8df48caac598573a62d8d055d6e4d636</span><br><span class="line">8df4bbaac5f4573acdd8d055d6e4d693</span><br><span class="line">8df47aaac576573ac1d8d055d6e4d61c</span><br><span class="line">8df444aac5c8573a23d8d055d6e4d6fb</span><br><span class="line">8df4e9e0c5c7b73a2768d055ade4d64b</span><br><span class="line">8df4e9f2c5c7063a27a4d055dfe4d64b</span><br><span class="line">8df4e942c5c7793a275ed05535e4d64b</span><br><span class="line">8df4e98fc5c7fa3a2778d055b3e4d64b</span><br></pre></td></tr></table></figure>
+<p>有了这个以后我们就可以还原得到第十轮的密钥了，这里使用<a class="link" target="_blank" rel="noopener" href="https://github.com/SideChannelMarvels/JeanGrey/tree/master/phoenixAES">phoenixAES<i class="fas fa-external-link-alt"></i></a>工具，先安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install phoenixAES</span><br></pre></td></tr></table></figure>
+<p>然后编写python脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> phoenixAES</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">'tracefile'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> t:</span><br><span class="line">    t.write(<span class="string">"""</span></span><br><span class="line"><span class="string">8df4e9aac5c7573a27d8d055d6e4d64b</span></span><br><span class="line"><span class="string">daf4e9aac5c757c927d85355d637d64b</span></span><br><span class="line"><span class="string">47f4e9aac5c7577d27d8a655d61ed64b</span></span><br><span class="line"><span class="string">79f4e9aac5c7572a27d89855d62ad64b</span></span><br><span class="line"><span class="string">30f4e9aac5c7570b27d86555d6a5d64b</span></span><br><span class="line"><span class="string">8d7de9aac8c7573a27d8d09ed6e4be4b</span></span><br><span class="line"><span class="string">8d5ce9aa43c7573a27d8d04cd6e4054b</span></span><br><span class="line"><span class="string">8d0de9aaddc7573a27d8d060d6e4234b</span></span><br><span class="line"><span class="string">8dabe9aacac7573a27d8d009d6e4484b</span></span><br><span class="line"><span class="string">8df48caac598573a62d8d055d6e4d636</span></span><br><span class="line"><span class="string">8df4bbaac5f4573acdd8d055d6e4d693</span></span><br><span class="line"><span class="string">8df47aaac576573ac1d8d055d6e4d61c</span></span><br><span class="line"><span class="string">8df444aac5c8573a23d8d055d6e4d6fb</span></span><br><span class="line"><span class="string">8df4e9e0c5c7b73a2768d055ade4d64b</span></span><br><span class="line"><span class="string">8df4e9f2c5c7063a27a4d055dfe4d64b</span></span><br><span class="line"><span class="string">8df4e942c5c7793a275ed05535e4d64b</span></span><br><span class="line"><span class="string">8df4e98fc5c7fa3a2778d055b3e4d64b</span></span><br><span class="line"><span class="string">"""</span>.encode(<span class="string">'utf8'</span>))</span><br><span class="line"></span><br><span class="line">phoenixAES.crack_file(<span class="string">'tracefile'</span>, [], <span class="literal">True</span>, <span class="literal">False</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>一共写入了17行数据到文件，其中第一行为正确的密文，剩余16行都是故障密文，最终通过crack_file即可得到第10轮密钥：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Last round key #N found:</span><br><span class="line">D014F9A8C9EE2589E13F0CC8B6630CA6</span><br></pre></td></tr></table></figure>
+<h3 id="还原密文"><a href="#还原密文" class="headerlink" title="还原密文"></a>还原密文</h3><p>接下来还要根据这个密钥去还原原始密钥，这里还需要用到一个工具<a class="link" target="_blank" rel="noopener" href="https://github.com/SideChannelMarvels/Stark">Stark<i class="fas fa-external-link-alt"></i></a>，它里面有一个aes_keyschedule.c文件，将其拷贝到本地并编译为可执行文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc aes_keyschedule.c -o aes_keyschedule</span><br></pre></td></tr></table></figure>
+<p>然后将刚才得到的第10轮密钥喂进去：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./aes_keyschedule 5D432583B2AA833FC22D53130FDA904C 10</span><br></pre></td></tr></table></figure>
+<p>执行上述命令后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">./aes_keyschedule D014F9A8C9EE2589E13F0CC8B6630CA6 10</span><br><span class="line">K00: 2B7E151628AED2A6ABF7158809CF4F3C</span><br><span class="line">K01: A0FAFE1788542CB123A339392A6C7605</span><br><span class="line">K02: F2C295F27A96B9435935807A7359F67F</span><br><span class="line">K03: 3D80477D4716FE3E1E237E446D7A883B</span><br><span class="line">K04: EF44A541A8525B7FB671253BDB0BAD00</span><br><span class="line">K05: D4D1C6F87C839D87CAF2B8BC11F915BC</span><br><span class="line">K06: 6D88A37A110B3EFDDBF98641CA0093FD</span><br><span class="line">K07: 4E54F70E5F5FC9F384A64FB24EA6DC4F</span><br><span class="line">K08: EAD27321B58DBAD2312BF5607F8D292F</span><br><span class="line">K09: AC7766F319FADC2128D12941575C006E</span><br><span class="line">K10: D014F9A8C9EE2589E13F0CC8B6630CA6</span><br></pre></td></tr></table></figure>
+<p>即可得到密钥为2B7E151628AED2A6ABF7158809CF4F3C，同一开始的密钥一致</p>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                DFA还原白盒AES密钥
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/15785/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2023-01-31 22:00</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/13480/"
+                                   title="ProtoBuf分析以及某方数据逆向"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">ProtoBuf分析以及某方数据逆向</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/17732/"
+                                   title="AES知道某一轮次密钥反推主密钥"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">AES知道某一轮次密钥反推主密钥</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%95%85%E9%9A%9C%E5%AF%86%E9%92%A5%E5%BE%97%E5%88%B0%E7%AC%AC%E5%8D%81%E8%BD%AE%E5%AF%86%E9%92%A5"><span class="nav-number">2.</span> <span class="nav-text">通过故障密钥得到第十轮密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%98%E5%8E%9F%E5%AF%86%E6%96%87"><span class="nav-number">3.</span> <span class="nav-text">还原密文</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">108.2k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%95%85%E9%9A%9C%E5%AF%86%E9%92%A5%E5%BE%97%E5%88%B0%E7%AC%AC%E5%8D%81%E8%BD%AE%E5%AF%86%E9%92%A5"><span class="nav-number">2.</span> <span class="nav-text">通过故障密钥得到第十轮密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%98%E5%8E%9F%E5%AF%86%E6%96%87"><span class="nav-number">3.</span> <span class="nav-text">还原密文</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/local-search.js"></script>
+
+
+<!-- code-block -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/code-block.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/lazyload.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
+
+        <!-- toc -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
+        
+    
+
+    <!-- category-page -->
+    
+
+    <!-- links-page -->
+    
+</div>
+
+<!-- pjax -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+
+</body>
+</html>
