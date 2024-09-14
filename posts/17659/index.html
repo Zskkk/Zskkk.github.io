@@ -298,7 +298,7 @@
 <p>到这里也能看出来so中的JNI_Onload的函数名必须要c的形式进行编译，还要导出的原因就是这里它需要去查找符号名</br>重新编译，刷入手机</br>运行有加壳的app，查看log</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231115/01.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231115/01.webp"
                      
                 ></p>
 <h4 id="第二种：基于frida，xposed等hook框架定制"><a href="#第二种：基于frida，xposed等hook框架定制" class="headerlink" title="第二种：基于frida，xposed等hook框架定制"></a>第二种：基于frida，xposed等hook框架定制</h4><p>要实现对加载so监控的话，可以结合流程当中的api进行hook来监控so的加载流程，在hook中选择的api层级越底层越好，如果只通过System.load, loadLibrary进行监控的话，可能会遗漏掉通过runtime进行加载的so。</br>上面分析到加载so底层的api是libnativeloader.so下的OpenNativeLibrary和libart.so下的LoadNativeLibrary</br>可以使用frida进行hook，在hook前可以先把libnativeloader.so和libart.so脱出来用ida查看导出表OpenNativeLibrary和LoadNativeLibrary的导出符号</br>&#x2F;system&#x2F;lib&#x2F;libart.so或者&#x2F;system&#x2F;lib64&#x2F;libart.so</br>&#x2F;system&#x2F;lib&#x2F;libnativeloader.so或者&#x2F;system&#x2F;lib64&#x2F;libnativeloader.so</br>OpenNativeLibrary的导出符号：_ZN7android17OpenNativeLibraryEP7_JNIEnviPKcP8_jobjectP8_jstringPbPNSt3__112basic_stringIcNS9_11char_traitsIcEENS9_9allocatorIcEEEE</p>

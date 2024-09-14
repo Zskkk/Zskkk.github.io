@@ -265,17 +265,17 @@
                     <h3 id="一、刷机"><a href="#一、刷机" class="headerlink" title="一、刷机"></a>一、刷机</h3><p>1、首先找到对应自己手机的镜像版本，进行下载，<a class="link"   target="_blank" rel="noopener" href="https://developers.google.cn/android/images#blueline" >https://developers.google.cn/android/images#blueline<i class="fas fa-external-link-alt"></i></a><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/01.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/01.webp"
                       alt="image.png"
                 ><br />新建个文件夹shuaji，下载完解压到刷机里面<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/02.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/02.webp"
                       alt="image.png"
                 ><br />2、下载刷机工具platform-tools.zip，<a class="link"   target="_blank" rel="noopener" href="https://developer.android.com/studio/releases/platform-tools?hl=zh-cn" >https://developer.android.com/studio/releases/platform-tools?hl=zh-cn<i class="fas fa-external-link-alt"></i></a>，根据操作系统下载，链接需要翻墙才能打开，我也把下载链接放出来，可以直接下载<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/03.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/03.webp"
                       alt="image.png"
                 ></p>
 <ul>
@@ -286,43 +286,43 @@
 <p>下载完，同样解压到shuaji目录下<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/04.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/04.webp"
                       alt="image.png"
                 ><br />3、手机关机，关机后 长按住 关键键+音量减键（或者开机界面执行adb reboot bootloader），手机进入bootloader<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/05.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/05.webp"
                      
                 ><br />4、winfows运行shuaji目录下flash-all.bat，mac则需要运行flash-all.sh文件，整个过程会自动处理完成，伴随着重启几次。<br /> <img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/06.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/06.webp"
                       alt="image.png"
                 ><br />过了几分钟后，到这里就刷机成功了<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/07.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/07.webp"
                      
                 ><br />5.修改手机配置<br />（1）点击English，换成简体中文，然后点击开始，能跳过的则跳过。<br />（2）点击设置，点击关于手机，多次点击版本号，开启开发者模式，在开发者模式开启USB调式。<br />（3）在设置修改手机日期时间为当前日期时间（不弄可能没网）</p>
 <h3 id="二、解锁root"><a href="#二、解锁root" class="headerlink" title="二、解锁root"></a>二、解锁root</h3><p>下载Magisk，<a class="link"   target="_blank" rel="noopener" href="https://github.com/topjohnwu/Magisk/tags" >https://github.com/topjohnwu/Magisk/tags<i class="fas fa-external-link-alt"></i></a>，我这下载的是v24.0的<br /><br>1.usb连接电脑后，使用命令 adb install Magisk-v24.0.apk 进行安装。<br /><br>2.解压上面shuaji文件目录下的image-xxxx.zip，把boot.img 通过adb push到手机&#x2F;sdcard&#x2F;download&#x2F;<br />命令：adb push boot.img &#x2F;sdcard&#x2F;download&#x2F;<br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/08.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/08.webp"
                       alt="image.png"
                 ><br /><br>3.手机上如下操作magisk，生成 magisk_patched-24000_xxxxx.img 文件<img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/09.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/09.webp"
                       alt="image.png"
                 ><br /><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/10.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/10.webp"
                       alt="image.png"
                 ><br />选择刚才上传的boot.img 然后点击开始，接着会在目录下生成带magisk的文件<img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230211/11.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230211/11.webp"
                       alt="image.png"
                 ><br />4.把生成的magisk_patched-24000_xxxxx.img 通过 adb pull 到电脑fastboot.exe所在的目录，也就是shuaji目录，命令如下 adb pull &#x2F;sdcard&#x2F;Download&#x2F;magisk_patched-24000_qJQvu.img .<br />5. 执行 adb reboot bootloader 手机进入bootloader<br />6. 执行命令 fastboot flash boot magisk_patched-24000_qJQvu.img 刷magisk fastboot reboot<br />7. 手机点击电源键让手机正常启动，magisk安装成功，root完成</p>
 

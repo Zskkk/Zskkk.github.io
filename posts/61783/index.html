@@ -265,7 +265,7 @@
                     <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240717/01.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20240717/01.webp"
                      
                 ></p>
 <p>明文：31323334353637383930616263646566（16个字节）</br>KEY：31323334353637383930616263646566（16个字节）</br></p>
@@ -297,7 +297,7 @@
 <h3 id="SM4-CBC模式"><a href="#SM4-CBC模式" class="headerlink" title="SM4 CBC模式"></a>SM4 CBC模式</h3><p>上面实现的是ecb模式，cbc模式会在分组加密的时候与iv异或，异或后的结果替换明文参与加密。且每组加密完的结果会做为下一轮的iv参与异或。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20240717/02.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20240717/02.webp"
                      
                 ></p>
 <p>明文：31323334353637383930616263646566（16个字节）<br>KEY：31323334353637383930616263646566（16个字节）<br>IV：   1234567890abcdef1234567890abcdef（16个字节）</br><br>明文和IV每个字节分别异或后拼接<br>明文: 0x31 0x32 0x33 0x34 0x35 0x36 0x37 0x38 0x39 0x30 0x61 0x62 0x63 0x64 0x65 0x66<br>IV:    0x12 0x34 0x56 0x78 0x90 0xab 0xcd 0xef 0x12 0x34 0x56 0x78 0x90 0xab 0xcd 0xef<br>结果: 23 06 65 4c a5 9d fa d7 2b 04 37 1a f3 cf a8 89<br>异或后的结果当成“明文”参与加密，其他流程跟ecb模式一样</p>

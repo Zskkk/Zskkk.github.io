@@ -265,7 +265,7 @@
                     <h3 id="Android-App启动流程"><a href="#Android-App启动流程" class="headerlink" title="Android App启动流程"></a>Android App启动流程</h3><p>这里就先以一张图来说明这个过程<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/01.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/01.webp"
                      
                 ></p>
 <blockquote>
@@ -282,45 +282,45 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/02.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/02.webp"
                      
                 ><br>进入983行newApplication函数</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/03.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/03.webp"
                      
                 ></p>
 <p>这里调用的时1084行的newApplication，但它又调用了1099行的newApplication<br>这里可以看到做了两件事：<br>（1）完成了Application的实例化<br>（2）并调用Application.attach()函数<br>继续进入Application.attach()函数</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/04.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/04.webp"
                      
                 ></p>
 <p>调用了Application.attachBaseContext函数，回到handleBindApplication，这里就执行完第四步<br>跟进第六步，进入callApplicationOnCreate函数<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/05.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/05.webp"
                      
                 ></p>
 <p>执行了Application.onCreate()方法<br>从上面可以看到大概的流程：<br>初始化—&gt;Application的构造函数—&gt;Application.attachBaseContext()—&gt;Application.onCreate()<br>最后才会进入MainActivity中的attachBaseContext函数、onCreate函数<br /><br /><br>可以得出结论，app最先获得执行权限的是app中声明的Application类中的attachBaseContext和onCreate函数。因此，壳要想完成应用中加固代码的解密以及应用执行权的交付就都是在这两个函数上做文章。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/06.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/06.webp"
                      
                 ></p>
 <p>下面这张图大致讲了加壳应用的运行流程。<br> <img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/07.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/07.webp"
                      
                 ></p>
 <p>当壳在函数attachBaseContext和onCreate中执行完加密的dex文件的解密后，通过自定义的Classloader在内存中加载解密后的dex文件。为了解决后续应用在加载执行解密后的dex文件中的Class和Method的问题，接下来就是通过利用java的反射修复一系列的变量。其中最为重要的一个变量就是应用运行中的Classloader，只有Classloader被修正后，应用才能够正常的加载并调用dex中的类和方法，否则的话由于Classloader的双亲委派机制，最终会报ClassNotFound异常，应用崩溃退出，这是加固厂商不愿意看到的。由此可见Classloader是一个至关重要的变量，所有的应用中加载的dex文件最终都在应用的Classloader中。</p>
 <h4 id="整体加壳原理"><a href="#整体加壳原理" class="headerlink" title="整体加壳原理"></a>整体加壳原理</h4><p>Dex整体加壳可以理解为在加密的源Apk程序外面有套上了一层外壳，简单过程为：<br> <img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/08.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/08.webp"
                      
                 ></p>
 <p>简要概括：壳dex读取源dex文件，通过加密后写进一个新的dex文件，就成为新的APK</p>
@@ -340,7 +340,7 @@
 <h4 id="第一种：类加载器替换"><a href="#第一种：类加载器替换" class="headerlink" title="第一种：类加载器替换"></a>第一种：类加载器替换</h4><p>怎么去替换系统的类加载器，这就和上面分析的ActivityThread中LoadedApk有关了，LoadedApk主要负责加载一个Apk程序，我们进一步分析源码<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/09.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/09.webp"
                      
                 ></p>
 <p>在LoadedApk里面就定义了ClassLoader即mClassLoader，可以通过反射获取mclassLoader，然后使用我们的DexClassLoader进行替换。</p>
@@ -350,7 +350,7 @@
 <p>大概的图如下，Android 应用的组件mclassLoader是由PathClassLoader加载的，要把mclassLoader替换成DexClassLoader就可以加载自定义的dex文件<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/10.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/10.webp"
                      
                 ></p>
 <p>先新建项目loaddextest编写一个activity类</p>
@@ -370,7 +370,7 @@
 <h4 id="第二种：类加载器插入"><a href="#第二种：类加载器插入" class="headerlink" title="第二种：类加载器插入"></a>第二种：类加载器插入</h4><p>还有一种方案，动态加载中我们讲述了类加载器的双亲委派机制，就是说我们的类加载器刚拿到类，并不会直接进行加载，而是先判断自己是否加载，如果没有加载则给自己的父类，父类再给父类，所以我们让DexClassLoader成为PathClassLoader的父类，这样就可以解决DexClassLoader生命周期的问题<br>大概的图如下：<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/11.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/11.webp"
                      
                 ></p>
 <p>总结：<br>（1）将DexClassloader父节点设置为BootClassLoader<br>（2）将PathClassLoader父节点设置为DexClassloader</p>
@@ -385,7 +385,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20231017/12.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20231017/12.webp"
                      
                 ></p>
 <p>运行成功，说明我们的整体加壳成功</p>

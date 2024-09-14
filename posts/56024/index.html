@@ -273,7 +273,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210607/01.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210607/01.webp"
                      
                 ></p>
 <h3 id="刷入SuperSU（Android-8）"><a href="#刷入SuperSU（Android-8）" class="headerlink" title="刷入SuperSU（Android 8）"></a>刷入SuperSU（Android 8）</h3><p>连上数据线，开启开发者模式<br /><br>运行命令</p>
@@ -296,7 +296,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210607/02.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210607/02.webp"
                      
                 ></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br></pre></td></tr></table></figure>
@@ -306,13 +306,13 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210607/03.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210607/03.webp"
                      
                 ><br><br /><br>点击NetHunter<br /><br>菜单选择KeX Manager<br /><br>点击SETUP LOCAL SERVER<br /><br>设置密码<br /><br> <br /><br>点击START SERVER开启服务器</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210607/04.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210607/04.webp"
                      
                 ><br><br /><br>连接手机</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@xxx.xxx.xx.xx</span><br></pre></td></tr></table></figure>
@@ -324,13 +324,13 @@
 <h3 id="另一种-android8-magisk-LSPosed"><a href="#另一种-android8-magisk-LSPosed" class="headerlink" title="另一种 android8+magisk+LSPosed"></a>另一种 android8+magisk+LSPosed</h3><p><a class="link"   target="_blank" rel="noopener" href="https://developers.google.cn/android/images" >https://developers.google.cn/android/images<i class="fas fa-external-link-alt"></i></a><br /><br><a class="link"   target="_blank" rel="noopener" href="https://topjohnwu.github.io/Magisk/install.html" >https://topjohnwu.github.io/Magisk/install.html<i class="fas fa-external-link-alt"></i></a><br /><br>android8+magisk+LSPosed<br /><br>下载刷机系统包后，解压，进入，输入 .&#x2F;flash-all.sh<br /><br>安装magisk<br /><br>修补镜像才能root<br /><br>刷完后从刷机包里的镜像压缩包找到boot.img ，推送到 &#x2F;sdcard&#x2F; 下<br /><br>打开magisk，点击安装，选择并修补一个文件，选择刚才推送的文件，点开始，然后就开始patch了<br /><br>显示All done后，adb shell进入到 &#x2F;sdcard&#x2F;Download&#x2F; 下，看到修补后的img，adb pull到电脑上<br /><br>进入到解压的系统包，输入adb root bootloader 到刷机界面<br /><br>输入 fastboot flash boot &#x2F;path&#x2F;to&#x2F;magisk_patched.img （这里用自己修补后的）<br /><br>刷完之后在输入 fastboot flash recovery &#x2F;path&#x2F;to&#x2F;magisk_patched.img <br /><br>重启之后就root成功了<br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210607/05.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210607/05.webp"
                      
                 ><br><br /></p>
 <p><a class="link"   target="_blank" rel="noopener" href="https://github.com/LSPosed/LSPosed" >https://github.com/LSPosed/LSPosed<i class="fas fa-external-link-alt"></i></a><br /><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20210607/06.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210607/06.webp"
                      
                 ><br><br /><br>下载 Riru 压缩包，push到手机&#x2F;sdcard&#x2F;，打开magisk点击模块，选择Riru，安装后<br /><br>下载LSPosed，推送到 &#x2F;sdcard&#x2F;，，打开magisk点击模块，选择LSPosed，安装后重启</p>
 

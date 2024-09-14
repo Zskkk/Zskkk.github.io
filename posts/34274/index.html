@@ -332,7 +332,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20220705/01.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/01.webp"
                      
                 ></p>
 </br>
@@ -343,13 +343,13 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20220705/02.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/02.webp"
                      
                 ></p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20220705/03.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/03.webp"
                      
                 ></p>
 </br>
@@ -434,7 +434,7 @@
 <h2 id="链接变量与初始链接变量进行求和运算"><a href="#链接变量与初始链接变量进行求和运算" class="headerlink" title="链接变量与初始链接变量进行求和运算"></a>链接变量与初始链接变量进行求和运算</h2><p>SHA1有4轮运算，每一轮包括20个步骤，一共80步，最终产生160位的信息摘要，这160位的摘要存放在5个32位的链接变量中。</br><br>在SHA1的4论运算中，虽然进行的就具体操作函数不同，但逻辑过程却是一致的。首先，定义5个变量，假设为H0、H1、H2、H3、H4，对其分别进行如下操作：</br><br>（A）、将A左移5为与 函数的结果求和，再与对应的子明文分组、E以及计算常数求和后的结果赋予H0。</br><br>（B）、将A的值赋予H1。</br><br>（C）、将B左移30位，并赋予H2。</br><br>（D）、将C的值赋予H3。</br><br>（E）、将D的值赋予H4。</br><br>（F）、最后将H0、H1、H2、H3、H4的值分别赋予A、B、C、D</br></br><br>A &#x3D; H0 &#x3D; A&lt;&lt;&lt;5+ft(B,C,D)+E+Wt+Kt</br><br>B &#x3D; H1 &#x3D; A</br><br>C &#x3D; H2 &#x3D; B&lt;&lt;&lt;30</br><br>D &#x3D; H3 &#x3D; C</br><br>E &#x3D; H4 &#x3D; D</br><br>这一过程表示如下：</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20220705/04.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/04.webp"
                      
                 ></p>
 </br>
@@ -449,7 +449,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20220705/05.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/05.webp"
                      
                 ></p>
 <p>跟程序结果一致，下面直接输出结果<br />W0 &#x3D; 0x34303937<br />W1 &#x3D; 0x33323131<br />W2 &#x3D; 0x32800000<br />W3 &#x3D; 0x0<br />W4 &#x3D; 0x0<br />W5 &#x3D; 0x0<br />W6 &#x3D; 0x0<br />W7 &#x3D; 0x0<br />W8 &#x3D; 0x0<br />W9 &#x3D; 0x0<br />W10 &#x3D; 0x0<br />W11 &#x3D; 0x0<br />W12 &#x3D; 0x0<br />W13 &#x3D; 0x0<br />W14 &#x3D; 0x0<br />W15 &#x3D; 0x48<br />W16 &#x3D; 0xd60726e<br />W17 &#x3D; 0x66646262<br />W18 &#x3D; 0x65000090<br />W19 &#x3D; 0x1ac0e4dc<br />W20 &#x3D; 0xccc8c4c4<br />W21 &#x3D; 0xca000120<br />W22 &#x3D; 0x3581c9b8<br />W23 &#x3D; 0x99918919<br />W24 &#x3D; 0x8ec0e69d<br />W25 &#x3D; 0xa7cb57b4<br />W26 &#x3D; 0xf9231313<br />W27 &#x3D; 0x28000483<br />W28 &#x3D; 0xd60726e0<br />W29 &#x3D; 0x664624f6<br />W30 &#x3D; 0x21c37eaa<br />W31 &#x3D; 0x53e59ba6<br />W32 &#x3D; 0x1cd612b<br />W33 &#x3D; 0xf5595f41<br />W34 &#x3D; 0x61c99c2<br />W35 &#x3D; 0xf21b00a9<br />W36 &#x3D; 0xb42ee9bb<br />W37 &#x3D; 0x67966a1a<br />W38 &#x3D; 0xd132a24c<br />W39 &#x3D; 0xb3235961<br />W40 &#x3D; 0x2371fd7e<br />W41 &#x3D; 0x57415c75<br />W42 &#x3D; 0x3437eaa1<br />W43 &#x3D; 0x3e59bb45<br />W44 &#x3D; 0x2957db08<br />W45 &#x3D; 0xcc047fd6<br />W46 &#x3D; 0x9eca0d11<br />W47 &#x3D; 0x79908d1c<br />W48 &#x3D; 0xd148f483<br />W49 &#x3D; 0x9d921d19<br />W50 &#x3D; 0xff2a2f89<br />W51 &#x3D; 0xf5384aea<br />W52 &#x3D; 0xa3b31bcd<br />W53 &#x3D; 0xcf36c649<br />W54 &#x3D; 0x33623193<br />W55 &#x3D; 0x7c83278a<br />W56 &#x3D; 0x12704a2a<br />W57 &#x3D; 0x8fd19775<br />W58 &#x3D; 0x3d927355<br />W59 &#x3D; 0x2a2b88a6<br />W60 &#x3D; 0x37feb543<br />W61 &#x3D; 0x8e608fac<br />W62 &#x3D; 0xad96814e<br />W63 &#x3D; 0x5efe0599<br />W64 &#x3D; 0x64e43d19<br />W65 &#x3D; 0x95da8390<br />W66 &#x3D; 0x7fea8510<br />W67 &#x3D; 0xe9827238<br />W68 &#x3D; 0x65ea391a<br />W69 &#x3D; 0x847fd6fe<br />W70 &#x3D; 0xca0d119e<br />W71 &#x3D; 0x908d18f9<br />W72 &#x3D; 0x9ef3a531<br />W73 &#x3D; 0xf45b1bbb<br />W74 &#x3D; 0xca16b7ff<br />W75 &#x3D; 0xa675a007<br />W76 &#x3D; 0x17b22d58<br />W77 &#x3D; 0x3defd669<br />W78 &#x3D; 0x4a141b9d<br />W79 &#x3D; 0x98376750</p>
@@ -491,7 +491,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20220705/06.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/06.webp"
                      
                 ><br><br />第一轮第一步<br />A&lt;&lt;&lt;5 &#x3D;&#x3D;&gt; 1110 1000 1010 0100 0110 0000 0010 1100<br />B&amp;C &#x3D; 1000 1000 1000 1000 1000 1000 1000 1000<br /><del>B&amp;D&#x3D; 0001 0000 0011 0010 0101 0100 0111 0110<br />ft(B,C,D) &#x3D; (B&amp;C)|(</del>B&amp;D) &#x3D; 1001 1000 1011 1010 1101 1100 1111 1110<br />H0 &#x3D; 0x2D3E4D1EA（保留末8位）&#x3D; 0x D3E4D1EA<br />H1 &#x3D; 0x67452301<br />H2 &#x3D; 0x7BF36AE2<br />H3 &#x3D; 0x98BADCFE<br />H4 &#x3D; 0x10325476<br />把H0-H4重新赋值给A,B,C,D,E<br />A &#x3D; H0<br />B &#x3D; H1<br />C &#x3D; H2<br />D &#x3D; H3<br />E &#x3D; H4<br />…<br />第80轮<br />A &#x3D; 0x135B4514 &#x3D; 0001 0011 0101 1011 0100 0101 0001 0100<br />B &#x3D; 0xCE03E912 &#x3D; 1100 1110 0000 0011 1110 1001 0001 0010<br />C &#x3D; 0xD50D5F9A &#x3D; 1101 0101 0000 1101 0101 1111 1001 1010<br />D &#x3D; 0xD940C253 &#x3D; 1101 1001 0100 0000 1100 0010 0101 0011<br />E &#x3D; 0x36F72811 &#x3D; 0011 0110 1111 0111 0010 1000 0001 0001</p>
 <p>A&lt;&lt;&lt;5 &#x3D; 0110 1011 0110 1000 1010 0010 1000 0010<br />ft(B,C,D)&#x3D;B⊕C⊕D &#x3D; 1100 0010 0100 1110 0111 0100 1101 1011<br />W79 &#x3D; 0x98376750<br />K79 &#x3D; 0xCA62C1D6<br />H0 &#x3D; 0xC7486894<br />H1 &#x3D;  0x135B4514<br />H2 &#x3D; 1011 0011 1000 0000 1111 1010 0100 0100 &#x3D; 0xB380FA44<br />H3 &#x3D; 0xD50D5F9A<br />H4 &#x3D; 0xD940C253 </p>

@@ -350,17 +350,17 @@
 <h2 id="条件和标志位响应"><a href="#条件和标志位响应" class="headerlink" title="条件和标志位响应"></a>条件和标志位响应</h2><h3 id="条件指令"><a href="#条件指令" class="headerlink" title="条件指令"></a>条件指令</h3><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/1.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/1.webp"
                      
                 ></br>条件指令是加在运算符后面的，如何看懂？</br>例如机器码为：</br>03 00 10 E3	TST</br>小端序排序的，前高4位是条件，看最高位也就是E，E的对应的bit为1110，也就是None，无条件，可以说E是出现最多的</br>06 00 00 0A	BEQ</br>最高位0，0就是EQ，</br>03 00 52 21	CMPCS</br>最高位为2，2就是0010，CS</br>指令后缀带S的，表示执行完标志位会改变</br>01 00 80 E0	ADD	R0, R0, R1</br>01 00 90 E0	ADDS	R0, R0, R1</br>01 00 40 E0	SUB		R0, R0, R1</br>01 00 50 E0	SUBS	R0, R0, R1</br>S是由第20个bit控制，也就是上面的8，9</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/2.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/2.webp"
                      
                 ></br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/3.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/3.webp"
                      
                 ></br></p>
 <p>S位为0就是不带S，为就是S</br>大部分算术指令都可以加S，CMP不行，CMP的20位固定为1</br></p>
@@ -375,26 +375,26 @@
 <h2 id="MOV指令"><a href="#MOV指令" class="headerlink" title="MOV指令"></a>MOV指令</h2><h3 id="立即数"><a href="#立即数" class="headerlink" title="立即数"></a>立即数</h3><p><strong>Move（immediate）将立即数值写入目标寄存器。</strong><br>mov是不访问内存，没有写内存的功能。那就只有寄存器操作数或者立即操作数</br>mov是把第二个操作数（可能是寄存器也可能是立即数）写到第一个操作数，那第一个操作数只能是寄存器操作数</br>arm指令是定长32位的，也就是立即数长度肯定不会超过32位</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/4.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/4.webp"
                      
                 ><br>这里立即数的位数是imm4+imm12，也就是16位</br>例如：</br>34 82 01 E3                   MOVW            R8, #0x1234</br>如果是超过16位，则写不进。</br>第15-12位4位二进制的长度刚好16对应着r0-r15</br>还有一种A1格式，立即数是可以超过16-32位的</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/5.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/5.webp"
                      
                 ></br><br>02 81 A0 E3                   MOV             R8, #0x80000000</br>虽然这里长度比16位大，但是它的有效位只有最高位的8，这里是把2向右移动1*2位， 0010 -&gt;右移2位-&gt; 1000 -&gt; 8(十进制)</br>01 81 A0 E3                   MOV             R8, #0x40000000</br>把1向右移动1*2位，0001 -&gt;右移2位-&gt; 0100 -&gt; 4(十进制)</br>02 82 A0 E3                   MOV             R8, #0x20000000</br>把2向右移动4位，0010 -&gt;右移4位-&gt; 0010 -&gt; 2(十进制)</br>立即数的有效位数比较密集，可以集中在8位范围内还是偶数</br>如果真要写入32位有效数如何做？</br>先写一条指令 mov r0, 0x5678 </br>再写 movt r0, 0x1234 写到高16位，ida会两句合成一句伪指令</br>78 06 05 E3 34 02 41 E3       MOV             R0, #0x12345678</br></p>
 <h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p><strong>Move（register）将值从寄存器复制到目标寄存器。</strong></br></p>
 <p>上面说的是立即数到寄存器，这个是寄存器到寄存器</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/6.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/6.webp"
                      
                 ></br></p>
 <p>除了： 01 00 A0 E1                   MOV             R0, R1</br>还能： 01 02 A0 E1                   MOV             R0, R1,LSL#4 （R0是一个操作数，R1,LSL#4整体是一个操作数）R1向左移动4位写到r0里</br>看第7-11位，5位的长度也就是2的32次方来表示偏移</br>第5-6位，stype2位的长度有4种情况，逻辑左移，逻辑右移，算术右移 ，循环移位（算术左移的逻辑和逻辑左移是一样的，循环移位不区分左右移，比如循环左移1位和循环右移32位是一样的）</br>此指令由别名 ASRS (immediate), ASR (immediate), LSLS (immediate), LSL (immediate), LSRS (immediate), LSR (immediate), RORS (immediate), ROR (immediate), RRXS, and RRX使用.</br> 指令lsl r0, r1,4 的效果跟 R0, R1,LSL#4 是一样的</br>所以 ASRS, ASR, LSLS, LSL, LSRS, LSR, RORS, ROR, RRXS, RRX 实际上都可以认为是mov指令的一个宏，另一种写法，在ida中都会翻译成mov指令</br>常用的也就是逻辑左移，逻辑右移，算术右移，都是一些数组，结构体偏移寻址的</br></p>
 <h3 id="寄存器移位寄存器"><a href="#寄存器移位寄存器" class="headerlink" title="寄存器移位寄存器"></a>寄存器移位寄存器</h3><p>Move（寄存器移位寄存器）将寄存器移位后的寄存器值复制到目标寄存器。</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/7.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/7.webp"
                      
                 ></br></p>
 <p>例如：11 02 A0 E1                   MOV             R0, R1,LSL R2</br></p>
@@ -402,14 +402,14 @@
 <h3 id="ADD-ADDS-immediate"><a href="#ADD-ADDS-immediate" class="headerlink" title="ADD, ADDS (immediate)"></a>ADD, ADDS (immediate)</h3><p>加法指令。</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/8.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/8.webp"
                      
                 ></br></p>
 <p>立即数长度12，分为有效数字低8位，高4位做位移循环。这种叫A32ExpandImm，把imm12扩展成32位</br></p>
 <h3 id="ADD-ADDS-register"><a href="#ADD-ADDS-register" class="headerlink" title="ADD, ADDS (register)"></a>ADD, ADDS (register)</h3><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/9.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/9.webp"
                      
                 ></br></p>
 <h3 id="ADR"><a href="#ADR" class="headerlink" title="ADR"></a>ADR</h3><p>将地址加载到寄存器的伪指令。</br>从PC相对地址将立即值添加到PC值以形成PC相对地址，并写入结果发送到目标寄存器。</br>该指令由伪指令ADD（立即，到PC）和SUB（立即，从PC）使用。这个伪指令从来都不是首选的反汇编。</br>例如指令 add, r0, pc, 4（把pc+4赋给r0）会在ida变成</br>04 00 8F E2                   ADR             R0, loc_16FD4</br>从pc+4会涉及到读pc，读pc  要+8，加上4就是12</br>00016FD0 04 00 8F E2                   ADR             R0, loc_16FDC</br>00016FDC                               loc_16FDC</br></p>
@@ -452,13 +452,13 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/10.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/10.webp"
                      
                 ></br><br>ldr的12位立即数是0扩展的，只支持12位，第23位U是表示正负的，第24位P是表示内外偏移的。str也是同理</br></p>
 <h2 id="块访存指令"><a href="#块访存指令" class="headerlink" title="块访存指令"></a>块访存指令</h2><p>块访存也是访存，读内存就是LDM开头，写内存STM开头，M表示多个数据或多个寄存器</br>当我们在使用LDM或STM指令时，是想加载或存储寄存器值之前还是之后增加或减少基址寄存器的值，这影响了加载或存储完成后基址寄存器的最终值。</br>LDM和STM指令可以跟随以下后缀：</br>IA，IB，DA，DB。第一个操作数后续还能加 ! ：表示在加载或存储完成后更新寄存器。</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/11.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/11.webp"
                      
                 ></br><br>简单归纳就是</br>IA：访问这块指针后，再向后加4。</br>IB：还没访问这块指针，先向后加4，再访问。</br>DA：反向读4字节，然后减4</br>DB：先减4，然后再访问</br>  !表示最后指针的地址是否更新</br>常用只有LDMIA!，STMDB!，当第一个操作数为sp，等价于pop和push</br>再ida中指令为 stmdb sp!,{r0-r3} 会自动替换为</br>0F 00 2D E9                   PUSH            {R0-R3}</br>或</br>0F 00 2D E9                   STMFD           SP!, {R0-R3} </br>这两个是一样，在不同ida版本会显示不同</br>当第一个操作数是sp!时，ida会翻译成STMFD。第二个操作数无论是写 {R2,R1,R4,R3} 也会翻译成 {R1-R4}，寄存器标号小的放在低地址，寄存器标号大的放在高地址。</br>FD是用来操作栈的，当第一个操作数是sp时候，LDMFD等价于LDMIA，STMFD等价于STMDB。ida也会优先翻译为LDMFD，STMFD。当sp加了!后，则会优先翻译为POP和PUSH。</br></p>
 <ul>
@@ -476,7 +476,7 @@
 <h3 id="B"><a href="#B" class="headerlink" title="B"></a>B</h3><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/12.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/12.webp"
                      
                 ></br><br>B指令是无条件跳转，不带模式切换，T标志位不变。如果是从arm跳转thumb，或者thumb跳转到arm，需要保证跳转前后的模式统一。把指令机器码改为 00 00 00 EA，会发现要跳转的地址是当前地址+8，01 00 00 EA 则要跳转的地址是8+立即数<em>4（当前立即数为1）。如果是thumb模式下，则是8+立即数</em>2。</br>当00 00 00 EA会加8，那么FE FF FF EA 则是8+(-2*4)，即一直跳转到自己当前地址，进入死循环。</br>FE FF FF EA 需要记住，当一个进程很快执行结束的时候，又需要进行调试的时候。</br>用ida找到文件_start的地方，elf文件加载到内存中，_start是程序的入口点。可以同010 Editor对这个入口位置的指令修改为 FE FF FF EA。push到设备重新运行就断住了，再把指令改回来，就可以调试。</br>B指令的立即数可以寻址的范围是从当前指令的地址向前或向后移动的距离。由于立即数是相对偏移量，因此它可以覆盖的地址范围是从PC - 32MB到PC + 32MB。thumb模式下立即数只会更短</br></p>
 <ul>
@@ -499,14 +499,14 @@
 <p>下面是在ida中的地址<br>!<img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/13.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/13.webp"
                      
                 ></br><br>在ida中的地址是1e774，通过readelf的地址是1e775，所以就能判断出printf是thumb模式的，在调用printf的时候，会把拆成两部分，最低位写入T标志位，跳转的时候自动模式切换了。</br>这也就解释了在使用frida在hook thumb函数地址的时候为什么要加1了。</br></p>
 <h2 id="Thumb模式"><a href="#Thumb模式" class="headerlink" title="Thumb模式"></a>Thumb模式</h2><p>在thumb下短指令也就是2字节的指令一般不使用r8-r12寄存器，如果使用了就会编译为长指令。</br>一般也没有条件码和标志响应位，运算指令优先对第一，第二操作数相同情况下用短指令编码，以提高代码密度。这种优化可以减少指令数量和代码大小。</br>比如：add r0, r0, r1 会自动转为 add r0, r1</br>还有一些情况当短指令编码编译不过的时候编译器会在指令后缀+.w进行4字节指令编码。</br>add.w r0, r0, r1</br></p>
 <h3 id="IT指令块"><a href="#IT指令块" class="headerlink" title="IT指令块"></a>IT指令块</h3><p>IT 指令是 Thumb 指令集中的一种条件执行指令，用于在紧接着的多条指令中根据条件选择性地执行。IT 指令块由一个条件码和最多四条紧接着的指令组成，它们构成了一个条件执行块。在条件执行块中，只有在满足条件时才会执行相应的指令。</br>IT 指令的格式如下：</br>IT{&lt;x&gt;{&lt;y&gt;{&lt;z&gt;}}}{&lt;q&gt;} &lt;cond&gt;</br><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20230901/14.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230901/14.webp"
                      
                 ></br><br>IT 指令块由可选的后缀（x, y, z）和一个可选的条件码（q）组成。 </br>后缀 x, y, z 分别指示条件执行块中的第一条、第二条和第三条指令。</br> &lt;q&gt; 是可选的条件码，用于指定条件执行块的执行条件。 如果条件码 &lt;q&gt; 不存在，则默认情况下，IT 指令块中的所有指令都受到相同的条件码 <cond> 控制。</br>T表示if，E表示else</br>05 BF	ITTET EQ</br>01 20	MOVEQ R0, #1</br>02 21	MOVEQ R1, #2</br>03 22	MOVS R2, #3</br>04 23	MOVSEQ R3, #4</br>在ida中比如指令 movs r0, #1 如果处于IT指令块里面，会自动给加上条件码。</br>假如这段指令当前的Z标志位是0，那EQ条件就不成立</br>it指令块下的第一条指令跟条件码EQ的条件一样的，不执行</br>it指令块下的第二条指令是看IT后面第一位是T，那也就是跟EQ的条件一样，不执行</br>it指令块下的第三条指令是看IT后面第二位是E，跟EQ的条件相反，执行</br>第四条是T，不执行</br></p>
 <h2 id="调用约定和栈帧分析"><a href="#调用约定和栈帧分析" class="headerlink" title="调用约定和栈帧分析"></a>调用约定和栈帧分析</h2><h3 id="调用约定"><a href="#调用约定" class="headerlink" title="调用约定"></a>调用约定</h3><p>前4个参数：r0-r3，其他参数栈传递</br>非易变寄存器：r4-r11</br><br>r11: 栈帧指针</br>r12: 导入表寻址</br>测试代码，使用ndk build后用ida打开</br></p>

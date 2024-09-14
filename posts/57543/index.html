@@ -276,72 +276,72 @@
 <p>用的抓包工具是HttpCanary，随便进入一间直播间，可以看到弹幕走的是websocket，携带的url参数token来自于下面post返回的结果，经过分析只有st,sign,sv三个参数会变，其余都不变。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/01.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/01.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/02.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/02.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/03.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/03.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/04.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/04.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/05.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/05.webp"
                      
                 ><br>既然分析完了，那就从sign开始入手。当时我找这个sign找了一会没找出来，由于sign会跟其它参数拼接成url，所以我就搜其它参数wifiBssid，搜出来很明显就在第一个。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/06.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/06.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/07.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/07.webp"
                      
                 ><br>这里hook这个getReportString方法，把它的调用堆栈打印出来，然后去查看。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/08.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/08.webp"
                      
                 ><br>这里我就直接贴出来了，省得大家浪费时间去找，眼尖的可以看到里面有signature，不就跟我们要的sign很像吗，这里把b方法三个参数hook打印一下，<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/09.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/09.webp"
                      
                 ><br>进到signature这个方法，可以看到这只是接口，那就搜索这个类，看它在哪里被实现。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/10.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/10.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/11.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/11.webp"
                      
                 ><br>被getSignFromJni方法实现了，再深入看一下，可以看到加密过程在so里面。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/12.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/12.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/13.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/13.webp"
                      
                 ><br>这里就直接hook这个函数打印参数，多调用几次，然后跟抓到的数据做对比，看哪些参数不变。经过我的测试，这些参数不用修改，可以直接拿过来用，而且都是string类型的，也不用做什么类型转换。返回值的st，sign，sv都是组成url需要的参数，而且这里的参数v3是post的body的值。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/14.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/14.webp"
                      
                 ></p>
 <h2 id="2-使用rpc进行调用"><a href="#2-使用rpc进行调用" class="headerlink" title="2.使用rpc进行调用"></a>2.使用rpc进行调用</h2><p>这里就直接使用rpc进行调用就可以了，根据它的参数照搬就可以了。</p>
@@ -361,19 +361,19 @@
 <p>运行结果如下：<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/15.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/15.webp"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/16.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/16.webp"
                      
                 ></p>
 <p>可以看到是实时抓取的，到这里就结束了。</p>
 <h2 id="5-其它接口"><a href="#5-其它接口" class="headerlink" title="5.其它接口"></a>5.其它接口</h2><p>这个app的接口参数都是一样的，不同的接口由functionId这个参数决定的。<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://jsd.cdn.zzko.cn/gh/Zskkk/blog-images@master/20201227/17.webp"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20201227/17.webp"
                      
                 ></p>
 <p>这里我就把其它的接口名发出来，然后post的参数hook查看一下照搬就可以了。<br>搜索 search<br>商品评价列表 getCommentListWithCard<br>问答 getQuestionList<br>直播带货商品 liveCartDetail<br>弹幕 liveauth</p>
