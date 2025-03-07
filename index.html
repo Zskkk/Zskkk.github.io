@@ -35,8 +35,7 @@
     KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
     KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
   </script>
-<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-<style>mjx-container[jax="SVG"] {
+<meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
   direction: ltr;
 }
 
@@ -148,7 +147,8 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style></head>
+</style><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -534,6 +534,72 @@ ECB：是一种基础的加密方式，密文被分割成分组长度相等的�
                 <div class="home-article-item-bottom border-box">
                     
                     <h3 class="home-article-title border-box">
+                        <a href="/posts/34066/">
+                            某乎x-zse-96逆向
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            app的版本是 10.37.0
+定位抓包啥的没啥好说的，参数定位直接jadx搜索，很快定位到，直接上图最终调用so加密的函数
+
+该app有frida检测，怎么绕过看上一篇绕过libmsaoaidsec.so的Frida检测
+从函数看加密跟aes相关，...
+                        
+                    </div>
+
+                    
+
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Sat Mar 08 2025 01:29:54 GMT+0800">2025-03-08 01:29:54</span>
+            </span>
+        
+
+
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">安卓逆向</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Unidbg/">Unidbg</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/34066/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
                         <a href="/posts/45698/">
                             绕过libmsaoaidsec.so的Frida检测
                         </a>
@@ -554,7 +620,7 @@ Frida反检测
     <div class="article-meta-info border-box">
         
             <span class="meta-info-item border-box">
-                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Thu Mar 06 2025 01:19:49 GMT+0800">2025-03-06 01:19:49</span>
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Sat Mar 08 2025 01:31:23 GMT+0800">2025-03-08 01:31:23</span>
             </span>
         
 
@@ -891,65 +957,6 @@ https://github.com/WooyunDota/DroidSSLUnpinning/blob/master/ObjectionUnpinningPl
                 </div>
             </li>
         
-            <li class="home-article-item">
-
-                
-
-                <div class="home-article-item-bottom border-box">
-                    
-                    <h3 class="home-article-title border-box">
-                        <a href="/posts/64557/">
-                            Art中的c++对象内存布局
-                        </a>
-                    </h3>
-
-                    <div class="home-article-content keep-markdown-body">
-                        
-                            ART由C++11实现的，C++11中的类所占内存的大小主要是由成员变量（静态变量除外）决定的，成员函数（虚函数除外）是不计算在内的。成员函数的存储是以一般函数的模式进行存储。a.fun()是通过fun(a.this)来调用的，这时候this指针会做...
-                        
-                    </div>
-
-                    
-
-<div class="article-meta-info-container border-box home">
-    <div class="article-meta-info border-box">
-        
-            <span class="meta-info-item border-box">
-                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Tue Oct 24 2023 00:00:00 GMT+0800">2023-10-24 00:00:00</span>
-            </span>
-        
-
-
-        
-
-        
-
-        
-            <span class="article-tag meta-info-item border-box">
-                <i class="icon fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E8%84%B1%E5%A3%B3/">脱壳</a></li>
-                        
-                    
-                </ul>
-            </span>
-        
-
-        
-        
-        
-        
-    </div>
-
-    
-        <a class="home-read-more" href="/posts/64557/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
-    
-</div>
-
-                </div>
-            </li>
-        
     </ul>
     
     <div class="paginator border-box flex-center">
@@ -1019,7 +1026,7 @@ https://github.com/WooyunDota/DroidSSLUnpinning/blob/master/ObjectionUnpinningPl
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">117k</span>
+                    <span class="item-value border-box word">120.6k</span>
                 </span>
             
 
