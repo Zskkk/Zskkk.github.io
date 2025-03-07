@@ -38,15 +38,6 @@
   </url>
   
   <url>
-    <loc>https://www.zskkk.cn/posts/24643/</loc>
-    
-    <lastmod>2024-09-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.zskkk.cn/posts/61783/</loc>
     
     <lastmod>2024-07-16</lastmod>
@@ -239,6 +230,15 @@
     <loc>https://www.zskkk.cn/about/index.html</loc>
     
     <lastmod>2022-11-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.zskkk.cn/posts/24643/</loc>
+    
+    <lastmod>2022-10-18</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

@@ -215,7 +215,7 @@
 
             <span class="meta-info-item article-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Sat Mar 08 2025 01:31:23 GMT+0800">2025-03-08 01:31:23</span>
+                <span class="pc" data-updated="Sat Mar 08 2025 01:37:05 GMT+0800">2025-03-08 01:37:05</span>
             </span>
         
 
@@ -317,8 +317,8 @@
 <p>因为想要hook linker的call_function并不容易，这里面涉及到linker的自举,可以在<code>.init_proc</code>函数中找一个调用了外部函数的位置，时机越早越好<br>ida中搜索<code>init_proc</code>函数，<br><img  
                      lazyload
                      alt="image"
-                     data-src="/../images/45698/05.png"
-                      alt="05"
+                     data-src="/../images/45698/06.png"
+                      alt="06"
                 ></p>
 <p>期间调用了 <code>sub_118FC()</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">__int64 <span class="title function_">sub_118FC</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  _QWORD v1[<span class="number">2</span>]; <span class="comment">// [xsp+0h] [xbp-20h] BYREF</span></span><br><span class="line"></span><br><span class="line">  v1[<span class="number">1</span>] = *(_QWORD *)(_ReadStatusReg(ARM64_SYSREG(<span class="number">3</span>, <span class="number">3</span>, <span class="number">13</span>, <span class="number">0</span>, <span class="number">2</span>)) + <span class="number">40</span>);</span><br><span class="line">  v1[<span class="number">0</span>] = <span class="number">0LL</span>;</span><br><span class="line">  _system_property_get(<span class="string">&quot;ro.build.version.sdk&quot;</span>, v1);</span><br><span class="line">  <span class="keyword">return</span> atoi((<span class="type">const</span> <span class="type">char</span> *)v1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -611,7 +611,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">120.6k</span>
+                    <span class="item-value border-box word">138.2k</span>
                 </span>
             
 
