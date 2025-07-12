@@ -42,720 +42,124 @@
 
 
 <body>
-<div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
-    
-
-    
-        <span class="pjax-progress-bar"></span>
-        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
-    
-</div>
-
-
-<main class="page-container border-box">
-
-    <!-- home first screen  -->
-    
-
-    <!-- page content -->
-    <div class="page-main-content border-box">
-        <div class="page-main-content-top">
-            
-<header class="header-wrapper">
-
-    <div class="border-box header-content">
-        <div class="left border-box">
-            
-                <a class="logo-image border-box" href="/">
-                    <img src="/images/logo.svg">
-                </a>
-            
-            <a class="site-name border-box" href="/">
-               zskのblog
-            </a>
-        </div>
-
-        <div class="right border-box">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                首页
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                归档
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/tags"
-                            >
-                                标签
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/about"
-                            >
-                                关于
-                            </a>
-                        </li>
-                    
-                    
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fas fa-search"></i>
-                        </li>
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">归档</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/tags">标签</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/about">关于</a>
-                </li>
-            
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle border-box">
-
-            <div class="main-content border-box">
-
-                
-
-                    <div class="fade-in-down-animation">
-    <div class="post-page-container border-box">
-
-        <div class="article-content-container border-box">
-
-            
-
-            <div class="article-content-bottom border-box">
-                
-                    <div class="article-title">
-                        HMAC-MD5,HMAC-SHA1算法流程
-                    </div>
-                
-
-                
-                    <div class="article-header border-box">
-                        
-                            <div class="avatar-box border-box">
-                                <img src="/images/head.svg">
-                            </div>
-                        
-                        <div class="info-box">
-                            <div class="author">
-                                <span class="name">zsk</span>
-                                
-                                    <span class="author-label">Lv4</span>
-                                
-                            </div>
-                            <div class="meta-info border-box">
-                                
-
-<div class="article-meta-info-container border-box post">
-    <div class="article-meta-info border-box">
-        
-
-
-        
-            <span class="meta-info-item article-create-date">
-                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
-                <span class="pc">2022-07-06 00:00:00</span>
-                <span class="mobile">2022-07-06 00:00</span>
-            </span>
-
-            <span class="meta-info-item article-update-date">
-                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Wed Jul 06 2022 00:00:00 GMT+0800">2022-07-06 00:00:00</span>
-            </span>
-        
-
-        
-
-        
-            <span class="article-tag meta-info-item border-box">
-                <i class="icon fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
-                        
-                    
-                </ul>
-            </span>
-        
-
-        
-        
-            <span class="meta-info-item article-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>826 字</span>
-            </span>
-        
-        
-            <span class="meta-info-item article-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>3 分钟</span>
-            </span>
-        
-        
-            <span class="meta-info-item article-pv">
-                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-            </span>
-        
-    </div>
-
-    
-</div>
-
-                            </div>
-                        </div>
-                    </div>
-                
-
-                <div class="article-content keep-markdown-body">
-                    
-
-                    <h2 id="每种哈希函数的特征"><a href="#每种哈希函数的特征" class="headerlink" title="每种哈希函数的特征"></a>每种哈希函数的特征</h2><p><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220706/01.webp"
-                     
-                ></p>
-<h3 id="1-MD5"><a href="#1-MD5" class="headerlink" title="1.MD5"></a>1.MD5</h3><p>初始化魔数：<br />A &#x3D; 0x67452301;<br />B &#x3D; 0xEFCDAB89;<br />C &#x3D; 0x98BADCFE;<br />D &#x3D; 0x10325476;<br />K表<br />K1 &#x3D; 0xd76aa478<br />K2 &#x3D; 0xe8c7b756<br />K3 &#x3D; 0x242070db<br />K表来自sin函数<br />输出长度16个字节，或者说32个十六进制数，有时候输出16个十六进制数。</p>
-<h3 id="2-SHA1"><a href="#2-SHA1" class="headerlink" title="2.SHA1"></a>2.SHA1</h3><p>A &#x3D; 0x67452301<br />B &#x3D; 0xEFCDAB89<br />C &#x3D; 0x98BADCFE<br />D &#x3D; 0x10325476<br />E &#x3D; 0xC3D2E1F0<br />和MD5相比，有五个初始化链接变量，而且前四个链接变量完全相同。<br />输出长度20个字节，或者说40个十六进制数。<br />只有四个K值，每20轮用同一个K作变换<br />K1 &#x3D; 0x5a827999<br />K2 &#x3D; 0x6ed9eba1<br />K3 &#x3D; 0x8f1bbcdc<br />K4 &#x3D; 0xca62c1d6</p>
-<h3 id="3-SHA256"><a href="#3-SHA256" class="headerlink" title="3.SHA256"></a>3.SHA256</h3><p>A &#x3D; 0x6A09E667;<br />B &#x3D; 0xBB67AE85;<br />C &#x3D; 0x3C6EF372;<br />D &#x3D; 0xA54FF53A;<br />E &#x3D; 0x510E527F;<br />F &#x3D; 0x9B05688C;<br />G &#x3D; 0x1F83D9AB;<br />H &#x3D; 0x5BE0CD19;<br />八个初始化链接变量<br />输出长度为32个字节，或者说64个十六进制数<br />有64个K值，每轮1个K值<br />K1 &#x3D; 0x428a2f98<br />K2 &#x3D; 0x71374491<br />K3 &#x3D; 0xb5c0fbcf<br />K4 &#x3D; 0xe9b5dba5<br />K值来自素数</p>
-<h3 id="4-SHA-512"><a href="#4-SHA-512" class="headerlink" title="4.SHA 512"></a>4.SHA 512</h3><p>A &#x3D; 0x6a09e667f3bcc908;<br />B &#x3D; 0xbb67ae8584caa73b;<br />C &#x3D; 0x3c6ef372fe94f82b;<br />D &#x3D; 0xa54ff53a5f1d36f1;<br />E &#x3D; 0x510e527fade682d1;<br />F &#x3D; 0x9b05688c2b3e6c1f;<br />G &#x3D; 0x1f83d9abfb41bd6b;<br />H &#x3D; 0x5be0cd19137e2179;<br />八个初始化链接变量，IDA反编译也时常显示为16个。<br />输出长度为64字节，或者说128个十六进制数<br />有80个K，每一轮一个K，K值来自素数。<br />K1 &#x3D; 0x428a2f98d728ae22<br />K2 &#x3D; 0x7137449123ef65cd<br />K3 &#x3D; 0xb5c0fbcfec4d3b2f<br />K4 &#x3D; 0xe9b5dba58189dbbc<br />和SHA256的K有关联。</p>
-<h2 id="HMAC"><a href="#HMAC" class="headerlink" title="HMAC"></a>HMAC</h2><p>HMAC-MD5<br />HMAC-SHA1<br />HMAX-XXX 加盐+双重哈希方案</p>
-<h3 id="HMAC-MD5"><a href="#HMAC-MD5" class="headerlink" title="HMAC MD5"></a>HMAC MD5</h3><p>Cyberchef<br />HMAC-MD5<br />明文：123456(utf-8)<br />密文：111111(utf-8)<br />结果：5542af910b1ff3f554dcdfb7ceccebc8</p>
-<h4 id="公式："><a href="#公式：" class="headerlink" title="公式："></a>公式：</h4><p><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220706/02.webp"
-                     
-                ></p>
-<h4 id="第一步（让密钥的长度达到分组长度）："><a href="#第一步（让密钥的长度达到分组长度）：" class="headerlink" title="第一步（让密钥的长度达到分组长度）："></a>第一步（让密钥的长度达到分组长度）：</h4><p>如果密钥长度超过512bit，先进行一次MD5后：16个字节+00000…<br />k &#x3D; 0x313131313131<br />密钥进行扩展<br />MD5: 512比特–64字节–128hex 分组长度<br />（十六进制，128长度）<br />k’&#x3D;0x31313131313100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</p>
-<h4 id="第二步（k’⊕opad）："><a href="#第二步（k’⊕opad）：" class="headerlink" title="第二步（k’⊕opad）："></a>第二步（k’⊕opad）：</h4><p>先对opad填充到分组长度<br />0x5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c<br />进行异或<br /><br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220706/03.webp"
-                     
-                ><br><br />k’⊕opad&#x3D;0x6d6d6d6d6d6d5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c</p>
-<h4 id="第三步（k’⊕ipad）："><a href="#第三步（k’⊕ipad）：" class="headerlink" title="第三步（k’⊕ipad）："></a>第三步（k’⊕ipad）：</h4><p>先对ipad填充到分组长度<br />0x36363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636<br />进行异或<br /><br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220706/04.webp"
-                     
-                ><br><br />k’⊕ipad&#x3D;0x07070707070736363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636</p>
-<h4 id="第四步级联明文（-k’⊕ipad-m）"><a href="#第四步级联明文（-k’⊕ipad-m）" class="headerlink" title="第四步级联明文（(k’⊕ipad)||m）:"></a>第四步级联明文（(k’⊕ipad)||m）:</h4><p>(k’⊕ipad)||m&#x3D;0x07070707070736363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636313233343536</p>
-<h4 id="第五步级联后进行md5（H-k’⊕ipad-m-）"><a href="#第五步级联后进行md5（H-k’⊕ipad-m-）" class="headerlink" title="第五步级联后进行md5（H((k’⊕ipad)||m)）:"></a>第五步级联后进行md5（H((k’⊕ipad)||m)）:</h4><p>级联后进行一次md5（不需要转hex）<br /><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220706/05.webp"
-                     
-                ><br />H((k’⊕ipad)||m)&#x3D;873883125b81d8d9b483f29cffeeea37</p>
-<h4 id="第六步（第二步级联第五步后进行md5，H-k’⊕opad-H-k’⊕ipad-m-）"><a href="#第六步（第二步级联第五步后进行md5，H-k’⊕opad-H-k’⊕ipad-m-）" class="headerlink" title="第六步（第二步级联第五步后进行md5，H((k’⊕opad)||H((k’⊕ipad)||m)）"></a>第六步（第二步级联第五步后进行md5，H((k’⊕opad)||H((k’⊕ipad)||m)）</h4><p>0x6d6d6d6d6d6d5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c873883125b81d8d9b483f29cffeeea37<br /><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220706/06.webp"
-                     
-                ><br />结果：5542af910b1ff3f554dcdfb7ceccebc8<br />结果跟Cyberchef的HMAC-MD5一致</p>
-<h3 id="HMAC-SHA1"><a href="#HMAC-SHA1" class="headerlink" title="HMAC SHA1"></a>HMAC SHA1</h3><p>Cyberchef<br />HMAC-SHA1<br />明文：helloword(utf-8)<br />密文：1111(hex)<br />结果：4ea30551db501b285a03a197c65fea249131b808</p>
-<h4 id="第一步（让密钥的长度达到分组长度）：-1"><a href="#第一步（让密钥的长度达到分组长度）：-1" class="headerlink" title="第一步（让密钥的长度达到分组长度）："></a>第一步（让密钥的长度达到分组长度）：</h4><p>如果密钥长度超过512bit，先进行一次SHA1后：16个字节+00000…<br />k &#x3D; 0x1111<br />密钥进行扩展<br />SHA1: 512比特–64字节–128hex 分组长度<br />（十六进制，128长度）<br />k’&#x3D;0x11110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</p>
-<h4 id="第二步（k’⊕opad）：-1"><a href="#第二步（k’⊕opad）：-1" class="headerlink" title="第二步（k’⊕opad）："></a>第二步（k’⊕opad）：</h4><p>异或0x5c<br />先对opad填充到分组长度<br />0x5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c<br />然后进行异或<br /><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220706/07.webp"
-                     
-                ><br />k’⊕opad&#x3D;0x4d4d5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c</p>
-<h4 id="第三步（k’⊕ipad）：-1"><a href="#第三步（k’⊕ipad）：-1" class="headerlink" title="第三步（k’⊕ipad）："></a>第三步（k’⊕ipad）：</h4><p>异或0x36<br />先对ipad填充到分组长度<br />0x3636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636<br />进行异或<br /><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220706/08.webp"
-                     
-                ><br />k’⊕ipad&#x3D;0x27273636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636</p>
-<h4 id="第四步级联明文（-k’⊕ipad-m）-1"><a href="#第四步级联明文（-k’⊕ipad-m）-1" class="headerlink" title="第四步级联明文（(k’⊕ipad)||m）:"></a>第四步级联明文（(k’⊕ipad)||m）:</h4><p>(k’⊕ipad)||m&#x3D;0x2727363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363668656c6c6f776f7264</p>
-<h4 id="第五步级联后进行sha1（H-k’⊕ipad-m-）"><a href="#第五步级联后进行sha1（H-k’⊕ipad-m-）" class="headerlink" title="第五步级联后进行sha1（H((k’⊕ipad)||m)）:"></a>第五步级联后进行sha1（H((k’⊕ipad)||m)）:</h4><p>级联后进行一次sha1（不需要转hex）<br />H((k’⊕ipad)||m)&#x3D;aea39b30d6922fdbb1848fe3a49bd130ed337f77</p>
-<h4 id="第六步（第二步级联第五步后进行sha1，H-k’⊕opad-H-k’⊕ipad-m-）"><a href="#第六步（第二步级联第五步后进行sha1，H-k’⊕opad-H-k’⊕ipad-m-）" class="headerlink" title="第六步（第二步级联第五步后进行sha1，H((k’⊕opad)||H((k’⊕ipad)||m)）"></a>第六步（第二步级联第五步后进行sha1，H((k’⊕opad)||H((k’⊕ipad)||m)）</h4><p>级联(k’⊕opad)||H((k’⊕ipad)||m)&#x3D;0x4d4d5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5caea39b30d6922fdbb1848fe3a49bd130ed337f77<br />4ea30551db501b285a03a197c65fea249131b808</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>第一步k值填充到块长度(md5和sha1是512bit，128hex)称为k’<br />第二步k’与0x36异或后拼接明文的hex，进行原函数哈希（如hmac md5就进行一次md5，hmac sha1就进行一次sha1）<br />第三步k’与0x5c异或后拼接第二步再进行一次原函数哈希</p>
-
-                </div>
-
-                
-                        <div class="article-copyright-info-container border-box">
-    <div class="copyright-info-content border-box">
-        <div class="copyright-info-top border-box">
-            <div class="post-title border-box text-ellipsis">
-                HMAC-MD5,HMAC-SHA1算法流程
-            </div>
-
-            <div class="post-link border-box text-ellipsis">
-                posts/40655/
-            </div>
-        </div>
-
-        <div class="copyright-info-bottom border-box">
-            <div class="post-author bottom-item">
-                <div class="type">
-                    作者
-                </div>
-                <div class="content">zsk</div>
-            </div>
-
-            <div class="post-time bottom-item">
-                <div class="type">
-                    发布于
-                </div>
-                <div class="content">2022-07-06 00:00</div>
-            </div>
-
-
-            <div class="post-license bottom-item">
-                <div class="type">
-                    许可
-                </div>
-                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
-                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
-                        <i class="fa-brands fa-creative-commons"></i>
-                        <i class="fa-brands fa-creative-commons-by"></i>
-                        <i class="fa-brands fa-creative-commons-nc"></i>
-                        <i class="fa-brands fa-creative-commons-sa"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <i class="copyright-bg fa-solid fa-copyright"></i>
-    </div>
-    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
-        <i class="fa-solid fa-copy"></i>
-    </div>
-</div>
-
-                
-
-                <div class="post-bottom-tags-and-share border-box">
-                    <div>
-                        
-                            <ul class="post-tags-box border-box">
-                                
-                                    <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
-                                    </li>
-                                
-                            </ul>
-                        
-                    </div>
-                    <div>
-                        
-                            <div class="post-share-container border-box">
-    <ul class="share-list-wrap border-box">
-        <li class="qq share-item border-box flex-center tooltip"
-            data-tooltip-content="分享到 QQ"
-        >
-            <i class="fa-brands fa-qq"></i>
-        </li>
-        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
-            data-tooltip-content="分享到微信"
-            data-tooltip-img-tip="微信扫一扫"
-            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
-        >
-            <i class="fa-brands fa-weixin"></i>
-        </li>
-        <li class="weibo share-item border-box flex-center tooltip"
-            data-tooltip-content="分享到微博"
-        >
-            <i class="fa-brands fa-weibo"></i>
-        </li>
-    </ul>
-</div>
-
-                        
-                    </div>
-                </div>
-
-                
-
-                
-                    <div class="article-nav">
-                        
-                            <div class="article-prev">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/posts/35582/"
-                                   title="对称加密算法DES的原理及分析"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                      <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                            <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">对称加密算法DES的原理及分析</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
-                        
-                            <div class="article-next">
-                                <a class="next"
-                                   rel="next"
-                                   href="/posts/34274/"
-                                   title="SHA1原理分析及流程"
-                                >
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">SHA1原理分析及流程</span>
-                                        <span class="post-nav-item">下一篇</span>
-                                    </span>
-                                            <span class="right arrow-icon flex-center">
-                                      <i class="fas fa-chevron-right"></i>
-                                    </span>
-                                </a>
-                            </div>
-                        
-                    </div>
-                
-
-                
-                    
-
-
-    <div class="comments-container border-box">
-        <div id="comments-anchor" class="comment-area-title border-box">
-            <i class="fas fa-comments"></i>&nbsp;评论
-        </div>
-        
-            
-
-    <div class="valine-container">
-        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
-        <div id="vcomments"></div>
-        <script data-pjax>
-          function loadValine() {
-
-            const config = {
-              el: '#vcomments',
-              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
-              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
-              meta: ['nick', 'mail', 'link'],
-              avatar: 'wavatar',
-              enableQQ: true,
-              placeholder: '😜 尽情吐槽吧~',
-              lang: 'zh-CN'.toLowerCase()
-            }
-
-            if ('') {
-              config.serverURLs = ''
-            }
-
-            new Valine(config)
-
-            function getAuthor(language) {
-              switch (language) {
-                case 'en':
-                  return 'Author'
-                case 'zh-CN':
-                  return '博主'
-                case 'zh-TW':
-                  return '站長'
-                default:
-                  return 'Master'
-              }
-            }
-
-            // Add "Author" identify
-            const getValineDomTimer = setInterval(() => {
-              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
-              if (vcards.length > 0) {
-                let author = 'zsk'
-
-                if (author) {
-                  for (let vcard of vcards) {
-                    const vnick_dom = vcard.querySelector('.vhead .vnick')
-                    const vnick = vnick_dom.innerHTML
-                    if (vnick === author) {
-                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
-                    }
-                  }
-                }
-                clearInterval(getValineDomTimer)
-              } else {
-                clearInterval(getValineDomTimer)
-              }
-            }, 2000)
-          }
-
-          if ('true' === 'true') {
-            const loadValineTimeout = setTimeout(() => {
-              loadValine()
-              clearTimeout(loadValineTimeout)
-            }, 1000)
-          } else {
-            window.addEventListener('DOMContentLoaded', loadValine)
-          }
-        </script>
-    </div>
-
-
-        
-    </div>
-
-
-
-
-
-                
-            </div>
-        </div>
-
-        
-            <div class="pc-post-toc right-toc">
-                <div class="post-toc-wrap border-box">
-    <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%8F%E7%A7%8D%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-number">1.</span> <span class="nav-text">每种哈希函数的特征</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MD5"><span class="nav-number">1.1.</span> <span class="nav-text">1.MD5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SHA1"><span class="nav-number">1.2.</span> <span class="nav-text">2.SHA1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SHA256"><span class="nav-number">1.3.</span> <span class="nav-text">3.SHA256</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-SHA-512"><span class="nav-number">1.4.</span> <span class="nav-text">4.SHA 512</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HMAC"><span class="nav-number">2.</span> <span class="nav-text">HMAC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HMAC-MD5"><span class="nav-number">2.1.</span> <span class="nav-text">HMAC MD5</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">公式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%88%E8%AE%A9%E5%AF%86%E9%92%A5%E7%9A%84%E9%95%BF%E5%BA%A6%E8%BE%BE%E5%88%B0%E5%88%86%E7%BB%84%E9%95%BF%E5%BA%A6%EF%BC%89%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">第一步（让密钥的长度达到分组长度）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%88k%E2%80%99%E2%8A%95opad%EF%BC%89%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">第二步（k’⊕opad）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%88k%E2%80%99%E2%8A%95ipad%EF%BC%89%EF%BC%9A"><span class="nav-number">2.1.4.</span> <span class="nav-text">第三步（k’⊕ipad）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%E7%BA%A7%E8%81%94%E6%98%8E%E6%96%87%EF%BC%88-k%E2%80%99%E2%8A%95ipad-m%EF%BC%89"><span class="nav-number">2.1.5.</span> <span class="nav-text">第四步级联明文（(k’⊕ipad)||m）:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%E7%BA%A7%E8%81%94%E5%90%8E%E8%BF%9B%E8%A1%8Cmd5%EF%BC%88H-k%E2%80%99%E2%8A%95ipad-m-%EF%BC%89"><span class="nav-number">2.1.6.</span> <span class="nav-text">第五步级联后进行md5（H((k’⊕ipad)||m)）:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E6%AD%A5%E7%BA%A7%E8%81%94%E7%AC%AC%E4%BA%94%E6%AD%A5%E5%90%8E%E8%BF%9B%E8%A1%8Cmd5%EF%BC%8CH-k%E2%80%99%E2%8A%95opad-H-k%E2%80%99%E2%8A%95ipad-m-%EF%BC%89"><span class="nav-number">2.1.7.</span> <span class="nav-text">第六步（第二步级联第五步后进行md5，H((k’⊕opad)||H((k’⊕ipad)||m)）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HMAC-SHA1"><span class="nav-number">2.2.</span> <span class="nav-text">HMAC SHA1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%88%E8%AE%A9%E5%AF%86%E9%92%A5%E7%9A%84%E9%95%BF%E5%BA%A6%E8%BE%BE%E5%88%B0%E5%88%86%E7%BB%84%E9%95%BF%E5%BA%A6%EF%BC%89%EF%BC%9A-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">第一步（让密钥的长度达到分组长度）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%88k%E2%80%99%E2%8A%95opad%EF%BC%89%EF%BC%9A-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">第二步（k’⊕opad）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%88k%E2%80%99%E2%8A%95ipad%EF%BC%89%EF%BC%9A-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">第三步（k’⊕ipad）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%E7%BA%A7%E8%81%94%E6%98%8E%E6%96%87%EF%BC%88-k%E2%80%99%E2%8A%95ipad-m%EF%BC%89-1"><span class="nav-number">2.2.4.</span> <span class="nav-text">第四步级联明文（(k’⊕ipad)||m）:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%E7%BA%A7%E8%81%94%E5%90%8E%E8%BF%9B%E8%A1%8Csha1%EF%BC%88H-k%E2%80%99%E2%8A%95ipad-m-%EF%BC%89"><span class="nav-number">2.2.5.</span> <span class="nav-text">第五步级联后进行sha1（H((k’⊕ipad)||m)）:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E6%AD%A5%E7%BA%A7%E8%81%94%E7%AC%AC%E4%BA%94%E6%AD%A5%E5%90%8E%E8%BF%9B%E8%A1%8Csha1%EF%BC%8CH-k%E2%80%99%E2%8A%95opad-H-k%E2%80%99%E2%8A%95ipad-m-%EF%BC%89"><span class="nav-number">2.2.6.</span> <span class="nav-text">第六步（第二步级联第五步后进行sha1，H((k’⊕opad)||H((k’⊕ipad)||m)）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol>
-    </div>
-</div>
-
-            </div>
-        
-    </div>
-</div>
-
-
-                
-            </div>
-
-        </div>
-
-        <div class="page-main-content-bottom border-box">
-            
-<footer class="footer border-box">
-    <div class="border-box website-info-box default">
-        
-            <div class="copyright-info info-item default">
-                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2025
-                
-                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
-                
-            </div>
-
-            <div class="theme-info info-item default">
-                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
-            </div>
-
-            
-
-            
-                <div class="deploy-info info-item default">
-                    
-                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
-                        
-                </div>
-            
-        
-
-        <div class="count-item info-item default">
-            
-                <span class="count-box border-box word">
-                    <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">140.3k</span>
-                </span>
-            
-
-            
-                <span class="count-box border-box uv">
-                    <span class="item-type border-box">访客数</span>
-                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
-                </span>
-            
-
-            
-                <span class="count-box border-box pv">
-                    <span class="item-type border-box">访问量</span>
-                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
-                </span>
-            
-        </div>
-    </div>
-</footer>
-
-        </div>
-    </div>
-
-    <!-- post tools -->
-    
-        <div class="post-tools right-toc">
-            <div class="post-tools-container border-box">
-    <ul class="tools-list border-box">
-        <!-- PC TOC show toggle -->
-        
-            <li class="tools-item flex-center toggle-show-toc">
-                <i class="fas fa-list"></i>
-            </li>
-        
-
-        <!-- PC go comment -->
-        
-            <li class="tools-item flex-center go-to-comments">
-                <i class="fas fa-comment"></i>
-                <span class="post-comments-count"></span>
-            </li>
-        
-    </ul>
-</div>
-
-        </div>
-    
-
-    <!-- side tools -->
-    <div class="side-tools">
-        <div class="side-tools-container border-box ">
-    <ul class="side-tools-list side-tools-show-handle border-box">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
-
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list border-box">
-        
-            <li class="tools-item toggle-show-toc-tablet flex-center">
-                <i class="fas fa-list"></i>
-            </li>
-        
-
-        
-            <li class="tools-item go-to-comments-tablet flex-center">
-                <i class="fas fa-comment"></i>
-            </li>
-        
-
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-
-        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
-            <i class="arrow fas fa-arrow-up"></i>
-            <span class="percent"></span>
-        </li>
-    </ul>
-</div>
-
-    </div>
-
-    <!-- image mask -->
-    <div class="zoom-in-image-mask">
-    <img class="zoom-in-image">
-</div>
-
-
-    <!-- local search -->
-    
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fas fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="搜索..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="close-popup-btn">
-                <i class="fas fa-times"></i>
-            </span>
-        </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-    
-
-    <!-- tablet toc -->
-    
-        <div class="tablet-post-toc-mask">
-            <div class="tablet-post-toc">
-                <div class="post-toc-wrap border-box">
-    <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%8F%E7%A7%8D%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-number">1.</span> <span class="nav-text">每种哈希函数的特征</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MD5"><span class="nav-number">1.1.</span> <span class="nav-text">1.MD5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SHA1"><span class="nav-number">1.2.</span> <span class="nav-text">2.SHA1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-SHA256"><span class="nav-number">1.3.</span> <span class="nav-text">3.SHA256</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-SHA-512"><span class="nav-number">1.4.</span> <span class="nav-text">4.SHA 512</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HMAC"><span class="nav-number">2.</span> <span class="nav-text">HMAC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HMAC-MD5"><span class="nav-number">2.1.</span> <span class="nav-text">HMAC MD5</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%EF%BC%9A"><span class="nav-number">2.1.1.</span> <span class="nav-text">公式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%88%E8%AE%A9%E5%AF%86%E9%92%A5%E7%9A%84%E9%95%BF%E5%BA%A6%E8%BE%BE%E5%88%B0%E5%88%86%E7%BB%84%E9%95%BF%E5%BA%A6%EF%BC%89%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">第一步（让密钥的长度达到分组长度）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%88k%E2%80%99%E2%8A%95opad%EF%BC%89%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">第二步（k’⊕opad）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%88k%E2%80%99%E2%8A%95ipad%EF%BC%89%EF%BC%9A"><span class="nav-number">2.1.4.</span> <span class="nav-text">第三步（k’⊕ipad）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%E7%BA%A7%E8%81%94%E6%98%8E%E6%96%87%EF%BC%88-k%E2%80%99%E2%8A%95ipad-m%EF%BC%89"><span class="nav-number">2.1.5.</span> <span class="nav-text">第四步级联明文（(k’⊕ipad)||m）:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%E7%BA%A7%E8%81%94%E5%90%8E%E8%BF%9B%E8%A1%8Cmd5%EF%BC%88H-k%E2%80%99%E2%8A%95ipad-m-%EF%BC%89"><span class="nav-number">2.1.6.</span> <span class="nav-text">第五步级联后进行md5（H((k’⊕ipad)||m)）:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E6%AD%A5%E7%BA%A7%E8%81%94%E7%AC%AC%E4%BA%94%E6%AD%A5%E5%90%8E%E8%BF%9B%E8%A1%8Cmd5%EF%BC%8CH-k%E2%80%99%E2%8A%95opad-H-k%E2%80%99%E2%8A%95ipad-m-%EF%BC%89"><span class="nav-number">2.1.7.</span> <span class="nav-text">第六步（第二步级联第五步后进行md5，H((k’⊕opad)||H((k’⊕ipad)||m)）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HMAC-SHA1"><span class="nav-number">2.2.</span> <span class="nav-text">HMAC SHA1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%88%E8%AE%A9%E5%AF%86%E9%92%A5%E7%9A%84%E9%95%BF%E5%BA%A6%E8%BE%BE%E5%88%B0%E5%88%86%E7%BB%84%E9%95%BF%E5%BA%A6%EF%BC%89%EF%BC%9A-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">第一步（让密钥的长度达到分组长度）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%88k%E2%80%99%E2%8A%95opad%EF%BC%89%EF%BC%9A-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">第二步（k’⊕opad）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%88k%E2%80%99%E2%8A%95ipad%EF%BC%89%EF%BC%9A-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">第三步（k’⊕ipad）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%E7%BA%A7%E8%81%94%E6%98%8E%E6%96%87%EF%BC%88-k%E2%80%99%E2%8A%95ipad-m%EF%BC%89-1"><span class="nav-number">2.2.4.</span> <span class="nav-text">第四步级联明文（(k’⊕ipad)||m）:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%E7%BA%A7%E8%81%94%E5%90%8E%E8%BF%9B%E8%A1%8Csha1%EF%BC%88H-k%E2%80%99%E2%8A%95ipad-m-%EF%BC%89"><span class="nav-number">2.2.5.</span> <span class="nav-text">第五步级联后进行sha1（H((k’⊕ipad)||m)）:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%88%E7%AC%AC%E4%BA%8C%E6%AD%A5%E7%BA%A7%E8%81%94%E7%AC%AC%E4%BA%94%E6%AD%A5%E5%90%8E%E8%BF%9B%E8%A1%8Csha1%EF%BC%8CH-k%E2%80%99%E2%8A%95opad-H-k%E2%80%99%E2%8A%95ipad-m-%EF%BC%89"><span class="nav-number">2.2.6.</span> <span class="nav-text">第六步（第二步级联第五步后进行sha1，H((k’⊕opad)||H((k’⊕ipad)||m)）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol>
-    </div>
-</div>
-
-            </div>
-        </div>
-    
-</main>
-
-
+.page-container {
+  width: 100%;
+  height: auto;
+  background: var(--background-color-1);
+}
+.page-container .page-main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding-top: var(--header-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content.is-home .transparent-1 {
+  background: var(--header-transparent-background-1);
+  backdrop-filter: blur(4px);
+}
+.page-container .page-main-content.is-home .transparent-2 {
+  background: var(--header-transparent-background-2);
+  backdrop-filter: blur(5px);
+}
+.header-shrink .page-container .page-main-content {
+  padding-top: var(--header-shrink-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: $z-index-5;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--header-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-top.hide {
+  transform: translateY(-105%);
+}
+.header-shrink .page-container .page-main-content .page-main-content-top {
+  height: var(--header-shrink-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-middle {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: $component-spacing-value 0;
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-middle .main-content {
+  width: $main-content-width;
+  max-width: $content-max-width;
+  height: 100%;
+keep-tablet()
+keep-mobile()
+}
+.has-toc .page-container .page-main-content .page-main-content-middle .main-content {
+  max-width: $has-toc-content-max-width;
+}
+.page-container .page-main-content .page-main-content-bottom {
+  width: 100%;
+}
+.page-container .post-tools {
+  position: fixed;
+  top: calc(var(--header-height) + $component-spacing-value);
+  box-sizing: border-box;
+  opacity: 0;
+keep-tablet()
+}
+.page-container .post-tools.right-toc {
+  left: calc((100vw - $content-max-width / 2) - 5rem);
+}
+.page-container .post-tools.left-toc {
+  right: calc((100vw - $content-max-width / 2) - 5rem);
+}
+.header-shrink .page-container .post-tools {
+  top: calc(var(--header-shrink-height) + $component-spacing-value);
+}
+.page-container .side-tools {
+  position: fixed;
+  right: 0;
+  bottom: 1.6rem;
+  box-sizing: border-box;
+  padding-right: 1rem;
+keep-tablet()
+}
+.page-container .side-tools:hover .side-tools-container {
+  transform: translateX(0);
+  opacity: 1;
+}
+.page-container .tablet-post-toc-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: $z-index-10;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0);
+  visibility: hidden;
+}
+.page-container .tablet-post-toc-mask .tablet-post-toc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 22rem;
+  height: 100%;
+  padding: 1.2rem 1rem;
+  background: var(--background-color-1);
+  transform: translateX(-100%);
+keep-mobile()
+}
 
 <!-- common -->
 <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>

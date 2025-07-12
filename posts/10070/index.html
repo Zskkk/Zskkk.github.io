@@ -42,818 +42,124 @@
 
 
 <body>
-<div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
-    
-
-    
-        <span class="pjax-progress-bar"></span>
-        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
-    
-</div>
-
-
-<main class="page-container border-box">
-
-    <!-- home first screen  -->
-    
-
-    <!-- page content -->
-    <div class="page-main-content border-box">
-        <div class="page-main-content-top">
-            
-<header class="header-wrapper">
-
-    <div class="border-box header-content">
-        <div class="left border-box">
-            
-                <a class="logo-image border-box" href="/">
-                    <img src="/images/logo.svg">
-                </a>
-            
-            <a class="site-name border-box" href="/">
-               zskのblog
-            </a>
-        </div>
-
-        <div class="right border-box">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                首页
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                归档
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/tags"
-                            >
-                                标签
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/about"
-                            >
-                                关于
-                            </a>
-                        </li>
-                    
-                    
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fas fa-search"></i>
-                        </li>
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">归档</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/tags">标签</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/about">关于</a>
-                </li>
-            
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle border-box">
-
-            <div class="main-content border-box">
-
-                
-
-                    <div class="fade-in-down-animation">
-    <div class="post-page-container border-box">
-
-        <div class="article-content-container border-box">
-
-            
-
-            <div class="article-content-bottom border-box">
-                
-                    <div class="article-title">
-                        某幸咖啡逆向及DFA还原白盒AES密钥
-                    </div>
-                
-
-                
-                    <div class="article-header border-box">
-                        
-                            <div class="avatar-box border-box">
-                                <img src="/images/head.svg">
-                            </div>
-                        
-                        <div class="info-box">
-                            <div class="author">
-                                <span class="name">zsk</span>
-                                
-                                    <span class="author-label">Lv4</span>
-                                
-                            </div>
-                            <div class="meta-info border-box">
-                                
-
-<div class="article-meta-info-container border-box post">
-    <div class="article-meta-info border-box">
-        
-
-
-        
-            <span class="meta-info-item article-create-date">
-                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
-                <span class="pc">2023-03-01 00:00:00</span>
-                <span class="mobile">2023-03-01 00:00</span>
-            </span>
-
-            <span class="meta-info-item article-update-date">
-                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Wed Mar 01 2023 00:00:00 GMT+0800">2023-03-01 00:00:00</span>
-            </span>
-        
-
-        
-
-        
-            <span class="article-tag meta-info-item border-box">
-                <i class="icon fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
-                        
-                    
-                </ul>
-            </span>
-        
-
-        
-        
-            <span class="meta-info-item article-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>6.2k 字</span>
-            </span>
-        
-        
-            <span class="meta-info-item article-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>33 分钟</span>
-            </span>
-        
-        
-            <span class="meta-info-item article-pv">
-                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-            </span>
-        
-    </div>
-
-    
-</div>
-
-                            </div>
-                        </div>
-                    </div>
-                
-
-                <div class="article-content keep-markdown-body">
-                    
-
-                    <p>样例APP：某幸咖啡<br>版本：5.0.01<br>下面会用DFA方式对该样本白盒AES分析还原</p>
-<h3 id="抓包脱壳"><a href="#抓包脱壳" class="headerlink" title="抓包脱壳"></a>抓包脱壳</h3><p>首先上来先抓包，这里直接抓包首页商品推荐，无论登录还是搜索接口都是一样的参数加密sign和q值，sign的长度不是固定的38，39，40位都有<br>发现是360的壳<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/01.webp"
-                     
-                >使用r0ysue的脱壳工具 <a class="link"   target="_blank" rel="noopener" href="https://github.com/r0ysue/frida_dump" >https://github.com/r0ysue/frida_dump<i class="fas fa-external-link-alt"></i></a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida -U --no-pause -f packagename  -l dump_dex.js</span><br></pre></td></tr></table></figure>
-<p>脱壳后的dex文件夹整个拉进jadx<br>用搜索关键词的方式没定位到，可能是字符串加密了<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/02.webp"
-                     
-                >请求表单大都是用hashmap put添加，这里也尝试hook hashmap</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_hashmap</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> hashMap = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.util.HashMap&quot;</span>);</span><br><span class="line">        hashMap.<span class="property">put</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params">a, b</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(a!=<span class="literal">null</span> &amp;&amp; a.<span class="title function_">equals</span>(<span class="string">&quot;sign&quot;</span>))&#123; </span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hashMap.put ==&gt; &quot;</span>, a, b);</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.util.Log&quot;</span>).<span class="title function_">getStackTraceString</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.Throwable&quot;</span>).$new()));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">put</span>(a, b);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用attach会发现失败，因为该样本存在双进程保护，会占用ptrace，attach 需要使用ptrace实现注入，ptrace被占用无法使用，就会导致attach注入失败。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">└─# adb shell</span><br><span class="line"><span class="attr">blueline</span>:/ $  ps -A | grep lucky</span><br><span class="line">u0_a225      <span class="number">28594</span>  <span class="number">1075</span> <span class="number">1856704</span> <span class="number">360324</span> <span class="number">0</span>                   <span class="number">0</span> S com.<span class="property">lucky</span>.<span class="property">luckyclient</span></span><br><span class="line">u0_a225      <span class="number">28645</span> <span class="number">28594</span> <span class="number">1463932</span> <span class="number">126400</span> <span class="number">0</span>                   <span class="number">0</span> S com.<span class="property">lucky</span>.<span class="property">luckyclient</span></span><br></pre></td></tr></table></figure>
-<p>查看进程后确实是双进程，那就改用Frida Spawn方式注入</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida -U -f 包名 -l js文件 --no-pause -o log.txt</span><br></pre></td></tr></table></figure>
-<p><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/03.webp"
-                     
-                >通过对应的包对比找到了请求参数的位置 com.lucky.lib.http2.AbstractLcRequest.getRequestParams<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/04.webp"
-                     
-                >果然跟想的一样字符串加密，主动调用一下看看加密的字符串是什么，顺便看到哪个是结果</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">call_getRequestParams</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">StubApp</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&#x27;com.stub.StubApp&#x27;</span>);</span><br><span class="line">        <span class="keyword">var</span> result1 = <span class="title class_">StubApp</span>[<span class="string">&#x27;getString2&#x27;</span>](<span class="string">&#x27;14154&#x27;</span>);</span><br><span class="line">        <span class="keyword">var</span> result2 = <span class="title class_">StubApp</span>[<span class="string">&#x27;getString2&#x27;</span>](<span class="string">&#x27;457&#x27;</span>);</span><br><span class="line">        <span class="keyword">var</span> result3 = <span class="title class_">StubApp</span>[<span class="string">&#x27;getString2&#x27;</span>](<span class="string">&#x27;4005&#x27;</span>);</span><br><span class="line">        <span class="keyword">var</span> result4 = <span class="title class_">StubApp</span>[<span class="string">&#x27;getString2&#x27;</span>](<span class="string">&#x27;16944&#x27;</span>);</span><br><span class="line">        <span class="keyword">var</span> result5 = <span class="title class_">StubApp</span>[<span class="string">&#x27;getString2&#x27;</span>](<span class="string">&#x27;7719&#x27;</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;StubApp.getString2(14154) ==&gt; &quot;</span>, result1)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;StubApp.getString2(457) ==&gt; &quot;</span>, result2)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;StubApp.getString2(4005) ==&gt; &quot;</span>, result3)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;StubApp.getString2(16944) ==&gt; &quot;</span>, result4)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;StubApp.getString2(7719) ==&gt; &quot;</span>, result5)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">StubApp</span>.<span class="title function_">getString2</span>(<span class="number">14154</span>) ==&gt;  appversion</span><br><span class="line"><span class="title class_">StubApp</span>.<span class="title function_">getString2</span>(<span class="number">457</span>) ==&gt;  q</span><br><span class="line"><span class="title class_">StubApp</span>.<span class="title function_">getString2</span>(<span class="number">4005</span>) ==&gt;  cid</span><br><span class="line"><span class="title class_">StubApp</span>.<span class="title function_">getString2</span>(<span class="number">16944</span>) ==&gt;  uid</span><br><span class="line"><span class="title class_">StubApp</span>.<span class="title function_">getString2</span>(<span class="number">7719</span>) ==&gt;  sign</span><br></pre></td></tr></table></figure>
-<p>多次抓包只有q和sign的值是会变的，sign是由cid，uid，q的值加密来的<br>一路跟进到native方法，其中q是由localAESWork4Api加密生成后转base64，sign是通过参数的拼接成字符串最后调用md5_crypt加密生成，<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/05.webp"
-                     
-                >其中最上面加载了lib库，System.loadLibrary(StubApp.getString2(“30491”));<br>用上面的主动调用解密后是 cryptoDD<br>解压apk找到这个so用ida打开<br>在Exports搜java，啥都没搜到，那就只有动态注册了，hook libart找动态注册函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">find_RegisterNatives</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> symbols = <span class="title class_">Module</span>.<span class="title function_">enumerateSymbolsSync</span>(<span class="string">&quot;libart.so&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> addrRegisterNatives = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; symbols.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> symbol = symbols[i];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//_ZN3art3JNI15RegisterNativesEP7_JNIEnvP7_jclassPK15JNINativeMethodi</span></span><br><span class="line">        <span class="keyword">if</span> (symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;art&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp;</span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;JNI&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;RegisterNatives&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;CheckJNI&quot;</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            addrRegisterNatives = symbol.<span class="property">address</span>;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;RegisterNatives is at &quot;</span>, symbol.<span class="property">address</span>, symbol.<span class="property">name</span>);</span><br><span class="line">            <span class="title function_">hook_RegisterNatives</span>(addrRegisterNatives)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_RegisterNatives</span>(<span class="params">addrRegisterNatives</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (addrRegisterNatives != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(addrRegisterNatives, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="comment">// console.log(&quot;[RegisterNatives] method_count:&quot;, args[3]);</span></span><br><span class="line">                <span class="keyword">let</span> java_class = args[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">let</span> class_name = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">tryGetEnv</span>().<span class="title function_">getClassName</span>(java_class);</span><br><span class="line">                <span class="comment">//console.log(class_name);</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">let</span> methods_ptr = <span class="title function_">ptr</span>(args[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">let</span> method_count = <span class="built_in">parseInt</span>(args[<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; method_count; i++) &#123;</span><br><span class="line">                    <span class="keyword">let</span> name_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span>));</span><br><span class="line">                    <span class="keyword">let</span> sig_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span> + <span class="title class_">Process</span>.<span class="property">pointerSize</span>));</span><br><span class="line">                    <span class="keyword">let</span> fnPtr_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span> + <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">let</span> name = <span class="title class_">Memory</span>.<span class="title function_">readCString</span>(name_ptr);</span><br><span class="line">                    <span class="keyword">let</span> sig = <span class="title class_">Memory</span>.<span class="title function_">readCString</span>(sig_ptr);</span><br><span class="line">                    <span class="keyword">var</span> find_module = <span class="title class_">Process</span>.<span class="title function_">findModuleByAddress</span>(name_ptr);</span><br><span class="line">                    <span class="keyword">if</span>(find_module != <span class="literal">null</span> &amp;&amp; find_module.<span class="property">name</span> == <span class="string">&quot;libcryptoDD.so&quot;</span>) &#123;</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[RegisterNatives] java_class:&quot;</span>, class_name, <span class="string">&quot;name:&quot;</span>, name, <span class="string">&quot;sig:&quot;</span>, sig, <span class="string">&quot;fnPtr:&quot;</span>, fnPtr_ptr, <span class="string">&quot;offset:&quot;</span>, <span class="title function_">ptr</span>(fnPtr_ptr).<span class="title function_">sub</span>(find_module.<span class="property">base</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(find_RegisterNatives)</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="title class_">RegisterNatives</span>] <span class="attr">java_class</span>: com.<span class="property">luckincoffee</span>.<span class="property">safeboxlib</span>.<span class="property">CryptoHelper</span> <span class="attr">name</span>: localAESWork <span class="attr">sig</span>: ([<span class="variable constant_">BI</span>[B)[B <span class="attr">fnPtr</span>: <span class="number">0xbe7f084d</span> <span class="attr">offset</span>: <span class="number">0x1984d</span></span><br><span class="line">[<span class="title class_">RegisterNatives</span>] <span class="attr">java_class</span>: com.<span class="property">luckincoffee</span>.<span class="property">safeboxlib</span>.<span class="property">CryptoHelper</span> <span class="attr">name</span>: localConnectWork <span class="attr">sig</span>: ([B[B)[B <span class="attr">fnPtr</span>: <span class="number">0xbe7f078d</span> <span class="attr">offset</span>: <span class="number">0x1978d</span></span><br><span class="line">[<span class="title class_">RegisterNatives</span>] <span class="attr">java_class</span>: com.<span class="property">luckincoffee</span>.<span class="property">safeboxlib</span>.<span class="property">CryptoHelper</span> <span class="attr">name</span>: md5_crypt <span class="attr">sig</span>: ([<span class="variable constant_">BI</span>)[B <span class="attr">fnPtr</span>: <span class="number">0xbe7f1981</span> <span class="attr">offset</span>: <span class="number">0x1a981</span></span><br><span class="line">[<span class="title class_">RegisterNatives</span>] <span class="attr">java_class</span>: com.<span class="property">luckincoffee</span>.<span class="property">safeboxlib</span>.<span class="property">CryptoHelper</span> <span class="attr">name</span>: localAESWork4Api <span class="attr">sig</span>: ([<span class="variable constant_">BI</span>)[B <span class="attr">fnPtr</span>: <span class="number">0xbe7f21cd</span> <span class="attr">offset</span>: <span class="number">0x1b1cd</span></span><br></pre></td></tr></table></figure>
-<p>只要关注md5_crypt和localAESWork4Api，偏移量分别为0x1a981，0x1b1cd<br>ida跳转到0x1b1cd位置函数名是android_native_wbaes，0x1a981函数名是android_native_md5<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/06.webp"
-                     
-                >大概浏览跟进android_native_wbaes查看有PKCS5Padding，wbaes_decrypt_ecb函数<br>从这些函数名可以猜测  wbaes_encrypt_ecb 是调用白盒aes的ecb模式加密<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/07.webp"
-                     
-                ></p>
-<h3 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h3><p>尝试对 wbaes_encrypt_ecb 进行hook参看参数，从参数名可以得知 in是明文，in_len是长度，out是输出结果，mode是模式<br>既然写了是ecb，那可以主动调用测试下是不是真的是ecb模式，我们知道aes是16字节一组，那可以设置明文两组一样的，然后看加密结果<br>以明文 zskkk.cnzskkk.cn 为例，转为字节是 7a 73 6b 6b 6b 2e 63 6e 7a 73 6b 6b 6b 2e 63 6e</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hexToBytes</span>(<span class="params">hex</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> bytes = [], c = <span class="number">0</span>; c &lt; hex.<span class="property">length</span>; c += <span class="number">2</span>)</span><br><span class="line">        bytes.<span class="title function_">push</span>(<span class="built_in">parseInt</span>(hex.<span class="title function_">substr</span>(c, <span class="number">2</span>), <span class="number">16</span>));</span><br><span class="line">    <span class="keyword">return</span> bytes;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">call_wbaes_encrypt_ecb</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x17bd5</span>);</span><br><span class="line">    <span class="keyword">var</span> wbaes_encrypt_ecb_func = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(real_addr, <span class="string">&quot;int&quot;</span>, [<span class="string">&quot;pointer&quot;</span>, <span class="string">&quot;int&quot;</span>, <span class="string">&quot;pointer&quot;</span>, <span class="string">&quot;int&quot;</span>]);</span><br><span class="line">    <span class="keyword">var</span> inputPtr = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">0x20</span>);</span><br><span class="line">    <span class="keyword">var</span> inputArray = <span class="title function_">hexToBytes</span>(<span class="string">&quot;7a736b6b6b2e636e7a736b6b6b2e636e7a736b6b6b2e636e7a736b6b6b2e636e&quot;</span>);</span><br><span class="line">    <span class="title class_">Memory</span>.<span class="title function_">writeByteArray</span>(inputPtr, inputArray)</span><br><span class="line">    <span class="keyword">var</span> outputPtr = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">0x20</span>);</span><br><span class="line">    <span class="title function_">wbaes_encrypt_ecb_func</span>(inputPtr, <span class="number">0x20</span>, outputPtr, <span class="number">0</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(outputPtr,&#123;<span class="attr">length</span>: <span class="number">0x20</span>&#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">f24005f8  4e <span class="number">64</span> b5 <span class="number">10</span> 8d a6 <span class="number">82</span> b5 <span class="number">13</span> f3 6e <span class="number">69</span> aa a4 <span class="number">63</span> <span class="number">56</span>  <span class="title class_">Nd</span>........<span class="property">ni</span>..<span class="property">cV</span></span><br><span class="line">f2400608  4e <span class="number">64</span> b5 <span class="number">10</span> 8d a6 <span class="number">82</span> b5 <span class="number">13</span> f3 6e <span class="number">69</span> aa a4 <span class="number">63</span> <span class="number">56</span>  <span class="title class_">Nd</span>........<span class="property">ni</span>..<span class="property">cV</span></span><br></pre></td></tr></table></figure>
-<p>可以发现，两个分组加密结果一致，看来确实是ECB。<br>现在对其进行hook</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_wbaes_encrypt_ecb</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="comment">// wbaes_encrypt_ecb 的偏移地址0x17bd4，因为thumb所以+1</span></span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x17bd5</span>)</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(real_addr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Input&quot;</span>);</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">buffer</span> = args[<span class="number">2</span>];</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">length</span> = args[<span class="number">1</span>].<span class="title function_">toInt32</span>();</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(args[<span class="number">0</span>],&#123;<span class="attr">length</span>: <span class="variable language_">this</span>.<span class="property">length</span>&#125;));</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;mode:&quot;</span>+args[<span class="number">3</span>]);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Output&quot;</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(<span class="variable language_">this</span>.<span class="property">buffer</span>,&#123;<span class="attr">length</span>: <span class="variable language_">this</span>.<span class="property">length</span>&#125;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也是使用spawn的方式启动</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[<span class="title class_">Pixel</span> <span class="number">3</span>::com.<span class="property">lucky</span>.<span class="property">luckyclient</span> ]-&gt; <span class="title class_">Input</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">f6b9ff10  7b <span class="number">22</span> <span class="number">70</span> <span class="number">61</span> <span class="number">67</span> <span class="number">65</span> <span class="number">54</span> <span class="number">79</span> <span class="number">70</span> <span class="number">65</span> <span class="number">22</span> 3a <span class="number">22</span> <span class="number">31</span> <span class="number">22</span> 2c  &#123;<span class="string">&quot;pageType&quot;</span>:<span class="string">&quot;1&quot;</span>,</span><br><span class="line">f6b9ff20  <span class="number">22</span> <span class="number">74</span> <span class="number">61</span> <span class="number">67</span> <span class="number">49</span> 6e <span class="number">64</span> <span class="number">65</span> <span class="number">78</span> <span class="number">22</span> 3a <span class="number">22</span> <span class="number">42</span> <span class="number">51</span> <span class="number">30</span> <span class="number">32</span>  <span class="string">&quot;tagIndex&quot;</span>:<span class="string">&quot;BQ02</span></span><br><span class="line"><span class="string">f6b9ff30  30 22 2c 22 61 70 70 76 65 72 73 69 6f 6e 22 3a  0&quot;</span>,<span class="string">&quot;appversion&quot;</span>:</span><br><span class="line">f6b9ff40  <span class="number">22</span> <span class="number">35</span> <span class="number">30</span> <span class="number">30</span> <span class="number">31</span> <span class="number">22</span> 2c <span class="number">22</span> <span class="number">70</span> <span class="number">61</span> <span class="number">67</span> <span class="number">65</span> <span class="number">22</span> 3a <span class="number">32</span> 2c  <span class="string">&quot;5001&quot;</span>,<span class="string">&quot;page&quot;</span>:<span class="number">2</span>,</span><br><span class="line">f6b9ff50  <span class="number">22</span> <span class="number">72</span> 6f <span class="number">77</span> <span class="number">73</span> <span class="number">22</span> 3a <span class="number">31</span> <span class="number">36</span> 2c <span class="number">22</span> <span class="number">62</span> <span class="number">72</span> <span class="number">61</span> 6e <span class="number">64</span>  <span class="string">&quot;rows&quot;</span>:<span class="number">16</span>,<span class="string">&quot;brand</span></span><br><span class="line"><span class="string">f6b9ff60  43 6f 64 65 22 3a 22 4c 4b 30 30 31 22 7d 02 02  Code&quot;</span>:<span class="string">&quot;LK001&quot;</span>&#125;..</span><br><span class="line"><span class="attr">mode</span>:<span class="number">0x0</span></span><br><span class="line"><span class="title class_">Output</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">f6b89cb0  f0 <span class="number">43</span> ce dd <span class="number">27</span> e5 <span class="number">47</span> 0a c5 8b fa <span class="number">67</span> <span class="number">16</span> <span class="number">20</span> 0d <span class="number">20</span>  .<span class="property">C</span>..<span class="string">&#x27;.G....g. . </span></span><br><span class="line"><span class="string">f6b89cc0  75 fa d6 ad a4 48 b0 fb 68 5f 81 60 86 53 68 03  u....H..h_.`.Sh.</span></span><br><span class="line"><span class="string">f6b89cd0  c3 0e 21 28 46 ae d2 dc e4 0c 3e 36 4f 10 32 ee  ..!(F.....&gt;6O.2.</span></span><br><span class="line"><span class="string">f6b89ce0  cc b7 57 6c 3c f7 85 c5 86 a4 b4 a6 7f da 47 67  ..Wl&lt;.........Gg</span></span><br><span class="line"><span class="string">f6b89cf0  ef bc 3a 8e 13 e0 30 1a 56 86 76 de 16 26 63 cc  ..:...0.V.v..&amp;c.</span></span><br><span class="line"><span class="string">f6b89d00  a7 93 16 80 8a 23 6d 63 8b 9d 98 55 26 26 cc fb  .....#mc...U&amp;&amp;..</span></span><br><span class="line"><span class="string">[Pixel 3::com.lucky.luckyclient ]-&gt;</span></span><br></pre></td></tr></table></figure>
-<p>观察输入可以发现，待加密的内容经过了PCKS7填充，末尾缺了2字节用了0x20填充。<br>虽然存在一些混淆，但是符号没去掉给了很大的帮助，从ida的代码中也能看出，wbaes_encrypt_ecb只是外层的简单包装，后面还会调用 aes128_enc_wb_coff 和 aes128_enc_wb_xlc 。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __fastcall <span class="title function_">aes128_enc_wb_xlc</span><span class="params">(<span class="type">uint8_t</span> *in, <span class="type">uint8_t</span> *out)</span></span><br><span class="line"><span class="type">void</span> __fastcall <span class="title function_">aes128_enc_wb_coff</span><span class="params">(<span class="type">uint8_t</span> *in, <span class="type">uint8_t</span> *out)</span></span><br></pre></td></tr></table></figure>
-<p>接下来只关注于单个分组，最后的call代码如下，完善Hook脚本，添加对这两个函数的Hook</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hexToBytes</span>(<span class="params">hex</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> bytes = [], c = <span class="number">0</span>; c &lt; hex.<span class="property">length</span>; c += <span class="number">2</span>)</span><br><span class="line">        bytes.<span class="title function_">push</span>(<span class="built_in">parseInt</span>(hex.<span class="title function_">substr</span>(c, <span class="number">2</span>), <span class="number">16</span>));</span><br><span class="line">    <span class="keyword">return</span> bytes;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_aes128_enc_wb_xlc</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="comment">// aes128_enc_wb_xlc 的偏移地址0x15c8c，因为thumb所以+1</span></span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x15c8d</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(real_addr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;aes128_enc_wb_xlc&quot;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(args[<span class="number">0</span>],&#123;<span class="attr">length</span>: <span class="number">0x10</span>&#125;))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_aes128_enc_wb_coff</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="comment">// aes128_enc_wb_coff 的偏移地址0x15320，因为thumb所以+1</span></span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x15321</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(real_addr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;aes128_enc_wb_coff&quot;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(args[<span class="number">0</span>],&#123;<span class="attr">length</span>: <span class="number">0x10</span>&#125;))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">call_wbaes_encrypt_ecb</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x17bd5</span>);</span><br><span class="line">    <span class="keyword">var</span> wbaes_encrypt_ecb_func = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(real_addr, <span class="string">&quot;int&quot;</span>, [<span class="string">&quot;pointer&quot;</span>, <span class="string">&quot;int&quot;</span>, <span class="string">&quot;pointer&quot;</span>, <span class="string">&quot;int&quot;</span>]);</span><br><span class="line">    <span class="keyword">var</span> inputPtr = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">0x10</span>);</span><br><span class="line">    <span class="keyword">var</span> inputArray = <span class="title function_">hexToBytes</span>(<span class="string">&quot;7a736b6b6b2e636e7a736b6b6b2e636e&quot;</span>);</span><br><span class="line">    <span class="title class_">Memory</span>.<span class="title function_">writeByteArray</span>(inputPtr, inputArray)</span><br><span class="line">    <span class="keyword">var</span> outputPtr = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">0x10</span>);</span><br><span class="line">    <span class="title function_">wbaes_encrypt_ecb_func</span>(inputPtr, <span class="number">0x10</span>, outputPtr, <span class="number">0</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(outputPtr,&#123;<span class="attr">length</span>: <span class="number">0x10</span>&#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aes128_enc_wb_coff</span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">df194260  7a <span class="number">73</span> 6b 6b 6b 2e <span class="number">63</span> 6e 7a <span class="number">73</span> 6b 6b 6b 2e <span class="number">63</span> 6e  zskkk.<span class="property">cnzskkk</span>.<span class="property">cn</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">f1ad5988  4e <span class="number">64</span> b5 <span class="number">10</span> 8d a6 <span class="number">82</span> b5 <span class="number">13</span> f3 6e <span class="number">69</span> aa a4 <span class="number">63</span> <span class="number">56</span>  <span class="title class_">Nd</span>........<span class="property">ni</span>..<span class="property">cV</span></span><br></pre></td></tr></table></figure>
-<p>可以确认，逻辑最终走到了aes128_enc_wb_coff，下面分析aes128_enc_wb_coff。观察可以看到三个表</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">uint8_t</span> Tboxes_[<span class="number">16</span>][<span class="number">256</span>];</span><br><span class="line"><span class="type">const</span> <span class="type">uint8_t</span> Txor[<span class="number">16</span>][<span class="number">16</span>];</span><br><span class="line"><span class="type">const</span> <span class="type">uint32_t</span> Tyboxes[<span class="number">9</span>][<span class="number">16</span>][<span class="number">256</span>];</span><br></pre></td></tr></table></figure>
-<p><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/08.webp"
-                     
-                ><br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/09.webp"
-                     
-                >都是不小的表，且程序逻辑中存在大量查表运算，确实是白盒加密。</p>
-<h3 id="DFA攻击获取密钥"><a href="#DFA攻击获取密钥" class="headerlink" title="DFA攻击获取密钥"></a>DFA攻击获取密钥</h3><h4 id="使用Frida"><a href="#使用Frida" class="headerlink" title="使用Frida"></a>使用Frida</h4><p>在<a href="https://www.zskkk.cn/posts/15785/">DFA还原白盒AES密钥</a>这一篇中说过，总结就是<br>三步骤</p>
-<ul>
-<li>找轮</li>
-<li>找时机，即具体第几轮做故障注入</li>
-<li>找state<br>由于代码被混淆了，很难静态做出这些判断，只能大概分析，鉴于函数名没有混淆，很快找到 wbShiftRows 这个函数，从名字得知应该是做循环左移，在aes一次加密中，会进行十轮循环左移，对其进行hook验证下<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_wbShiftRows</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x14f99</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(real_addr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">            count += <span class="number">1</span>;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;wbShiftRows:&quot;</span>+count);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-运行结果<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[<span class="title class_">Pixel</span> <span class="number">3</span>::com.<span class="property">lucky</span>.<span class="property">luckyclient</span> ]-&gt; aes128_enc_wb_coff</span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">df194260  7a <span class="number">73</span> 6b 6b 6b 2e <span class="number">63</span> 6e 7a <span class="number">73</span> 6b 6b 6b 2e <span class="number">63</span> 6e  zskkk.<span class="property">cnzskkk</span>.<span class="property">cn</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">1</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">2</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">3</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">4</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">5</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">6</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">7</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">8</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">9</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">10</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">f2c7d930  4e <span class="number">64</span> b5 <span class="number">10</span> 8d a6 <span class="number">82</span> b5 <span class="number">13</span> f3 6e <span class="number">69</span> aa a4 <span class="number">63</span> <span class="number">56</span>  <span class="title class_">Nd</span>........<span class="property">ni</span>..<span class="property">cV</span></span><br></pre></td></tr></table></figure>
-确实是十轮，设置故障点最好的时机就是在第九轮，而循环左移后就是列混淆了，<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __fastcall <span class="title function_">wbShiftRows</span><span class="params">(<span class="type">uint8_t</span> *out)</span></span><br></pre></td></tr></table></figure>
-发现，函数就一个参数，out即作输入又当输出，那么可以对这个函数参数进行修改，就可以故障注入，可以将第一个字节改成0。运行结果：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">aes128_enc_wb_coff</span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">df194260  7a <span class="number">73</span> 6b 6b 6b 2e <span class="number">63</span> 6e 7a <span class="number">73</span> 6b 6b 6b 2e <span class="number">63</span> 6e  zskkk.<span class="property">cnzskkk</span>.<span class="property">cn</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">1</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">2</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">3</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">4</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">5</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">6</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">7</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">8</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">9</span></span><br><span class="line"><span class="attr">wbShiftRows</span>:<span class="number">10</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">f2ad6450  de <span class="number">64</span> b5 <span class="number">10</span> 8d a6 <span class="number">82</span> <span class="number">12</span> <span class="number">13</span> f3 9c <span class="number">69</span> aa 5f <span class="number">63</span> <span class="number">56</span>  .<span class="property">d</span>.........i.<span class="property">_cV</span></span><br></pre></td></tr></table></figure>
-将正确明文和故障密文做对比<br><strong>正确密文：<font color="red">4e</font> 64 b5 10 8d a6 82 <font color="red">b5</font> 13 f3 <font color="red">6e</font> 69 aa <font color="red">a4</font> 63 56</strong><br><strong>故障密文：<font color="red">de</font> 64 b5 10 8d a6 82 <font color="red">12</font> 13 f3 <font color="red">9c</font> 69 aa <font color="red">5f</font> 63 56</strong><br>注入成功了，接下来只需要收集多点故障密文加上正常密文，喂给phoenixAES就可以得到第十轮密钥了<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">bufferToHex</span>(<span class="params">buffer</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> [...<span class="keyword">new</span> <span class="title class_">Uint8Array</span> (buffer)]</span><br><span class="line">        .<span class="property">map</span> (<span class="function"><span class="params">b</span> =&gt;</span> b.<span class="property">toString</span> (<span class="number">16</span>).<span class="property">padStart</span> (<span class="number">2</span>, <span class="string">&quot;0&quot;</span>))</span><br><span class="line">        .<span class="property">join</span> (<span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_wbShiftRows</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="comment">// wbShiftRows 的偏移地址0x14f90，因为thumb所以+1</span></span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x14f99</span>);</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(real_addr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">            count += <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (count % <span class="number">9</span> == <span class="number">0</span>)&#123;</span><br><span class="line">                args[<span class="number">0</span>].<span class="title function_">add</span>(<span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">16</span>)).<span class="title function_">writeS8</span>(<span class="number">0x0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">call_wbaes_encrypt_ecb</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x17bd5</span>);</span><br><span class="line">    <span class="keyword">var</span> wbaes_encrypt_ecb_func = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(real_addr, <span class="string">&quot;int&quot;</span>, [<span class="string">&quot;pointer&quot;</span>, <span class="string">&quot;int&quot;</span>, <span class="string">&quot;pointer&quot;</span>, <span class="string">&quot;int&quot;</span>]);</span><br><span class="line">    <span class="keyword">var</span> inputPtr = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">0x10</span>);</span><br><span class="line">    <span class="keyword">var</span> inputArray = <span class="title function_">hexToBytes</span>(<span class="string">&quot;7a736b6b6b2e636e7a736b6b6b2e636e&quot;</span>);</span><br><span class="line">    <span class="title class_">Memory</span>.<span class="title function_">writeByteArray</span>(inputPtr, inputArray)</span><br><span class="line">    <span class="keyword">var</span> outputPtr = <span class="title class_">Memory</span>.<span class="title function_">alloc</span>(<span class="number">0x10</span>);</span><br><span class="line">    <span class="title function_">wbaes_encrypt_ecb_func</span>(inputPtr, <span class="number">0x10</span>, outputPtr, <span class="number">0</span>);</span><br><span class="line">    <span class="comment">// console.log(hexdump(outputPtr,&#123;length: 0x10&#125;));</span></span><br><span class="line">    <span class="keyword">var</span> output = <span class="title class_">Memory</span>.<span class="title function_">readByteArray</span>(outputPtr, <span class="number">0x10</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">bufferToHex</span>(output))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">dfa</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">hook_wbShiftRows</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i&lt;<span class="number">200</span>; i++) &#123;</span><br><span class="line">        <span class="title function_">call_wbaes_encrypt_ecb</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-这里打印成hexstr而不是hexdump，然后在hook_wbShiftRows中计数器为九的倍数时就注入故障，因为计数器的数字会随着call_wbaes_encrypt_ecb不断增加，注入故障的位置是随机在0-15字节位置修改为0x0，随机字节也可以。<br>然后将正确密文以及输出的200个故障密文放入phoenixAES，结果为<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Last round key #N found:</span><br><span class="line">869D92BBB700D0D25BD9FD3E224B5DF2</span><br></pre></td></tr></table></figure>
-放入 stark<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">./aes_keyschedule 869D92BBB700D0D25BD9FD3E224B5DF2 10</span><br><span class="line">K00: 644A4C64434A69566E44764D394A5570</span><br><span class="line">K01: B3B61D76F0FC74209EB8026DA7F2571D</span><br><span class="line">K02: 38EDB92AC811CD0A56A9CF67F15B987A</span><br><span class="line">K03: 05AB638BCDBAAE819B1361E66A48F99C</span><br><span class="line">K04: 5F32BD8992881308099B72EE63D38B72</span><br><span class="line">K05: 290FFD72BB87EE7AB21C9C94D1CF17E6</span><br><span class="line">K06: 83FF734C38789D368A6401A25BAB1644</span><br><span class="line">K07: A1B8687599C0F54313A4F4E1480FE2A5</span><br><span class="line">K08: 57206E27CEE09B64DD446F85954B8D20</span><br><span class="line">K09: FF7DD90D319D4269ECD92DEC7992A0CC</span><br><span class="line">K10: 869D92BBB700D0D25BD9FD3E224B5DF2</span><br></pre></td></tr></table></figure>
-得出密钥：<strong>644A4C64434A69566E44764D394A5570</strong><br>在cyber中用一开始抓包的密文做测试解密看看<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/10.webp"
-                     
-                >成功解密<br>再次抓包hook localAESWork4Api的返回值与aes ecb加密后的结果是否一致，看下是否还有做其它操作<br>新增hook函数<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_localAESWork4Api</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="title class_">CryptoHelper</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.luckincoffee.safeboxlib.CryptoHelper&quot;</span>);</span><br><span class="line">        <span class="title class_">CryptoHelper</span>[<span class="string">&quot;localAESWork4Api&quot;</span>].<span class="property">implementation</span> = <span class="keyword">function</span> (<span class="params">bArr, i</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> ret = <span class="variable language_">this</span>.<span class="title function_">localAESWork4Api</span>(bArr, i);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;localAESWork4Api value: &#x27;</span> + <span class="title function_">bufferToHex</span>(ret));</span><br><span class="line">            <span class="keyword">return</span> ret;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[<span class="title class_">Pixel</span> <span class="number">3</span>::com.<span class="property">lucky</span>.<span class="property">luckyclient</span> ]-&gt; <span class="title class_">Input</span></span><br><span class="line"><span class="number">0x9fd42f50</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">9fd42f50  7b <span class="number">22</span> <span class="number">70</span> <span class="number">61</span> <span class="number">67</span> <span class="number">65</span> <span class="number">54</span> <span class="number">79</span> <span class="number">70</span> <span class="number">65</span> <span class="number">22</span> 3a <span class="number">22</span> <span class="number">31</span> <span class="number">22</span> 2c  &#123;<span class="string">&quot;pageType&quot;</span>:<span class="string">&quot;1&quot;</span>,</span><br><span class="line">9fd42f60  <span class="number">22</span> <span class="number">74</span> <span class="number">61</span> <span class="number">67</span> <span class="number">49</span> 6e <span class="number">64</span> <span class="number">65</span> <span class="number">78</span> <span class="number">22</span> 3a <span class="number">22</span> <span class="number">42</span> <span class="number">51</span> <span class="number">30</span> <span class="number">32</span>  <span class="string">&quot;tagIndex&quot;</span>:<span class="string">&quot;BQ02</span></span><br><span class="line"><span class="string">9fd42f70  30 22 2c 22 61 70 70 76 65 72 73 69 6f 6e 22 3a  0&quot;</span>,<span class="string">&quot;appversion&quot;</span>:</span><br><span class="line">9fd42f80  <span class="number">22</span> <span class="number">35</span> <span class="number">30</span> <span class="number">30</span> <span class="number">31</span> <span class="number">22</span> 2c <span class="number">22</span> <span class="number">70</span> <span class="number">61</span> <span class="number">67</span> <span class="number">65</span> <span class="number">22</span> 3a <span class="number">35</span> 2c  <span class="string">&quot;5001&quot;</span>,<span class="string">&quot;page&quot;</span>:<span class="number">5</span>,</span><br><span class="line">9fd42f90  <span class="number">22</span> <span class="number">72</span> 6f <span class="number">77</span> <span class="number">73</span> <span class="number">22</span> 3a <span class="number">31</span> <span class="number">36</span> 2c <span class="number">22</span> <span class="number">62</span> <span class="number">72</span> <span class="number">61</span> 6e <span class="number">64</span>  <span class="string">&quot;rows&quot;</span>:<span class="number">16</span>,<span class="string">&quot;brand</span></span><br><span class="line"><span class="string">9fd42fa0  43 6f 64 65 22 3a 22 4c 4b 30 30 31 22 7d 02 02  Code&quot;</span>:<span class="string">&quot;LK001&quot;</span>&#125;..</span><br><span class="line"><span class="attr">mode</span>:<span class="number">0x0</span></span><br><span class="line"><span class="title class_">Output</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">e7a50000  f0 <span class="number">43</span> ce dd <span class="number">27</span> e5 <span class="number">47</span> 0a c5 8b fa <span class="number">67</span> <span class="number">16</span> <span class="number">20</span> 0d <span class="number">20</span>  .<span class="property">C</span>..<span class="string">&#x27;.G....g. . </span></span><br><span class="line"><span class="string">e7a50010  75 fa d6 ad a4 48 b0 fb 68 5f 81 60 86 53 68 03  u....H..h_.`.Sh.</span></span><br><span class="line"><span class="string">e7a50020  c3 0e 21 28 46 ae d2 dc e4 0c 3e 36 4f 10 32 ee  ..!(F.....&gt;6O.2.</span></span><br><span class="line"><span class="string">e7a50030  a0 6f a2 2f c6 f5 73 59 b3 5d bb 5b f3 ec 41 bf  .o./..sY.].[..A.</span></span><br><span class="line"><span class="string">e7a50040  ef bc 3a 8e 13 e0 30 1a 56 86 76 de 16 26 63 cc  ..:...0.V.v..&amp;c.</span></span><br><span class="line"><span class="string">e7a50050  a7 93 16 80 8a 23 6d 63 8b 9d 98 55 26 26 cc fb  .....#mc...U&amp;&amp;..</span></span><br><span class="line"><span class="string">localAESWork4Api value: f043cedd27e5470ac58bfa6716200d2075fad6ada448b0fb685f816086536803c30e212846aed2dce40c3e364f1032eea06fa22fc6f57359b35dbb5bf3ec41bfefbc3a8e13e0301a568676de162663cca79316808a236d638b9d98552626ccfb</span></span><br></pre></td></tr></table></figure>
-结果是一致的，回到localAESWork4Api看密文出来后接下来的处理<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public synchronized <span class="title class_">String</span> <span class="title function_">m29712c</span>(<span class="params"><span class="built_in">String</span> str</span>) &#123;</span><br><span class="line">    byte[] localAESWork4Api;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">f235976e</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="title class_">String</span> mo24058a = <span class="variable language_">this</span>.<span class="property">f235976e</span>.<span class="title function_">mo24058a</span>();</span><br><span class="line">        <span class="keyword">if</span> (!mo24058a.<span class="title function_">endsWith</span>(<span class="title class_">StubApp</span>.<span class="title function_">getString2</span>(<span class="string">&quot;30492&quot;</span>))) &#123;</span><br><span class="line">            localAESWork4Api = <span class="title function_">localAESWork</span>(str.<span class="title function_">getBytes</span>(), <span class="number">2</span>, <span class="title class_">Base64</span>.<span class="title function_">decode</span>(mo24058a.<span class="title function_">replace</span>(<span class="string">&#x27;-&#x27;</span>, <span class="string">&#x27;+&#x27;</span>).<span class="title function_">replace</span>(<span class="string">&#x27;_&#x27;</span>, <span class="string">&#x27;/&#x27;</span>).<span class="title function_">getBytes</span>(), <span class="number">2</span>));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            localAESWork4Api = <span class="title function_">localAESWork4Api</span>(str.<span class="title function_">getBytes</span>(), mo24058a.<span class="title function_">startsWith</span>(<span class="title class_">StubApp</span>.<span class="title function_">getString2</span>(<span class="string">&quot;11453&quot;</span>)) ? <span class="number">0</span> : <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="title class_">StubApp</span>.<span class="title function_">getString2</span>(<span class="string">&quot;30494&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="title class_">Base64</span>.<span class="title function_">encode</span>(localAESWork4Api, <span class="number">2</span>)).<span class="title function_">replace</span>(<span class="string">&#x27;+&#x27;</span>, <span class="string">&#x27;-&#x27;</span>).<span class="title function_">replace</span>(<span class="string">&#x27;/&#x27;</span>, <span class="string">&#x27;_&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="使用Unidbg"><a href="#使用Unidbg" class="headerlink" title="使用Unidbg"></a>使用Unidbg</h4><p>先搭架子</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.LuckyCoffee;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.AndroidEmulator;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.Module;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidEmulatorBuilder;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidResolver;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.AbstractJni;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.DalvikModule;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.VM;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.memory.Memory;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LuckyAES</span> <span class="keyword">extends</span> <span class="title class_">AbstractJni</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AndroidEmulator emulator;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> VM vm;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Module <span class="keyword">module</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">LuckyAES</span><span class="params">()</span>&#123;</span><br><span class="line">        emulator = AndroidEmulatorBuilder.for32Bit().build(); <span class="comment">// 创建模拟器实例，要模拟32位或者64位，在这里区分</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟器的内存操作接口</span></span><br><span class="line">        <span class="keyword">final</span> <span class="type">Memory</span> <span class="variable">memory</span> <span class="operator">=</span> emulator.getMemory();</span><br><span class="line">        <span class="comment">// 设置系统类库解析</span></span><br><span class="line">        memory.setLibraryResolver(<span class="keyword">new</span> <span class="title class_">AndroidResolver</span>(<span class="number">23</span>));</span><br><span class="line">        <span class="comment">// 创建Android虚拟机</span></span><br><span class="line">        vm = emulator.createDalvikVM(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/LuckyCoffee/ruixing5.0.01.apk&quot;</span>));</span><br><span class="line">        vm.setVerbose(<span class="literal">true</span>);</span><br><span class="line">        <span class="comment">// 加载基本库</span></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">AndroidModule</span>(emulator, vm).register(memory);</span><br><span class="line">        <span class="comment">// 加载so到虚拟内存</span></span><br><span class="line">        <span class="type">DalvikModule</span> <span class="variable">dm</span> <span class="operator">=</span> vm.loadLibrary(<span class="string">&quot;cryptoDD&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">module</span> = dm.getModule();</span><br><span class="line">        <span class="comment">// 设置JNI</span></span><br><span class="line">        vm.setJni(<span class="built_in">this</span>);</span><br><span class="line">        dm.callJNI_OnLoad(emulator);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">LuckyAES</span> <span class="variable">luckyAES</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LuckyAES</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行完没问题后就开始调用函数wbaes_encrypt_ecb，通过分析知道了该函数偏移0x17bd4+1，<br>参数明文跟上面frida一样”zskkk.cnzskkk.cn”</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] hexStringToBytes(String hexString) &#123;</span><br><span class="line">    <span class="keyword">return</span> DatatypeConverter.parseHexBinary(hexString);</span><br><span class="line">    <span class="comment">//if(hexString.isEmpty())&#123;</span></span><br><span class="line">    <span class="comment">//    return null;</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line">    <span class="comment">//hexString = hexString.toLowerCase();</span></span><br><span class="line">    <span class="comment">//byte[] byteArray = new byte[hexString.length() &gt;&gt; 1];</span></span><br><span class="line">    <span class="comment">//int index = 0;</span></span><br><span class="line">    <span class="comment">//for(int i = 0; i &lt; hexString.length(); i++) &#123;</span></span><br><span class="line">    <span class="comment">//    if(index &gt; hexString.length() - 1)&#123;</span></span><br><span class="line">    <span class="comment">//        return byteArray;</span></span><br><span class="line">    <span class="comment">//    &#125;</span></span><br><span class="line">    <span class="comment">//    byte highDit = (byte) (Character.digit(hexString.charAt(index), 16) &amp; 0xFF);</span></span><br><span class="line">    <span class="comment">//    byte lowDit = (byte) (Character.digit(hexString.charAt(index + 1), 16) &amp; 0xFF);</span></span><br><span class="line">    <span class="comment">//    byteArray[i] = (byte) (highDit &lt;&lt; 4 | lowDit);</span></span><br><span class="line">    <span class="comment">//    index += 2;</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line">    <span class="comment">//return byteArray;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">bytesTohexString</span><span class="params">(<span class="type">byte</span>[] bytes)</span> &#123;</span><br><span class="line">    <span class="type">StringBuffer</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i&lt;bytes.length; i++)&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">hex</span> <span class="operator">=</span> Integer.toHexString(bytes[i] &amp; <span class="number">0xFF</span>);</span><br><span class="line">        <span class="keyword">if</span> (hex.length() &lt; <span class="number">2</span>) &#123;</span><br><span class="line">            sb.append(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(hex);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sb.toString();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">call_wbaes_encrypt_ecb</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">MemoryBlock</span> <span class="variable">inBlock</span> <span class="operator">=</span> emulator.getMemory().malloc(<span class="number">16</span>, <span class="literal">true</span>);</span><br><span class="line">    <span class="type">UnidbgPointer</span> <span class="variable">inPtr</span> <span class="operator">=</span> inBlock.getPointer();</span><br><span class="line">    <span class="type">MemoryBlock</span> <span class="variable">outBlock</span> <span class="operator">=</span> emulator.getMemory().malloc(<span class="number">16</span>, <span class="literal">true</span>);</span><br><span class="line">    <span class="type">UnidbgPointer</span> <span class="variable">outPtr</span> <span class="operator">=</span> outBlock.getPointer();</span><br><span class="line"></span><br><span class="line">    <span class="type">byte</span>[] stub = hexStringToBytes(<span class="string">&quot;7a736b6b6b2e636e7a736b6b6b2e636e&quot;</span>);</span><br><span class="line">    <span class="keyword">assert</span> stub != <span class="literal">null</span>;</span><br><span class="line">    inPtr.write(<span class="number">0</span>, stub, <span class="number">0</span>, stub.length);</span><br><span class="line">    <span class="keyword">module</span>.callFunction(emulator, <span class="number">0x17bd5</span>, inPtr, <span class="number">16</span>, outPtr, <span class="number">0</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">ret</span> <span class="operator">=</span> bytesTohexString(outPtr.getByteArray(<span class="number">0</span>, <span class="number">0x10</span>));</span><br><span class="line">    System.out.println(<span class="string">&quot;white box result:&quot;</span>+ret);</span><br><span class="line">    inBlock.free();</span><br><span class="line">    outBlock.free();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行后结果也是一致</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JNIEnv-&gt;FindClass(com/luckincoffee/safeboxlib/CryptoHelper) was called from RX@<span class="number">0x1201b43b</span>[libcryptoDD.so]<span class="number">0x1b43b</span></span><br><span class="line">JNIEnv-&gt;RegisterNatives(com/luckincoffee/safeboxlib/CryptoHelper, RW@<span class="number">0x120dfd0c</span>[libcryptoDD.so]<span class="number">0xdfd0c</span>, <span class="number">4</span>) was called from RX@<span class="number">0x1201b3e3</span>[libcryptoDD.so]<span class="number">0x1b3e3</span></span><br><span class="line">RegisterNative(com/luckincoffee/safeboxlib/CryptoHelper, localAESWork([BI[B)[B, RX@<span class="number">0x1201984d</span>[libcryptoDD.so]<span class="number">0x1984d</span>)</span><br><span class="line">RegisterNative(com/luckincoffee/safeboxlib/CryptoHelper, localConnectWork([B[B)[B, RX@<span class="number">0x1201978d</span>[libcryptoDD.so]<span class="number">0x1978d</span>)</span><br><span class="line">RegisterNative(com/luckincoffee/safeboxlib/CryptoHelper, md5_crypt([BI)[B, RX@<span class="number">0x1201a981</span>[libcryptoDD.so]<span class="number">0x1a981</span>)</span><br><span class="line">RegisterNative(com/luckincoffee/safeboxlib/CryptoHelper, localAESWork4Api([BI)[B, RX@<span class="number">0x1201b1cd</span>[libcryptoDD.so]<span class="number">0x1b1cd</span>)</span><br><span class="line">white box result:4e64b5108da682b513f36e69aaa46356</span><br></pre></td></tr></table></figure>
-<p>接下来跟龙哥学了一招，作图<br>因为白盒加密的主要实现方式是查表法，所以加密主体就是大量的内存访问。那么记录函数对内存的访问以及发起访问的地址（PC指针），绘制成折线图，就可以较好的反映加密流程。<br>使用Unidbg的ReadHook<br>规则如下：监控整个SO地址范围内的内存读取操作，记录PC发起的地址，减去SO基地址，只打印偏移，这样呈现效果更好。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">traceAESRead</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">ReadHook</span> <span class="variable">readHook</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReadHook</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hook</span><span class="params">(Backend backend, <span class="type">long</span> address, <span class="type">int</span> size, Object user)</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">now</span> <span class="operator">=</span> emulator.getBackend().reg_read(ArmConst.UC_ARM_REG_PC).intValue();</span><br><span class="line">            <span class="keyword">if</span>((now &gt; <span class="keyword">module</span>.base) &amp; (now &lt; (<span class="keyword">module</span>.base + <span class="keyword">module</span>.size)))&#123;</span><br><span class="line">                System.out.println(now - <span class="keyword">module</span>.base);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onAttach</span><span class="params">(UnHook unHook)</span> &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">detach</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    emulator.getBackend().hook_add_new(readHook, <span class="keyword">module</span>.base, <span class="keyword">module</span>.base+<span class="keyword">module</span>.size, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>traceAESRead 函数放于如下位置</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">LuckyAES</span> <span class="variable">luckyAES</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LuckyAES</span>();</span><br><span class="line">    luckyAES.traceAESRead();</span><br><span class="line">    luckyAES.call_wbaes_encrypt_ecb();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>结果如下<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/11.webp"
-                     
-                >将这几千条记录拷贝出来，保存在trace.txt 中，在Python中做可视化。需要安装matplotlib以及numpy库。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = numpy.loadtxt(<span class="string">&quot;trace.txt&quot;</span>, <span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(<span class="built_in">range</span>(<span class="built_in">len</span>(<span class="built_in">input</span>)), <span class="built_in">input</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p>运行后生成折线图，将其放大是如下效果<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/12.webp"
-                     
-                >X轴的计数单位是次数，表示当前是第几次内存访问，如图，在程序的运行过程中，发生了1400余次对SO内存的读操作。Y轴是发起访问的偏移地址。需要注意，X与Y轴的数值表示为十进制。图上可得，Y主要在80000-100000之间，我们修改Y轴范围，增强呈现效果。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = numpy.loadtxt(<span class="string">&quot;trace.txt&quot;</span>, <span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(<span class="built_in">range</span>(<span class="built_in">len</span>(<span class="built_in">input</span>)), <span class="built_in">input</span>)</span><br><span class="line"><span class="comment"># 限制Y</span></span><br><span class="line">plt.ylim(<span class="number">80000</span>,<span class="number">100000</span>)</span><br><span class="line">plt.plot(<span class="built_in">range</span>(<span class="built_in">len</span>(<span class="built_in">input</span>)), <span class="built_in">input</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/13.webp"
-                     
-                >还可以缩小到85000-90000之间，再次缩小Y的范围，<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/14.webp"
-                     
-                >可已看到重复了10次的相同模式，代表了十轮运算，这一点可用于区分AES-128&#x2F;192&#x2F;256，分别对应10&#x2F;12&#x2F;14 轮。<br>除此之外，我们发现每轮运算的起点是一个较低的地址，具体在86000附近左右，转成十六进制就是0x14FF0附近。<br>在IDA中查看，是处于wbShiftRows函数中，<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/15.webp"
-                     
-                >接下来就再次来到故障攻击的部分，很接近Frida Hook的代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">randInt</span><span class="params">(<span class="type">int</span> min, <span class="type">int</span> max)</span> &#123;</span><br><span class="line">    <span class="type">Random</span> <span class="variable">rand</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line">    <span class="keyword">return</span> rand.nextInt((max - min) + <span class="number">1</span>) + min;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfaAttack</span><span class="params">()</span> &#123;</span><br><span class="line">    emulator.attach().addBreakPoint(<span class="keyword">module</span>.base + <span class="number">0x14f98</span> + <span class="number">1</span>, <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        UnidbgPointer pointer;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">            count += <span class="number">1</span>;</span><br><span class="line">            <span class="type">RegisterContext</span> <span class="variable">registerContext</span> <span class="operator">=</span> emulator.getContext();</span><br><span class="line">            pointer = registerContext.getPointerArg(<span class="number">0</span>);</span><br><span class="line">            emulator.attach().addBreakPoint(registerContext.getLRPointer().peer, <span class="keyword">new</span> <span class="title class_">BreakPointCallback</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onHit</span><span class="params">(Emulator&lt;?&gt; emulator, <span class="type">long</span> address)</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (count % <span class="number">9</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                        pointer.setByte(randInt(<span class="number">0</span>, <span class="number">15</span>), (<span class="type">byte</span>) randInt(<span class="number">0</span>, <span class="number">0xff</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">LuckyAES</span> <span class="variable">luckyAES</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LuckyAES</span>();</span><br><span class="line">    luckyAES.dfaAttack();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">200</span>; i++) &#123;</span><br><span class="line">        luckyAES.call_wbaes_encrypt_ecb();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行出来的故障密文同样喂给phoenixAES，也是得到相同第十轮密钥，放入stark得到初始密钥</p>
-<h3 id="sign参数分析"><a href="#sign参数分析" class="headerlink" title="sign参数分析"></a>sign参数分析</h3><p>上次说到md5_crypt是sign的加密函数，在so中对应的是android_native_md5偏移量0x1a981<br>也是在该函数中很快的发现md5，doMD5sign可疑函数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __fastcall <span class="title function_">md5</span><span class="params">(<span class="type">const</span> <span class="type">uint8_t</span> *initial_msg, <span class="type">size_t</span> initial_len, <span class="type">uint8_t</span> *digest)</span></span><br><span class="line"><span class="type">uint32_t</span> __fastcall <span class="title function_">doMD5sign</span><span class="params">(<span class="type">const</span> <span class="type">uint8_t</span> *initial_msg, <span class="type">size_t</span> initial_len, <span class="type">int8_t</span> **digest)</span></span><br></pre></td></tr></table></figure>
-<p>查看doMD5sign的代码后</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint32_t</span> __fastcall <span class="title function_">doMD5sign</span><span class="params">(<span class="type">const</span> <span class="type">uint8_t</span> *initial_msg, <span class="type">size_t</span> initial_len, <span class="type">int8_t</span> **digest)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">signed</span> <span class="type">int</span> v4; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">int</span> v5; <span class="comment">// r2</span></span><br><span class="line">  <span class="type">signed</span> <span class="type">int</span> v6; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">int</span> v7; <span class="comment">// r2</span></span><br><span class="line">  <span class="type">signed</span> <span class="type">int</span> v8; <span class="comment">// r2</span></span><br><span class="line">  <span class="type">signed</span> <span class="type">int</span> v9; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">int</span> v10; <span class="comment">// r2</span></span><br><span class="line">  <span class="type">size_t</span> v11; <span class="comment">// r4</span></span><br><span class="line">  <span class="type">int8_t</span> *v12; <span class="comment">// r0</span></span><br><span class="line">  <span class="type">uint8_t</span> v14[<span class="number">16</span>]; <span class="comment">// [sp+0h] [bp-A8h] BYREF</span></span><br><span class="line">  <span class="type">char</span> s[<span class="number">64</span>]; <span class="comment">// [sp+10h] [bp-98h] BYREF</span></span><br><span class="line">  <span class="type">char</span> v16[<span class="number">20</span>]; <span class="comment">// [sp+50h] [bp-58h] BYREF</span></span><br><span class="line">  <span class="type">char</span> v17[<span class="number">20</span>]; <span class="comment">// [sp+64h] [bp-44h] BYREF</span></span><br><span class="line">  <span class="type">char</span> v18[<span class="number">20</span>]; <span class="comment">// [sp+78h] [bp-30h] BYREF</span></span><br><span class="line"></span><br><span class="line">  md5(initial_msg, initial_len, v14);</span><br><span class="line">  v4 = bytesToInt(v14, <span class="number">0</span>);</span><br><span class="line">  v5 = v4;</span><br><span class="line">  <span class="keyword">if</span> ( v4 &lt; <span class="number">0</span> )</span><br><span class="line">    v5 = -v4;</span><br><span class="line">  <span class="built_in">sprintf</span>(s, &amp;byte_E0021, v5);</span><br><span class="line">  v6 = bytesToInt(v14, <span class="number">4u</span>);</span><br><span class="line">  v7 = v6;</span><br><span class="line">  <span class="keyword">if</span> ( v6 &lt; <span class="number">0</span> )</span><br><span class="line">    v7 = -v6;</span><br><span class="line">  <span class="built_in">sprintf</span>(v18, &amp;byte_E0021, v7);</span><br><span class="line">  v8 = bytesToInt(v14, <span class="number">8u</span>);</span><br><span class="line">  <span class="keyword">if</span> ( v8 &lt;= <span class="number">-1</span> )</span><br><span class="line">    v8 = -v8;</span><br><span class="line">  <span class="built_in">sprintf</span>(v17, &amp;byte_E0021, v8);</span><br><span class="line">  v9 = bytesToInt(v14, <span class="number">0xC</span>u);</span><br><span class="line">  v10 = v9;</span><br><span class="line">  <span class="keyword">if</span> ( v9 &lt; <span class="number">0</span> )</span><br><span class="line">    v10 = -v9;</span><br><span class="line">  <span class="built_in">sprintf</span>(v16, &amp;byte_E0021, v10);</span><br><span class="line">  <span class="built_in">strcat</span>(s, v18);</span><br><span class="line">  <span class="built_in">strcat</span>(s, v17);</span><br><span class="line">  <span class="built_in">strcat</span>(s, v16);</span><br><span class="line">  v11 = <span class="built_in">strlen</span>(s);</span><br><span class="line">  v12 = (<span class="type">int8_t</span> *)<span class="built_in">malloc</span>(v11);</span><br><span class="line">  *digest = v12;</span><br><span class="line">  qmemcpy(v12, s, v11);</span><br><span class="line">  <span class="keyword">return</span> v11;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>调用的了4次bytesToInt，最后经过strcat拼接成字符串，抓包的sign也都是由数字拼接，那会不会跟这个函数有关？hook看下</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_doMD5sign</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x14d55</span>)</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(real_addr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;doMD5sign Input&quot;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(args[<span class="number">0</span>])</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">length</span> = args[<span class="number">1</span>].<span class="title function_">toInt32</span>();</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">buffer</span> = args[<span class="number">2</span>];</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(args[<span class="number">0</span>],&#123;<span class="attr">length</span>: <span class="variable language_">this</span>.<span class="property">length</span>&#125;));</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;doMD5sign Output&quot;</span>)</span><br><span class="line">            <span class="comment">// console.log(retval.toInt32());</span></span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(<span class="variable language_">this</span>.<span class="property">buffer</span>,&#123;<span class="attr">length</span>: retval.<span class="title function_">toInt32</span>()&#125;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_md5</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x13e3d</span>)</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(real_addr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;md5 Input&quot;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(args[<span class="number">0</span>])</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">length</span> = args[<span class="number">1</span>].<span class="title function_">toInt32</span>();</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">buffer</span> = args[<span class="number">2</span>];</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(args[<span class="number">0</span>],&#123;<span class="attr">length</span>: <span class="variable language_">this</span>.<span class="property">length</span>&#125;));</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;md5 Output&quot;</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(<span class="variable language_">this</span>.<span class="property">buffer</span>,&#123;<span class="attr">length</span>: <span class="number">32</span>&#125;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_bytesToInt</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> base_addr = <span class="title class_">Module</span>.<span class="title function_">findBaseAddress</span>(<span class="string">&quot;libcryptoDD.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> real_addr = base_addr.<span class="title function_">add</span>(<span class="number">0x13925</span>)</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(real_addr, &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;bytesToInt Input&quot;</span>);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(args[<span class="number">0</span>])</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">offset</span> = args[<span class="number">1</span>].<span class="title function_">toInt32</span>();</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">hexdump</span>(args[<span class="number">0</span>]));</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;bytesToInt Output&quot;</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(retval.<span class="title function_">toInt32</span>());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">[<span class="title class_">Pixel</span> <span class="number">3</span>::com.<span class="property">lucky</span>.<span class="property">luckyclient</span> ]-&gt; doMD5sign <span class="title class_">Input</span></span><br><span class="line"><span class="number">0xe239f5a0</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">e239f5a0  <span class="number">63</span> <span class="number">69</span> <span class="number">64</span> 3d <span class="number">32</span> <span class="number">31</span> <span class="number">30</span> <span class="number">31</span> <span class="number">30</span> <span class="number">31</span> 3b <span class="number">71</span> 3d <span class="number">38</span> <span class="number">45</span> <span class="number">50</span>  cid=<span class="number">210101</span>;q=8EP</span><br><span class="line">e239f5b0  4f <span class="number">33</span> <span class="number">53</span> <span class="number">66</span> 6c <span class="number">52</span> <span class="number">77</span> <span class="number">72</span> <span class="number">46</span> <span class="number">69</span> 5f <span class="number">70</span> 6e <span class="number">46</span> <span class="number">69</span> <span class="number">41</span>  O3SflRwrFi_pnFiA</span><br><span class="line">e239f5c0  4e <span class="number">49</span> 4f 5f <span class="number">68</span> <span class="number">46</span> 5f 7a <span class="number">74</span> <span class="number">57</span> <span class="number">75</span> 5f <span class="number">33</span> <span class="number">49</span> <span class="number">77</span> <span class="number">77</span>  NIO_hF_ztWu_3Iww</span><br><span class="line">e239f5d0  4c <span class="number">48</span> <span class="number">71</span> 4b <span class="number">71</span> <span class="number">73</span> <span class="number">49</span> <span class="number">66</span> <span class="number">43</span> 5f <span class="number">70</span> <span class="number">65</span> <span class="number">58</span> <span class="number">73</span> 6b <span class="number">70</span>  <span class="title class_">LHqKqsIfC</span>_peXskp</span><br><span class="line">e239f5e0  <span class="number">53</span> <span class="number">38</span> <span class="number">76</span> 6e <span class="number">44</span> <span class="number">54</span> 5a 6e <span class="number">72</span> 4b <span class="number">37</span> <span class="number">43</span> <span class="number">62</span> 4c <span class="number">73</span> 4f  S8vnDTZnrK7CbLsO</span><br><span class="line">e239f5f0  <span class="number">59</span> <span class="number">54</span> <span class="number">51</span> <span class="number">59</span> <span class="number">37</span> <span class="number">79</span> <span class="number">33</span> <span class="number">45</span> <span class="number">65</span> <span class="number">31</span> 6f 6d <span class="number">49</span> <span class="number">75</span> 4c <span class="number">48</span>  <span class="title class_">YTQY7</span>y3Ee1omIuLH</span><br><span class="line">e239f600  <span class="number">56</span> <span class="number">45</span> 2d 2d <span class="number">38</span> 4f 6f <span class="number">34</span> <span class="number">54</span> <span class="number">34</span> <span class="number">44</span> <span class="number">41</span> <span class="number">61</span> <span class="number">56</span> 6f 5a  <span class="variable constant_">VE</span>--8Oo4T4DAaVoZ</span><br><span class="line">e239f610  <span class="number">32</span> <span class="number">33</span> <span class="number">68</span> <span class="number">59</span> 6d <span class="number">59</span> <span class="number">38</span> <span class="number">79</span> 6e 6b <span class="number">78</span> <span class="number">61</span> <span class="number">41</span> <span class="number">69</span> <span class="number">69</span> 4e  23hYmY8ynkxaAiiN</span><br><span class="line">e239f620  <span class="number">74</span> <span class="number">59</span> <span class="number">34</span> <span class="number">75</span> <span class="number">64</span> 6d <span class="number">46</span> <span class="number">55</span> 6d 4a <span class="number">73</span> 7a <span class="number">37</span> 3b <span class="number">75</span> <span class="number">69</span>  tY4udmFUmJsz7;ui</span><br><span class="line">e239f630  <span class="number">64</span> 3d <span class="number">65</span> <span class="number">32</span> <span class="number">65</span> <span class="number">63</span> <span class="number">33</span> <span class="number">38</span> <span class="number">37</span> <span class="number">31</span> 2d <span class="number">37</span> <span class="number">33</span> <span class="number">63</span> <span class="number">35</span> 2d  d=e2ec3871-73c5-</span><br><span class="line">e239f640  <span class="number">34</span> <span class="number">38</span> <span class="number">32</span> <span class="number">33</span> 2d <span class="number">62</span> <span class="number">36</span> <span class="number">63</span> <span class="number">35</span> 2d <span class="number">32</span> <span class="number">31</span> <span class="number">33</span> <span class="number">33</span> <span class="number">66</span> <span class="number">38</span>  <span class="number">4823</span>-b6c5-2133f8</span><br><span class="line">e239f650  <span class="number">30</span> <span class="number">63</span> <span class="number">32</span> <span class="number">36</span> <span class="number">37</span> <span class="number">66</span> <span class="number">31</span> <span class="number">37</span> <span class="number">32</span> <span class="number">35</span> <span class="number">38</span> <span class="number">30</span> <span class="number">30</span> <span class="number">37</span> <span class="number">34</span> <span class="number">31</span>  0c267f1725800741</span><br><span class="line">e239f660  <span class="number">31</span> <span class="number">32</span> <span class="number">36</span> <span class="number">64</span> 4a 4c <span class="number">64</span> <span class="number">43</span> 4a <span class="number">69</span> <span class="number">56</span> 6e <span class="number">44</span> <span class="number">76</span> 4d <span class="number">39</span>  126dJLdCJiVnDvM9</span><br><span class="line">e239f670  4a <span class="number">55</span> <span class="number">70</span> <span class="number">73</span> 6f 6d <span class="number">39</span>                             <span class="title class_">JUpsom9</span></span><br><span class="line">md5 <span class="title class_">Input</span></span><br><span class="line"><span class="number">0xe239f5a0</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">e239f5a0  <span class="number">63</span> <span class="number">69</span> <span class="number">64</span> 3d <span class="number">32</span> <span class="number">31</span> <span class="number">30</span> <span class="number">31</span> <span class="number">30</span> <span class="number">31</span> 3b <span class="number">71</span> 3d <span class="number">38</span> <span class="number">45</span> <span class="number">50</span>  cid=<span class="number">210101</span>;q=8EP</span><br><span class="line">e239f5b0  4f <span class="number">33</span> <span class="number">53</span> <span class="number">66</span> 6c <span class="number">52</span> <span class="number">77</span> <span class="number">72</span> <span class="number">46</span> <span class="number">69</span> 5f <span class="number">70</span> 6e <span class="number">46</span> <span class="number">69</span> <span class="number">41</span>  O3SflRwrFi_pnFiA</span><br><span class="line">e239f5c0  4e <span class="number">49</span> 4f 5f <span class="number">68</span> <span class="number">46</span> 5f 7a <span class="number">74</span> <span class="number">57</span> <span class="number">75</span> 5f <span class="number">33</span> <span class="number">49</span> <span class="number">77</span> <span class="number">77</span>  NIO_hF_ztWu_3Iww</span><br><span class="line">e239f5d0  4c <span class="number">48</span> <span class="number">71</span> 4b <span class="number">71</span> <span class="number">73</span> <span class="number">49</span> <span class="number">66</span> <span class="number">43</span> 5f <span class="number">70</span> <span class="number">65</span> <span class="number">58</span> <span class="number">73</span> 6b <span class="number">70</span>  <span class="title class_">LHqKqsIfC</span>_peXskp</span><br><span class="line">e239f5e0  <span class="number">53</span> <span class="number">38</span> <span class="number">76</span> 6e <span class="number">44</span> <span class="number">54</span> 5a 6e <span class="number">72</span> 4b <span class="number">37</span> <span class="number">43</span> <span class="number">62</span> 4c <span class="number">73</span> 4f  S8vnDTZnrK7CbLsO</span><br><span class="line">e239f5f0  <span class="number">59</span> <span class="number">54</span> <span class="number">51</span> <span class="number">59</span> <span class="number">37</span> <span class="number">79</span> <span class="number">33</span> <span class="number">45</span> <span class="number">65</span> <span class="number">31</span> 6f 6d <span class="number">49</span> <span class="number">75</span> 4c <span class="number">48</span>  <span class="title class_">YTQY7</span>y3Ee1omIuLH</span><br><span class="line">e239f600  <span class="number">56</span> <span class="number">45</span> 2d 2d <span class="number">38</span> 4f 6f <span class="number">34</span> <span class="number">54</span> <span class="number">34</span> <span class="number">44</span> <span class="number">41</span> <span class="number">61</span> <span class="number">56</span> 6f 5a  <span class="variable constant_">VE</span>--8Oo4T4DAaVoZ</span><br><span class="line">e239f610  <span class="number">32</span> <span class="number">33</span> <span class="number">68</span> <span class="number">59</span> 6d <span class="number">59</span> <span class="number">38</span> <span class="number">79</span> 6e 6b <span class="number">78</span> <span class="number">61</span> <span class="number">41</span> <span class="number">69</span> <span class="number">69</span> 4e  23hYmY8ynkxaAiiN</span><br><span class="line">e239f620  <span class="number">74</span> <span class="number">59</span> <span class="number">34</span> <span class="number">75</span> <span class="number">64</span> 6d <span class="number">46</span> <span class="number">55</span> 6d 4a <span class="number">73</span> 7a <span class="number">37</span> 3b <span class="number">75</span> <span class="number">69</span>  tY4udmFUmJsz7;ui</span><br><span class="line">e239f630  <span class="number">64</span> 3d <span class="number">65</span> <span class="number">32</span> <span class="number">65</span> <span class="number">63</span> <span class="number">33</span> <span class="number">38</span> <span class="number">37</span> <span class="number">31</span> 2d <span class="number">37</span> <span class="number">33</span> <span class="number">63</span> <span class="number">35</span> 2d  d=e2ec3871-73c5-</span><br><span class="line">e239f640  <span class="number">34</span> <span class="number">38</span> <span class="number">32</span> <span class="number">33</span> 2d <span class="number">62</span> <span class="number">36</span> <span class="number">63</span> <span class="number">35</span> 2d <span class="number">32</span> <span class="number">31</span> <span class="number">33</span> <span class="number">33</span> <span class="number">66</span> <span class="number">38</span>  <span class="number">4823</span>-b6c5-2133f8</span><br><span class="line">e239f650  <span class="number">30</span> <span class="number">63</span> <span class="number">32</span> <span class="number">36</span> <span class="number">37</span> <span class="number">66</span> <span class="number">31</span> <span class="number">37</span> <span class="number">32</span> <span class="number">35</span> <span class="number">38</span> <span class="number">30</span> <span class="number">30</span> <span class="number">37</span> <span class="number">34</span> <span class="number">31</span>  0c267f1725800741</span><br><span class="line">e239f660  <span class="number">31</span> <span class="number">32</span> <span class="number">36</span> <span class="number">64</span> 4a 4c <span class="number">64</span> <span class="number">43</span> 4a <span class="number">69</span> <span class="number">56</span> 6e <span class="number">44</span> <span class="number">76</span> 4d <span class="number">39</span>  126dJLdCJiVnDvM9</span><br><span class="line">e239f670  4a <span class="number">55</span> <span class="number">70</span> <span class="number">73</span> 6f 6d <span class="number">39</span>                             <span class="title class_">JUpsom9</span></span><br><span class="line">md5 <span class="title class_">Output</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">ffb70848  <span class="number">46</span> 6b <span class="number">91</span> <span class="number">12</span> 1c 7c <span class="number">30</span> <span class="number">66</span> <span class="number">92</span> da <span class="number">99</span> 8e <span class="number">63</span> <span class="number">15</span> <span class="number">70</span> 6c  <span class="title class_">Fk</span>...|0f....<span class="property">c</span>.<span class="property">pl</span></span><br><span class="line">bytesToInt <span class="title class_">Input</span> <span class="attr">offset</span>:  <span class="number">0</span></span><br><span class="line">bytesToInt <span class="title class_">Output</span>:  <span class="number">1181454610</span> </span><br><span class="line"></span><br><span class="line">bytesToInt <span class="title class_">Input</span> <span class="attr">offset</span>:  <span class="number">4</span></span><br><span class="line">bytesToInt <span class="title class_">Output</span>:  <span class="number">477900902</span> </span><br><span class="line"></span><br><span class="line">bytesToInt <span class="title class_">Input</span> <span class="attr">offset</span>:  <span class="number">8</span></span><br><span class="line">bytesToInt <span class="title class_">Output</span>:  -<span class="number">1831167602</span> </span><br><span class="line"></span><br><span class="line">bytesToInt <span class="title class_">Input</span> <span class="attr">offset</span>:  <span class="number">12</span></span><br><span class="line">bytesToInt <span class="title class_">Output</span>:  <span class="number">1662349420</span> </span><br><span class="line"></span><br><span class="line">doMD5sign <span class="title class_">Output</span></span><br><span class="line">           <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  A  B  C  D  E  F  0123456789ABCDEF</span><br><span class="line">ffb70964  <span class="number">90</span> <span class="number">78</span> ba af a1 <span class="number">70</span> <span class="number">40</span> <span class="number">18</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">10</span> <span class="number">00</span> dc de  .<span class="property">x</span>...p@.........</span><br><span class="line">ffb70974  a0 <span class="number">09</span> b7 ff <span class="number">10</span> <span class="number">00</span> dc de <span class="number">89</span> 6a ad eb <span class="number">34</span> 0a b7 ff  .........j.<span class="number">.4</span>...</span><br><span class="line">ffb70984  <span class="number">24</span> 0a b7 ff <span class="number">03</span> <span class="number">00</span> <span class="number">00</span>                             $......</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>多次抓包发现除了由刚才说的几个另外的参数拼接，还加了uid+盐值 <strong><font color="red">dJLdCJiVnDvM9JUpsom9</font></strong><br>验证下是不是标准的md5<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/16.webp"
-                     
-                >是标准的md5，没有经过魔改<br>再看看抓包的sign和hook对比发现bytesToInt的4个返回值的绝对值拼接起来就是sign<br><font color="red">1181454610 477900902 1831167602 1662349420</font><br>查看bytesToInt(const uint8_t *src, uint32_t offset)的代码只要的就是</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v9 = (src[offset + <span class="number">1</span>] &lt;&lt; <span class="number">16</span>) | (src[offset] &lt;&lt; <span class="number">24</span>) | (src[offset + <span class="number">2</span>] &lt;&lt; <span class="number">8</span>) | src[offset + <span class="number">3</span>];</span><br></pre></td></tr></table></figure>
-<p>现在就很清晰了，sign由<br>md5(cid，q，uid，dJLdCJiVnDvM9JUpsom9拼接)的第1，4，10，15字节偏移而来<br>response也是aes ebc加密的，先replace(&quot;_&quot;,&quot;&#x2F;&quot;).replace(&quot;-&quot;,&quot;+&quot;)，base64解码，再用上面的密钥解密就可以了<br><img  
-                     lazyload
-                     alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20230301/18.webp"
-                     
-                ></p>
-
-                </div>
-
-                
-                        <div class="article-copyright-info-container border-box">
-    <div class="copyright-info-content border-box">
-        <div class="copyright-info-top border-box">
-            <div class="post-title border-box text-ellipsis">
-                某幸咖啡逆向及DFA还原白盒AES密钥
-            </div>
-
-            <div class="post-link border-box text-ellipsis">
-                posts/10070/
-            </div>
-        </div>
-
-        <div class="copyright-info-bottom border-box">
-            <div class="post-author bottom-item">
-                <div class="type">
-                    作者
-                </div>
-                <div class="content">zsk</div>
-            </div>
-
-            <div class="post-time bottom-item">
-                <div class="type">
-                    发布于
-                </div>
-                <div class="content">2023-03-01 00:00</div>
-            </div>
-
-
-            <div class="post-license bottom-item">
-                <div class="type">
-                    许可
-                </div>
-                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
-                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
-                        <i class="fa-brands fa-creative-commons"></i>
-                        <i class="fa-brands fa-creative-commons-by"></i>
-                        <i class="fa-brands fa-creative-commons-nc"></i>
-                        <i class="fa-brands fa-creative-commons-sa"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <i class="copyright-bg fa-solid fa-copyright"></i>
-    </div>
-    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
-        <i class="fa-solid fa-copy"></i>
-    </div>
-</div>
-
-                
-
-                <div class="post-bottom-tags-and-share border-box">
-                    <div>
-                        
-                            <ul class="post-tags-box border-box">
-                                
-                                    <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
-                                    </li>
-                                
-                            </ul>
-                        
-                    </div>
-                    <div>
-                        
-                            <div class="post-share-container border-box">
-    <ul class="share-list-wrap border-box">
-        <li class="qq share-item border-box flex-center tooltip"
-            data-tooltip-content="分享到 QQ"
-        >
-            <i class="fa-brands fa-qq"></i>
-        </li>
-        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
-            data-tooltip-content="分享到微信"
-            data-tooltip-img-tip="微信扫一扫"
-            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
-        >
-            <i class="fa-brands fa-weixin"></i>
-        </li>
-        <li class="weibo share-item border-box flex-center tooltip"
-            data-tooltip-content="分享到微博"
-        >
-            <i class="fa-brands fa-weibo"></i>
-        </li>
-    </ul>
-</div>
-
-                        
-                    </div>
-                </div>
-
-                
-
-                
-                    <div class="article-nav">
-                        
-                            <div class="article-prev">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/posts/16537/"
-                                   title="某音web端X-Bogus 逆向分析算法"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                      <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                            <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">某音web端X-Bogus 逆向分析算法</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
-                        
-                            <div class="article-next">
-                                <a class="next"
-                                   rel="next"
-                                   href="/posts/36296/"
-                                   title="谷歌Pixel3刷机以及magisk的安装"
-                                >
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">谷歌Pixel3刷机以及magisk的安装</span>
-                                        <span class="post-nav-item">下一篇</span>
-                                    </span>
-                                            <span class="right arrow-icon flex-center">
-                                      <i class="fas fa-chevron-right"></i>
-                                    </span>
-                                </a>
-                            </div>
-                        
-                    </div>
-                
-
-                
-                    
-
-
-    <div class="comments-container border-box">
-        <div id="comments-anchor" class="comment-area-title border-box">
-            <i class="fas fa-comments"></i>&nbsp;评论
-        </div>
-        
-            
-
-    <div class="valine-container">
-        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
-        <div id="vcomments"></div>
-        <script data-pjax>
-          function loadValine() {
-
-            const config = {
-              el: '#vcomments',
-              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
-              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
-              meta: ['nick', 'mail', 'link'],
-              avatar: 'wavatar',
-              enableQQ: true,
-              placeholder: '😜 尽情吐槽吧~',
-              lang: 'zh-CN'.toLowerCase()
-            }
-
-            if ('') {
-              config.serverURLs = ''
-            }
-
-            new Valine(config)
-
-            function getAuthor(language) {
-              switch (language) {
-                case 'en':
-                  return 'Author'
-                case 'zh-CN':
-                  return '博主'
-                case 'zh-TW':
-                  return '站長'
-                default:
-                  return 'Master'
-              }
-            }
-
-            // Add "Author" identify
-            const getValineDomTimer = setInterval(() => {
-              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
-              if (vcards.length > 0) {
-                let author = 'zsk'
-
-                if (author) {
-                  for (let vcard of vcards) {
-                    const vnick_dom = vcard.querySelector('.vhead .vnick')
-                    const vnick = vnick_dom.innerHTML
-                    if (vnick === author) {
-                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
-                    }
-                  }
-                }
-                clearInterval(getValineDomTimer)
-              } else {
-                clearInterval(getValineDomTimer)
-              }
-            }, 2000)
-          }
-
-          if ('true' === 'true') {
-            const loadValineTimeout = setTimeout(() => {
-              loadValine()
-              clearTimeout(loadValineTimeout)
-            }, 1000)
-          } else {
-            window.addEventListener('DOMContentLoaded', loadValine)
-          }
-        </script>
-    </div>
-
-
-        
-    </div>
-
-
-
-
-
-                
-            </div>
-        </div>
-
-        
-            <div class="pc-post-toc right-toc">
-                <div class="post-toc-wrap border-box">
-    <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%93%E5%8C%85%E8%84%B1%E5%A3%B3"><span class="nav-number">1.</span> <span class="nav-text">抓包脱壳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFA%E6%94%BB%E5%87%BB%E8%8E%B7%E5%8F%96%E5%AF%86%E9%92%A5"><span class="nav-number">3.</span> <span class="nav-text">DFA攻击获取密钥</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Frida"><span class="nav-number">3.1.</span> <span class="nav-text">使用Frida</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Unidbg"><span class="nav-number">3.2.</span> <span class="nav-text">使用Unidbg</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sign%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">sign参数分析</span></a></li></ol>
-    </div>
-</div>
-
-            </div>
-        
-    </div>
-</div>
-
-
-                
-            </div>
-
-        </div>
-
-        <div class="page-main-content-bottom border-box">
-            
-<footer class="footer border-box">
-    <div class="border-box website-info-box default">
-        
-            <div class="copyright-info info-item default">
-                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2025
-                
-                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
-                
-            </div>
-
-            <div class="theme-info info-item default">
-                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
-            </div>
-
-            
-
-            
-                <div class="deploy-info info-item default">
-                    
-                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
-                        
-                </div>
-            
-        
-
-        <div class="count-item info-item default">
-            
-                <span class="count-box border-box word">
-                    <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">140.3k</span>
-                </span>
-            
-
-            
-                <span class="count-box border-box uv">
-                    <span class="item-type border-box">访客数</span>
-                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
-                </span>
-            
-
-            
-                <span class="count-box border-box pv">
-                    <span class="item-type border-box">访问量</span>
-                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
-                </span>
-            
-        </div>
-    </div>
-</footer>
-
-        </div>
-    </div>
-
-    <!-- post tools -->
-    
-        <div class="post-tools right-toc">
-            <div class="post-tools-container border-box">
-    <ul class="tools-list border-box">
-        <!-- PC TOC show toggle -->
-        
-            <li class="tools-item flex-center toggle-show-toc">
-                <i class="fas fa-list"></i>
-            </li>
-        
-
-        <!-- PC go comment -->
-        
-            <li class="tools-item flex-center go-to-comments">
-                <i class="fas fa-comment"></i>
-                <span class="post-comments-count"></span>
-            </li>
-        
-    </ul>
-</div>
-
-        </div>
-    
-
-    <!-- side tools -->
-    <div class="side-tools">
-        <div class="side-tools-container border-box ">
-    <ul class="side-tools-list side-tools-show-handle border-box">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
-
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list border-box">
-        
-            <li class="tools-item toggle-show-toc-tablet flex-center">
-                <i class="fas fa-list"></i>
-            </li>
-        
-
-        
-            <li class="tools-item go-to-comments-tablet flex-center">
-                <i class="fas fa-comment"></i>
-            </li>
-        
-
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-
-        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
-            <i class="arrow fas fa-arrow-up"></i>
-            <span class="percent"></span>
-        </li>
-    </ul>
-</div>
-
-    </div>
-
-    <!-- image mask -->
-    <div class="zoom-in-image-mask">
-    <img class="zoom-in-image">
-</div>
-
-
-    <!-- local search -->
-    
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fas fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="搜索..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="close-popup-btn">
-                <i class="fas fa-times"></i>
-            </span>
-        </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-    
-
-    <!-- tablet toc -->
-    
-        <div class="tablet-post-toc-mask">
-            <div class="tablet-post-toc">
-                <div class="post-toc-wrap border-box">
-    <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%93%E5%8C%85%E8%84%B1%E5%A3%B3"><span class="nav-number">1.</span> <span class="nav-text">抓包脱壳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">算法分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFA%E6%94%BB%E5%87%BB%E8%8E%B7%E5%8F%96%E5%AF%86%E9%92%A5"><span class="nav-number">3.</span> <span class="nav-text">DFA攻击获取密钥</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Frida"><span class="nav-number">3.1.</span> <span class="nav-text">使用Frida</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Unidbg"><span class="nav-number">3.2.</span> <span class="nav-text">使用Unidbg</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sign%E5%8F%82%E6%95%B0%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">sign参数分析</span></a></li></ol>
-    </div>
-</div>
-
-            </div>
-        </div>
-    
-</main>
-
-
+.page-container {
+  width: 100%;
+  height: auto;
+  background: var(--background-color-1);
+}
+.page-container .page-main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding-top: var(--header-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content.is-home .transparent-1 {
+  background: var(--header-transparent-background-1);
+  backdrop-filter: blur(4px);
+}
+.page-container .page-main-content.is-home .transparent-2 {
+  background: var(--header-transparent-background-2);
+  backdrop-filter: blur(5px);
+}
+.header-shrink .page-container .page-main-content {
+  padding-top: var(--header-shrink-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: $z-index-5;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--header-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-top.hide {
+  transform: translateY(-105%);
+}
+.header-shrink .page-container .page-main-content .page-main-content-top {
+  height: var(--header-shrink-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-middle {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: $component-spacing-value 0;
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-middle .main-content {
+  width: $main-content-width;
+  max-width: $content-max-width;
+  height: 100%;
+keep-tablet()
+keep-mobile()
+}
+.has-toc .page-container .page-main-content .page-main-content-middle .main-content {
+  max-width: $has-toc-content-max-width;
+}
+.page-container .page-main-content .page-main-content-bottom {
+  width: 100%;
+}
+.page-container .post-tools {
+  position: fixed;
+  top: calc(var(--header-height) + $component-spacing-value);
+  box-sizing: border-box;
+  opacity: 0;
+keep-tablet()
+}
+.page-container .post-tools.right-toc {
+  left: calc((100vw - $content-max-width / 2) - 5rem);
+}
+.page-container .post-tools.left-toc {
+  right: calc((100vw - $content-max-width / 2) - 5rem);
+}
+.header-shrink .page-container .post-tools {
+  top: calc(var(--header-shrink-height) + $component-spacing-value);
+}
+.page-container .side-tools {
+  position: fixed;
+  right: 0;
+  bottom: 1.6rem;
+  box-sizing: border-box;
+  padding-right: 1rem;
+keep-tablet()
+}
+.page-container .side-tools:hover .side-tools-container {
+  transform: translateX(0);
+  opacity: 1;
+}
+.page-container .tablet-post-toc-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: $z-index-10;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0);
+  visibility: hidden;
+}
+.page-container .tablet-post-toc-mask .tablet-post-toc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 22rem;
+  height: 100%;
+  padding: 1.2rem 1rem;
+  background: var(--background-color-1);
+  transform: translateX(-100%);
+keep-mobile()
+}
 
 <!-- common -->
 <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>

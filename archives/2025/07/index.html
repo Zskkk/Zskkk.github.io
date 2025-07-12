@@ -10,7 +10,7 @@
     
     <title>
         
-            ProtoBuf分析以及某方数据逆向 |
+            归档: 2025/7 |
         
         zskのblog
     </title>
@@ -42,123 +42,212 @@
 
 
 <body>
+$post-tools-offset = 'calc((100vw - %s / 2) - 5rem)' % $content-max-width
+
 .page-container {
-  width: 100%;
-  height: auto;
-  background: var(--background-color-1);
-}
-.page-container .page-main-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-  padding-top: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content.is-home .transparent-1 {
-  background: var(--header-transparent-background-1);
-  backdrop-filter: blur(4px);
-}
-.page-container .page-main-content.is-home .transparent-2 {
-  background: var(--header-transparent-background-2);
-  backdrop-filter: blur(5px);
-}
-.header-shrink .page-container .page-main-content {
-  padding-top: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-5;
-  box-sizing: border-box;
-  width: 100%;
-  height: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top.hide {
-  transform: translateY(-105%);
-}
-.header-shrink .page-container .page-main-content .page-main-content-top {
-  height: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: $component-spacing-value 0;
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle .main-content {
-  width: $main-content-width;
-  max-width: $content-max-width;
-  height: 100%;
-keep-tablet()
-keep-mobile()
-}
-.has-toc .page-container .page-main-content .page-main-content-middle .main-content {
-  max-width: $has-toc-content-max-width;
-}
-.page-container .page-main-content .page-main-content-bottom {
-  width: 100%;
-}
-.page-container .post-tools {
-  position: fixed;
-  top: calc(var(--header-height) + $component-spacing-value);
-  box-sizing: border-box;
-  opacity: 0;
-keep-tablet()
-}
-.page-container .post-tools.right-toc {
-  left: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.page-container .post-tools.left-toc {
-  right: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.header-shrink .page-container .post-tools {
-  top: calc(var(--header-shrink-height) + $component-spacing-value);
-}
-.page-container .side-tools {
-  position: fixed;
-  right: 0;
-  bottom: 1.6rem;
-  box-sizing: border-box;
-  padding-right: 1rem;
-keep-tablet()
-}
-.page-container .side-tools:hover .side-tools-container {
-  transform: translateX(0);
-  opacity: 1;
-}
-.page-container .tablet-post-toc-mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-10;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0);
-  visibility: hidden;
-}
-.page-container .tablet-post-toc-mask .tablet-post-toc {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  width: 22rem;
-  height: 100%;
-  padding: 1.2rem 1rem;
-  background: var(--background-color-1);
-  transform: translateX(-100%);
-keep-mobile()
+  width 100%
+  height auto
+  background var(--background-color-1)
+
+  .page-main-content {
+    display flex
+    flex-direction column
+    justify-content space-between
+    min-height 100vh
+    padding-top var(--header-height)
+
+    &.is-home {
+      .transparent-1 {
+        background var(--header-transparent-background-1)
+        backdrop-filter blur(4px)
+      }
+
+      .transparent-2 {
+        background var(--header-transparent-background-2)
+        backdrop-filter blur(5px)
+      }
+    }
+
+
+    .header-shrink & {
+      padding-top var(--header-shrink-height)
+
+
+      +keep-tablet() {
+        padding-top calc(var(--header-shrink-height) * 0.9)
+      }
+
+      +keep-mobile() {
+        padding-top calc(var(--header-shrink-height) * 0.8)
+      }
+    }
+
+
+    +keep-tablet() {
+      padding-top calc(var(--header-height) * 0.9)
+    }
+
+
+    +keep-mobile() {
+      padding-top calc(var(--header-height) * 0.8)
+    }
+
+
+    .page-main-content-top {
+      position fixed
+      top 0
+      right 0
+      z-index $z-index-5
+      box-sizing border-box
+      width 100%
+      height var(--header-height)
+      transition-t("transform, height", "0, 0", "0.3, 0.2", "ease-out, ease")
+
+      &.hide {
+        transform translateY(-105%)
+      }
+
+      .header-shrink & {
+        height var(--header-shrink-height)
+
+        +keep-tablet() {
+          height calc(var(--header-shrink-height) * 0.9)
+        }
+
+        +keep-mobile() {
+          height calc(var(--header-shrink-height) * 0.8)
+        }
+      }
+
+
+      +keep-tablet() {
+        height calc(var(--header-height) * 0.9)
+      }
+
+
+      +keep-mobile() {
+        height calc(var(--header-height) * 0.8)
+      }
+    }
+
+
+    .page-main-content-middle {
+      display flex
+      justify-content center
+      width 100%
+      padding $component-spacing-value 0
+
+      +keep-tablet() {
+        padding $component-spacing-value * 0.8 0
+      }
+
+      +keep-mobile() {
+        padding $component-spacing-value * 0.6 0
+      }
+
+      .main-content {
+        width $main-content-width
+        max-width $content-max-width
+        height 100%
+        transition-t("max-width, width", "0, 0", "0.1, 0.1", "ease, ease")
+
+        .has-toc & {
+          max-width $has-toc-content-max-width
+        }
+
+        +keep-tablet() {
+          width $main-content-width-tablet
+        }
+
+        +keep-mobile() {
+          width $main-content-width-mobile
+        }
+      }
+    }
+
+
+    .page-main-content-bottom {
+      width 100%
+    }
+  }
+
+
+  .post-tools {
+    position fixed
+    top 'calc(var(--header-height) + %s)' % $component-spacing-value
+    box-sizing border-box
+    opacity 0
+    transition-t("top, transform, opacity, left", "0, 0, 0.2, 0", "0.2, 0.2, 0.2, 0.2", "ease, ease, ease, ease")
+
+    &.right-toc {
+      left $post-tools-offset
+    }
+
+    &.left-toc {
+      right $post-tools-offset
+    }
+
+    .header-shrink & {
+      top 'calc(var(--header-shrink-height) + %s)' % $component-spacing-value
+    }
+
+
+    +keep-tablet() {
+      display none !important
+    }
+  }
+
+
+  .side-tools {
+    position fixed
+    right 0
+    bottom 1.6rem
+    box-sizing border-box
+    padding-right 1rem
+
+    +keep-tablet() {
+      padding-right 0
+    }
+
+    &:hover {
+      .side-tools-container {
+        transform translateX(0)
+        opacity 1
+      }
+    }
+  }
+
+
+  .tablet-post-toc-mask {
+    position fixed
+    top 0
+    right 0
+    z-index $z-index-10
+    box-sizing border-box
+    width 100%
+    height 100%
+    background rgba(0, 0, 0, 0)
+    visibility hidden
+    transition-t("visibility", "0", "0.2", "ease")
+
+
+    .tablet-post-toc {
+      position absolute
+      top 0
+      left 0
+      box-sizing border-box
+      width 22rem
+      height 100%
+      padding 1.2rem 1rem
+      background var(--background-color-1)
+      transform translateX(-100%)
+      transition-t("transform", "0", "0.4", "ease")
+
+      +keep-mobile() {
+        width 70%
+      }
+    }
+  }
 }
 
 <!-- common -->
@@ -180,24 +269,6 @@ keep-mobile()
 
 
 <div class="pjax">
-    
-        <!-- post-helper -->
-        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
-
-        <!-- toc -->
-        
-            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
-        
-
-        <!-- copyright-info -->
-        
-            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
-        
-
-        <!-- share -->
-        
-            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
-        
     
 
     <!-- category-page -->

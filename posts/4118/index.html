@@ -42,838 +42,124 @@
 
 
 <body>
-<div class="progress-bar-container">
-    
-        <span class="scroll-progress-bar"></span>
-    
-
-    
-        <span class="pjax-progress-bar"></span>
-        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
-    
-</div>
-
-
-<main class="page-container border-box">
-
-    <!-- home first screen  -->
-    
-
-    <!-- page content -->
-    <div class="page-main-content border-box">
-        <div class="page-main-content-top">
-            
-<header class="header-wrapper">
-
-    <div class="border-box header-content">
-        <div class="left border-box">
-            
-                <a class="logo-image border-box" href="/">
-                    <img src="/images/logo.svg">
-                </a>
-            
-            <a class="site-name border-box" href="/">
-               zskのblog
-            </a>
-        </div>
-
-        <div class="right border-box">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                首页
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                归档
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/tags"
-                            >
-                                标签
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/about"
-                            >
-                                关于
-                            </a>
-                        </li>
-                    
-                    
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fas fa-search"></i>
-                        </li>
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">归档</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/tags">标签</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/about">关于</a>
-                </li>
-            
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-        </div>
-
-        <div class="page-main-content-middle border-box">
-
-            <div class="main-content border-box">
-
-                
-
-                    <div class="fade-in-down-animation">
-    <div class="post-page-container border-box">
-
-        <div class="article-content-container border-box">
-
-            
-
-            <div class="article-content-bottom border-box">
-                
-                    <div class="article-title">
-                        Ubuntu18.04 编译安卓6.0刷入Nexus 5
-                    </div>
-                
-
-                
-                    <div class="article-header border-box">
-                        
-                            <div class="avatar-box border-box">
-                                <img src="/images/head.svg">
-                            </div>
-                        
-                        <div class="info-box">
-                            <div class="author">
-                                <span class="name">zsk</span>
-                                
-                                    <span class="author-label">Lv4</span>
-                                
-                            </div>
-                            <div class="meta-info border-box">
-                                
-
-<div class="article-meta-info-container border-box post">
-    <div class="article-meta-info border-box">
-        
-
-
-        
-            <span class="meta-info-item article-create-date">
-                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
-                <span class="pc">2023-09-28 00:00:00</span>
-                <span class="mobile">2023-09-28 00:00</span>
-            </span>
-
-            <span class="meta-info-item article-update-date">
-                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Thu Sep 28 2023 00:00:00 GMT+0800">2023-09-28 00:00:00</span>
-            </span>
-        
-
-        
-
-        
-            <span class="article-tag meta-info-item border-box">
-                <i class="icon fas fa-tags"></i>&nbsp;
-                <ul>
-                    
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%88%B7%E6%9C%BA/">刷机</a></li>
-                        
-                    
-                </ul>
-            </span>
-        
-
-        
-        
-            <span class="meta-info-item article-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.8k 字</span>
-            </span>
-        
-        
-            <span class="meta-info-item article-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>13 分钟</span>
-            </span>
-        
-        
-            <span class="meta-info-item article-pv">
-                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-            </span>
-        
-    </div>
-
-    
-</div>
-
-                            </div>
-                        </div>
-                    </div>
-                
-
-                <div class="article-content keep-markdown-body">
-                    
-
-                    <p>有台闲置的nexus 5，想着刷机，之前都是刷入编译好的系统包，就琢磨着自己编译安卓源码刷入。<br>一开始用ubuntu22.04，各种踩坑，放弃了改为用ubuntu18.04<br>资料链接：<br><a class="link"   target="_blank" rel="noopener" href="https://source.android.com/docs/setup/about/build-numbers?hl=zh-cn#platform-code-names-versions-api-levels-and-ndk-releases" >https://source.android.com/docs/setup/about/build-numbers?hl=zh-cn#platform-code-names-versions-api-levels-and-ndk-releases<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://source.android.com/docs/setup/build/running?hl=zh-cn#selecting-device-build" >https://source.android.com/docs/setup/build/running?hl=zh-cn#selecting-device-build<i class="fas fa-external-link-alt"></i></a></p>
-<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><p><strong>安装和配置git</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install git</span><br><span class="line">$ git config --global user.name &quot;Your Name&quot;</span><br><span class="line">$ git config --global user.email &quot;you@example.com&quot;</span><br></pre></td></tr></table></figure>
-<p><strong>更换软件源为清华</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
-<p>在文件最前面加入下面代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
-<p>修改完成后，保存文件，执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装依赖：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y git flex bison gperf build-essential libncurses5-dev:i386</span><br><span class="line">sudo apt-get install libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-dev g++-multilib</span><br><span class="line">sudo apt-get install tofrodos python-markdown libxml2-utils xsltproc zlib1g-dev:i386</span><br><span class="line">sudo apt-get install dpkg-dev libsdl1.2-dev libesd0-dev</span><br><span class="line">sudo apt-get install git-core gnupg flex bison gperf build-essential </span><br><span class="line">sudo apt-get install zip curl zlib1g-dev gcc-multilib g++-multilib</span><br><span class="line">sudo apt-get install libc6-dev-i386</span><br><span class="line">sudo apt-get install lib32ncurses5-dev x11proto-core-dev libx11-dev</span><br><span class="line">sudo apt-get install lib32z-dev ccache</span><br><span class="line">sudo apt-get install libgl1-mesa-dev libxml2-utils xsltproc unzip m4</span><br><span class="line">sudo apt-get install lib32stdc++6</span><br></pre></td></tr></table></figure>
-<p><strong>所需JDK：</strong><br><a class="link"   target="_blank" rel="noopener" href="https://source.android.com/docs/setup/start/older-versions?hl=zh-cn" >https://source.android.com/docs/setup/start/older-versions?hl=zh-cn<i class="fas fa-external-link-alt"></i></a></br><br>JDK</p>
-<ul>
-<li>Android 7.0 - Android 8.0：<ul>
-<li>Ubuntu：OpenJDK 8</li>
-<li>Mac OS X：JDK 8u45 或更高版本</li>
-</ul>
-</li>
-<li>Android 5.x (Lollipop) - Android 6.0 (Marshmallow)：<ul>
-<li>Ubuntu：OpenJDK 7</li>
-<li>Mac OS X：jdk-7u71-macosx-x64.dmg</li>
-</ul>
-</li>
-</ul>
-<p>nexus 5官方只支持到 android-6.0.1_r77，这里用openJDK7，我给找好了</br>链接：<a class="link"   target="_blank" rel="noopener" href="https://pan.baidu.com/s/1YMCsApMD_jeI5S7wmpJgTg" >https://pan.baidu.com/s/1YMCsApMD_jeI5S7wmpJgTg<i class="fas fa-external-link-alt"></i></a> </br>提取码：aupw</br>将openJDK7解压到&#x2F;usr&#x2F;lib&#x2F;jvm这个目录下面，比如我的目录&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;openjdk-1.7.0_121</br>打开&#x2F;etc&#x2F;profile文件:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/profile</span><br></pre></td></tr></table></figure>
-
-<p></br>在末尾追加下面代码：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/openjdk-1.7.0_121</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre </span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib </span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure>
-
-<p>修改了&#x2F;etc&#x2F;profile文件需要 重启 才能生效，但使用下面命令可以在不重启的情况下在 当前 bash环境生效：<br>验证</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
-
-<p> <strong>配置python</strong><br>Ubuntu 18.04.6已内置python3，安装位置在&#x2F;usr&#x2F;bin&#x2F;python3.6</br>AOSP 12及以上用python3，只需要建立一个python的链接</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/bin/python3 /usr/bin/python</span><br></pre></td></tr></table></figure>
-<p>AOSP 12以下，需要安装python2</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python-minimal</span><br><span class="line">python2 --version</span><br></pre></td></tr></table></figure>
-
-<p>python2的安装路径为&#x2F;usr&#x2F;bin&#x2F;python2.7。因为系统中安装了多个python版本，需要使用update-alternatives来切换版本，update-alternatives是Linux上的一个版本管理工具</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1</span><br><span class="line">sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 0</span><br></pre></td></tr></table></figure>
-
-<p>update-alternatives后面按顺序共5个参数，其中：</br>第一个参数–install表示向update-alternatives注册服务名。</br>第二个参数&#x2F;usr&#x2F;bin&#x2F;python是注册的最终地址，以后管理就是管理这个软链</br>第三个参数python为服务名</br>第四个参数为被管理命令的绝对路径</br>第五个参数为优先级，数字越大优先级越高</br>配置完毕后，可以使用python –version查看当前使用的python版本</br></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">zsk@ubuntu:~$ update-alternatives --display python</span><br><span class="line">python - 自动模式</span><br><span class="line">  最佳链接版本为 /usr/bin/python2.7</span><br><span class="line"> 链接目前指向 /usr/bin/python2.7</span><br><span class="line">  链接 python 指向 /usr/bin/python</span><br><span class="line">/usr/bin/python2.7 - 优先级 1</span><br><span class="line">/usr/bin/python3.6 - 优先级 0</span><br></pre></td></tr></table></figure>
-<p>后面如果需要切换python版本，执行如下命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">zsk@ubuntu:~$ sudo update-alternatives --config python</span><br><span class="line">有 2 个候选项可用于替换 python (提供 /usr/bin/python)。</span><br><span class="line"></span><br><span class="line">  选择       路径              优先级  状态</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">* 0            /usr/bin/python2.7   1         自动模式</span><br><span class="line">  1            /usr/bin/python2.7   1         手动模式</span><br><span class="line">  2            /usr/bin/python3.6   0         手动模式</span><br><span class="line"></span><br><span class="line">要维持当前值[*]请按&lt;回车键&gt;，或者键入选择的编号：</span><br></pre></td></tr></table></figure>
-<p>如果需要安装对应版本的pip<br>python3安装pip（先切换到python3下）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python3-pip</span><br></pre></td></tr></table></figure>
-<p>python2安装pip</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install curl  #安装curl下载工具</span><br><span class="line">sudo curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py  #下载安装脚本</span><br><span class="line">sudo python get-pip.py  #运行安装脚本</span><br></pre></td></tr></table></figure>
-<h3 id="安装repo"><a href="#安装repo" class="headerlink" title="安装repo"></a>安装repo</h3><p>上面是谷歌官方的地址，如果下载不了，可以使用下面清华镜像地址</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; ~/bin/repo</span><br></pre></td></tr></table></figure>
-<p><strong>初始化repo和manifest仓库</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo init -u https://aosp.tuna.tsinghua.edu.cn/platform/manifest -b android-6.0.0_r1 --depth=1</span><br></pre></td></tr></table></figure>
-<p>后面记得加–depth&#x3D;1，这样就会只拉最新的git版本。而不是把所有版本都拉下来。不然会有几百G大</br>如果提示无法连接到 gerrit.googlesource.com，repo的运行过程中会尝试访问官方的git源更新自己，如果想使用tuna的镜像源进行更新，可以将如下内容复制到你的~&#x2F;.bashrc里 </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export REPO_URL=&#x27;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/&#x27;</span><br></pre></td></tr></table></figure>
-<p>同步</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo sync</span><br></pre></td></tr></table></figure>
-<h3 id="下载驱动"><a href="#下载驱动" class="headerlink" title="下载驱动"></a>下载驱动</h3><p>需要下载对应的驱动<br><a class="link"   target="_blank" rel="noopener" href="https://developers.google.com/android/drivers#hammerheadm4b30z" >https://developers.google.com/android/drivers#hammerheadm4b30z<i class="fas fa-external-link-alt"></i></a><br><strong>适用于 Android 6.0.0 (MRA58K) 的 Nexus 5 (GSM&#x2F;LTE) 二进制文件</strong></p>
-<table>
-<thead>
-<tr>
-<th>硬件组件</th>
-<th>公司</th>
-<th>下载</th>
-<th>SHA-256 校验和</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NFC、蓝牙、Wi-Fi</td>
-<td>Broadcom</td>
-<td><a class="link"   target="_blank" rel="noopener" href="https://dl.google.com/dl/android/aosp/broadcom-hammerhead-mra58k-bed5b700.tgz" >Link<i class="fas fa-external-link-alt"></i></a></td>
-<td>4009c98b916f679a96cc9d9459b811498e198c478b656652537fd7d705d28acc</td>
-</tr>
-<tr>
-<td>摄像头、传感器、音频</td>
-<td>LG</td>
-<td><a class="link"   target="_blank" rel="noopener" href="https://dl.google.com/dl/android/aosp/lge-hammerhead-mra58k-25d00e3d.tgz" >Link<i class="fas fa-external-link-alt"></i></a></td>
-<td>42bca1a416903020f7e90bf1cc8651fa6b045b6137291dc21bfe5cf3626424ea</td>
-</tr>
-<tr>
-<td>图形、GSM、摄像头、GPS、传感器、媒体、DSP、USB</td>
-<td>Qualcomm</td>
-<td><a class="link"   target="_blank" rel="noopener" href="https://dl.google.com/dl/android/aosp/qcom-hammerhead-mra58k-ff98ab07.tgz" >Link<i class="fas fa-external-link-alt"></i></a></td>
-<td>489df79f864abdc4947f39f45923b7999589db49a40dcd3c180d8cd924b73ae3</td>
-</tr>
-</tbody></table>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.google.com/dl/android/aosp/broadcom-hammerhead-mra58k-bed5b700.tgz</span><br><span class="line">wget https://dl.google.com/dl/android/aosp/lge-hammerhead-mra58k-25d00e3d.tgz</span><br><span class="line">wget https://dl.google.com/dl/android/aosp/qcom-hammerhead-mra58k-ff98ab07.tgz</span><br></pre></td></tr></table></figure>
-<p>下载后解压得到三个shell脚本文件，放到源码的根目录中</br>依次执行这三个脚本文件，这里要注意，三个脚本文件的作用是生成驱动文件，但是在执行操作前，它会让你阅读相关协议，你必须一直按enter键一行一行往下读，更不能一键摁到底，因为程序在最后会让你输入“I ACCEPT”，如果你一键摁到底，也就是说最后一步也摁enter键的话它就会执行默认操作，即不接受此协议，那生成驱动文件的操作就不会执行。</br></p>
-<h3 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h3><p>修改 源码目录&#x2F;art&#x2F;build&#x2F;Android.common_build.mk 文件，定位到75行，将下面的代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifneq ($(WITHOUT_HOST_CLANG),true)改为ifeq ($(WITHOUT_HOST_CLANG),false) //对应问题3</span><br></pre></td></tr></table></figure>
-<p>如果之前编译过，删除所有以前编译操作的已有输出</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make clobber</span><br><span class="line">make clean</span><br></pre></td></tr></table></figure>
-<ol>
-<li>在 .bashrc文件末尾添加：export USE_CCACHE &#x3D; 1， 只要编译过aosp，执行过这一句代码，以后再编译aosp，就不用再执行了<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo export USE_CCACHE=1 &gt;&gt; ~/.bashrc </span><br></pre></td></tr></table></figure></li>
-<li>为了提高编译效率，设置编译器高速缓存<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prebuilts/misc/linux-x86/ccache/ccache -M 100G</span><br></pre></td></tr></table></figure></li>
-<li>初始化编译环境 source<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source build/envsetup.sh</span><br></pre></td></tr></table></figure></li>
-<li>运行lunch命令选择编译目标</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>变体</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>eng</td>
-<td><ul>这是默认变种<li>安装带有 eng 或 debug 标记的模块。</li><li>除了带有标记的模块之外，还会根据产品定义文件安装相应模块。</li><li>ro.secure&#x3D;0</li><li>ro.debuggable&#x3D;1</li><li>ro.kernel.android.checkjni&#x3D;1</li><li>adb 默认处于启用状态。</li></ul></td>
-</tr>
-<tr>
-<td>user</td>
-<td><ul>打算作为最终发布版本的变体。<li>安装带有 user 标记的模块。</li><li>除了带有标记的模块之外，还会根据产品定义文件安装相应模块。</li><li>ro.secure&#x3D;1</li><li>ro.debuggable&#x3D;0</li><li>adb 默认处于停用状态。</li></ul></td>
-</tr>
-<tr>
-<td>userdebug</td>
-<td><ul>与 user 相同，但以下几点除外：<li>还会安装带有 debug 标记的模块。</li><li>ro.debuggable&#x3D;1</li><li>adb 默认处于启用状态。</li></ul></td>
-</tr>
-</tbody></table>
-<p><a class="link"   target="_blank" rel="noopener" href="https://source.android.com/docs/setup/build/running#selecting-device-build" >https://source.android.com/docs/setup/build/running#selecting-device-build<i class="fas fa-external-link-alt"></i></a></p>
-<table>
-<thead>
-<tr>
-<th>-</th>
-<th>-</th>
-<th>-</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Nexus 6P</td>
-<td>angler</td>
-<td>aosp_angler-userdebug</td>
-</tr>
-<tr>
-<td>Nexus 5X</td>
-<td>bullhead</td>
-<td>aosp_bullhead-userdebug</td>
-</tr>
-<tr>
-<td>Nexus 6</td>
-<td>shamu</td>
-<td>aosp_shamu-userdebug</td>
-</tr>
-<tr>
-<td>Nexus Player</td>
-<td>fugu</td>
-<td>aosp_fugu-userdebug</td>
-</tr>
-<tr>
-<td>Nexus 9</td>
-<td>volantis (flounder)</td>
-<td>aosp_flounder-userdebug</td>
-</tr>
-<tr>
-<td>Nexus 5 (GSM&#x2F;LTE)</td>
-<td>hammerhead</td>
-<td>aosp_hammerhead-userdebug</td>
-</tr>
-</tbody></table>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lunch</span><br><span class="line">// 1. aosp_arm-eng不会生成我们需要的5个文件，17. aosp_hammerhead-userdebug可以</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LC_ALL=C //对应问题2</span><br></pre></td></tr></table></figure>
-<p>查看CPU核心数：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep processor</span><br></pre></td></tr></table></figure>
-<p>花了两个半小时编译完成</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">make_ext4fs -s -T -1 -S out/target/product/hammerhead/root/file_contexts -L system -l 1073741824 -a system out/target/product/hammerhead/obj/PACKAGING/systemimage_intermediates/system.img out/target/product/hammerhead/system out/target/product/hammerhead/system</span><br><span class="line">Creating filesystem with parameters:</span><br><span class="line">    Size: 1073741824</span><br><span class="line">    Block size: 4096</span><br><span class="line">    Blocks per group: 32768</span><br><span class="line">    Inodes per group: 8192</span><br><span class="line">    Inode size: 256</span><br><span class="line">    Journal blocks: 4096</span><br><span class="line">    Label: system</span><br><span class="line">    Blocks: 262144</span><br><span class="line">    Block groups: 8</span><br><span class="line">    Reserved block group size: 63</span><br><span class="line">Created filesystem with 1718/65536 inodes and 105291/262144 blocks</span><br><span class="line">Install system fs image: out/target/product/hammerhead/system.img</span><br><span class="line">out/target/product/hammerhead/system.img+out/target/product/hammerhead/obj/PACKAGING/recovery_patch_intermediates/recovery_from_boot.p maxsize=1096212480 blocksize=135168 total=416118221 reserve=11083776</span><br><span class="line"></span><br><span class="line">#### make completed successfully (02:27:25 (hh:mm:ss)) ####</span><br></pre></td></tr></table></figure>
-
-<p>编译后输出的文件都放在了源码根目录下的 &#x2F;out&#x2F;target&#x2F;product&#x2F;hammerhead&#x2F;</br>可以在该目录下面找到boot.img、system.img、recovery.img、cache.img、userdata.img五个镜像文件，这表示编译成功，这也是刷机需要的文件。</p>
-<h4 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a>问题1：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Export includes file: frameworks/base/tools/aidl/Android.mk -- out/host/linux-x86/obj/EXECUTABLES/aidl_intermediates/export_includes</span><br><span class="line">build/core/binary.mk:609: recipe for target &#x27;out/host/linux-x86/obj/EXECUTABLES/aidl_intermediates/aidl_language_y.cpp&#x27; failed</span><br><span class="line">make: *** [out/host/linux-x86/obj/EXECUTABLES/aidl_intermediates/aidl_language_y.cpp] Error 127</span><br><span class="line">make: *** 正在等待未完成的任务....</span><br><span class="line">Lex: aidl &lt;= frameworks/base/tools/aidl/aidl_language_l.l</span><br><span class="line">Notice file: frameworks/base/tools/aidl/NOTICE -- out/host/linux-x86/obj/NOTICE_FILES/src//bin/aidl.txt</span><br><span class="line">flex-2.5.39: loadlocale.c:130:_nl_intern_locale_data: ?? &#x27;cnt &lt; (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))&#x27; ???</span><br><span class="line">build/core/binary.mk:646: recipe for target &#x27;out/host/linux-x86/obj/EXECUTABLES/aidl_intermediates/aidl_language_l.cpp&#x27; failed</span><br><span class="line">make: *** [out/host/linux-x86/obj/EXECUTABLES/aidl_intermediates/aidl_language_l.cpp] 已放弃 (core dumped)</span><br><span class="line">注: 某些输入文件使用了未经检查或不安全的操作。</span><br><span class="line">注: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。</span><br><span class="line">注: 某些输入文件使用了未经检查或不安全的操作。</span><br><span class="line">注: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。</span><br><span class="line"></span><br><span class="line">make failed to build some targets (02:10 (mm:ss))</span><br></pre></td></tr></table></figure>
-<p>执行: make -j8 update-api</p>
-<h4 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a>问题2：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Lex: aidl &lt;= frameworks/base/tools/aidl/aidl_language_l.l</span><br><span class="line">flex-2.5.39: loadlocale.c:130:_nl_intern_locale_data: ?? &#x27;cnt &lt; (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))&#x27; ???</span><br><span class="line">build/core/binary.mk:646: recipe for target &#x27;out/host/linux-x86/obj/EXECUTABLES/aidl_intermediates/aidl_language_l.cpp&#x27; failed</span><br><span class="line">make: *** [out/host/linux-x86/obj/EXECUTABLES/aidl_intermediates/aidl_language_l.cpp] 已放弃 (core dumped)</span><br></pre></td></tr></table></figure>
-<p>编译前：export LC_ALL&#x3D;C</p>
-<h4 id="问题3："><a href="#问题3：" class="headerlink" title="问题3："></a>问题3：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clang: error: linker command failed with exit code 1 (use -v to see invocation)</span><br><span class="line">build/core/host_shared_library_internal.mk:51: recipe for target &#x27;out/host/linux-x86/obj/lib/libart.so&#x27; failed</span><br><span class="line">make: *** [out/host/linux-x86/obj/lib/libart.so] Error 1</span><br></pre></td></tr></table></figure>
-<p>修改 源码目录&#x2F;art&#x2F;build&#x2F;Android.common_build.mk 文件，定位到75行，将下面的代码：</br>ifneq ($(WITHOUT_HOST_CLANG),true)改为ifeq ($(WITHOUT_HOST_CLANG),false)</p>
-<h3 id="将镜像刷入Nexus5"><a href="#将镜像刷入Nexus5" class="headerlink" title="将镜像刷入Nexus5"></a>将镜像刷入Nexus5</h3><p>在源码根目录下输入以下命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb reboot bootloader</span><br></pre></td></tr></table></figure>
-<p>随后手机就会进入recovery模式。</br>执行 fastboot oem unlock 解锁bootloader，如果已经解锁，启动界面的google图标下有一把打开的锁。</br>开始刷机：</br></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fastboot -w flashall</span><br></pre></td></tr></table></figure>
-<p>如果遇到 error: ANDROID_PRODUCT_OUT not set</br>执行 $ export ANDROID_PRODUCT_OUT&#x3D;&#x2F;home&#x2F;zsk&#x2F;bin&#x2F;out&#x2F;target&#x2F;product&#x2F;hammerhead</br>或者进到 &#x2F;home&#x2F;zsk&#x2F;bin&#x2F;out&#x2F;target&#x2F;product&#x2F;hammerhead 目录下，执行刷入5个镜像文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo fastboot flash recovery recovery.img</span><br><span class="line">sudo fastboot flash boot boot.img</span><br><span class="line">sudo fastboot flash system system.img</span><br><span class="line">sudo fastboot flash cache cache.img</span><br><span class="line">sudo fastboot flash userdata userdata.img</span><br><span class="line">sudo fastboot reboot</span><br></pre></td></tr></table></figure>
-
-                </div>
-
-                
-                        <div class="article-copyright-info-container border-box">
-    <div class="copyright-info-content border-box">
-        <div class="copyright-info-top border-box">
-            <div class="post-title border-box text-ellipsis">
-                Ubuntu18.04 编译安卓6.0刷入Nexus 5
-            </div>
-
-            <div class="post-link border-box text-ellipsis">
-                posts/4118/
-            </div>
-        </div>
-
-        <div class="copyright-info-bottom border-box">
-            <div class="post-author bottom-item">
-                <div class="type">
-                    作者
-                </div>
-                <div class="content">zsk</div>
-            </div>
-
-            <div class="post-time bottom-item">
-                <div class="type">
-                    发布于
-                </div>
-                <div class="content">2023-09-28 00:00</div>
-            </div>
-
-
-            <div class="post-license bottom-item">
-                <div class="type">
-                    许可
-                </div>
-                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
-                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
-                        <i class="fa-brands fa-creative-commons"></i>
-                        <i class="fa-brands fa-creative-commons-by"></i>
-                        <i class="fa-brands fa-creative-commons-nc"></i>
-                        <i class="fa-brands fa-creative-commons-sa"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <i class="copyright-bg fa-solid fa-copyright"></i>
-    </div>
-    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
-        <i class="fa-solid fa-copy"></i>
-    </div>
-</div>
-
-                
-
-                <div class="post-bottom-tags-and-share border-box">
-                    <div>
-                        
-                            <ul class="post-tags-box border-box">
-                                
-                                    <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%88%B7%E6%9C%BA/">刷机</a>
-                                    </li>
-                                
-                            </ul>
-                        
-                    </div>
-                    <div>
-                        
-                            <div class="post-share-container border-box">
-    <ul class="share-list-wrap border-box">
-        <li class="qq share-item border-box flex-center tooltip"
-            data-tooltip-content="分享到 QQ"
-        >
-            <i class="fa-brands fa-qq"></i>
-        </li>
-        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
-            data-tooltip-content="分享到微信"
-            data-tooltip-img-tip="微信扫一扫"
-            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
-        >
-            <i class="fa-brands fa-weixin"></i>
-        </li>
-        <li class="weibo share-item border-box flex-center tooltip"
-            data-tooltip-content="分享到微博"
-        >
-            <i class="fa-brands fa-weibo"></i>
-        </li>
-    </ul>
-</div>
-
-                        
-                    </div>
-                </div>
-
-                
-
-                
-                    <div class="article-nav">
-                        
-                            <div class="article-prev">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/posts/23195/"
-                                   title="Android加壳与脱壳（一）ClassLoader和动态加载"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                      <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                            <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Android加壳与脱壳（一）ClassLoader和动态加载</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
-                        
-                            <div class="article-next">
-                                <a class="next"
-                                   rel="next"
-                                   href="/posts/22788/"
-                                   title="Arm汇编"
-                                >
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Arm汇编</span>
-                                        <span class="post-nav-item">下一篇</span>
-                                    </span>
-                                            <span class="right arrow-icon flex-center">
-                                      <i class="fas fa-chevron-right"></i>
-                                    </span>
-                                </a>
-                            </div>
-                        
-                    </div>
-                
-
-                
-                    
-
-
-    <div class="comments-container border-box">
-        <div id="comments-anchor" class="comment-area-title border-box">
-            <i class="fas fa-comments"></i>&nbsp;评论
-        </div>
-        
-            
-
-    <div class="valine-container">
-        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
-        <div id="vcomments"></div>
-        <script data-pjax>
-          function loadValine() {
-
-            const config = {
-              el: '#vcomments',
-              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
-              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
-              meta: ['nick', 'mail', 'link'],
-              avatar: 'wavatar',
-              enableQQ: true,
-              placeholder: '😜 尽情吐槽吧~',
-              lang: 'zh-CN'.toLowerCase()
-            }
-
-            if ('') {
-              config.serverURLs = ''
-            }
-
-            new Valine(config)
-
-            function getAuthor(language) {
-              switch (language) {
-                case 'en':
-                  return 'Author'
-                case 'zh-CN':
-                  return '博主'
-                case 'zh-TW':
-                  return '站長'
-                default:
-                  return 'Master'
-              }
-            }
-
-            // Add "Author" identify
-            const getValineDomTimer = setInterval(() => {
-              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
-              if (vcards.length > 0) {
-                let author = 'zsk'
-
-                if (author) {
-                  for (let vcard of vcards) {
-                    const vnick_dom = vcard.querySelector('.vhead .vnick')
-                    const vnick = vnick_dom.innerHTML
-                    if (vnick === author) {
-                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
-                    }
-                  }
-                }
-                clearInterval(getValineDomTimer)
-              } else {
-                clearInterval(getValineDomTimer)
-              }
-            }, 2000)
-          }
-
-          if ('true' === 'true') {
-            const loadValineTimeout = setTimeout(() => {
-              loadValine()
-              clearTimeout(loadValineTimeout)
-            }, 1000)
-          } else {
-            window.addEventListener('DOMContentLoaded', loadValine)
-          }
-        </script>
-    </div>
-
-
-        
-    </div>
-
-
-
-
-
-                
-            </div>
-        </div>
-
-        
-            <div class="pc-post-toc right-toc">
-                <div class="post-toc-wrap border-box">
-    <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85repo"><span class="nav-number">2.</span> <span class="nav-text">安装repo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%A9%B1%E5%8A%A8"><span class="nav-number">3.</span> <span class="nav-text">下载驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E7%BC%96%E8%AF%91"><span class="nav-number">4.</span> <span class="nav-text">开始编译</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%981%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">问题1：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%982%EF%BC%9A"><span class="nav-number">4.2.</span> <span class="nav-text">问题2：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%983%EF%BC%9A"><span class="nav-number">4.3.</span> <span class="nav-text">问题3：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E9%95%9C%E5%83%8F%E5%88%B7%E5%85%A5Nexus5"><span class="nav-number">5.</span> <span class="nav-text">将镜像刷入Nexus5</span></a></li></ol>
-    </div>
-</div>
-
-            </div>
-        
-    </div>
-</div>
-
-
-                
-            </div>
-
-        </div>
-
-        <div class="page-main-content-bottom border-box">
-            
-<footer class="footer border-box">
-    <div class="border-box website-info-box default">
-        
-            <div class="copyright-info info-item default">
-                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2025
-                
-                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
-                
-            </div>
-
-            <div class="theme-info info-item default">
-                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
-            </div>
-
-            
-
-            
-                <div class="deploy-info info-item default">
-                    
-                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
-                        
-                </div>
-            
-        
-
-        <div class="count-item info-item default">
-            
-                <span class="count-box border-box word">
-                    <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">140.3k</span>
-                </span>
-            
-
-            
-                <span class="count-box border-box uv">
-                    <span class="item-type border-box">访客数</span>
-                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
-                </span>
-            
-
-            
-                <span class="count-box border-box pv">
-                    <span class="item-type border-box">访问量</span>
-                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
-                </span>
-            
-        </div>
-    </div>
-</footer>
-
-        </div>
-    </div>
-
-    <!-- post tools -->
-    
-        <div class="post-tools right-toc">
-            <div class="post-tools-container border-box">
-    <ul class="tools-list border-box">
-        <!-- PC TOC show toggle -->
-        
-            <li class="tools-item flex-center toggle-show-toc">
-                <i class="fas fa-list"></i>
-            </li>
-        
-
-        <!-- PC go comment -->
-        
-            <li class="tools-item flex-center go-to-comments">
-                <i class="fas fa-comment"></i>
-                <span class="post-comments-count"></span>
-            </li>
-        
-    </ul>
-</div>
-
-        </div>
-    
-
-    <!-- side tools -->
-    <div class="side-tools">
-        <div class="side-tools-container border-box ">
-    <ul class="side-tools-list side-tools-show-handle border-box">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
-
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
-
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="exposed-tools-list border-box">
-        
-            <li class="tools-item toggle-show-toc-tablet flex-center">
-                <i class="fas fa-list"></i>
-            </li>
-        
-
-        
-            <li class="tools-item go-to-comments-tablet flex-center">
-                <i class="fas fa-comment"></i>
-            </li>
-        
-
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-
-        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
-            <i class="arrow fas fa-arrow-up"></i>
-            <span class="percent"></span>
-        </li>
-    </ul>
-</div>
-
-    </div>
-
-    <!-- image mask -->
-    <div class="zoom-in-image-mask">
-    <img class="zoom-in-image">
-</div>
-
-
-    <!-- local search -->
-    
-        <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-input-field-pre">
-            <i class="fas fa-keyboard"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="搜索..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="close-popup-btn">
-                <i class="fas fa-times"></i>
-            </span>
-        </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-    
-
-    <!-- tablet toc -->
-    
-        <div class="tablet-post-toc-mask">
-            <div class="tablet-post-toc">
-                <div class="post-toc-wrap border-box">
-    <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85repo"><span class="nav-number">2.</span> <span class="nav-text">安装repo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%A9%B1%E5%8A%A8"><span class="nav-number">3.</span> <span class="nav-text">下载驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E7%BC%96%E8%AF%91"><span class="nav-number">4.</span> <span class="nav-text">开始编译</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%981%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">问题1：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%982%EF%BC%9A"><span class="nav-number">4.2.</span> <span class="nav-text">问题2：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%983%EF%BC%9A"><span class="nav-number">4.3.</span> <span class="nav-text">问题3：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E9%95%9C%E5%83%8F%E5%88%B7%E5%85%A5Nexus5"><span class="nav-number">5.</span> <span class="nav-text">将镜像刷入Nexus5</span></a></li></ol>
-    </div>
-</div>
-
-            </div>
-        </div>
-    
-</main>
-
-
+.page-container {
+  width: 100%;
+  height: auto;
+  background: var(--background-color-1);
+}
+.page-container .page-main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding-top: var(--header-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content.is-home .transparent-1 {
+  background: var(--header-transparent-background-1);
+  backdrop-filter: blur(4px);
+}
+.page-container .page-main-content.is-home .transparent-2 {
+  background: var(--header-transparent-background-2);
+  backdrop-filter: blur(5px);
+}
+.header-shrink .page-container .page-main-content {
+  padding-top: var(--header-shrink-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: $z-index-5;
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--header-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-top.hide {
+  transform: translateY(-105%);
+}
+.header-shrink .page-container .page-main-content .page-main-content-top {
+  height: var(--header-shrink-height);
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-middle {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: $component-spacing-value 0;
+keep-tablet()
+keep-mobile()
+}
+.page-container .page-main-content .page-main-content-middle .main-content {
+  width: $main-content-width;
+  max-width: $content-max-width;
+  height: 100%;
+keep-tablet()
+keep-mobile()
+}
+.has-toc .page-container .page-main-content .page-main-content-middle .main-content {
+  max-width: $has-toc-content-max-width;
+}
+.page-container .page-main-content .page-main-content-bottom {
+  width: 100%;
+}
+.page-container .post-tools {
+  position: fixed;
+  top: calc(var(--header-height) + $component-spacing-value);
+  box-sizing: border-box;
+  opacity: 0;
+keep-tablet()
+}
+.page-container .post-tools.right-toc {
+  left: calc((100vw - $content-max-width / 2) - 5rem);
+}
+.page-container .post-tools.left-toc {
+  right: calc((100vw - $content-max-width / 2) - 5rem);
+}
+.header-shrink .page-container .post-tools {
+  top: calc(var(--header-shrink-height) + $component-spacing-value);
+}
+.page-container .side-tools {
+  position: fixed;
+  right: 0;
+  bottom: 1.6rem;
+  box-sizing: border-box;
+  padding-right: 1rem;
+keep-tablet()
+}
+.page-container .side-tools:hover .side-tools-container {
+  transform: translateX(0);
+  opacity: 1;
+}
+.page-container .tablet-post-toc-mask {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: $z-index-10;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0);
+  visibility: hidden;
+}
+.page-container .tablet-post-toc-mask .tablet-post-toc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 22rem;
+  height: 100%;
+  padding: 1.2rem 1rem;
+  background: var(--background-color-1);
+  transform: translateX(-100%);
+keep-mobile()
+}
 
 <!-- common -->
 <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
