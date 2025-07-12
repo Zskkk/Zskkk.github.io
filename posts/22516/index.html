@@ -42,124 +42,769 @@
 
 
 <body>
-.page-container {
-  width: 100%;
-  height: auto;
-  background: var(--background-color-1);
-}
-.page-container .page-main-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-  padding-top: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content.is-home .transparent-1 {
-  background: var(--header-transparent-background-1);
-  backdrop-filter: blur(4px);
-}
-.page-container .page-main-content.is-home .transparent-2 {
-  background: var(--header-transparent-background-2);
-  backdrop-filter: blur(5px);
-}
-.header-shrink .page-container .page-main-content {
-  padding-top: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-5;
-  box-sizing: border-box;
-  width: 100%;
-  height: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top.hide {
-  transform: translateY(-105%);
-}
-.header-shrink .page-container .page-main-content .page-main-content-top {
-  height: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: $component-spacing-value 0;
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle .main-content {
-  width: $main-content-width;
-  max-width: $content-max-width;
-  height: 100%;
-keep-tablet()
-keep-mobile()
-}
-.has-toc .page-container .page-main-content .page-main-content-middle .main-content {
-  max-width: $has-toc-content-max-width;
-}
-.page-container .page-main-content .page-main-content-bottom {
-  width: 100%;
-}
-.page-container .post-tools {
-  position: fixed;
-  top: calc(var(--header-height) + $component-spacing-value);
-  box-sizing: border-box;
-  opacity: 0;
-keep-tablet()
-}
-.page-container .post-tools.right-toc {
-  left: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.page-container .post-tools.left-toc {
-  right: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.header-shrink .page-container .post-tools {
-  top: calc(var(--header-shrink-height) + $component-spacing-value);
-}
-.page-container .side-tools {
-  position: fixed;
-  right: 0;
-  bottom: 1.6rem;
-  box-sizing: border-box;
-  padding-right: 1rem;
-keep-tablet()
-}
-.page-container .side-tools:hover .side-tools-container {
-  transform: translateX(0);
-  opacity: 1;
-}
-.page-container .tablet-post-toc-mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-10;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0);
-  visibility: hidden;
-}
-.page-container .tablet-post-toc-mask .tablet-post-toc {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  width: 22rem;
-  height: 100%;
-  padding: 1.2rem 1rem;
-  background: var(--background-color-1);
-  transform: translateX(-100%);
-keep-mobile()
-}
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        jni接口比较(Jnitrace/Frida/ExAndroidNativeEmu/Unidbg)
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2022-06-07 00:00:00</span>
+                <span class="mobile">2022-06-07 00:00</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Tue Jun 07 2022 00:00:00 GMT+0800">2022-06-07 00:00:00</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/frida/">frida</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.6k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>15 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <ul>
+<li><p>它们是如何处理&#x2F;实现jni几百个接口函数的？</p>
+</li>
+<li><p>它们能hook&#x2F;主动调用JNI接口函数么？</p>
+</li>
+<li><p>它们是如何找到jni(动)静态注册的Native函数的？</p>
+</li>
+<li><p>它们能hook动(静)态注册的Native函数么？</p>
+</li>
+<li><p>它们能主动调用动(静)态注册的Native函数么？</p>
+</li>
+<li><p>首先定义：</p>
+<ul>
+<li>Java层的Native函数</li>
+<li>env、vm → jni接口函数</li>
+<li>jni静态函数、jni动态函数</li>
+<li>纯native函数<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Frida</strong></th>
+<th><strong>jnitrace</strong></th>
+<th><strong>ExAndroidNativeEmu</strong></th>
+<th><strong>Unidbg</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可以跑完整的apk么？</td>
+<td>⚪</td>
+<td>⚪</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>可以hook Java么？查看参调返</td>
+<td>⚪</td>
+<td>x</td>
+<td>x</td>
+<td>×</td>
+</tr>
+<tr>
+<td>可以hook JNI接口函数么？查看参调返</td>
+<td>⚪</td>
+<td>⚪</td>
+<td>⚪</td>
+<td>⚪</td>
+</tr>
+<tr>
+<td>可以主动调用JNI接口函数么？获取返回值</td>
+<td>⚪</td>
+<td>x</td>
+<td>⚪</td>
+<td>⚪</td>
+</tr>
+<tr>
+<td>如何找到静态绑定的Native函数？</td>
+<td>dlopen&#x2F;dlsym</td>
+<td>dlsym</td>
+<td>Module</td>
+<td>Module</td>
+</tr>
+<tr>
+<td>如何找到动态绑定的Native函数？</td>
+<td>hook RegisterNatives</td>
+<td>hook RegisterNatives</td>
+<td>hook RegisterNatives</td>
+<td>hook RegisterNatives</td>
+</tr>
+<tr>
+<td>如何hook(动)静态注册的Native函数？</td>
+<td>⚪</td>
+<td>⚪</td>
+<td>x</td>
+<td>⚪</td>
+</tr>
+<tr>
+<td>如何主动调用(动)静态注册的Native函数？</td>
+<td>⚪</td>
+<td>x</td>
+<td>⚪</td>
+<td>⚪</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>Frida中JNI接口的实现细节</p>
+</li>
+</ul>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/frida/frida-java-bridge/blob/master/lib/env.js#L362" >https://github.com/frida/frida-java-bridge/blob/master/lib/env.js#L362<i class="fas fa-external-link-alt"></i></a><br />linux动态库函数dlopen与dlsym使用<br /><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/lanhuazui10/article/details/117849995" >https://blog.csdn.net/lanhuazui10/article/details/117849995<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="frida-hook-java"><a href="#frida-hook-java" class="headerlink" title="frida hook java"></a>frida hook java</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hookJava</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.roysue.easyso1.MainActivity&quot;</span>).<span class="property">method01</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params">str</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;str:&quot;</span>, str)</span><br><span class="line">            <span class="keyword">var</span> result = <span class="variable language_">this</span>.<span class="title function_">method01</span>(str);</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result:&quot;</span>, result);</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="frida-invoke-java"><a href="#frida-invoke-java" class="headerlink" title="frida invoke java"></a>frida invoke java</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">invokeJava</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> result = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.roysue.easyso1.MainActivity&quot;</span>).<span class="title function_">decrypt</span>(<span class="string">&quot;82e8edd5b05654bf0fedcdfc1c9b4b0f&quot;</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result:&quot;</span>, result)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="frida-hook-jni"><a href="#frida-hook-jni" class="headerlink" title="frida hook jni"></a>frida hook jni</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">find_RegisterNatives</span>(<span class="params">params</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> symbols = <span class="title class_">Module</span>.<span class="title function_">enumerateSymbolsSync</span>(<span class="string">&quot;libart.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> addrRegisterNatives = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; symbols.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> symbol = symbols[i];</span><br><span class="line">        <span class="comment">//_ZN3art3JNI15RegisterNativesEP7_JNIEnvP7_jclassPK15JNINativeMethodi</span></span><br><span class="line">        <span class="keyword">if</span> (symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;art&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp;</span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;JNI&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;RegisterNatives&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;CheckJNI&quot;</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            addrRegisterNatives = symbol.<span class="property">address</span>;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;RegisterNatives is at &quot;</span>, symbol.<span class="property">address</span>, symbol.<span class="property">name</span>);</span><br><span class="line">            <span class="title function_">hook_RegisterNatives</span>(addrRegisterNatives)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_RegisterNatives</span>(<span class="params">addrRegisterNatives</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (addrRegisterNatives != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(addrRegisterNatives, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[RegisterNatives] method_count:&quot;</span>, args[<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">var</span> env = args[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">var</span> java_class = args[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">var</span> class_name = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">tryGetEnv</span>().<span class="title function_">getClassName</span>(java_class);</span><br><span class="line">                <span class="comment">//console.log(class_name);</span></span><br><span class="line">                <span class="keyword">var</span> methods_ptr = <span class="title function_">ptr</span>(args[<span class="number">2</span>]);</span><br><span class="line">                <span class="keyword">var</span> method_count = <span class="built_in">parseInt</span>(args[<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; method_count; i++) &#123;</span><br><span class="line">                    <span class="keyword">var</span> name_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span>));</span><br><span class="line">                    <span class="keyword">var</span> sig_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span> + <span class="title class_">Process</span>.<span class="property">pointerSize</span>));</span><br><span class="line">                    <span class="keyword">var</span> fnPtr_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span> + <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">2</span>));</span><br><span class="line">                    <span class="keyword">var</span> name = <span class="title class_">Memory</span>.<span class="title function_">readCString</span>(name_ptr);</span><br><span class="line">                    <span class="keyword">var</span> sig = <span class="title class_">Memory</span>.<span class="title function_">readCString</span>(sig_ptr);</span><br><span class="line">                    <span class="keyword">var</span> find_module = <span class="title class_">Process</span>.<span class="title function_">findModuleByAddress</span>(fnPtr_ptr);</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[RegisterNatives] java_class:&quot;</span>, class_name, <span class="string">&quot;name:&quot;</span>, name, <span class="string">&quot;sig:&quot;</span>, sig, <span class="string">&quot;fnPtr:&quot;</span>, fnPtr_ptr,  <span class="string">&quot; fnOffset:&quot;</span>, <span class="title function_">ptr</span>(fnPtr_ptr).<span class="title function_">sub</span>(find_module.<span class="property">base</span>), <span class="string">&quot; callee:&quot;</span>, <span class="title class_">DebugSymbol</span>.<span class="title function_">fromAddress</span>(<span class="variable language_">this</span>.<span class="property">returnAddress</span>));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(find_RegisterNatives);</span><br></pre></td></tr></table></figure>
+
+<h3 id="frida-hook-纯native静态，动态函数（dlopen）"><a href="#frida-hook-纯native静态，动态函数（dlopen）" class="headerlink" title="frida hook  纯native静态，动态函数（dlopen）"></a>frida hook  纯native静态，动态函数（dlopen）</h3><p>动态函数初始化只执行一次，需要hook dlopen（来判断so是否加载）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_Native_JNi</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> method01 = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libroysue.so&quot;</span>, <span class="string">&quot;Java_com_roysue_easyso1_MainActivity_method01&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> method02 = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libroysue.so&quot;</span>, <span class="string">&quot;_Z8method02P7_JNIEnvP7_jclassP8_jstring&quot;</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01 address:&quot;</span>, method01)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 address:&quot;</span>, method02)</span><br><span class="line">        <span class="keyword">if</span>(method01)&#123;</span><br><span class="line">            <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(method01, &#123;</span><br><span class="line">                <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">                    <span class="comment">// env-&gt;GetStringUTFChars(str_, JNI_FALSE)</span></span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01 args[2] ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(args[<span class="number">2</span>], <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01 retval ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(retval, <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(method02)&#123;</span><br><span class="line">            <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(method02, &#123;</span><br><span class="line">                <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 args[2] ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(args[<span class="number">2</span>], <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 retval ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(retval, <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_dlopen</span>(<span class="params">module_name, fun</span>) &#123;</span><br><span class="line">    <span class="comment">//安卓高版本需要同时hook android_dlopen_ext</span></span><br><span class="line">    <span class="keyword">var</span> android_dlopen_ext = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&quot;android_dlopen_ext&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (android_dlopen_ext) &#123;</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(android_dlopen_ext, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> pathptr = args[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">if</span> (pathptr) &#123;</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">path</span> = (pathptr).<span class="title function_">readCString</span>();</span><br><span class="line">                    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">path</span>.<span class="title function_">indexOf</span>(module_name) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">canhook</span> = <span class="literal">true</span>;</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;android_dlopen_ext:&quot;</span>, <span class="variable language_">this</span>.<span class="property">path</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">canhook</span>) &#123;</span><br><span class="line">                    <span class="title function_">fun</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> dlopen = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&quot;dlopen&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (dlopen) &#123;</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(dlopen, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> pathptr = args[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">if</span> (pathptr) &#123;</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">path</span> = (pathptr).<span class="title function_">readCString</span>();</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dlopen:&quot;</span>, <span class="variable language_">this</span>.<span class="property">path</span>)</span><br><span class="line">                    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">path</span>.<span class="title function_">indexOf</span>(module_name) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">canhook</span> = <span class="literal">true</span>;</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dlopen:&quot;</span>, <span class="variable language_">this</span>.<span class="property">path</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">canhook</span>) &#123;</span><br><span class="line">                    <span class="title function_">fun</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;android_dlopen_ext:&quot;</span>, android_dlopen_ext, <span class="string">&quot;dlopen:&quot;</span>, dlopen);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="comment">// hookJava()</span></span><br><span class="line">    <span class="title function_">hook_dlopen</span>(<span class="string">&quot;libroysue.so&quot;</span>, hook_Native_JNi)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="frida-hook-纯native静态，动态函数（libart，RegisterNatives）"><a href="#frida-hook-纯native静态，动态函数（libart，RegisterNatives）" class="headerlink" title="frida hook 纯native静态，动态函数（libart，RegisterNatives）"></a>frida hook 纯native静态，动态函数（libart，RegisterNatives）</h3><p>通过hook libart下的RegisterNatives来hook动态函数，动态函数加载后，静态函数已经加载了<br />.init .init_array, so feature - dlopen dlsym<br />jni JNI_Onload &#x3D; RegisterNatives</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">find_RegisterNatives</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> symbols = <span class="title class_">Module</span>.<span class="title function_">enumerateSymbolsSync</span>(<span class="string">&quot;libart.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> addrRegisterNatives = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; symbols.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> symbol = symbols[i];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//_ZN3art3JNI15RegisterNativesEP7_JNIEnvP7_jclassPK15JNINativeMethodi</span></span><br><span class="line">        <span class="keyword">if</span> (symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;art&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp;</span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;JNI&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;RegisterNatives&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;CheckJNI&quot;</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            addrRegisterNatives = symbol.<span class="property">address</span>;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;RegisterNatives is at &quot;</span>, symbol.<span class="property">address</span>, symbol.<span class="property">name</span>);</span><br><span class="line">            <span class="title function_">hook_RegisterNatives</span>(addrRegisterNatives)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_RegisterNatives</span>(<span class="params">addrRegisterNatives</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (addrRegisterNatives != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(addrRegisterNatives, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[RegisterNatives] method_count:&quot;</span>, args[<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">var</span> env = args[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">var</span> java_class = args[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">var</span> class_name = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">tryGetEnv</span>().<span class="title function_">getClassName</span>(java_class);</span><br><span class="line">                <span class="comment">//console.log(class_name);</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">var</span> methods_ptr = <span class="title function_">ptr</span>(args[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">var</span> method_count = <span class="built_in">parseInt</span>(args[<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; method_count; i++) &#123;</span><br><span class="line">                    <span class="keyword">var</span> name_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span>));</span><br><span class="line">                    <span class="keyword">var</span> sig_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span> + <span class="title class_">Process</span>.<span class="property">pointerSize</span>));</span><br><span class="line">                    <span class="keyword">var</span> fnPtr_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span> + <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">var</span> name = <span class="title class_">Memory</span>.<span class="title function_">readCString</span>(name_ptr);</span><br><span class="line">                    <span class="keyword">var</span> sig = <span class="title class_">Memory</span>.<span class="title function_">readCString</span>(sig_ptr);</span><br><span class="line">                    <span class="keyword">var</span> find_module = <span class="title class_">Process</span>.<span class="title function_">findModuleByAddress</span>(fnPtr_ptr);</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[RegisterNatives] java_class:&quot;</span>, class_name, <span class="string">&quot;name:&quot;</span>, name, <span class="string">&quot;sig:&quot;</span>, sig, <span class="string">&quot;fnPtr:&quot;</span>, fnPtr_ptr,  <span class="string">&quot; fnOffset:&quot;</span>, <span class="title function_">ptr</span>(fnPtr_ptr).<span class="title function_">sub</span>(find_module.<span class="property">base</span>), <span class="string">&quot; callee:&quot;</span>, <span class="title class_">DebugSymbol</span>.<span class="title function_">fromAddress</span>(<span class="variable language_">this</span>.<span class="property">returnAddress</span>));</span><br><span class="line">                    <span class="keyword">if</span> (name.<span class="title function_">indexOf</span>(<span class="string">&quot;decrypt&quot;</span>) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">                        <span class="keyword">var</span> method02addr = fnPtr_ptr;</span><br><span class="line">                        <span class="keyword">var</span> method01addr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libroysue.so&quot;</span>, <span class="string">&quot;Java_com_roysue_easyso1_MainActivity_method01&quot;</span>);</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01 address:&quot;</span>, method02addr)</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 address:&quot;</span>, method01addr)</span><br><span class="line">                        <span class="keyword">if</span>(method01addr)&#123;</span><br><span class="line">                            <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(method01addr, &#123;</span><br><span class="line">                                <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">                                    <span class="comment">// env-&gt;GetStringUTFChars(str_, JNI_FALSE)</span></span><br><span class="line">                                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01 args[2] ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(args[<span class="number">2</span>], <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                                &#125;,</span><br><span class="line">                                <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">                                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01 retval ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(retval, <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;)</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span>(method02addr)&#123;</span><br><span class="line">                            <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(method02addr, &#123;</span><br><span class="line">                                <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">                                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 args[2] ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(args[<span class="number">2</span>], <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                                &#125;,</span><br><span class="line">                                <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">                                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 retval ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(retval, <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="frida-invoke-纯native-动态，静态-（基于dlopen）"><a href="#frida-invoke-纯native-动态，静态-（基于dlopen）" class="headerlink" title="frida invoke  纯native(动态，静态)（基于dlopen）"></a>frida invoke  纯native(动态，静态)（基于dlopen）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> method01_addr = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">var</span> method02_addr = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">var</span> addrNewStringUTF = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_dlopen</span>(<span class="params">module_name, fun</span>) &#123;</span><br><span class="line">    <span class="comment">//安卓高版本需要同时hook android_dlopen_ext</span></span><br><span class="line">    <span class="keyword">var</span> android_dlopen_ext = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&quot;android_dlopen_ext&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (android_dlopen_ext) &#123;</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(android_dlopen_ext, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> pathptr = args[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">if</span> (pathptr) &#123;</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">path</span> = (pathptr).<span class="title function_">readCString</span>();</span><br><span class="line">                    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">path</span>.<span class="title function_">indexOf</span>(module_name) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">canhook</span> = <span class="literal">true</span>;</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;android_dlopen_ext:&quot;</span>, <span class="variable language_">this</span>.<span class="property">path</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">canhook</span>) &#123;</span><br><span class="line">                    <span class="title function_">fun</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> dlopen = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&quot;dlopen&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (dlopen) &#123;</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(dlopen, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> pathptr = args[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">if</span> (pathptr) &#123;</span><br><span class="line">                    <span class="variable language_">this</span>.<span class="property">path</span> = (pathptr).<span class="title function_">readCString</span>();</span><br><span class="line">                    <span class="comment">// console.log(&quot;dlopen:&quot;, this.path)</span></span><br><span class="line">                    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">path</span>.<span class="title function_">indexOf</span>(module_name) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">canhook</span> = <span class="literal">true</span>;</span><br><span class="line">                        <span class="comment">// console.log(&quot;dlopen:&quot;, this.path);</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">onLeave</span>: <span class="keyword">function</span> (<span class="params">retval</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">canhook</span>) &#123;</span><br><span class="line">                    <span class="title function_">fun</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;android_dlopen_ext:&quot;</span>, android_dlopen_ext, <span class="string">&quot;dlopen:&quot;</span>, dlopen);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_Native_JNi</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        method01_addr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libroysue.so&quot;</span>, <span class="string">&quot;Java_com_roysue_easyso1_MainActivity_method01&quot;</span>);</span><br><span class="line">        method02_addr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libroysue.so&quot;</span>, <span class="string">&quot;_Z8method02P7_JNIEnvP7_jclassP8_jstring&quot;</span>);</span><br><span class="line">        addrNewStringUTF = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libroysue.so&quot;</span>, <span class="string">&quot;_ZN7_JNIEnv12NewStringUTFEPKc&quot;</span>);</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01 address:&quot;</span>, method01_addr)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 address:&quot;</span>, method02_addr)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;addrNewStringUTF address:&quot;</span>, addrNewStringUTF)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">invoke_method01</span>(<span class="params">contents</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> method01_addr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libroysue.so&quot;</span>, <span class="string">&quot;Java_com_roysue_easyso1_MainActivity_method01&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span>(method01_addr &amp;&amp; addrNewStringUTF)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01_addr is =&gt;&quot;</span>,method01_addr)</span><br><span class="line">        <span class="keyword">var</span> method01 = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(method01_addr, <span class="string">&#x27;pointer&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">NewStringUTF</span> = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(addrNewStringUTF, <span class="string">&quot;pointer&quot;</span>, [<span class="string">&quot;pointer&quot;</span>, <span class="string">&quot;pointer&quot;</span>]);</span><br><span class="line">        <span class="keyword">var</span> result = <span class="literal">null</span>;</span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> <span class="title class_">Jstring</span> = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">newStringUtf</span>(contents)</span><br><span class="line">            <span class="comment">// var Jstring = NewStringUTF(Java.vm.getEnv(), Memory.allocUtf8String(contents));</span></span><br><span class="line">            result = <span class="title function_">method01</span>(<span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>(), <span class="title class_">Jstring</span>, <span class="title class_">Jstring</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result is =&gt;&quot;</span>,result)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result is &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(result, <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">            result = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(result, <span class="literal">null</span>).<span class="title function_">readCString</span>();</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">invoke_method02</span>(<span class="params">contents</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(method02_addr &amp;&amp; addrNewStringUTF)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02_addr is =&gt;&quot;</span>, method02_addr)</span><br><span class="line">        <span class="keyword">var</span> method02 = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(method02_addr, <span class="string">&#x27;pointer&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">NewStringUTF</span> = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(addrNewStringUTF,<span class="string">&#x27;pointer&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">        <span class="keyword">var</span> result = <span class="literal">null</span>;</span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> <span class="title class_">Jstring</span> = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">newStringUtf</span>(contents)</span><br><span class="line">            <span class="comment">// var Jstring = NewStringUTF(Java.vm.getEnv(), Memory.allocUtf8String(contents));</span></span><br><span class="line">            result = <span class="title function_">method02</span>(<span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>(), <span class="title class_">Jstring</span>, <span class="title class_">Jstring</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result is =&gt;&quot;</span>,result)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result is &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(result, <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">            result = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(result, <span class="literal">null</span>).<span class="title function_">readCString</span>();</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rpc.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">invoke1</span>:invoke_method01,</span><br><span class="line">    <span class="attr">invoke2</span>:invoke_method02</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">hook_dlopen</span>(<span class="string">&quot;libroysue.so&quot;</span>, hook_Native_JNi)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+
+<h3 id="frida-invoke-纯native-动态，静态-（基于RegisterNatives）"><a href="#frida-invoke-纯native-动态，静态-（基于RegisterNatives）" class="headerlink" title="frida invoke  纯native(动态，静态)（基于RegisterNatives）"></a>frida invoke  纯native(动态，静态)（基于RegisterNatives）</h3><p>通过RegisterNatives获取到jni函数地址，进行调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> addrNewStringUTF = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">var</span> method02addr = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">find_RegisterNatives</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> symbols = <span class="title class_">Module</span>.<span class="title function_">enumerateSymbolsSync</span>(<span class="string">&quot;libart.so&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> addrRegisterNatives = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; symbols.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> symbol = symbols[i];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;art&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp;</span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;JNI&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;NewStringUTF&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;CheckJNI&quot;</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            addrNewStringUTF = symbol.<span class="property">address</span>;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;NewStringUTF is at &quot;</span>, symbol.<span class="property">address</span>, symbol.<span class="property">name</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//_ZN3art3JNI15RegisterNativesEP7_JNIEnvP7_jclassPK15JNINativeMethodi</span></span><br><span class="line">        <span class="keyword">if</span> (symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;art&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp;</span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;JNI&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;RegisterNatives&quot;</span>) &gt;= <span class="number">0</span> &amp;&amp; </span><br><span class="line">                symbol.<span class="property">name</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;CheckJNI&quot;</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            addrRegisterNatives = symbol.<span class="property">address</span>;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;RegisterNatives is at &quot;</span>, symbol.<span class="property">address</span>, symbol.<span class="property">name</span>);</span><br><span class="line">            <span class="title function_">hook_RegisterNatives</span>(addrRegisterNatives)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">hook_RegisterNatives</span>(<span class="params">addrRegisterNatives</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (addrRegisterNatives != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(addrRegisterNatives, &#123;</span><br><span class="line">            <span class="attr">onEnter</span>: <span class="keyword">function</span> (<span class="params">args</span>) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[RegisterNatives] method_count:&quot;</span>, args[<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">var</span> env = args[<span class="number">0</span>];</span><br><span class="line">                <span class="keyword">var</span> java_class = args[<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">var</span> class_name = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">tryGetEnv</span>().<span class="title function_">getClassName</span>(java_class);</span><br><span class="line">                <span class="comment">//console.log(class_name);</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">var</span> methods_ptr = <span class="title function_">ptr</span>(args[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">var</span> method_count = <span class="built_in">parseInt</span>(args[<span class="number">3</span>]);</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; method_count; i++) &#123;</span><br><span class="line">                    <span class="keyword">var</span> name_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span>));</span><br><span class="line">                    <span class="keyword">var</span> sig_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span> + <span class="title class_">Process</span>.<span class="property">pointerSize</span>));</span><br><span class="line">                    <span class="keyword">var</span> fnPtr_ptr = <span class="title class_">Memory</span>.<span class="title function_">readPointer</span>(methods_ptr.<span class="title function_">add</span>(i * <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">3</span> + <span class="title class_">Process</span>.<span class="property">pointerSize</span> * <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">var</span> name = <span class="title class_">Memory</span>.<span class="title function_">readCString</span>(name_ptr);</span><br><span class="line">                    <span class="keyword">var</span> sig = <span class="title class_">Memory</span>.<span class="title function_">readCString</span>(sig_ptr);</span><br><span class="line">                    <span class="keyword">var</span> find_module = <span class="title class_">Process</span>.<span class="title function_">findModuleByAddress</span>(fnPtr_ptr);</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[RegisterNatives] java_class:&quot;</span>, class_name, <span class="string">&quot;name:&quot;</span>, name, <span class="string">&quot;sig:&quot;</span>, sig, <span class="string">&quot;fnPtr:&quot;</span>, fnPtr_ptr,  <span class="string">&quot; fnOffset:&quot;</span>, <span class="title function_">ptr</span>(fnPtr_ptr).<span class="title function_">sub</span>(find_module.<span class="property">base</span>), <span class="string">&quot; callee:&quot;</span>, <span class="title class_">DebugSymbol</span>.<span class="title function_">fromAddress</span>(<span class="variable language_">this</span>.<span class="property">returnAddress</span>));</span><br><span class="line">                    <span class="keyword">if</span> (name.<span class="title function_">indexOf</span>(<span class="string">&quot;decrypt&quot;</span>) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">                        method02addr = fnPtr_ptr;</span><br><span class="line">                        <span class="keyword">var</span> method01addr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libroysue.so&quot;</span>, <span class="string">&quot;Java_com_roysue_easyso1_MainActivity_method01&quot;</span>);</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01 address:&quot;</span>, method02addr)</span><br><span class="line">                        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 address:&quot;</span>, method01addr)</span><br><span class="line">                        <span class="comment">// if(method01addr)&#123;</span></span><br><span class="line">                        <span class="comment">//     Interceptor.attach(method01addr, &#123;</span></span><br><span class="line">                        <span class="comment">//         onEnter: function(args)&#123;</span></span><br><span class="line">                        <span class="comment">//             // env-&gt;GetStringUTFChars(str_, JNI_FALSE)</span></span><br><span class="line">                        <span class="comment">//             console.log(&quot;method01 args[2] ==&gt; &quot;, Java.vm.getEnv().getStringUtfChars(args[2], null).readCString())</span></span><br><span class="line">                        <span class="comment">//         &#125;,</span></span><br><span class="line">                        <span class="comment">//         onLeave: function(retval)&#123;</span></span><br><span class="line">                        <span class="comment">//             console.log(&quot;method01 retval ==&gt; &quot;, Java.vm.getEnv().getStringUtfChars(retval, null).readCString())</span></span><br><span class="line">                        <span class="comment">//         &#125;</span></span><br><span class="line">                        <span class="comment">//     &#125;)</span></span><br><span class="line">                        <span class="comment">// &#125;</span></span><br><span class="line">                        <span class="keyword">if</span>(method02addr)&#123;</span><br><span class="line">                            <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(method02addr, &#123;</span><br><span class="line">                                <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>)&#123;</span><br><span class="line">                                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 args[2] ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(args[<span class="number">2</span>], <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                                &#125;,</span><br><span class="line">                                <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>)&#123;</span><br><span class="line">                                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02 retval ==&gt; &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(retval, <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;)</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">invoke_method01</span>(<span class="params">contents</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> method01_addr = <span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="string">&quot;libroysue.so&quot;</span>, <span class="string">&quot;Java_com_roysue_easyso1_MainActivity_method01&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span>(method01_addr &amp;&amp; addrNewStringUTF)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method01_addr is =&gt;&quot;</span>,method01_addr)</span><br><span class="line">        <span class="keyword">var</span> method01 = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(method01_addr, <span class="string">&#x27;pointer&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">NewStringUTF</span> = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(addrNewStringUTF, <span class="string">&quot;pointer&quot;</span>, [<span class="string">&quot;pointer&quot;</span>, <span class="string">&quot;pointer&quot;</span>]);</span><br><span class="line">        <span class="keyword">var</span> result = <span class="literal">null</span>;</span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> <span class="title class_">Jstring</span> = <span class="title class_">NewStringUTF</span>(<span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>(), <span class="title class_">Memory</span>.<span class="title function_">allocUtf8String</span>(contents));</span><br><span class="line">            result = <span class="title function_">method01</span>(<span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>(), <span class="title class_">Jstring</span>, <span class="title class_">Jstring</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result is =&gt;&quot;</span>,result)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result is &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(result, <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">            result = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(result, <span class="literal">null</span>).<span class="title function_">readCString</span>();</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">invoke_method02</span>(<span class="params">contents</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(method02addr &amp;&amp; addrNewStringUTF)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;method02_addr is =&gt;&quot;</span>, method02addr)</span><br><span class="line">        <span class="keyword">var</span> method02 = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(method02addr, <span class="string">&#x27;pointer&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">        <span class="keyword">var</span> <span class="title class_">NewStringUTF</span> = <span class="keyword">new</span> <span class="title class_">NativeFunction</span>(addrNewStringUTF,<span class="string">&#x27;pointer&#x27;</span>,[<span class="string">&#x27;pointer&#x27;</span>,<span class="string">&#x27;pointer&#x27;</span>])</span><br><span class="line">        <span class="keyword">var</span> result = <span class="literal">null</span>;</span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> <span class="title class_">Jstring</span> = <span class="title class_">NewStringUTF</span>(<span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>(), <span class="title class_">Memory</span>.<span class="title function_">allocUtf8String</span>(contents));</span><br><span class="line">            result = <span class="title function_">method02</span>(<span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>(), <span class="title class_">Jstring</span>, <span class="title class_">Jstring</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result is =&gt;&quot;</span>,result)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result is &quot;</span>, <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(result, <span class="literal">null</span>).<span class="title function_">readCString</span>())</span><br><span class="line">            result = <span class="title class_">Java</span>.<span class="property">vm</span>.<span class="title function_">getEnv</span>().<span class="title function_">getStringUtfChars</span>(result, <span class="literal">null</span>).<span class="title function_">readCString</span>();</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rpc.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">invoke1</span>:invoke_method01,</span><br><span class="line">    <span class="attr">invoke2</span>:invoke_method02</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="comment">// hookJava()</span></span><br><span class="line">    <span class="comment">// hook_dlopen(&quot;libroysue.so&quot;, hook_Native_JNi)</span></span><br><span class="line">    <span class="title function_">find_RegisterNatives</span>(<span class="string">&quot;libroysue.so&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+
+</br>
+
+
+<h3 id="注："><a href="#注：" class="headerlink" title="注："></a>注：</h3><p>可以获取jni的NewStringUTF的地址，然后创建函数自动调用。或者直接使用Java.vm.getEnv().newStringUtf(contents)<br />作用：将java的string转jni的Jsting</p>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                jni接口比较(Jnitrace/Frida/ExAndroidNativeEmu/Unidbg)
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/22516/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2022-06-07 00:00</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/frida/">frida</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/51977/"
+                                   title="Base64编码与解码源码分析"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Base64编码与解码源码分析</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/37757/"
+                                   title="frida备忘录"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">frida备忘录</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-hook-java"><span class="nav-number">1.</span> <span class="nav-text">frida hook java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-invoke-java"><span class="nav-number">2.</span> <span class="nav-text">frida invoke java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-hook-jni"><span class="nav-number">3.</span> <span class="nav-text">frida hook jni</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-hook-%E7%BA%AFnative%E9%9D%99%E6%80%81%EF%BC%8C%E5%8A%A8%E6%80%81%E5%87%BD%E6%95%B0%EF%BC%88dlopen%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">frida hook  纯native静态，动态函数（dlopen）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-hook-%E7%BA%AFnative%E9%9D%99%E6%80%81%EF%BC%8C%E5%8A%A8%E6%80%81%E5%87%BD%E6%95%B0%EF%BC%88libart%EF%BC%8CRegisterNatives%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">frida hook 纯native静态，动态函数（libart，RegisterNatives）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-invoke-%E7%BA%AFnative-%E5%8A%A8%E6%80%81%EF%BC%8C%E9%9D%99%E6%80%81-%EF%BC%88%E5%9F%BA%E4%BA%8Edlopen%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">frida invoke  纯native(动态，静态)（基于dlopen）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-invoke-%E7%BA%AFnative-%E5%8A%A8%E6%80%81%EF%BC%8C%E9%9D%99%E6%80%81-%EF%BC%88%E5%9F%BA%E4%BA%8ERegisterNatives%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">frida invoke  纯native(动态，静态)（基于RegisterNatives）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%EF%BC%9A"><span class="nav-number">8.</span> <span class="nav-text">注：</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2025
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">147.1k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-hook-java"><span class="nav-number">1.</span> <span class="nav-text">frida hook java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-invoke-java"><span class="nav-number">2.</span> <span class="nav-text">frida invoke java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-hook-jni"><span class="nav-number">3.</span> <span class="nav-text">frida hook jni</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-hook-%E7%BA%AFnative%E9%9D%99%E6%80%81%EF%BC%8C%E5%8A%A8%E6%80%81%E5%87%BD%E6%95%B0%EF%BC%88dlopen%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">frida hook  纯native静态，动态函数（dlopen）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-hook-%E7%BA%AFnative%E9%9D%99%E6%80%81%EF%BC%8C%E5%8A%A8%E6%80%81%E5%87%BD%E6%95%B0%EF%BC%88libart%EF%BC%8CRegisterNatives%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">frida hook 纯native静态，动态函数（libart，RegisterNatives）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-invoke-%E7%BA%AFnative-%E5%8A%A8%E6%80%81%EF%BC%8C%E9%9D%99%E6%80%81-%EF%BC%88%E5%9F%BA%E4%BA%8Edlopen%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">frida invoke  纯native(动态，静态)（基于dlopen）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida-invoke-%E7%BA%AFnative-%E5%8A%A8%E6%80%81%EF%BC%8C%E9%9D%99%E6%80%81-%EF%BC%88%E5%9F%BA%E4%BA%8ERegisterNatives%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">frida invoke  纯native(动态，静态)（基于RegisterNatives）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%EF%BC%9A"><span class="nav-number">8.</span> <span class="nav-text">注：</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
 
 <!-- common -->
 <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>

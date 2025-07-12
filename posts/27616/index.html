@@ -42,124 +42,840 @@
 
 
 <body>
-.page-container {
-  width: 100%;
-  height: auto;
-  background: var(--background-color-1);
-}
-.page-container .page-main-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-  padding-top: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content.is-home .transparent-1 {
-  background: var(--header-transparent-background-1);
-  backdrop-filter: blur(4px);
-}
-.page-container .page-main-content.is-home .transparent-2 {
-  background: var(--header-transparent-background-2);
-  backdrop-filter: blur(5px);
-}
-.header-shrink .page-container .page-main-content {
-  padding-top: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-5;
-  box-sizing: border-box;
-  width: 100%;
-  height: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top.hide {
-  transform: translateY(-105%);
-}
-.header-shrink .page-container .page-main-content .page-main-content-top {
-  height: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: $component-spacing-value 0;
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle .main-content {
-  width: $main-content-width;
-  max-width: $content-max-width;
-  height: 100%;
-keep-tablet()
-keep-mobile()
-}
-.has-toc .page-container .page-main-content .page-main-content-middle .main-content {
-  max-width: $has-toc-content-max-width;
-}
-.page-container .page-main-content .page-main-content-bottom {
-  width: 100%;
-}
-.page-container .post-tools {
-  position: fixed;
-  top: calc(var(--header-height) + $component-spacing-value);
-  box-sizing: border-box;
-  opacity: 0;
-keep-tablet()
-}
-.page-container .post-tools.right-toc {
-  left: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.page-container .post-tools.left-toc {
-  right: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.header-shrink .page-container .post-tools {
-  top: calc(var(--header-shrink-height) + $component-spacing-value);
-}
-.page-container .side-tools {
-  position: fixed;
-  right: 0;
-  bottom: 1.6rem;
-  box-sizing: border-box;
-  padding-right: 1rem;
-keep-tablet()
-}
-.page-container .side-tools:hover .side-tools-container {
-  transform: translateX(0);
-  opacity: 1;
-}
-.page-container .tablet-post-toc-mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-10;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0);
-  visibility: hidden;
-}
-.page-container .tablet-post-toc-mask .tablet-post-toc {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  width: 22rem;
-  height: 100%;
-  padding: 1.2rem 1rem;
-  background: var(--background-color-1);
-  transform: translateX(-100%);
-keep-mobile()
-}
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        Hook抓包
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2021-09-01 23:15:21</span>
+                <span class="mobile">2021-09-01 23:15</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Wed Sep 01 2021 23:15:21 GMT+0800">2021-09-01 23:15:21</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%8A%93%E5%8C%85/">抓包</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.7k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>8 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <p>Hook抓包核心思想：数据包在明文状态下的一切时机进行dump</p>
+<h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><h2 id="request"><a href="#request" class="headerlink" title="request"></a>request</h2><p>使用socket实现原生的请求<br>新建一个安卓项目，在mainactivity里添加</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                httpsock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">httpsock</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">String</span> <span class="variable">host</span> <span class="operator">=</span> <span class="string">&quot;www.httpbin.org&quot;</span>;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">int</span> <span class="variable">port</span> <span class="operator">=</span> <span class="number">80</span>;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> <span class="string">&quot;/get&quot;</span>;</span><br><span class="line">            <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Socket</span>(host, port);</span><br><span class="line"></span><br><span class="line">            <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">            sb.append(<span class="string">&quot;GET &quot;</span> + path + <span class="string">&quot; HTTP/1.1\r\n&quot;</span>);</span><br><span class="line">            sb.append(<span class="string">&quot;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36\r\n&quot;</span>);</span><br><span class="line">            sb.append(<span class="string">&quot;Host: &quot;</span>+ host+<span class="string">&quot;\r\n&quot;</span>);</span><br><span class="line">            sb.append(<span class="string">&quot;\r\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="type">OutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> socket.getOutputStream();</span><br><span class="line">            outputStream.write(sb.toString().getBytes());</span><br><span class="line"></span><br><span class="line">            <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> socket.getInputStream();</span><br><span class="line">            <span class="type">byte</span>[] buffer = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">            <span class="type">int</span> len;</span><br><span class="line">            <span class="keyword">while</span> ((len = inputStream.read(buffer, <span class="number">0</span>, buffer.length)) != -<span class="number">1</span>)&#123;</span><br><span class="line">                Log.d(<span class="string">&quot;response==&gt;&quot;</span>, <span class="keyword">new</span> <span class="title class_">String</span>(Arrays.copyOf(buffer, len)));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行一下<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/01.webp"
+                     
+                ></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这是socket发送http请求的数据包，把数据包写进outputStream后进行发送，outputStream是socket对象的方法，先看一下socket的实现。跟进一下socket的实现</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/02.webp"
+                     
+                ></p>
+<p>这些都是实现的接口，要找到实现的地方，跟进setImpl方法</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/03.webp"
+                     
+                ></p>
+<p>可以看到impl是实例对象，这里有分支，先看一下factory，在该文件搜索factory &#x3D; ，看被什么赋值了，</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/04.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/05.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/06.webp"
+                     
+                ><br>看到两次赋值的值都是null，所以走else，跟进 SocksSocketImpl();，这里就到socket实现的地方。</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/07.webp"
+                     
+                ></p>
+<p>进行搜索getOutputStream()方法实现的地方，发现没有找到，那就是存在父类了，跟进父类PlainSocketImpl。<br>再次搜索没有，再跟进它的父类AbstractPlainSocketImpl</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/08.webp"
+                     
+                ></p>
+<p>再搜索，发现找到了getOutputStream()实现的地方，两个if都是抛出异常，看第三个if，跟进SocketOutputStream()，</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/09.webp"
+                     
+                ><br>找到了SocketOutputStream()对象的地方，搜索write()方法，参数是字节</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/10.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/11.webp"
+                     
+                ><br>跟进socketWrite()，调用了socketWrite0()方法，跟进</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/12.webp"
+                     
+                ><br>可以看到该方法在native层。<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/13.webp"
+                     
+                ></p>
+<h3 id="frida抓包"><a href="#frida抓包" class="headerlink" title="frida抓包"></a>frida抓包</h3><p>跟到socketWrite0()这里，应该是java层最底层了，hook socketWrite0尝试下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="comment">//Http request</span></span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.net.SocketOutputStream&quot;</span>).<span class="property">socketWrite0</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params">fd,bytes,off,len</span>)&#123;</span><br><span class="line">            <span class="title function_">hexdump</span>(bytes,off,len)</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">socketWrite0</span>(fd,bytes,off,len)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">		<span class="comment">// 打印字节数组</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">hexdump</span>(<span class="params">bytearry,offset,length</span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> <span class="title class_">HexDump</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.android.internal.util.HexDump&quot;</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">HexDump</span>.<span class="title function_">dumpHexString</span>(bytearry,offset,length))</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p>运行frida，运行脚本，成功抓到包<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/14.webp"
+                     
+                ><br>再完善一下，添加请求地址，堆栈</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="comment">//Http request</span></span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.net.SocketOutputStream&quot;</span>).<span class="property">socketWrite0</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params">fd,bytes,off,len</span>)&#123;</span><br><span class="line">            <span class="comment">// 地址</span></span><br><span class="line">            <span class="title function_">printAddress</span>(<span class="variable language_">this</span>.<span class="property">socket</span>, <span class="literal">true</span>)</span><br><span class="line">            <span class="comment">// 请求</span></span><br><span class="line">            <span class="title function_">hexdump</span>(bytes,off,len)</span><br><span class="line">            <span class="comment">// 堆栈</span></span><br><span class="line">            <span class="title function_">showStacks</span>()</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">socketWrite0</span>(fd,bytes,off,len)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">printAddress</span>(<span class="params">socket, isSend</span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> localAddress = socket.<span class="property">value</span>.<span class="title function_">getLocalAddress</span>().<span class="title function_">toString</span>()</span><br><span class="line">            <span class="keyword">var</span> remoteAddress = socket.<span class="property">value</span>.<span class="title function_">getRemoteSocketAddress</span>().<span class="title function_">toString</span>()</span><br><span class="line">            <span class="keyword">if</span>(isSend)&#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(localAddress +<span class="string">&quot;====&gt;&quot;</span>+ remoteAddress)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(remoteAddress +<span class="string">&quot;====&gt;&quot;</span>+ localAddress)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">hexdump</span>(<span class="params">bytearry,offset,length</span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> <span class="title class_">HexDump</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.android.internal.util.HexDump&quot;</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">HexDump</span>.<span class="title function_">dumpHexString</span>(bytearry,offset,length))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">showStacks</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.util.Log&quot;</span>).<span class="title function_">getStackTraceString</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.Exception&quot;</span>).$new()));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p>请求地址，堆栈都打印了<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/15.webp"
+                     
+                ><br>现在知识完成request部分，还有response</p>
+<h2 id="response"><a href="#response" class="headerlink" title="response"></a>response</h2><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>接受数据是InputStream，调用的是socket的getInputStream，getInputStream和getOuputStream是成对出现的，按着刚才的思路可以找到。或者，socketWrite0()是在SocketOutputStream，那么socketRead0()就是在SocketInputStream里。<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/16.webp"
+                     
+                ></p>
+<h3 id="frida抓包-1"><a href="#frida抓包-1" class="headerlink" title="frida抓包"></a>frida抓包</h3><p>用Frida hook试试，再之前的代码上添加</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Http response</span></span><br><span class="line"><span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.net.SocketInputStream&quot;</span>).<span class="property">socketRead0</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params">fd,bytes,off,len,timeout</span>)&#123;</span><br><span class="line">    <span class="title function_">printAddress</span>(<span class="variable language_">this</span>.<span class="property">socket</span>, <span class="literal">true</span>)</span><br><span class="line">    <span class="title function_">hexdump</span>(bytes,off,len)</span><br><span class="line">    <span class="title function_">showStacks</span>()</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">socketRead0</span>(fd,bytes,off,len,timeout)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也是成功抓到返回的数据<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/17.webp"
+                     
+                ><br>HTTP通用的收发包都抓到了，那HTTPS的呢</p>
+<h1 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h1><h2 id="request-1"><a href="#request-1" class="headerlink" title="request"></a>request</h2><p>也是一样，创建一个HTTPS的请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">String</span> <span class="variable">host</span> <span class="operator">=</span> <span class="string">&quot;www.httpbin.org&quot;</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> <span class="variable">port</span> <span class="operator">=</span> <span class="number">443</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> <span class="string">&quot;/get&quot;</span>;</span><br><span class="line">    <span class="type">SSLSocketFactory</span> <span class="variable">sslSocketFactory</span> <span class="operator">=</span> (SSLSocketFactory) SSLSocketFactory.getDefault();</span><br><span class="line">    <span class="type">SSLSocket</span> <span class="variable">socket</span> <span class="operator">=</span> (SSLSocket) sslSocketFactory.createSocket(host, port);</span><br><span class="line"></span><br><span class="line">    <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">    sb.append(<span class="string">&quot;GET &quot;</span> + path + <span class="string">&quot; HTTP/1.1\r\n&quot;</span>);</span><br><span class="line">    sb.append(<span class="string">&quot;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36\r\n&quot;</span>);</span><br><span class="line">    sb.append(<span class="string">&quot;Host: &quot;</span>+ host+<span class="string">&quot;\r\n&quot;</span>);</span><br><span class="line">    sb.append(<span class="string">&quot;\r\n&quot;</span>);</span><br><span class="line">    Log.d(<span class="string">&quot;request body ===&gt;&quot;</span>, sb.toString());</span><br><span class="line"></span><br><span class="line">    <span class="type">OutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> socket.getOutputStream();</span><br><span class="line">    outputStream.write(sb.toString().getBytes());</span><br><span class="line"></span><br><span class="line">    <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> socket.getInputStream();</span><br><span class="line">    <span class="type">byte</span>[] buffer = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">    <span class="type">int</span> len;</span><br><span class="line">    <span class="keyword">while</span> ((len = inputStream.read(buffer, <span class="number">0</span>, buffer.length)) != -<span class="number">1</span>)&#123;</span><br><span class="line">        Log.d(<span class="string">&quot;response ==&gt;&quot;</span>, <span class="keyword">new</span> <span class="title class_">String</span>(Arrays.copyOf(buffer, len)));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行之后<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/18.webp"
+                     
+                ></p>
+<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>这里使用调试，可以快速定位到对象类的位置，<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/19.webp"
+                     
+                ><br>在源码中搜一下ConscryptFileDescriptorSocket<br>网址：<a class="link"   target="_blank" rel="noopener" href="http://aospxref.com/android-8.1.0_r81/" >http://aospxref.com/android-8.1.0_r81/<i class="fas fa-external-link-alt"></i></a><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/20.webp"
+                     
+                ><br>然后在源码文件搜索内部类SSLOutputStream，是继承OutputStream，然后对原来的write方法进行重写<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/21.webp"
+                     
+                ><br>跟踪一下write方法里的ssl.write()<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/22.webp"
+                     
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/23.webp"
+                     
+                ><br>再跟踪NativeCrypto.SSL_write()，又到了native层，可以说已经在java层跟到底了<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/24.webp"
+                     
+                ></p>
+<h3 id="frida抓包-2"><a href="#frida抓包-2" class="headerlink" title="frida抓包"></a>frida抓包</h3><p>用frida hook下org.conscrypt.NativeCrypto类下的SSL_write()方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">main</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title class_">Java</span>.<span class="title function_">perform</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="comment">//Https request</span></span><br><span class="line">        <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;org.conscrypt.NativeCrypto&quot;</span>).<span class="property">SSL_write</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params">ssl,fd,shc,bytes,off,len,timeout</span>)&#123;</span><br><span class="line">            <span class="title function_">hexdump</span>(bytes,off,len)</span><br><span class="line">            <span class="title function_">showStacks</span>()</span><br><span class="line">            <span class="variable language_">this</span>.<span class="title function_">SSL_write</span>(ssl,fd,shc,bytes,off,len,timeout)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">		<span class="comment">// 打印字节数组</span></span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">hexdump</span>(<span class="params">bytearry,offset,length</span>)&#123;</span><br><span class="line">            <span class="keyword">var</span> <span class="title class_">HexDump</span> = <span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.android.internal.util.HexDump&quot;</span>)</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">HexDump</span>.<span class="title function_">dumpHexString</span>(bytearry,offset,length))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">function</span> <span class="title function_">showStacks</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;android.util.Log&quot;</span>).<span class="title function_">getStackTraceString</span>(<span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;java.lang.Exception&quot;</span>).$new()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(main)</span><br></pre></td></tr></table></figure>
+<p>运行会看到报错了，说找不到NativeCrypto这个类<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/25.webp"
+                     
+                ><br>使用objection看一下，内存中是否存在NativeCrypto，多加了com.android前缀，再用frida试一下com.android.org.conscrypt.NativeCrypto<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/26.webp"
+                     
+                ><br>这次成功抓到包<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/27.webp"
+                     
+                ></p>
+<h2 id="response-1"><a href="#response-1" class="headerlink" title="response"></a>response</h2><p>response同理<br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/28.webp"
+                     
+                ></p>
+<h3 id="frida抓包-3"><a href="#frida抓包-3" class="headerlink" title="frida抓包"></a>frida抓包</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Https response</span></span><br><span class="line"><span class="title class_">Java</span>.<span class="title function_">use</span>(<span class="string">&quot;com.android.org.conscrypt.NativeCrypto&quot;</span>).<span class="property">SSL_read</span>.<span class="property">implementation</span> = <span class="keyword">function</span>(<span class="params">ssl,fd,shc,bytes,off,len,timeout</span>)&#123;</span><br><span class="line">    <span class="title function_">hexdump</span>(bytes,off,len)</span><br><span class="line">    <span class="title function_">showStacks</span>()</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">SSL_read</span>(ssl,fd,shc,bytes,off,len,timeout)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210901/29.webp"
+                     
+                ></p>
+<h1 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">function main()&#123;</span><br><span class="line">    Java.perform(function()&#123;</span><br><span class="line">        //Http request</span><br><span class="line">        Java.use(<span class="string">&quot;java.net.SocketOutputStream&quot;</span>).socketWrite0.implementation = function(fd,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)&#123;</span><br><span class="line">            printAddress(this.socket, true)</span><br><span class="line">            hexdump(<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">            showStacks()</span><br><span class="line">            this.socketWrite0(fd,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        //Http response</span><br><span class="line">        Java.use(<span class="string">&quot;java.net.SocketInputStream&quot;</span>).socketRead0.implementation = function(fd,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)&#123;</span><br><span class="line">            printAddress(this.socket, false)</span><br><span class="line">            hexdump(<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">            showStacks()</span><br><span class="line">            <span class="keyword">return</span> this.socketRead0(fd,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //Https request</span><br><span class="line">        Java.use(<span class="string">&quot;com.android.org.conscrypt.NativeCrypto&quot;</span>).SSL_write.implementation = function(sslNativePointer,fd,shc,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)&#123;</span><br><span class="line">            printHttpsAddress(fd)</span><br><span class="line">            hexdump(<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">            showStacks()</span><br><span class="line">            <span class="keyword">return</span> this.SSL_write(sslNativePointer,fd,shc,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)</span><br><span class="line">        &#125;</span><br><span class="line">        //Https response</span><br><span class="line">        Java.use(<span class="string">&quot;com.android.org.conscrypt.NativeCrypto&quot;</span>).SSL_read.implementation = function(sslNativePointer,fd,shc,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)&#123;</span><br><span class="line">            printHttpsAddress(fd)</span><br><span class="line">            hexdump(<span class="built_in">bytes</span>,off,<span class="built_in">len</span>)</span><br><span class="line">            showStacks()</span><br><span class="line">            <span class="keyword">return</span> this.SSL_read(sslNativePointer,fd,shc,<span class="built_in">bytes</span>,off,<span class="built_in">len</span>,timeout)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        function printHttpsAddress(fd, isSend)&#123;</span><br><span class="line">            var local = Socket.localAddress(fd.getInt$())</span><br><span class="line">            var peer = Socket.peerAddress(fd.getInt$())</span><br><span class="line">            <span class="keyword">if</span>(isSend)&#123;</span><br><span class="line">                console.log(local.ip+<span class="string">&quot;:&quot;</span>+local.port +<span class="string">&quot;====&gt;&quot;</span>+ peer.ip+<span class="string">&quot;:&quot;</span>+peer.port)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                console.log(peer.ip+<span class="string">&quot;:&quot;</span>+peer.port +<span class="string">&quot;====&gt;&quot;</span>+ local.ip+<span class="string">&quot;:&quot;</span>+local.port)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        function printAddress(socket, isSend)&#123;</span><br><span class="line">            var localAddress = socket.value.getLocalAddress().toString()</span><br><span class="line">            var remoteAddress = socket.value.getRemoteSocketAddress().toString()</span><br><span class="line">            <span class="keyword">if</span>(isSend)&#123;</span><br><span class="line">                console.log(localAddress +<span class="string">&quot;====&gt;&quot;</span>+ remoteAddress)</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                console.log(remoteAddress +<span class="string">&quot;====&gt;&quot;</span>+ localAddress)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        function hexdump(bytearry,offset,length)&#123;</span><br><span class="line">            var HexDump = Java.use(<span class="string">&quot;com.android.internal.util.HexDump&quot;</span>)</span><br><span class="line">            console.log(HexDump.dumpHexString(bytearry,offset,length))</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        function showStacks() &#123;</span><br><span class="line">            console.log(Java.use(<span class="string">&quot;android.util.Log&quot;</span>).getStackTraceString(Java.use(<span class="string">&quot;java.lang.Exception&quot;</span>).$new()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">setImmediate(main)</span><br></pre></td></tr></table></figure>
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                Hook抓包
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/27616/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2021-09-01 23:15</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%8A%93%E5%8C%85/">抓包</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/39138/"
+                                   title="抓包进阶之双端校验"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">抓包进阶之双端校验</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/14651/"
+                                   title="Frida&amp;反调试&amp;反反调试"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Frida&amp;反调试&amp;反反调试</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP"><span class="nav-number">1.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#request"><span class="nav-number">1.1.</span> <span class="nav-text">request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida%E6%8A%93%E5%8C%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">frida抓包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#response"><span class="nav-number">1.2.</span> <span class="nav-text">response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida%E6%8A%93%E5%8C%85-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">frida抓包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTPS"><span class="nav-number">2.</span> <span class="nav-text">HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#request-1"><span class="nav-number">2.1.</span> <span class="nav-text">request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">2.1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida%E6%8A%93%E5%8C%85-2"><span class="nav-number">2.1.2.</span> <span class="nav-text">frida抓包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#response-1"><span class="nav-number">2.2.</span> <span class="nav-text">response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#frida%E6%8A%93%E5%8C%85-3"><span class="nav-number">2.2.1.</span> <span class="nav-text">frida抓包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">完整代码</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2025
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">147.1k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP"><span class="nav-number">1.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#request"><span class="nav-number">1.1.</span> <span class="nav-text">request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida%E6%8A%93%E5%8C%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">frida抓包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#response"><span class="nav-number">1.2.</span> <span class="nav-text">response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida%E6%8A%93%E5%8C%85-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">frida抓包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTPS"><span class="nav-number">2.</span> <span class="nav-text">HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#request-1"><span class="nav-number">2.1.</span> <span class="nav-text">request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">2.1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frida%E6%8A%93%E5%8C%85-2"><span class="nav-number">2.1.2.</span> <span class="nav-text">frida抓包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#response-1"><span class="nav-number">2.2.</span> <span class="nav-text">response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#frida%E6%8A%93%E5%8C%85-3"><span class="nav-number">2.2.1.</span> <span class="nav-text">frida抓包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">完整代码</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
 
 <!-- common -->
 <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>

@@ -42,124 +42,772 @@
 
 
 <body>
-.page-container {
-  width: 100%;
-  height: auto;
-  background: var(--background-color-1);
-}
-.page-container .page-main-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-  padding-top: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content.is-home .transparent-1 {
-  background: var(--header-transparent-background-1);
-  backdrop-filter: blur(4px);
-}
-.page-container .page-main-content.is-home .transparent-2 {
-  background: var(--header-transparent-background-2);
-  backdrop-filter: blur(5px);
-}
-.header-shrink .page-container .page-main-content {
-  padding-top: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-5;
-  box-sizing: border-box;
-  width: 100%;
-  height: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top.hide {
-  transform: translateY(-105%);
-}
-.header-shrink .page-container .page-main-content .page-main-content-top {
-  height: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: $component-spacing-value 0;
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle .main-content {
-  width: $main-content-width;
-  max-width: $content-max-width;
-  height: 100%;
-keep-tablet()
-keep-mobile()
-}
-.has-toc .page-container .page-main-content .page-main-content-middle .main-content {
-  max-width: $has-toc-content-max-width;
-}
-.page-container .page-main-content .page-main-content-bottom {
-  width: 100%;
-}
-.page-container .post-tools {
-  position: fixed;
-  top: calc(var(--header-height) + $component-spacing-value);
-  box-sizing: border-box;
-  opacity: 0;
-keep-tablet()
-}
-.page-container .post-tools.right-toc {
-  left: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.page-container .post-tools.left-toc {
-  right: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.header-shrink .page-container .post-tools {
-  top: calc(var(--header-shrink-height) + $component-spacing-value);
-}
-.page-container .side-tools {
-  position: fixed;
-  right: 0;
-  bottom: 1.6rem;
-  box-sizing: border-box;
-  padding-right: 1rem;
-keep-tablet()
-}
-.page-container .side-tools:hover .side-tools-container {
-  transform: translateX(0);
-  opacity: 1;
-}
-.page-container .tablet-post-toc-mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-10;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0);
-  visibility: hidden;
-}
-.page-container .tablet-post-toc-mask .tablet-post-toc {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  width: 22rem;
-  height: 100%;
-  padding: 1.2rem 1rem;
-  background: var(--background-color-1);
-  transform: translateX(-100%);
-keep-mobile()
-}
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        对称加密算法DES的原理及分析
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2022-07-07 00:00:00</span>
+                <span class="mobile">2022-07-07 00:00</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Thu Jul 07 2022 00:00:00 GMT+0800">2022-07-07 00:00:00</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.8k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>13 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <h3 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h3><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220707/01.webp"
+                     
+                ></p>
+<h3 id="手算DES"><a href="#手算DES" class="headerlink" title="手算DES"></a>手算DES</h3><p>入参：<br />明文：64比特（16个十六进制数、8个字节）<br />KEY：64比特（16个十六进制数、8个字节）<br />出参：64比特（16个十六进制数、8个字节）</p>
+<p>明文：0123456789ABCDEF（hex）<br />密钥：133457799BBCDFF1（hex）<br />结果：85e813540f0ab405fdf2e174492922f8<br />因为模式的原因，会进行填充，这里先把结果当成 85e813540f0ab405（hex）</p>
+<h4 id="1-对明文初始置换（重排）"><a href="#1-对明文初始置换（重排）" class="headerlink" title="1.对明文初始置换（重排）"></a>1.对明文初始置换（重排）</h4><p>PI置换表（IP表）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PI = [<span class="number">58</span>, <span class="number">50</span>, <span class="number">42</span>, <span class="number">34</span>, <span class="number">26</span>, <span class="number">18</span>, <span class="number">10</span>, <span class="number">2</span>,</span><br><span class="line">      <span class="number">60</span>, <span class="number">52</span>, <span class="number">44</span>, <span class="number">36</span>, <span class="number">28</span>, <span class="number">20</span>, <span class="number">12</span>, <span class="number">4</span>,</span><br><span class="line">      <span class="number">62</span>, <span class="number">54</span>, <span class="number">46</span>, <span class="number">38</span>, <span class="number">30</span>, <span class="number">22</span>, <span class="number">14</span>, <span class="number">6</span>,</span><br><span class="line">      <span class="number">64</span>, <span class="number">56</span>, <span class="number">48</span>, <span class="number">40</span>, <span class="number">32</span>, <span class="number">24</span>, <span class="number">16</span>, <span class="number">8</span>,</span><br><span class="line">      <span class="number">57</span>, <span class="number">49</span>, <span class="number">41</span>, <span class="number">33</span>, <span class="number">25</span>, <span class="number">17</span>, <span class="number">9</span>, <span class="number">1</span>,</span><br><span class="line">      <span class="number">59</span>, <span class="number">51</span>, <span class="number">43</span>, <span class="number">35</span>, <span class="number">27</span>, <span class="number">19</span>, <span class="number">11</span>, <span class="number">3</span>,</span><br><span class="line">      <span class="number">61</span>, <span class="number">53</span>, <span class="number">45</span>, <span class="number">37</span>, <span class="number">29</span>, <span class="number">21</span>, <span class="number">13</span>, <span class="number">5</span>,</span><br><span class="line">      <span class="number">63</span>, <span class="number">55</span>, <span class="number">47</span>, <span class="number">39</span>, <span class="number">31</span>, <span class="number">23</span>, <span class="number">15</span>, <span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+<p>根据置换表的索引对明文进行重新排列（例如明文第58的位置放到第一位）<br />明文 0123456789ABCDEF（hex）<br />转为二进制 00000001 00100011 01000101 01100111 10001001 10101011 11001101 11101111<br />重新排列后 11001100 00000000 11001100 11111111 11110000 10101010 11110000 10101010<br />排列顺序如图所示：<br /><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220707/02.webp"
+                     
+                ></p>
+<h4 id="2-对密钥进行编排"><a href="#2-对密钥进行编排" class="headerlink" title="2.对密钥进行编排"></a>2.对密钥进行编排</h4><p><strong>PC1（CP_1）（置换选择一表）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CP_1 = [<span class="number">57</span>, <span class="number">49</span>, <span class="number">41</span>, <span class="number">33</span>, <span class="number">25</span>, <span class="number">17</span>, <span class="number">9</span>,</span><br><span class="line">        <span class="number">1</span>, <span class="number">58</span>, <span class="number">50</span>, <span class="number">42</span>, <span class="number">34</span>, <span class="number">26</span>, <span class="number">18</span>,</span><br><span class="line">        <span class="number">10</span>, <span class="number">2</span>, <span class="number">59</span>, <span class="number">51</span>, <span class="number">43</span>, <span class="number">35</span>, <span class="number">27</span>,</span><br><span class="line">        <span class="number">19</span>, <span class="number">11</span>, <span class="number">3</span>, <span class="number">60</span>, <span class="number">52</span>, <span class="number">44</span>, <span class="number">36</span>,</span><br><span class="line">        <span class="number">63</span>, <span class="number">55</span>, <span class="number">47</span>, <span class="number">39</span>, <span class="number">31</span>, <span class="number">23</span>, <span class="number">15</span>,</span><br><span class="line">        <span class="number">7</span>, <span class="number">62</span>, <span class="number">54</span>, <span class="number">46</span>, <span class="number">38</span>, <span class="number">30</span>, <span class="number">22</span>,</span><br><span class="line">        <span class="number">14</span>, <span class="number">6</span>, <span class="number">61</span>, <span class="number">53</span>, <span class="number">45</span>, <span class="number">37</span>, <span class="number">29</span>,</span><br><span class="line">        <span class="number">21</span>, <span class="number">13</span>, <span class="number">5</span>, <span class="number">28</span>, <span class="number">20</span>, <span class="number">12</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<p>密钥：133457799BBCDFF1（hex）<br />转为二进制：00010011 00110100 01010111 01111001 10011011 10111100 11011111 11110001<br />重新排列后：1111000 0110011 0010101 0101111 0101010 1011001 1001111 0001111<br />对DES来说，密钥64位，只有56位被使用，每8个比特的最后一位被舍弃掉<br />对重新编排后的拆分成左右两部分<br />L0：1111000 0110011 0010101 0101111<br />R0：0101010 1011001 1001111 0001111</p>
+<h4 id="3-对编排后的密钥进行16轮循环左移生成16个子密钥"><a href="#3-对编排后的密钥进行16轮循环左移生成16个子密钥" class="headerlink" title="3.对编排后的密钥进行16轮循环左移生成16个子密钥"></a>3.对编排后的密钥进行16轮循环左移生成16个子密钥</h4><p>对L0和R0进行16轮循环左移，每轮根据上一轮左移n位+本次左移的位数（或者是本次左移索引+前面左移索引位数），左移后加在一起LnRn，然后根据PC2（CP_2）表重新编排为K，只有48位，生成16个子密钥（注：索引是从1开始）。<br /><br><font color="red">生成的16个子密钥subkeys会对应明文处理16轮每轮的key</font></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHIFT = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CP_2 = [<span class="number">14</span>, <span class="number">17</span>, <span class="number">11</span>, <span class="number">24</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">28</span>,</span><br><span class="line">        <span class="number">15</span>, <span class="number">6</span>, <span class="number">21</span>, <span class="number">10</span>, <span class="number">23</span>, <span class="number">19</span>, <span class="number">12</span>, <span class="number">4</span>,</span><br><span class="line">        <span class="number">26</span>, <span class="number">8</span>, <span class="number">16</span>, <span class="number">7</span>, <span class="number">27</span>, <span class="number">20</span>, <span class="number">13</span>, <span class="number">2</span>,</span><br><span class="line">        <span class="number">41</span>, <span class="number">52</span>, <span class="number">31</span>, <span class="number">37</span>, <span class="number">47</span>, <span class="number">55</span>, <span class="number">30</span>, <span class="number">40</span>,</span><br><span class="line">        <span class="number">51</span>, <span class="number">45</span>, <span class="number">33</span>, <span class="number">48</span>, <span class="number">44</span>, <span class="number">49</span>, <span class="number">39</span>, <span class="number">56</span>,</span><br><span class="line">        <span class="number">34</span>, <span class="number">53</span>, <span class="number">46</span>, <span class="number">42</span>, <span class="number">50</span>, <span class="number">36</span>, <span class="number">29</span>, <span class="number">32</span>]</span><br></pre></td></tr></table></figure>
+<p>L1：1110000 1100110 0101010 1011111<br />R1：1010101 0110011 0011110 0011110<br />L1R1：1110000 1100110 0101010 1011111 1010101 0110011 0011110 0011110<br />编排后K1：00011011 00000010 11101111 11111100 01110000 01110010</p>
+<p>第二次左移2位（对L0和R0左移2位，或者对L1和R1左移1位）<br />L2：1100001 1001100 1010101 0111111<br />R2：0101010 1100110 0111100 0111101<br />L2R2：1100001 1001100 1010101 0111111 0101010 1100110 0111100 0111101<br />编排后K2：01111001 10101110 11011001 11011011 11001001 11100101</p>
+<p>第三次左移4位（对L0和R0左移4位，或者对L2和R2左移2位）<br />L3：0000110 0110010 1010101 1111111<br />R3：0101011 0011001 1110001 1110101<br />L3R3：0000110 0110010 1010101 1111111 0101011 0011001 1110001 1110101<br />编排后K3：010101 011111 110010 001010 010000 101100 111110 011001<br />…</p>
+<p>K1 &#x3D; 000110 110000 001011 101111 111111 000111 000001 110010<br />K2 &#x3D; 011110 011010 111011 011001 110110 111100 100111 100101<br />K3 &#x3D; 010101 011111 110010 001010 010000 101100 111110 011001<br />K4 &#x3D; 011100 101010 110111 010110 110110 110011 010100 011101<br />K5 &#x3D; 011111 001110 110000 000111 111010 110101 001110 101000<br />K6 &#x3D; 011000 111010 010100 111110 010100 000111 101100 101111<br />K7 &#x3D; 111011 001000 010010 110111 111101 100001 100010 111100<br />K8 &#x3D; 111101 111000 101000 111010 110000 010011 101111 111011<br />K9 &#x3D; 111000 001101 101111 101011 111011 011110 011110 000001<br />K10 &#x3D; 101100 011111 001101 000111 101110 100100 011001 001111<br />K11 &#x3D; 001000 010101 111111 010011 110111 101101 001110 000110<br />K12 &#x3D; 011101 010111 000111 110101 100101 000110 011111 101001<br />K13 &#x3D; 100101 111100 010111 010001 111110 101011 101001 000001<br />K14 &#x3D; 010111 110100 001110 110111 111100 101110 011100 111010<br />K15 &#x3D; 101111 111001 000110 001101 001111 010011 111100 001010<br />K16 &#x3D; 110010 110011 110110 001011 000011 100001 011111 110101</p>
+<h4 id="4-对明文进行16轮运算加密"><a href="#4-对明文进行16轮运算加密" class="headerlink" title="4.对明文进行16轮运算加密"></a>4.对明文进行16轮运算加密</h4><p>明文重新编排后的 11001100 00000000 11001100 11111111 11110000 10101010 11110000 10101010<br />拆分成左右两部分<br />L0：11001100 00000000 11001100 11111111<br />R0：11110000 10101010 11110000 10101010<br />每一轮运算只对R进行改变<br />加密：<br />Li+1&#x3D;Ri<br />Ri+1&#x3D;Li⊕F(Ri,Ki)<br /><br />解密：<br>Ri&#x3D;Li+1<br>Li&#x3D;Ri+1⊕F(Li+1,Ki)<br /></p>
+<font color="red">
+f函数：
+1. f函数首先将输入经过E表扩展置换，将32位的输入扩展为48位。</br>
+2. 将48位结果与第i轮第密钥ki进行XOR(异或)操作</br>
+3. 将异或操作第结果送入S盒进行压缩，压缩成32位</br>
+4. 将32位的结果送入P盒置换</font>
+</br>
+
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220707/03.webp"
+                     
+                ></p>
+</br>
+
+<p>Expand表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">E = [<span class="number">32</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>,</span><br><span class="line">     <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>,</span><br><span class="line">     <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>,</span><br><span class="line">     <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>,</span><br><span class="line">     <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>,</span><br><span class="line">     <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>,</span><br><span class="line">     <span class="number">24</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>,</span><br><span class="line">     <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">32</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>S盒（S_BOX，8组）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">S_BOX = [    </span><br><span class="line">[[<span class="number">14</span>, <span class="number">4</span>, <span class="number">13</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">15</span>, <span class="number">11</span>, <span class="number">8</span>, <span class="number">3</span>, <span class="number">10</span>, <span class="number">6</span>, <span class="number">12</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">7</span>],</span><br><span class="line"> [<span class="number">0</span>, <span class="number">15</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">14</span>, <span class="number">2</span>, <span class="number">13</span>, <span class="number">1</span>, <span class="number">10</span>, <span class="number">6</span>, <span class="number">12</span>, <span class="number">11</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">8</span>],</span><br><span class="line"> [<span class="number">4</span>, <span class="number">1</span>, <span class="number">14</span>, <span class="number">8</span>, <span class="number">13</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">11</span>, <span class="number">15</span>, <span class="number">12</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">10</span>, <span class="number">5</span>, <span class="number">0</span>],</span><br><span class="line"> [<span class="number">15</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">11</span>, <span class="number">3</span>, <span class="number">14</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">13</span>],</span><br><span class="line">],</span><br><span class="line"></span><br><span class="line">[[<span class="number">15</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">14</span>, <span class="number">6</span>, <span class="number">11</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">13</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">10</span>],</span><br><span class="line"> [<span class="number">3</span>, <span class="number">13</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">15</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">14</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">10</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">11</span>, <span class="number">5</span>],</span><br><span class="line"> [<span class="number">0</span>, <span class="number">14</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">10</span>, <span class="number">4</span>, <span class="number">13</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">12</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">15</span>],</span><br><span class="line"> [<span class="number">13</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">15</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">11</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">12</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">14</span>, <span class="number">9</span>],</span><br><span class="line">],</span><br><span class="line"></span><br><span class="line">[[<span class="number">10</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">14</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">15</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">13</span>, <span class="number">12</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">8</span>],</span><br><span class="line"> [<span class="number">13</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">14</span>, <span class="number">12</span>, <span class="number">11</span>, <span class="number">15</span>, <span class="number">1</span>],</span><br><span class="line"> [<span class="number">13</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">11</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">12</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">14</span>, <span class="number">7</span>],</span><br><span class="line"> [<span class="number">1</span>, <span class="number">10</span>, <span class="number">13</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">15</span>, <span class="number">14</span>, <span class="number">3</span>, <span class="number">11</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">12</span>],</span><br><span class="line">],</span><br><span class="line"></span><br><span class="line">[[<span class="number">7</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">4</span>, <span class="number">15</span>],</span><br><span class="line"> [<span class="number">13</span>, <span class="number">8</span>, <span class="number">11</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">12</span>, <span class="number">1</span>, <span class="number">10</span>, <span class="number">14</span>, <span class="number">9</span>],</span><br><span class="line"> [<span class="number">10</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="number">11</span>, <span class="number">7</span>, <span class="number">13</span>, <span class="number">15</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">14</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">4</span>],</span><br><span class="line"> [<span class="number">3</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">13</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">14</span>],</span><br><span class="line">],  </span><br><span class="line"></span><br><span class="line">[[<span class="number">2</span>, <span class="number">12</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">15</span>, <span class="number">13</span>, <span class="number">0</span>, <span class="number">14</span>, <span class="number">9</span>],</span><br><span class="line"> [<span class="number">14</span>, <span class="number">11</span>, <span class="number">2</span>, <span class="number">12</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">13</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">15</span>, <span class="number">10</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">6</span>],</span><br><span class="line"> [<span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">11</span>, <span class="number">10</span>, <span class="number">13</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">15</span>, <span class="number">9</span>, <span class="number">12</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">14</span>],</span><br><span class="line"> [<span class="number">11</span>, <span class="number">8</span>, <span class="number">12</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">14</span>, <span class="number">2</span>, <span class="number">13</span>, <span class="number">6</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">3</span>],</span><br><span class="line">], </span><br><span class="line"></span><br><span class="line">[[<span class="number">12</span>, <span class="number">1</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">9</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">13</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">14</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">11</span>],</span><br><span class="line"> [<span class="number">10</span>, <span class="number">15</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">12</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">0</span>, <span class="number">11</span>, <span class="number">3</span>, <span class="number">8</span>],</span><br><span class="line"> [<span class="number">9</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">12</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">10</span>, <span class="number">1</span>, <span class="number">13</span>, <span class="number">11</span>, <span class="number">6</span>],</span><br><span class="line"> [<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">12</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">15</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">14</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">13</span>],</span><br><span class="line">], </span><br><span class="line"></span><br><span class="line">[[<span class="number">4</span>, <span class="number">11</span>, <span class="number">2</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">13</span>, <span class="number">3</span>, <span class="number">12</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">6</span>, <span class="number">1</span>],</span><br><span class="line"> [<span class="number">13</span>, <span class="number">0</span>, <span class="number">11</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">1</span>, <span class="number">10</span>, <span class="number">14</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">12</span>, <span class="number">2</span>, <span class="number">15</span>, <span class="number">8</span>, <span class="number">6</span>],</span><br><span class="line"> [<span class="number">1</span>, <span class="number">4</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">12</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">14</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">2</span>],</span><br><span class="line"> [<span class="number">6</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">15</span>, <span class="number">14</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">12</span>],</span><br><span class="line">],</span><br><span class="line">   </span><br><span class="line">[[<span class="number">13</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">15</span>, <span class="number">11</span>, <span class="number">1</span>, <span class="number">10</span>, <span class="number">9</span>, <span class="number">3</span>, <span class="number">14</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">12</span>, <span class="number">7</span>],</span><br><span class="line"> [<span class="number">1</span>, <span class="number">15</span>, <span class="number">13</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">12</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">11</span>, <span class="number">0</span>, <span class="number">14</span>, <span class="number">9</span>, <span class="number">2</span>],</span><br><span class="line"> [<span class="number">7</span>, <span class="number">11</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">13</span>, <span class="number">15</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">8</span>],</span><br><span class="line"> [<span class="number">2</span>, <span class="number">1</span>, <span class="number">14</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">10</span>, <span class="number">8</span>, <span class="number">13</span>, <span class="number">15</span>, <span class="number">12</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">11</span>],</span><br><span class="line">]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>P盒</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">P = [<span class="number">16</span>, <span class="number">7</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">29</span>, <span class="number">12</span>, <span class="number">28</span>, <span class="number">17</span>,</span><br><span class="line">     <span class="number">1</span>, <span class="number">15</span>, <span class="number">23</span>, <span class="number">26</span>, <span class="number">5</span>, <span class="number">18</span>, <span class="number">31</span>, <span class="number">10</span>,</span><br><span class="line">     <span class="number">2</span>, <span class="number">8</span>, <span class="number">24</span>, <span class="number">14</span>, <span class="number">32</span>, <span class="number">27</span>, <span class="number">3</span>, <span class="number">9</span>,</span><br><span class="line">     <span class="number">19</span>, <span class="number">13</span>, <span class="number">30</span>, <span class="number">6</span>, <span class="number">22</span>, <span class="number">11</span>, <span class="number">4</span>, <span class="number">25</span>]</span><br></pre></td></tr></table></figure>
+
+<p>第一轮为例：<br />R1&#x3D; L0⊕f(R0，K1)<br />F函数	P(S(E(Ri)⊕Ki))：<br />R0：11110000 10101010 11110000 10101010<br />经过E表编排：01111010 00010101 01010101 01111010 00010101 01010101<br />与K1异或后：011000 010001 011110 111010 100001 100110 010100 100111<br /><br><font color="red">把异或后的拆分8组，进行8轮S盒运算</font><br><br />B1 &#x3D; 011000 <br />B2 &#x3D; 010001 <br />B3 &#x3D; 011110 <br />B4 &#x3D; 111010 <br />B5 &#x3D; 100001 <br />B6 &#x3D; 100110 <br />B7 &#x3D; 010100 <br />B8 &#x3D; 100111<br /><br><font color="red">将每一组前后1个比特拼接为row转十进制，中间4个比特为column转十进制，然后去S盒映射第i个row行column列</font><br><br />B1	0 1100 0 <br />row：00 &#x3D;&#x3D;&gt; 0  （十进制）<br />column：1100 &#x3D;&#x3D;&gt; 12  （十进制）<br />(0, 12) &#x3D;&#x3D;&gt; S[0][0][12]&#x3D;&#x3D;&gt;5<br />B1 &#x3D; 5 &#x3D;&#x3D;&gt; 0101 （二进制）</p>
+<p>B2 	0 1000 1<br />row：01 &#x3D;&#x3D;&gt; 1  （十进制）<br />column：1000 &#x3D;&#x3D;&gt; 8  （十进制）<br />(1, 8) &#x3D;&#x3D;&gt; S[1][1][8]&#x3D;&#x3D;&gt;12<br />B1 &#x3D;12&#x3D;&#x3D;&gt; 1100（二进制）</p>
+<p>B3 	0 1111 0 <br />row：00 &#x3D;&#x3D;&gt; 0  （十进制）<br />column：1111&#x3D;&#x3D;&gt; 15  （十进制）<br />(0, 15) &#x3D;&#x3D;&gt; S[2][0][15]&#x3D;&#x3D;&gt;8<br />B1 &#x3D;8&#x3D;&#x3D;&gt; 1000（二进制）<br />…<br />6<em>8&#x3D;48bit 经过8轮 4</em>8&#x3D;32bit<br />把B1-B8拼接起来：<br />01011100 10000010 10110101 10010111</p>
+<p>经过P盒置换后：00100011 01001010 10101001 10111011<br />F函数结束，结果异或L0<br />R1：11101111 01001010 01100101 01000100<br />L1：R0<br />…<br />16轮后<br />R16：00001010 01001100 11011001 10010101<br />L16：01000011 01000010 00110010 00110100<br />R16L16拼接（R在前），再经过末置换表（PI_1）（64位）：<br />R16L16：00001010 01001100 11011001 10010101 01000011 01000010 00110010 00110100<br />置换后：10000101 11101000 00010011 01010100 00001111 00001010 10110100 00000101<br />转为hex就是结果了：85e813540f0ab405<br /></p>
+<p><strong>PI_1表</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PI_1 = [<span class="number">40</span>, <span class="number">8</span>, <span class="number">48</span>, <span class="number">16</span>, <span class="number">56</span>, <span class="number">24</span>, <span class="number">64</span>, <span class="number">32</span>,</span><br><span class="line">        <span class="number">39</span>, <span class="number">7</span>, <span class="number">47</span>, <span class="number">15</span>, <span class="number">55</span>, <span class="number">23</span>, <span class="number">63</span>, <span class="number">31</span>,</span><br><span class="line">        <span class="number">38</span>, <span class="number">6</span>, <span class="number">46</span>, <span class="number">14</span>, <span class="number">54</span>, <span class="number">22</span>, <span class="number">62</span>, <span class="number">30</span>,</span><br><span class="line">        <span class="number">37</span>, <span class="number">5</span>, <span class="number">45</span>, <span class="number">13</span>, <span class="number">53</span>, <span class="number">21</span>, <span class="number">61</span>, <span class="number">29</span>,</span><br><span class="line">        <span class="number">36</span>, <span class="number">4</span>, <span class="number">44</span>, <span class="number">12</span>, <span class="number">52</span>, <span class="number">20</span>, <span class="number">60</span>, <span class="number">28</span>,</span><br><span class="line">        <span class="number">35</span>, <span class="number">3</span>, <span class="number">43</span>, <span class="number">11</span>, <span class="number">51</span>, <span class="number">19</span>, <span class="number">59</span>, <span class="number">27</span>,</span><br><span class="line">        <span class="number">34</span>, <span class="number">2</span>, <span class="number">42</span>, <span class="number">10</span>, <span class="number">50</span>, <span class="number">18</span>, <span class="number">58</span>, <span class="number">26</span>,</span><br><span class="line">        <span class="number">33</span>, <span class="number">1</span>, <span class="number">41</span>, <span class="number">9</span>, <span class="number">49</span>, <span class="number">17</span>, <span class="number">57</span>, <span class="number">25</span>]</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220707/04.webp"
+                     
+                ></p>
+<h3 id="分组密码的填充"><a href="#分组密码的填充" class="headerlink" title="分组密码的填充"></a>分组密码的填充</h3><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220707/05.webp"
+                     
+                ><br><br /><br><font color="red">Passing只用于CBC和ECB模式，默认采用PKCS#7进行填充</font><br><br />DES 64比特明文，64比特密钥，结果64比特输出<br />那为什么明文刚好是64比特，如果输入是56比特？20比特？或者什么都不输入呢？<br />明文会切割成每64比特为一组进行des加密，最后一组小于或等于64都会进行填充<br />如果传入的是utf，需先转hex<br /></p>
+<p>小于64比特：<br /><br>123456789（hex）&#x3D;&#x3D;&gt; 1234567809（hex）<br /><br>还差6位hex（3个字节），填充030303：1234567809030303</p>
+<p>123456789abcd（hex）&#x3D;&#x3D;&gt;123456789abc0d（hex）<br />还差2位hex（1个字节），填充01：123456789abc0d01</p>
+<br />
+
+<p>等于64比特，需要填充一整个分组0808080808080808：<br />0123456789abcdef（hex）&#x3D;&#x3D;&gt; 0123456789abcdef0808080808080808</p>
+<p>最少填充一字节，最多填充一整个分组，不能不填充。<br /></p>
+<h3 id="分组密码的工作模式"><a href="#分组密码的工作模式" class="headerlink" title="分组密码的工作模式"></a>分组密码的工作模式</h3><h4 id="ECB"><a href="#ECB" class="headerlink" title="ECB"></a>ECB</h4><p>相同的分组输入，计算后的结果是完全一致的，每个分组单独处理，叫ECB工作模式<br />这种模式有很多好处，我们可以直接for 循环，将很长的输入分成对应个数的分组，每个分组得到结果后拼接在一起就行，而且这也意味着可以并行计算。 <br />如果ECB模式是可行的、安全的，那么我们一定选择它，因为最简单和高效。那也就不会出现别的工作模式了，可惜的是它并不安全。<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220707/06.webp"
+                     
+                ></p>
+<h4 id="CBC"><a href="#CBC" class="headerlink" title="CBC"></a>CBC</h4><p>最常用的模式<br /><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220707/07.webp"
+                     
+                ><br />其实想法也很朴素，每个明文分组在加密前多一个步骤，和上一个分组的密文块进行异或运算。因为第一个明文块没有所谓的“上一个分组的密文块“，所以需要人给一个64比特，或者说8字节的输入，我们叫它初始化向量，IV。<br />在cyberchef中验证一下</p>
+<blockquote>
+<p>明文：123456789ABCDEF0（hex）<br /><br>密钥：133457799BBCDFF1（hex）<br /><br>使用CBC模式<br /><br>IV：0123456789ABCDEF<br /><br>计算结果：0ecb68bac16aece07cbadcfa7a974bcc（hex）</p>
+</blockquote>
+<p>按照我们上面的说法<br /><br><font color="red">0ecb68bac16aece0</font>的明文应该就是<font color="red">123456789ABCDEF0</font>和<font color="red">0123456789ABCDEF</font>异或的结果<br /><br>得到结果<font color="red">1317131f1317131f</font><br /><br>使用cyberchef计算<font color="red">123456789ABCDEF0 ^ 0123456789ABCDEF</font> 得到结果<font color="red">1317131f1317131f</font>，单独计算其DES加密结果，注意这儿要用ECB模式: <font color="red">0ecb68bac16aece0 fdf2e174492922f8</font>，因为<font color="red">1317131f1317131f</font>是一个分组的长度，所以要填充0808080808080808， <font color="red">fdf2e174492922f8</font>是08的结果，所以不用管。可以发现，第一块加密结果<font color="red">0ecb68bac16aece0</font>正是我们所预期的。<br /></p>
+<p>接下来看一下第二块，第二块即0808080808080808，按照CBC的规则计算 <font color="red">0ecb68bac16aece0 ^ 0808080808080808 &#x3D; 06c360b2c962e4e8</font>，单独计算ECB下的<font color="red">06c360b2c962e4e8</font> 结果为<font color="red">7cbadcfa7a974bcc fdf2e174492922f8</font>，第二块结果<font color="red">7cbadcfa7a974bcc</font>也完全正确。</p>
+<h4 id="CFB"><a href="#CFB" class="headerlink" title="CFB"></a>CFB</h4><blockquote>
+<p>明文：123456789ABCDEF0<br /><br>密钥：133457799BBCDFF1<br /><br>IV：0123456789ABCDEF<br /><br>模式：CFB<br /><br>结果: 97dc452c95b66af5<br /><br>IV即0123456789ABCDEF的des加密结果85e813540f0ab405<br /><br>85e813540f0ab405 与 123456789ABCDEF0 的异或结果是97dc452c95b66af5</p>
+</blockquote>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220707/08.webp"
+                     
+                ></p>
+<h4 id="OFB"><a href="#OFB" class="headerlink" title="OFB"></a>OFB</h4><blockquote>
+<p>明文：123456789ABCDEF0<br /><br>密钥：133457799BBCDFF1<br /><br>IV：0123456789ABCDEF<br /><br>模式：OFB<br /><br>结果: 97dc452c95b66af5<br /><br>即一个分组的OFB与CFB是一样一样的<br /></p>
+</blockquote>
+<p>两个分组的计算：</p>
+<blockquote>
+<p>明文：123456789ABCDEF0 123456789ABCDEF0<br /><br>密钥：133457799BBCDFF1<br /><br>IV：0123456789ABCDEF<br /><br>模式：OFB<br /><br>结果：97dc452c95b66af5 759a2c51fb637db5</p>
+</blockquote>
+<p>直接观察第二个分组759a2c51fb637db5是如何计算出来呢?<br />它是明文和加密两次的IV的异或结果<br />明文：123456789ABCDEF0 加密第一次：85e813540f0ab405 加密第二次 67ae7a2961dfa345f，最后异或 67ae7a2961dfa345f ^ 123456789ABCDEF0 &#x3D; 759a2c51fb637db5<br /><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220707/09.webp"
+                     
+                ></p>
+<h4 id="CTR"><a href="#CTR" class="headerlink" title="CTR"></a>CTR</h4>
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                对称加密算法DES的原理及分析
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/35582/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2022-07-07 00:00</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/3538/"
+                                   title="对称加解密算法RC4原理过程及实现"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">对称加解密算法RC4原理过程及实现</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/40655/"
+                                   title="HMAC-MD5,HMAC-SHA1算法流程"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">HMAC-MD5,HMAC-SHA1算法流程</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">图解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E7%AE%97DES"><span class="nav-number">2.</span> <span class="nav-text">手算DES</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AF%B9%E6%98%8E%E6%96%87%E5%88%9D%E5%A7%8B%E7%BD%AE%E6%8D%A2%EF%BC%88%E9%87%8D%E6%8E%92%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">1.对明文初始置换（重排）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AF%B9%E5%AF%86%E9%92%A5%E8%BF%9B%E8%A1%8C%E7%BC%96%E6%8E%92"><span class="nav-number">2.2.</span> <span class="nav-text">2.对密钥进行编排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%AF%B9%E7%BC%96%E6%8E%92%E5%90%8E%E7%9A%84%E5%AF%86%E9%92%A5%E8%BF%9B%E8%A1%8C16%E8%BD%AE%E5%BE%AA%E7%8E%AF%E5%B7%A6%E7%A7%BB%E7%94%9F%E6%88%9016%E4%B8%AA%E5%AD%90%E5%AF%86%E9%92%A5"><span class="nav-number">2.3.</span> <span class="nav-text">3.对编排后的密钥进行16轮循环左移生成16个子密钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AF%B9%E6%98%8E%E6%96%87%E8%BF%9B%E8%A1%8C16%E8%BD%AE%E8%BF%90%E7%AE%97%E5%8A%A0%E5%AF%86"><span class="nav-number">2.4.</span> <span class="nav-text">4.对明文进行16轮运算加密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E7%9A%84%E5%A1%AB%E5%85%85"><span class="nav-number">3.</span> <span class="nav-text">分组密码的填充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">分组密码的工作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ECB"><span class="nav-number">4.1.</span> <span class="nav-text">ECB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CBC"><span class="nav-number">4.2.</span> <span class="nav-text">CBC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CFB"><span class="nav-number">4.3.</span> <span class="nav-text">CFB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OFB"><span class="nav-number">4.4.</span> <span class="nav-text">OFB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CTR"><span class="nav-number">4.5.</span> <span class="nav-text">CTR</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2025
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">147.1k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">图解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E7%AE%97DES"><span class="nav-number">2.</span> <span class="nav-text">手算DES</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AF%B9%E6%98%8E%E6%96%87%E5%88%9D%E5%A7%8B%E7%BD%AE%E6%8D%A2%EF%BC%88%E9%87%8D%E6%8E%92%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">1.对明文初始置换（重排）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AF%B9%E5%AF%86%E9%92%A5%E8%BF%9B%E8%A1%8C%E7%BC%96%E6%8E%92"><span class="nav-number">2.2.</span> <span class="nav-text">2.对密钥进行编排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%AF%B9%E7%BC%96%E6%8E%92%E5%90%8E%E7%9A%84%E5%AF%86%E9%92%A5%E8%BF%9B%E8%A1%8C16%E8%BD%AE%E5%BE%AA%E7%8E%AF%E5%B7%A6%E7%A7%BB%E7%94%9F%E6%88%9016%E4%B8%AA%E5%AD%90%E5%AF%86%E9%92%A5"><span class="nav-number">2.3.</span> <span class="nav-text">3.对编排后的密钥进行16轮循环左移生成16个子密钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AF%B9%E6%98%8E%E6%96%87%E8%BF%9B%E8%A1%8C16%E8%BD%AE%E8%BF%90%E7%AE%97%E5%8A%A0%E5%AF%86"><span class="nav-number">2.4.</span> <span class="nav-text">4.对明文进行16轮运算加密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E7%9A%84%E5%A1%AB%E5%85%85"><span class="nav-number">3.</span> <span class="nav-text">分组密码的填充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">分组密码的工作模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ECB"><span class="nav-number">4.1.</span> <span class="nav-text">ECB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CBC"><span class="nav-number">4.2.</span> <span class="nav-text">CBC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CFB"><span class="nav-number">4.3.</span> <span class="nav-text">CFB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OFB"><span class="nav-number">4.4.</span> <span class="nav-text">OFB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CTR"><span class="nav-number">4.5.</span> <span class="nav-text">CTR</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
 
 <!-- common -->
 <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>

@@ -35,7 +35,8 @@
     KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
     KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
   </script>
-<meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+<style>mjx-container[jax="SVG"] {
   direction: ltr;
 }
 
@@ -147,218 +148,937 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-</head>
+</style></head>
 
 
 <body>
-$post-tools-offset = 'calc((100vw - %s / 2) - 5rem)' % $content-max-width
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
 
-.page-container {
-  width 100%
-  height auto
-  background var(--background-color-1)
-
-  .page-main-content {
-    display flex
-    flex-direction column
-    justify-content space-between
-    min-height 100vh
-    padding-top var(--header-height)
-
-    &.is-home {
-      .transparent-1 {
-        background var(--header-transparent-background-1)
-        backdrop-filter blur(4px)
-      }
-
-      .transparent-2 {
-        background var(--header-transparent-background-2)
-        backdrop-filter blur(5px)
-      }
-    }
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
 
 
-    .header-shrink & {
-      padding-top var(--header-shrink-height)
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box is-home">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper transparent-1">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class="active"
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class="active"
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
 
 
-      +keep-tablet() {
-        padding-top calc(var(--header-shrink-height) * 0.9)
-      }
+        </div>
 
-      +keep-mobile() {
-        padding-top calc(var(--header-shrink-height) * 0.8)
-      }
-    }
+        <div class="page-main-content-middle border-box">
 
+            <div class="main-content border-box">
 
-    +keep-tablet() {
-      padding-top calc(var(--header-height) * 0.9)
-    }
+                
 
+                    <div class="home-content-container fade-in-down-animation">
+    <ul class="home-article-list border-box">
+        
+            <li class="home-article-item">
 
-    +keep-mobile() {
-      padding-top calc(var(--header-height) * 0.8)
-    }
+                
 
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/14763/">
+                            ProtoBuf逆向之某公交app
+                        </a>
+                    </h3>
 
-    .page-main-content-top {
-      position fixed
-      top 0
-      right 0
-      z-index $z-index-5
-      box-sizing border-box
-      width 100%
-      height var(--header-height)
-      transition-t("transform, height", "0, 0", "0.3, 0.2", "ease-out, ease")
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            上一篇是web端的ProtoBuf逆向，这篇就找了个app的ProtoBuf看看练练手目标app：aHR0cHM6Ly93d3cud2FuZG91amlhLmNvbS9hcHBzLzc0NTAxNjM&#x3D;
+抓包分析随便搜索一个线路点进去，看到...
+                        
+                    </div>
 
-      &.hide {
-        transform translateY(-105%)
-      }
+                    
 
-      .header-shrink & {
-        height var(--header-shrink-height)
-
-        +keep-tablet() {
-          height calc(var(--header-shrink-height) * 0.9)
-        }
-
-        +keep-mobile() {
-          height calc(var(--header-shrink-height) * 0.8)
-        }
-      }
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Tue Feb 07 2023 16:27:40 GMT+0800">2023-02-07 16:27:40</span>
+            </span>
+        
 
 
-      +keep-tablet() {
-        height calc(var(--header-height) * 0.9)
-      }
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/protobuf/">protobuf</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">安卓逆向</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/14763/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/13480/">
+                            ProtoBuf分析以及某方数据逆向
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            什么是protobuf一拿到网站，F12查看是否有相关数据的请求接口请求体是这样的请求头的类型也非常见的
+
+application&#x2F;json： JSON数据格式
+application&#x2F;octet-stream ： 二进制流数据
+...
+                        
+                    </div>
+
+                    
+
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Wed Feb 01 2023 01:26:14 GMT+0800">2023-02-01 01:26:14</span>
+            </span>
+        
 
 
-      +keep-mobile() {
-        height calc(var(--header-height) * 0.8)
-      }
-    }
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/js/">js</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/protobuf/">protobuf</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/13480/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/15785/">
+                            DFA还原白盒AES密钥
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            介绍DFA攻击简单来说就是在倒数第一轮列混淆和倒数第二轮列混淆之间（在AES-128中也就是第8轮和第9轮之间，因为最后第10轮不做列混淆），修改此时中间结果的一个字节，会导致最终密文和正确密文有4个字节的不同。通过多次的修改，得到多组错误的密文，然...
+                        
+                    </div>
+
+                    
+
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Tue Jan 31 2023 22:00:00 GMT+0800">2023-01-31 22:00:00</span>
+            </span>
+        
 
 
-    .page-main-content-middle {
-      display flex
-      justify-content center
-      width 100%
-      padding $component-spacing-value 0
+        
 
-      +keep-tablet() {
-        padding $component-spacing-value * 0.8 0
-      }
+        
 
-      +keep-mobile() {
-        padding $component-spacing-value * 0.6 0
-      }
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
 
-      .main-content {
-        width $main-content-width
-        max-width $content-max-width
-        height 100%
-        transition-t("max-width, width", "0, 0", "0.1, 0.1", "ease, ease")
+        
+        
+        
+        
+    </div>
 
-        .has-toc & {
-          max-width $has-toc-content-max-width
-        }
+    
+        <a class="home-read-more" href="/posts/15785/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
 
-        +keep-tablet() {
-          width $main-content-width-tablet
-        }
+                </div>
+            </li>
+        
+            <li class="home-article-item">
 
-        +keep-mobile() {
-          width $main-content-width-mobile
-        }
-      }
-    }
+                
 
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/17732/">
+                            AES知道某一轮次密钥反推主密钥
+                        </a>
+                    </h3>
 
-    .page-main-content-bottom {
-      width 100%
-    }
-  }
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            从轮密钥逆推主密钥首先讨论AES-128这里用上上篇对称加密算法AES原理及分析里面用到的密钥0123456789abcdef0123456789abcdef生成的10轮子密钥做分析
+1234567891011K00:0123456789abcdef...
+                        
+                    </div>
 
+                    
 
-  .post-tools {
-    position fixed
-    top 'calc(var(--header-height) + %s)' % $component-spacing-value
-    box-sizing border-box
-    opacity 0
-    transition-t("top, transform, opacity, left", "0, 0, 0.2, 0", "0.2, 0.2, 0.2, 0.2", "ease, ease, ease, ease")
-
-    &.right-toc {
-      left $post-tools-offset
-    }
-
-    &.left-toc {
-      right $post-tools-offset
-    }
-
-    .header-shrink & {
-      top 'calc(var(--header-shrink-height) + %s)' % $component-spacing-value
-    }
-
-
-    +keep-tablet() {
-      display none !important
-    }
-  }
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Tue Jan 31 2023 17:25:40 GMT+0800">2023-01-31 17:25:40</span>
+            </span>
+        
 
 
-  .side-tools {
-    position fixed
-    right 0
-    bottom 1.6rem
-    box-sizing border-box
-    padding-right 1rem
+        
 
-    +keep-tablet() {
-      padding-right 0
-    }
+        
 
-    &:hover {
-      .side-tools-container {
-        transform translateX(0)
-        opacity 1
-      }
-    }
-  }
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/17732/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/57348/">
+                            某鱼直播软件使用unidbg算法分析
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            
+Unidbg 模拟执行 首先模拟执行，先搭个架子  
+123456789101112131415161718192021222324252627282930313233package com.douyu;import com.github.unid...
+                        
+                    </div>
+
+                    
+
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Mon Jan 09 2023 19:24:29 GMT+0800">2023-01-09 19:24:29</span>
+            </span>
+        
 
 
-  .tablet-post-toc-mask {
-    position fixed
-    top 0
-    right 0
-    z-index $z-index-10
-    box-sizing border-box
-    width 100%
-    height 100%
-    background rgba(0, 0, 0, 0)
-    visibility hidden
-    transition-t("visibility", "0", "0.2", "ease")
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">安卓逆向</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Unidbg/">Unidbg</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/57348/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/42662/">
+                            unidbg补获取系统属性
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            
+什么叫获取系统属性？Build类第一种 NDK中最常见的方式是通过JNI调用 ， 通过JNI调用JAVA方法获取本机的属性和信息，是最常见的做法，除了Build类，常见的还有 System.getProperty和Systemproperties....
+                        
+                    </div>
+
+                    
+
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Sun Sep 15 2024 02:23:16 GMT+0800">2024-09-15 02:23:16</span>
+            </span>
+        
 
 
-    .tablet-post-toc {
-      position absolute
-      top 0
-      left 0
-      box-sizing border-box
-      width 22rem
-      height 100%
-      padding 1.2rem 1rem
-      background var(--background-color-1)
-      transform translateX(-100%)
-      transition-t("transform", "0", "0.4", "ease")
+        
 
-      +keep-mobile() {
-        width 70%
-      }
-    }
-  }
-}
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Unidbg/">Unidbg</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/42662/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/48808/">
+                            unidbg踩坑记录，getobjectclass对象为null
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667...
+                        
+                    </div>
+
+                    
+
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Sun Sep 15 2024 02:23:16 GMT+0800">2024-09-15 02:23:16</span>
+            </span>
+        
+
+
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Unidbg/">Unidbg</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/48808/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/24643/">
+                            Unidbg操作说明
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            补环境的三条准则
+常规object，比如jstring，jarray使用Unidbg封装的API
+除此之外的jobject使用vm.resolveClass(className).newObject(object)，jclass使用vm.resolv...
+                        
+                    </div>
+
+                    
+
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Wed Oct 19 2022 00:00:00 GMT+0800">2022-10-19 00:00:00</span>
+            </span>
+        
+
+
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Unidbg/">Unidbg</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/24643/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/3538/">
+                            对称加解密算法RC4原理过程及实现
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            介绍RC4是一种流密码，可实现短密钥到长密钥的转换，流密码的加密就是比特的异或，为了安全性，关键就是密钥的生成，RC4就是解决密钥生成问题的。
+流密码结构：
+
+
+流密码类似于”一次一密”，不同的是”一次一密”使用的是真正的随机数流，而流密码使用的是伪...
+                        
+                    </div>
+
+                    
+
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Thu Sep 15 2022 00:00:00 GMT+0800">2022-09-15 00:00:00</span>
+            </span>
+        
+
+
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/3538/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                <div class="home-article-item-bottom border-box">
+                    
+                    <h3 class="home-article-title border-box">
+                        <a href="/posts/40655/">
+                            HMAC-MD5,HMAC-SHA1算法流程
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content keep-markdown-body">
+                        
+                            每种哈希函数的特征
+1.MD5初始化魔数：A &#x3D; 0x67452301;B &#x3D; 0xEFCDAB89;C &#x3D; 0x98BADCFE;D &#x3D; 0x10325476;K表K1 &#x3D; 0xd76aa478K2...
+                        
+                    </div>
+
+                    
+
+<div class="article-meta-info-container border-box home">
+    <div class="article-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fas fa-history"></i>&nbsp;<span class="home-article-history" data-updated="Wed Jul 06 2022 00:00:00 GMT+0800">2022-07-06 00:00:00</span>
+            </span>
+        
+
+
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/posts/40655/">阅读全文&nbsp;<i class="icon fas fa-angles-right"></i></a>
+    
+</div>
+
+                </div>
+            </li>
+        
+    </ul>
+    
+    <div class="paginator border-box flex-center">
+        <div class="btn-wrap allowed">
+            <a class="jump-btn"
+               href="/page/2/"
+            ><i class="fa-solid fa-chevron-left"></i></a>
+        </div>
+
+
+        <div class="page-number-box border-box flex-center">
+            <input class="page-number-input border-box base-color-size"
+                   type="number"
+                   value="3"
+                   min="1"
+                   max="5"
+            ><span class="delimiter base-color-size">/</span><span class="base-color-size">5</span>
+        </div>
+
+
+        <div class="btn-wrap allowed">
+            <a class="jump-btn"
+               href="/page/4/"
+            ><i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2025
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">147.1k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box side-tools-show-handle">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+</main>
+
+
 
 
 <!-- common -->

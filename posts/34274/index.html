@@ -42,124 +42,893 @@
 
 
 <body>
-.page-container {
-  width: 100%;
-  height: auto;
-  background: var(--background-color-1);
-}
-.page-container .page-main-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-  padding-top: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content.is-home .transparent-1 {
-  background: var(--header-transparent-background-1);
-  backdrop-filter: blur(4px);
-}
-.page-container .page-main-content.is-home .transparent-2 {
-  background: var(--header-transparent-background-2);
-  backdrop-filter: blur(5px);
-}
-.header-shrink .page-container .page-main-content {
-  padding-top: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-5;
-  box-sizing: border-box;
-  width: 100%;
-  height: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top.hide {
-  transform: translateY(-105%);
-}
-.header-shrink .page-container .page-main-content .page-main-content-top {
-  height: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: $component-spacing-value 0;
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle .main-content {
-  width: $main-content-width;
-  max-width: $content-max-width;
-  height: 100%;
-keep-tablet()
-keep-mobile()
-}
-.has-toc .page-container .page-main-content .page-main-content-middle .main-content {
-  max-width: $has-toc-content-max-width;
-}
-.page-container .page-main-content .page-main-content-bottom {
-  width: 100%;
-}
-.page-container .post-tools {
-  position: fixed;
-  top: calc(var(--header-height) + $component-spacing-value);
-  box-sizing: border-box;
-  opacity: 0;
-keep-tablet()
-}
-.page-container .post-tools.right-toc {
-  left: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.page-container .post-tools.left-toc {
-  right: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.header-shrink .page-container .post-tools {
-  top: calc(var(--header-shrink-height) + $component-spacing-value);
-}
-.page-container .side-tools {
-  position: fixed;
-  right: 0;
-  bottom: 1.6rem;
-  box-sizing: border-box;
-  padding-right: 1rem;
-keep-tablet()
-}
-.page-container .side-tools:hover .side-tools-container {
-  transform: translateX(0);
-  opacity: 1;
-}
-.page-container .tablet-post-toc-mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-10;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0);
-  visibility: hidden;
-}
-.page-container .tablet-post-toc-mask .tablet-post-toc {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  width: 22rem;
-  height: 100%;
-  padding: 1.2rem 1rem;
-  background: var(--background-color-1);
-  transform: translateX(-100%);
-keep-mobile()
-}
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        SHA1原理分析及流程
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2022-07-05 00:00:00</span>
+                <span class="mobile">2022-07-05 00:00</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Tue Jul 05 2022 00:00:00 GMT+0800">2022-07-05 00:00:00</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.9k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>14 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <h1 id="SHA1介绍"><a href="#SHA1介绍" class="headerlink" title="SHA1介绍"></a>SHA1介绍</h1><p>SHA实际上是一系列算法的统称，分别包括：SHA-1、SHA-224、SHA-256、SHA-384以及SHA-512。后面4中统称为SHA-2，事实上SHA-224是SHA-256的缩减版，SHA-384是SHA-512的缩减版。各中SHA算法的数据比较如下表，其中的长度单位均为位：</p>
+<table>
+<thead>
+<tr>
+<th><strong>类别</strong></th>
+<th><strong>MD5</strong></th>
+<th><strong>SHA-1</strong></th>
+<th><strong>SHA-224</strong></th>
+<th><strong>SHA-256</strong></th>
+<th><strong>SHA-384</strong></th>
+<th><strong>SHA-512</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>消息摘要长度</td>
+<td>128位(bit) 或 32字节</td>
+<td>160位(bit)或40字节</td>
+<td>224位(bit)或56字节</td>
+<td>256位(bit)或64字节</td>
+<td>384位(bit)或96字节</td>
+<td>512位(bit)或128字节</td>
+</tr>
+<tr>
+<td>消息长度</td>
+<td>&#x2F;</td>
+<td>小于264位</td>
+<td>小于264位</td>
+<td>小于264位</td>
+<td>小于2128位</td>
+<td>小于2128位</td>
+</tr>
+<tr>
+<td>分组长度</td>
+<td>512bit</td>
+<td>512bit</td>
+<td>512bit</td>
+<td>512bit</td>
+<td>1024bit</td>
+<td>1024bit</td>
+</tr>
+<tr>
+<td>计算字长度</td>
+<td>32bit</td>
+<td>32bit</td>
+<td>32bit</td>
+<td>32bit</td>
+<td>64bit</td>
+<td>64bit</td>
+</tr>
+<tr>
+<td>计算步骤数</td>
+<td>64</td>
+<td>80</td>
+<td>64</td>
+<td>64</td>
+<td>80</td>
+<td>80</td>
+</tr>
+</tbody></table>
+</br>
+
+<h1 id="SHA1哈希算法流程"><a href="#SHA1哈希算法流程" class="headerlink" title="SHA1哈希算法流程"></a>SHA1哈希算法流程</h1><h2 id="消息填充"><a href="#消息填充" class="headerlink" title="消息填充"></a>消息填充</h2><p>对于任意长度的明文，SHA1的明文分组过程与MD5相类似，首先需要对明文添加位数，使明文总长度为448（mod512）位。在明文后添加位的方法是第一个添加位是l，其余都是0。然后将真正明文的长度（没有添加位以前的明文长度）以64位表示，附加于前面已添加过位的明文后，此时的明文长度正好是512位的倍数。<br />M的长度 mod 512 &#x3D; R，考虑R（R为输入消息长度按512bit进行分组后，最后一组的长度）<br /> </p>
+<ol>
+<li>R &lt; 448，在最后一组的末尾填充1个“1”及若干个“0”，使最后一组的位数达到448位；再在这448位的基础上填充64位，这64位是M的原始长度的[二进制]</li>
+</ol>
+</br>
+
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/01.webp"
+                     
+                ></p>
+</br>
+
+<ol start="2">
+<li>R &gt;&#x3D; 448，在最后一组的末尾填充1个“1”及若干个“0”，使最后一组位数达到512；再新增一组，添加448个“0”和64位M的原始长度的二进制表示。</li>
+</ol>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/02.webp"
+                     
+                ></p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/03.webp"
+                     
+                ></p>
+</br>
+
+<h2 id="初始化模值"><a href="#初始化模值" class="headerlink" title="初始化模值"></a>初始化模值</h2><p>A&#x3D;0x67452301</br><br>B&#x3D;0xEFCDAB89</br><br>C&#x3D;0x98BADCFE</br><br>D&#x3D;0x10325476</br><br>E&#x3D;0xC3D2E1F0</br></br></p>
+<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><p>第一个512位分组进来后，以32位为一组，分别存储在W0 ，……，W15 中</br><br>之后还要将这16份子明文分组扩充到80份子明文分组，我们记为W[k]（k&#x3D; 0, 1,……79），扩充的方法如下。</br></br></p>
+<h2 id="分组扩展为80份"><a href="#分组扩展为80份" class="headerlink" title="分组扩展为80份"></a>分组扩展为80份</h2><p><em>Wt</em> &#x3D; Mt , 当0≤t≤15</br><br><em>Wt</em>&#x3D;(<em>Wt</em> −16 ⊕ <em>Wt</em> −14 ⊕ <em>Wt</em> −8 ⊕ <em>Wt</em> −3)&lt;&lt;&lt;1    (16≤t≤79)</br><br>“&lt;&lt;&lt;” 表示循环左移符号，上述中是循环左移1位。</p>
+</br>
+
+<h2 id="计算信息摘要"><a href="#计算信息摘要" class="headerlink" title="计算信息摘要"></a>计算信息摘要</h2><p>Kt (0≤t≤19) &#x3D; 0x5A827999</br><br>Kt (20≤t≤39) &#x3D; 0x6ED9EBA1</br><br>Kt (40≤t≤59) &#x3D; 0x0x8F188CDC</br><br>Kt (60≤t≤79) &#x3D; 0x0xCA62C1D6</br></br><br>4轮80步的计算中使用到的函数和固定常熟如下表所示：</br></p>
+<table>
+<thead>
+<tr>
+<th><strong>计算轮次</strong></th>
+<th><strong>计算的步数</strong></th>
+<th><strong>计算函数</strong></th>
+<th><strong>计算常数</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一轮</td>
+<td>0≤t≤19步</td>
+<td>ft(B,C,D)&#x3D;(B&amp;C)&amp;#124;(~B&amp;D)</td>
+<td>_K_t&#x3D;0x5A827999</td>
+</tr>
+<tr>
+<td>第二轮</td>
+<td>20≤t≤39步</td>
+<td>ft(B,C,D)&#x3D;B⊕C⊕D</td>
+<td>_K_t&#x3D;0x6ED9EBA1</td>
+</tr>
+<tr>
+<td>第三轮</td>
+<td>40≤t≤59步</td>
+<td>ft(B,C,D)&#x3D;(B&amp;C)&amp;#124;(B&amp;D)&amp;#124;(C&amp;D)</td>
+<td>_K_t&#x3D;0x8F188CDC</td>
+</tr>
+<tr>
+<td>第四轮</td>
+<td>60≤t≤79步</td>
+<td>ft(B,C,D)&#x3D;B⊕C⊕D</td>
+<td>_K_t&#x3D;0xCA62C1D6</td>
+</tr>
+</tbody></table>
+<p>（&amp;是与（And），|是或（Or），~是非（Not），^是异或（Xor））</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;</td>
+<td>与</td>
+<td>两个位都为1时，结果才为1</td>
+</tr>
+<tr>
+<td>|</td>
+<td>或</td>
+<td>两个位都为0时，结果才为0</td>
+</tr>
+<tr>
+<td>^</td>
+<td>异或</td>
+<td>两个位相同为0，相异为1</td>
+</tr>
+<tr>
+<td>~</td>
+<td>取反</td>
+<td>0变1，1变0</td>
+</tr>
+<tr>
+<td>&lt;&lt;&lt;</td>
+<td>循环左移</td>
+<td>将移出的低位放到该数的高位</td>
+</tr>
+</tbody></table>
+</br>
+
+<h2 id="链接变量与初始链接变量进行求和运算"><a href="#链接变量与初始链接变量进行求和运算" class="headerlink" title="链接变量与初始链接变量进行求和运算"></a>链接变量与初始链接变量进行求和运算</h2><p>SHA1有4轮运算，每一轮包括20个步骤，一共80步，最终产生160位的信息摘要，这160位的摘要存放在5个32位的链接变量中。</br><br>在SHA1的4论运算中，虽然进行的就具体操作函数不同，但逻辑过程却是一致的。首先，定义5个变量，假设为H0、H1、H2、H3、H4，对其分别进行如下操作：</br><br>（A）、将A左移5为与 函数的结果求和，再与对应的子明文分组、E以及计算常数求和后的结果赋予H0。</br><br>（B）、将A的值赋予H1。</br><br>（C）、将B左移30位，并赋予H2。</br><br>（D）、将C的值赋予H3。</br><br>（E）、将D的值赋予H4。</br><br>（F）、最后将H0、H1、H2、H3、H4的值分别赋予A、B、C、D</br></br><br>A &#x3D; H0 &#x3D; A&lt;&lt;&lt;5+ft(B,C,D)+E+Wt+Kt</br><br>B &#x3D; H1 &#x3D; A</br><br>C &#x3D; H2 &#x3D; B&lt;&lt;&lt;30</br><br>D &#x3D; H3 &#x3D; C</br><br>E &#x3D; H4 &#x3D; D</br><br>这一过程表示如下：</br><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/04.webp"
+                     
+                ></p>
+</br>
+
+<h2 id="加上初始化模值"><a href="#加上初始化模值" class="headerlink" title="加上初始化模值"></a>加上初始化模值</h2><p>a &#x3D; H0+A</br><br>b &#x3D; H1+B</br><br>c &#x3D; H2+C</br><br>d &#x3D; H3+D</br><br>e &#x3D; H4+E</br><br>result &#x3D; abcde</br><br>经过4论80步计算后得到的结果，再与各链接变量的初始值求和，就得到了我们最终的信息摘要。而对于有多个明文分组的，则将前面所得到的结果作为初始值进行下一明文分组的计算，最后一组的512位分组经过80轮的操作后，最终产生的</br><br>H0、H1、H2、H3、H4要加上一开始的A、B、C、D、E，及加完后最终的abcde即为消息M的hash值。</br><br></br></p>
+<h1 id="整个sha1加密简要过程如下："><a href="#整个sha1加密简要过程如下：" class="headerlink" title="整个sha1加密简要过程如下："></a>整个sha1加密简要过程如下：</h1><p>（1） 将512位的明文分组划分为16个子明文分组，每个子明文分组为32位。</br><br>（2） 申请5个32位的链接变量，记为A、B、C、D、E。</br><br>（3） 16份子明文分组扩展为80份。</br><br>（4） 80份子明文分组进行4轮运算。</br><br>（5） 链接变量与初始链接变量进行求和运算。</br><br>（6） 链接变量作为下一个明文分组的输入重复进行以上操作。</br><br>（7） 最后，5个链接变量要加上一开始的模值，最终级联起来的数据就是SHA1摘要。</br></p>
+</br>
+
+<h1 id="例子：对409732112进行sha1"><a href="#例子：对409732112进行sha1" class="headerlink" title="例子：对409732112进行sha1"></a>例子：对409732112进行sha1</h1><p>409732112&#x3D;&#x3D;&gt;ASCII   34 30 39 37 33 32 31 31 32<br />转为二进制就是 4*18 &#x3D; 72bit<br />34 &#x3D;&#x3D;&gt; 0011 0100<br />30 &#x3D;&#x3D;&gt; 0011 0000<br />39 &#x3D;&#x3D;&gt; 0011 1001<br />37 &#x3D;&#x3D;&gt; 0011 0111<br />33 &#x3D;&#x3D;&gt; 0011 0011<br />32 &#x3D;&#x3D;&gt; 0011 0010<br />31 &#x3D;&#x3D;&gt; 0011 0001<br />31 &#x3D;&#x3D;&gt; 0011 0001<br />32 &#x3D;&#x3D;&gt; 0011 0010<br />72bit填充1000….到448bit， 填充1个1和375个0<br /><br>0011 0100 0011 0000 0011 1001 0011 0111 0011 0011 0011 0010 0011 0001 0011 0001 0011 0010 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000<br /><br><br />对应16进制<br />34 30 39 37 33 32 31 31 32 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00<br />512bit - 448bit &#x3D; 64bit<br /><br />留的那64比特长度，用于填充长度信息，长度单位为比特<br />64bit附加长度信息 （就是明文对应16进制的长度）<br />00  …. 00 72（中间58个0, 明文72是十进制，需要转为十六进制）<br />明文72bit+填充（10…）376bit+长度信息（00 00 …48）64bit &#x3D; 512bit<br />34 30 39 37 33 32 31 31 32 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 48<br />512bit &#x2F; 4 &#x3D; 128位16进制<br />128分16组 &#x3D; 8位 （每组8位）<br />W0 &#x3D; 0x 34 30 39 37<br />W1 &#x3D; 0x 33 32 31 31 <br />W2 &#x3D; 0x 32 80 00 00 <br />W3 &#x3D; 0x 00 00 00 00<br />…<br />W14 &#x3D; 0x 00 00 00 00<br />W15 &#x3D; 0x 00 00 00 48 <br />扩展分组到80份<br /></p>
+<p><em>Wt</em>&#x3D;( <em>Wt</em> − 16 ⊕ <em>Wt</em> −14 ⊕ <em>Wt</em> −8 ⊕ <em>Wt</em> −3)&lt;&lt;1    (16≤_t_≤79)<br />这里手算前3个，最终80份程序生成<br />W16 &#x3D; (W0⊕W2⊕W8⊕W13)&lt;&lt;1<br />W17 &#x3D; (W1⊕W3⊕W9⊕W14)&lt;&lt;1<br />W18 &#x3D; (W2⊕W4⊕W10⊕W15)&lt;&lt;1</p>
+<p>W0 &#x3D; 0011 0100 0011 0000 0011 1001 0011 0111<br />W1 &#x3D; 0011 0011 0011 0010 0011 0001 0011 0001<br />W2 &#x3D; 0011 0010 1000 0000 0000 0000 0000 0000<br />W3&#x3D;0，W4&#x3D;0，W8&#x3D;0，W9&#x3D;0，W10&#x3D;0，W13&#x3D;0，W14 &#x3D; 0<br />W15&#x3D; 0000 0000 0000 0000 0000 0000 0100 1000<br />W16 &#x3D; (W0⊕W2)&lt;&lt;1&#x3D; 0000 1101 0110 0000 0111 0010 0110 1110 &#x3D; 0x 0D60726E<br />W17 &#x3D; W1&lt;&lt;1&#x3D; 0110 0110 0110 0100 0110 0010 0110 0010 &#x3D; 0x 66646262<br />W18 &#x3D; (W2⊕W15)&lt;&lt;1&#x3D; 0110 0101 0000 0000 0000 0000 1001 0000 &#x3D; 0x 65000090<br /></p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/05.webp"
+                     
+                ></p>
+<p>跟程序结果一致，下面直接输出结果<br />W0 &#x3D; 0x34303937<br />W1 &#x3D; 0x33323131<br />W2 &#x3D; 0x32800000<br />W3 &#x3D; 0x0<br />W4 &#x3D; 0x0<br />W5 &#x3D; 0x0<br />W6 &#x3D; 0x0<br />W7 &#x3D; 0x0<br />W8 &#x3D; 0x0<br />W9 &#x3D; 0x0<br />W10 &#x3D; 0x0<br />W11 &#x3D; 0x0<br />W12 &#x3D; 0x0<br />W13 &#x3D; 0x0<br />W14 &#x3D; 0x0<br />W15 &#x3D; 0x48<br />W16 &#x3D; 0xd60726e<br />W17 &#x3D; 0x66646262<br />W18 &#x3D; 0x65000090<br />W19 &#x3D; 0x1ac0e4dc<br />W20 &#x3D; 0xccc8c4c4<br />W21 &#x3D; 0xca000120<br />W22 &#x3D; 0x3581c9b8<br />W23 &#x3D; 0x99918919<br />W24 &#x3D; 0x8ec0e69d<br />W25 &#x3D; 0xa7cb57b4<br />W26 &#x3D; 0xf9231313<br />W27 &#x3D; 0x28000483<br />W28 &#x3D; 0xd60726e0<br />W29 &#x3D; 0x664624f6<br />W30 &#x3D; 0x21c37eaa<br />W31 &#x3D; 0x53e59ba6<br />W32 &#x3D; 0x1cd612b<br />W33 &#x3D; 0xf5595f41<br />W34 &#x3D; 0x61c99c2<br />W35 &#x3D; 0xf21b00a9<br />W36 &#x3D; 0xb42ee9bb<br />W37 &#x3D; 0x67966a1a<br />W38 &#x3D; 0xd132a24c<br />W39 &#x3D; 0xb3235961<br />W40 &#x3D; 0x2371fd7e<br />W41 &#x3D; 0x57415c75<br />W42 &#x3D; 0x3437eaa1<br />W43 &#x3D; 0x3e59bb45<br />W44 &#x3D; 0x2957db08<br />W45 &#x3D; 0xcc047fd6<br />W46 &#x3D; 0x9eca0d11<br />W47 &#x3D; 0x79908d1c<br />W48 &#x3D; 0xd148f483<br />W49 &#x3D; 0x9d921d19<br />W50 &#x3D; 0xff2a2f89<br />W51 &#x3D; 0xf5384aea<br />W52 &#x3D; 0xa3b31bcd<br />W53 &#x3D; 0xcf36c649<br />W54 &#x3D; 0x33623193<br />W55 &#x3D; 0x7c83278a<br />W56 &#x3D; 0x12704a2a<br />W57 &#x3D; 0x8fd19775<br />W58 &#x3D; 0x3d927355<br />W59 &#x3D; 0x2a2b88a6<br />W60 &#x3D; 0x37feb543<br />W61 &#x3D; 0x8e608fac<br />W62 &#x3D; 0xad96814e<br />W63 &#x3D; 0x5efe0599<br />W64 &#x3D; 0x64e43d19<br />W65 &#x3D; 0x95da8390<br />W66 &#x3D; 0x7fea8510<br />W67 &#x3D; 0xe9827238<br />W68 &#x3D; 0x65ea391a<br />W69 &#x3D; 0x847fd6fe<br />W70 &#x3D; 0xca0d119e<br />W71 &#x3D; 0x908d18f9<br />W72 &#x3D; 0x9ef3a531<br />W73 &#x3D; 0xf45b1bbb<br />W74 &#x3D; 0xca16b7ff<br />W75 &#x3D; 0xa675a007<br />W76 &#x3D; 0x17b22d58<br />W77 &#x3D; 0x3defd669<br />W78 &#x3D; 0x4a141b9d<br />W79 &#x3D; 0x98376750</p>
+<p>80轮运算<br />A &#x3D; 0x67452301 &#x3D; 0110 0111 0100 0101 0010 0011 0000 0001<br />B &#x3D; 0xEFCDAB89 &#x3D; 1110 1111 1100 1101 1010 1011 1000 1001<br />C &#x3D; 0x98BADCFE &#x3D; 1001 1000 1011 1010 1101 1100 1111 1110<br />D &#x3D; 0x10325476 &#x3D; 0001 0000 0011 0010 0101 0100 0111 0110<br />E &#x3D; 0xC3D2E1F0 &#x3D; 1100 0011 1101 0010 1110 0001 1111 0000</p>
+<table>
+<thead>
+<tr>
+<th><strong>计算轮次</strong></th>
+<th><strong>计算的步数</strong></th>
+<th><strong>计算函数</strong></th>
+<th><strong>计算常数</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一轮</td>
+<td>0≤t≤19步</td>
+<td>ft(B,C,D)&#x3D;(B&amp;C)&amp;#124;(~B&amp;D)</td>
+<td>_K_t&#x3D;0x5A827999</td>
+</tr>
+<tr>
+<td>第二轮</td>
+<td>20≤t≤39步</td>
+<td>ft(B,C,D)&#x3D;B⊕C⊕D</td>
+<td>_K_t&#x3D;0x6ED9EBA1</td>
+</tr>
+<tr>
+<td>第三轮</td>
+<td>40≤t≤59步</td>
+<td>ft(B,C,D)&#x3D;(B&amp;C)&amp;#124;(B&amp;D)&amp;#124;(C&amp;D)</td>
+<td>_K_t&#x3D;0x8F188CDC</td>
+</tr>
+<tr>
+<td>第四轮</td>
+<td>60≤t≤79步</td>
+<td>ft(B,C,D)&#x3D;B⊕C⊕D</td>
+<td>_K_t&#x3D;0xCA62C1D6</td>
+</tr>
+</tbody></table>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20220705/06.webp"
+                     
+                ><br><br />第一轮第一步<br />A&lt;&lt;&lt;5 &#x3D;&#x3D;&gt; 1110 1000 1010 0100 0110 0000 0010 1100<br />B&amp;C &#x3D; 1000 1000 1000 1000 1000 1000 1000 1000<br /><del>B&amp;D&#x3D; 0001 0000 0011 0010 0101 0100 0111 0110<br />ft(B,C,D) &#x3D; (B&amp;C)|(</del>B&amp;D) &#x3D; 1001 1000 1011 1010 1101 1100 1111 1110<br />H0 &#x3D; 0x2D3E4D1EA（保留末8位）&#x3D; 0x D3E4D1EA<br />H1 &#x3D; 0x67452301<br />H2 &#x3D; 0x7BF36AE2<br />H3 &#x3D; 0x98BADCFE<br />H4 &#x3D; 0x10325476<br />把H0-H4重新赋值给A,B,C,D,E<br />A &#x3D; H0<br />B &#x3D; H1<br />C &#x3D; H2<br />D &#x3D; H3<br />E &#x3D; H4<br />…<br />第80轮<br />A &#x3D; 0x135B4514 &#x3D; 0001 0011 0101 1011 0100 0101 0001 0100<br />B &#x3D; 0xCE03E912 &#x3D; 1100 1110 0000 0011 1110 1001 0001 0010<br />C &#x3D; 0xD50D5F9A &#x3D; 1101 0101 0000 1101 0101 1111 1001 1010<br />D &#x3D; 0xD940C253 &#x3D; 1101 1001 0100 0000 1100 0010 0101 0011<br />E &#x3D; 0x36F72811 &#x3D; 0011 0110 1111 0111 0010 1000 0001 0001</p>
+<p>A&lt;&lt;&lt;5 &#x3D; 0110 1011 0110 1000 1010 0010 1000 0010<br />ft(B,C,D)&#x3D;B⊕C⊕D &#x3D; 1100 0010 0100 1110 0111 0100 1101 1011<br />W79 &#x3D; 0x98376750<br />K79 &#x3D; 0xCA62C1D6<br />H0 &#x3D; 0xC7486894<br />H1 &#x3D;  0x135B4514<br />H2 &#x3D; 1011 0011 1000 0000 1111 1010 0100 0100 &#x3D; 0xB380FA44<br />H3 &#x3D; 0xD50D5F9A<br />H4 &#x3D; 0xD940C253 </p>
+<p>最后的H0-H4要加上一开始的模值<br />a &#x3D; H0+A &#x3D; 0x2E8D8B95<br />b &#x3D; H1+B &#x3D;0x0328F09D<br />c &#x3D; H2+C &#x3D; 0x4C3BD742<br />d &#x3D; H3+D &#x3D; 0xE53FB410<br />e &#x3D; H4+E &#x3D; 0x9D13A443<br />abcde &#x3D; 2E8D8B950328F09D4C3BD742E53FB4109D13A443<br />              2e8d8b950328f09d4c3bd742e53fb4109d13a443<br />结果一致</p>
+<h3 id="python实现sha1"><a href="#python实现sha1" class="headerlink" title="python实现sha1"></a>python实现sha1</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 0xffffffff is used to make sure numbers dont go over 32</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">chunks</span>(<span class="params">messageLength, chunkSize</span>):</span><br><span class="line">    chunkValues = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(messageLength), chunkSize):</span><br><span class="line">        chunkValues.append(messageLength[i:i + chunkSize])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> chunkValues</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">leftRotate</span>(<span class="params">chunk, rotateLength</span>):</span><br><span class="line">    <span class="keyword">return</span> ((chunk &lt;&lt; rotateLength) | (chunk &gt;&gt; (<span class="number">32</span> - rotateLength))) &amp; <span class="number">0xffffffff</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sha1Function</span>(<span class="params">message</span>):</span><br><span class="line">    <span class="comment"># initial hash values</span></span><br><span class="line">    h0 = <span class="number">0x67452301</span></span><br><span class="line">    h1 = <span class="number">0xEFCDAB89</span></span><br><span class="line">    h2 = <span class="number">0x98BADCFE</span></span><br><span class="line">    h3 = <span class="number">0x10325476</span></span><br><span class="line">    h4 = <span class="number">0xC3D2E1F0</span></span><br><span class="line"></span><br><span class="line">    messageLength = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># preprocessing</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(message)):</span><br><span class="line">        messageLength += <span class="string">&#x27;&#123;0:08b&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">ord</span>(message[char]))</span><br><span class="line"></span><br><span class="line">    temp = messageLength</span><br><span class="line">    messageLength += <span class="string">&#x27;1&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">len</span>(messageLength) % <span class="number">512</span> != <span class="number">448</span>):</span><br><span class="line">        messageLength += <span class="string">&#x27;0&#x27;</span></span><br><span class="line"></span><br><span class="line">    messageLength += <span class="string">&#x27;&#123;0:064b&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">len</span>(temp))</span><br><span class="line">    chunk = chunks(messageLength, <span class="number">512</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> eachChunk <span class="keyword">in</span> chunk:</span><br><span class="line">        words = chunks(eachChunk, <span class="number">32</span>)</span><br><span class="line">        w = [<span class="number">0</span>] * <span class="number">80</span></span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">16</span>):</span><br><span class="line">            w[n] = <span class="built_in">int</span>(words[n], <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>, <span class="number">80</span>):</span><br><span class="line">            <span class="comment"># sha1</span></span><br><span class="line">            w[i] = leftRotate((w[i - <span class="number">3</span>] ^ w[i - <span class="number">8</span>] ^ w[i - <span class="number">14</span>] ^ w[i - <span class="number">16</span>]), <span class="number">1</span>)</span><br><span class="line">            <span class="comment"># sha0</span></span><br><span class="line">            <span class="comment"># w[i] = (w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16])</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># Initialize hash value for this chunk:</span></span><br><span class="line">        a = h0</span><br><span class="line">        b = h1</span><br><span class="line">        c = h2</span><br><span class="line">        d = h3</span><br><span class="line">        e = h4</span><br><span class="line"></span><br><span class="line">        <span class="comment"># main loop:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">80</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="number">0</span> &lt;= i &lt;= <span class="number">19</span>:</span><br><span class="line">                f = (b &amp; c) | ((~b) &amp; d)</span><br><span class="line">                k = <span class="number">0x5A827999</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> <span class="number">20</span> &lt;= i &lt;= <span class="number">39</span>:</span><br><span class="line">                f = b ^ c ^ d</span><br><span class="line">                k = <span class="number">0x6ED9EBA1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> <span class="number">40</span> &lt;= i &lt;= <span class="number">59</span>:</span><br><span class="line">                f = (b &amp; c) | (b &amp; d) | (c &amp; d)</span><br><span class="line">                k = <span class="number">0x8F1BBCDC</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> <span class="number">60</span> &lt;= i &lt;= <span class="number">79</span>:</span><br><span class="line">                f = b ^ c ^ d</span><br><span class="line">                k = <span class="number">0xCA62C1D6</span></span><br><span class="line"></span><br><span class="line">            a, b, c, d, e = ((leftRotate(a, <span class="number">5</span>) + f + e + k + w[i]) &amp; <span class="number">0xffffffff</span>, a, leftRotate(b, <span class="number">30</span>), c, d)</span><br><span class="line"></span><br><span class="line">        h0 = h0 + a &amp; <span class="number">0xffffffff</span></span><br><span class="line">        h1 = h1 + b &amp; <span class="number">0xffffffff</span></span><br><span class="line">        h2 = h2 + c &amp; <span class="number">0xffffffff</span></span><br><span class="line">        h3 = h3 + d &amp; <span class="number">0xffffffff</span></span><br><span class="line">        h4 = h4 + e &amp; <span class="number">0xffffffff</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;%08x%08x%08x%08x%08x&#x27;</span> % (h0, h1, h2, h3, h4)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    plainText = <span class="string">&quot;409732112&quot;</span></span><br><span class="line">    sha1Hash = sha1Function(plainText)</span><br><span class="line">    <span class="built_in">print</span>(sha1Hash)</span><br></pre></td></tr></table></figure>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                SHA1原理分析及流程
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/34274/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2022-07-05 00:00</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/40655/"
+                                   title="HMAC-MD5,HMAC-SHA1算法流程"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">HMAC-MD5,HMAC-SHA1算法流程</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/14604/"
+                                   title="MD5源码分析及流程"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">MD5源码分析及流程</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SHA1%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">SHA1介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SHA1%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">SHA1哈希算法流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%A1%AB%E5%85%85"><span class="nav-number">2.1.</span> <span class="nav-text">消息填充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A8%A1%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">初始化模值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84"><span class="nav-number">2.3.</span> <span class="nav-text">分组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%89%A9%E5%B1%95%E4%B8%BA80%E4%BB%BD"><span class="nav-number">2.4.</span> <span class="nav-text">分组扩展为80份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E4%BF%A1%E6%81%AF%E6%91%98%E8%A6%81"><span class="nav-number">2.5.</span> <span class="nav-text">计算信息摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E5%8F%98%E9%87%8F%E4%B8%8E%E5%88%9D%E5%A7%8B%E9%93%BE%E6%8E%A5%E5%8F%98%E9%87%8F%E8%BF%9B%E8%A1%8C%E6%B1%82%E5%92%8C%E8%BF%90%E7%AE%97"><span class="nav-number">2.6.</span> <span class="nav-text">链接变量与初始链接变量进行求和运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E4%B8%8A%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A8%A1%E5%80%BC"><span class="nav-number">2.7.</span> <span class="nav-text">加上初始化模值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B4%E4%B8%AAsha1%E5%8A%A0%E5%AF%86%E7%AE%80%E8%A6%81%E8%BF%87%E7%A8%8B%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">整个sha1加密简要过程如下：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90%EF%BC%9A%E5%AF%B9409732112%E8%BF%9B%E8%A1%8Csha1"><span class="nav-number">4.</span> <span class="nav-text">例子：对409732112进行sha1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python%E5%AE%9E%E7%8E%B0sha1"><span class="nav-number">4.0.1.</span> <span class="nav-text">python实现sha1</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2025
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">147.1k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SHA1%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">SHA1介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SHA1%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">SHA1哈希算法流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%A1%AB%E5%85%85"><span class="nav-number">2.1.</span> <span class="nav-text">消息填充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A8%A1%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">初始化模值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84"><span class="nav-number">2.3.</span> <span class="nav-text">分组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%89%A9%E5%B1%95%E4%B8%BA80%E4%BB%BD"><span class="nav-number">2.4.</span> <span class="nav-text">分组扩展为80份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E4%BF%A1%E6%81%AF%E6%91%98%E8%A6%81"><span class="nav-number">2.5.</span> <span class="nav-text">计算信息摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E5%8F%98%E9%87%8F%E4%B8%8E%E5%88%9D%E5%A7%8B%E9%93%BE%E6%8E%A5%E5%8F%98%E9%87%8F%E8%BF%9B%E8%A1%8C%E6%B1%82%E5%92%8C%E8%BF%90%E7%AE%97"><span class="nav-number">2.6.</span> <span class="nav-text">链接变量与初始链接变量进行求和运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E4%B8%8A%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A8%A1%E5%80%BC"><span class="nav-number">2.7.</span> <span class="nav-text">加上初始化模值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B4%E4%B8%AAsha1%E5%8A%A0%E5%AF%86%E7%AE%80%E8%A6%81%E8%BF%87%E7%A8%8B%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">整个sha1加密简要过程如下：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90%EF%BC%9A%E5%AF%B9409732112%E8%BF%9B%E8%A1%8Csha1"><span class="nav-number">4.</span> <span class="nav-text">例子：对409732112进行sha1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python%E5%AE%9E%E7%8E%B0sha1"><span class="nav-number">4.0.1.</span> <span class="nav-text">python实现sha1</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
 
 <!-- common -->
 <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>

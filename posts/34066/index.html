@@ -42,124 +42,865 @@
 
 
 <body>
-.page-container {
-  width: 100%;
-  height: auto;
-  background: var(--background-color-1);
-}
-.page-container .page-main-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-  padding-top: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content.is-home .transparent-1 {
-  background: var(--header-transparent-background-1);
-  backdrop-filter: blur(4px);
-}
-.page-container .page-main-content.is-home .transparent-2 {
-  background: var(--header-transparent-background-2);
-  backdrop-filter: blur(5px);
-}
-.header-shrink .page-container .page-main-content {
-  padding-top: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-5;
-  box-sizing: border-box;
-  width: 100%;
-  height: var(--header-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-top.hide {
-  transform: translateY(-105%);
-}
-.header-shrink .page-container .page-main-content .page-main-content-top {
-  height: var(--header-shrink-height);
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: $component-spacing-value 0;
-keep-tablet()
-keep-mobile()
-}
-.page-container .page-main-content .page-main-content-middle .main-content {
-  width: $main-content-width;
-  max-width: $content-max-width;
-  height: 100%;
-keep-tablet()
-keep-mobile()
-}
-.has-toc .page-container .page-main-content .page-main-content-middle .main-content {
-  max-width: $has-toc-content-max-width;
-}
-.page-container .page-main-content .page-main-content-bottom {
-  width: 100%;
-}
-.page-container .post-tools {
-  position: fixed;
-  top: calc(var(--header-height) + $component-spacing-value);
-  box-sizing: border-box;
-  opacity: 0;
-keep-tablet()
-}
-.page-container .post-tools.right-toc {
-  left: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.page-container .post-tools.left-toc {
-  right: calc((100vw - $content-max-width / 2) - 5rem);
-}
-.header-shrink .page-container .post-tools {
-  top: calc(var(--header-shrink-height) + $component-spacing-value);
-}
-.page-container .side-tools {
-  position: fixed;
-  right: 0;
-  bottom: 1.6rem;
-  box-sizing: border-box;
-  padding-right: 1rem;
-keep-tablet()
-}
-.page-container .side-tools:hover .side-tools-container {
-  transform: translateX(0);
-  opacity: 1;
-}
-.page-container .tablet-post-toc-mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: $z-index-10;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0);
-  visibility: hidden;
-}
-.page-container .tablet-post-toc-mask .tablet-post-toc {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  width: 22rem;
-  height: 100%;
-  padding: 1.2rem 1rem;
-  background: var(--background-color-1);
-  transform: translateX(-100%);
-keep-mobile()
-}
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        某乎x-zse-96逆向
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2025-03-08 01:12:35</span>
+                <span class="mobile">2025-03-08 01:12</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Sat Mar 08 2025 01:29:54 GMT+0800">2025-03-08 01:29:54</span>
+            </span>
+        
+
+        
+
+        
+            <span class="article-tag meta-info-item border-box">
+                <i class="icon fas fa-tags"></i>&nbsp;
+                <ul>
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">安卓逆向</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Unidbg/">Unidbg</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>3.6k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>19 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <p>app的版本是 10.37.0</p>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p>抓包啥的没啥好说的，参数定位直接jadx搜索，很快定位到，直接上图最终调用so加密的函数</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/01.png"
+                      alt="01"
+                ></p>
+<p>该app有frida检测，怎么绕过看上一篇<a href="https://www.zskkk.cn/posts/45698/">绕过libmsaoaidsec.so的Frida检测</a></p>
+<p>从函数看加密跟aes相关，但其实魔改了多很，其中<code>laesEncryptByteArr</code>的三个参数，bArr是明文，str可以理解为扩展后的key，bArr2是iv，str和bArr2都是固定的</p>
+<h2 id="unidng分析"><a href="#unidng分析" class="headerlink" title="unidng分析"></a>unidng分析</h2><p>直接搭起框架，函数调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zhihu;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.AndroidEmulator;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.Module;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidEmulatorBuilder;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.AndroidResolver;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.AbstractJni;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.DalvikModule;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.StringObject;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.VM;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.linux.android.dvm.array.ByteArray;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.memory.Memory;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.virtualmodule.android.AndroidModule;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.virtualmodule.android.JniGraphics;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.virtualmodule.android.MediaNdkModule;</span><br><span class="line"><span class="keyword">import</span> com.github.unidbg.virtualmodule.android.SystemProperties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by zsk</span></span><br><span class="line"><span class="comment"> * on 2025/03/06 02:00</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">encrypt</span> <span class="keyword">extends</span> <span class="title class_">AbstractJni</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AndroidEmulator emulator;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> VM vm;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Module <span class="keyword">module</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">encrypt</span><span class="params">()</span> &#123;</span><br><span class="line">        emulator = AndroidEmulatorBuilder.for64Bit().setProcessName(<span class="string">&quot;com.zhihu.android&quot;</span>).build(); <span class="comment">// 创建模拟器实例，要模拟32位或者64位，在这里区分</span></span><br><span class="line">        <span class="comment">// 模拟器的内存操作接口</span></span><br><span class="line">        <span class="keyword">final</span> <span class="type">Memory</span> <span class="variable">memory</span> <span class="operator">=</span> emulator.getMemory();</span><br><span class="line">        <span class="comment">// 设置系统类库解析</span></span><br><span class="line">        memory.setLibraryResolver(<span class="keyword">new</span> <span class="title class_">AndroidResolver</span>(<span class="number">23</span>));</span><br><span class="line">        <span class="comment">// 创建Android虚拟机</span></span><br><span class="line">        vm = emulator.createDalvikVM(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;unidbg-android/src/test/resources/zhihu/zhihu10.37.0.apk&quot;</span>));</span><br><span class="line">        <span class="comment">// 设置JNI</span></span><br><span class="line">        vm.setJni(<span class="built_in">this</span>);</span><br><span class="line">        <span class="comment">// 打印日志</span></span><br><span class="line">        vm.setVerbose(<span class="literal">true</span>);</span><br><span class="line">        <span class="comment">// 加载基本库</span></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">AndroidModule</span>(emulator, vm).register(memory);</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">MediaNdkModule</span>(emulator, vm).register(memory);</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">JniGraphics</span>(emulator, vm).register(memory);</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">SystemProperties</span>(emulator, <span class="literal">null</span>).register(memory);</span><br><span class="line">        <span class="comment">// 加载so到虚拟内存</span></span><br><span class="line">        <span class="type">DalvikModule</span> <span class="variable">dm</span> <span class="operator">=</span> vm.loadLibrary(<span class="string">&quot;bangcle_crypto_tool&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">module</span> = dm.getModule();</span><br><span class="line"></span><br><span class="line">        dm.callJNI_OnLoad(emulator);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">bytesToHex</span><span class="params">(<span class="type">byte</span>[] bytes)</span> &#123;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">hexString</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">byte</span> b : bytes) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">hex</span> <span class="operator">=</span> Integer.toHexString(b &amp; <span class="number">0xFF</span>);</span><br><span class="line">            <span class="keyword">if</span> (hex.length() == <span class="number">1</span>) &#123;</span><br><span class="line">                hexString.append(<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            hexString.append(hex);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> hexString.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">callAesEncryptByteArr</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// args list</span></span><br><span class="line">        List&lt;Object&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(<span class="number">10</span>);</span><br><span class="line">        <span class="comment">// jnienv</span></span><br><span class="line">        list.add(vm.getJNIEnv());</span><br><span class="line">        <span class="comment">// jclazz</span></span><br><span class="line">        list.add(<span class="number">0</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// hex 8b8d8089212822818d23298d23298180218229882280238883808a2a2a238082</span></span><br><span class="line">        <span class="type">byte</span>[] input = &#123;-<span class="number">117</span>, -<span class="number">115</span>, -<span class="number">128</span>, -<span class="number">119</span>, <span class="number">33</span>, <span class="number">40</span>, <span class="number">34</span>, -<span class="number">127</span>, -<span class="number">115</span>, <span class="number">35</span>, <span class="number">41</span>, -<span class="number">115</span>, <span class="number">35</span>, <span class="number">41</span>, -<span class="number">127</span>, -<span class="number">128</span>, <span class="number">33</span>, -<span class="number">126</span>, <span class="number">41</span>, -<span class="number">120</span>, <span class="number">34</span>, -<span class="number">128</span>, <span class="number">35</span>, -<span class="number">120</span>, -<span class="number">125</span>, -<span class="number">128</span>, -<span class="number">118</span>, <span class="number">42</span>, <span class="number">42</span>, <span class="number">35</span>, -<span class="number">128</span>, -<span class="number">126</span>&#125;;</span><br><span class="line">        <span class="comment">// hex 99303a3a32343a3992923a3b3a999292</span></span><br><span class="line">        <span class="type">byte</span>[] iv = &#123;-<span class="number">103</span>, <span class="number">48</span>, <span class="number">58</span>, <span class="number">58</span>, <span class="number">50</span>, <span class="number">52</span>, <span class="number">58</span>, <span class="number">57</span>, -<span class="number">110</span>, -<span class="number">110</span>, <span class="number">58</span>, <span class="number">59</span>, <span class="number">58</span>, -<span class="number">103</span>, -<span class="number">110</span>, -<span class="number">110</span>&#125;;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> <span class="string">&quot;541a3a5896fbefd351917c8251328a236a7efbf27d0fad8283ef59ef07aa386dbb2b1fcbba167135d575877ba0205a02f0aac2d31957bc7f028ed5888d4bbe69ed6768efc15ab703dc0f406b301845a0a64cf3c427c82870053bd7ba6721649c3a9aca8c3c31710a6be5ce71e4686842732d9314d6898cc3fdca075db46d1ccf3a7f9b20615f4a303c5235bd02c5cdc791eb123b9d9f7e72e954de3bcbf7d314064a1eced78d13679d040dd4080640d18c37bbde&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">ByteArray</span> <span class="variable">arr1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArray</span>(vm, input);</span><br><span class="line">        <span class="type">ByteArray</span> <span class="variable">arr2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArray</span>(vm, iv);</span><br><span class="line"></span><br><span class="line">        list.add(vm.addLocalObject(arr1));</span><br><span class="line">        list.add(vm.addLocalObject(<span class="keyword">new</span> <span class="title class_">StringObject</span>(vm, key)));</span><br><span class="line">        list.add(vm.addLocalObject(arr2));</span><br><span class="line"></span><br><span class="line">        <span class="type">Number</span> <span class="variable">number</span> <span class="operator">=</span> <span class="keyword">module</span>.callFunction(emulator, <span class="number">0x9e98</span>, list.toArray());</span><br><span class="line">        <span class="type">ByteArray</span> <span class="variable">resultArr</span> <span class="operator">=</span> vm.getObject(number.intValue());</span><br><span class="line">        System.out.println(<span class="string">&quot;result: &quot;</span> + bytesToHex(resultArr.getValue()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">encrypt</span> <span class="variable">e</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">encrypt</span>();</span><br><span class="line">        e.callAesEncryptByteArr();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行报错了，该问题内存未分配，调用free释放内存导致的问题</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/02.png"
+                      alt="02"
+                ></p>
+<p>这里可以直接在调用free的地方patch掉，不执行free就可以了</p>
+<p>把traceCode开启，看报错的位置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emulator.traceCode(<span class="keyword">module</span>.base, <span class="keyword">module</span>.base + <span class="keyword">module</span>.size);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">00</span>:<span class="number">19</span>:<span class="number">30</span> <span class="number">167</span>][libbangcle_crypto_tool.so <span class="number">0x048c8</span>] [a01740f9] <span class="number">0x120048c8</span>: <span class="string">&quot;ldr x0, [x29, #0x28]&quot;</span> x29=<span class="number">0xe4fff5b0</span> =&gt; x0=<span class="number">0x12052000</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">19</span>:<span class="number">30</span> <span class="number">168</span>][libbangcle_crypto_tool.so <span class="number">0x048cc</span>] [1f001feb] <span class="number">0x120048cc</span>: <span class="string">&quot;cmp x0, xzr&quot;</span> =&gt; nzcv: N=<span class="number">0</span>, Z=<span class="number">0</span>, C=<span class="number">1</span>, V=<span class="number">0</span> x0=<span class="number">0x12052000</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">19</span>:<span class="number">30</span> <span class="number">168</span>][libbangcle_crypto_tool.so <span class="number">0x048d0</span>] [<span class="number">20010054</span>] <span class="number">0x120048d0</span>: <span class="string">&quot;b.eq #0x120048f4&quot;</span> nzcv: N=<span class="number">0</span>, Z=<span class="number">0</span>, C=<span class="number">1</span>, V=<span class="number">0</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">19</span>:<span class="number">30</span> <span class="number">169</span>][libbangcle_crypto_tool.so <span class="number">0x048d4</span>] [a01740f9] <span class="number">0x120048d4</span>: <span class="string">&quot;ldr x0, [x29, #0x28]&quot;</span> x29=<span class="number">0xe4fff5b0</span> =&gt; x0=<span class="number">0x12052000</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">19</span>:<span class="number">30</span> <span class="number">169</span>][libbangcle_crypto_tool.so <span class="number">0x048d8</span>] [52f6ff97] <span class="number">0x120048d8</span>: <span class="string">&quot;bl #0x12002220&quot;</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">19</span>:<span class="number">30</span> <span class="number">177</span>][libbangcle_crypto_tool.so <span class="number">0x02220</span>] [f00000b0] <span class="number">0x12002220</span>: <span class="string">&quot;adrp x16, #0x1201f000&quot;</span> =&gt; x16=<span class="number">0x1201f000</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">19</span>:<span class="number">30</span> <span class="number">179</span>][libbangcle_crypto_tool.so <span class="number">0x02224</span>] [11ba47f9] <span class="number">0x12002224</span>: <span class="string">&quot;ldr x17, [x16, #0xf70]&quot;</span> x16=<span class="number">0x1201f000</span> =&gt; x17=<span class="number">0x1218bac0</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">19</span>:<span class="number">30</span> <span class="number">182</span>][libbangcle_crypto_tool.so <span class="number">0x02228</span>] [10c23d91] <span class="number">0x12002228</span>: <span class="string">&quot;add x16, x16, #0xf70&quot;</span> x16=<span class="number">0x1201f000</span> =&gt; x16=<span class="number">0x1201ff70</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">19</span>:<span class="number">30</span> <span class="number">184</span>][libbangcle_crypto_tool.so <span class="number">0x0222c</span>] [20021fd6] <span class="number">0x1200222c</span>: <span class="string">&quot;br x17&quot;</span> x17=0x1218bac0Invalid address <span class="number">0x12052000</span> passed to free: value not allocated</span><br><span class="line">[crash]A/libc: Invalid address <span class="number">0x12052000</span> passed to free: value not allocated</span><br></pre></td></tr></table></figure>
+
+<p>程序是在0x0222c这个位置奔溃的，ida调到对应位置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">free</span><span class="params">(<span class="type">void</span> *p)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">free</span>(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>free函数，可以往上一点调到调用它的位置，0x048d8，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __fastcall <span class="title function_">check_package_name</span><span class="params">(__int64 a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> *pkgname; <span class="comment">// [xsp+28h] [xbp+28h]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( aComZhihuAndroi[<span class="number">0</span>] )</span><br><span class="line">  &#123;</span><br><span class="line">    pkgname = get_pkgname(a1);</span><br><span class="line">    <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(aComZhihuAndroi, pkgname) )</span><br><span class="line">      dword_20024 = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> ( pkgname )</span><br><span class="line">      <span class="built_in">free</span>(pkgname);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    dword_20024 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接在 0x48d8 调转到free那里把指令改为npo，就不会执行了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">patch</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> (<span class="type">Keystone</span> <span class="variable">keystone</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Keystone</span>(KeystoneArchitecture.Arm64, KeystoneMode.LittleEndian);) &#123;</span><br><span class="line">        <span class="type">KeystoneEncoded</span> <span class="variable">encoded</span> <span class="operator">=</span> keystone.assemble(<span class="string">&quot;nop&quot;</span>);</span><br><span class="line">        <span class="type">byte</span>[] patchCode = encoded.getMachineCode();</span><br><span class="line">        emulator.getMemory().pointer(<span class="keyword">module</span>.base + <span class="number">0x48d8</span>).write(patchCode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很顺利不用补环境直接跑出来了结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result: 0f02c75267dd7becc6b32f941837721f6f89610d4c49c3b5a8ddd649767e953de0a02e505b8e684fb5654137c266f12e</span><br></pre></td></tr></table></figure>
+
+
+<p>开始ida分析函数</p>
+<h2 id="ida分析"><a href="#ida分析" class="headerlink" title="ida分析"></a>ida分析</h2><p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/03.png"
+                      alt="03"
+                ></p>
+<p>整个函数看下来，只有 sub_8B2C 这个函数最可疑跟进查看</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/04.png"
+                      alt="04"
+                ></p>
+<p>好多aes加密相关的函数，怎么判断程序调用了哪个</p>
+<p><font style="color:rgb(51, 51, 51);">记录函数对内存的访问以及发起访问的地址（PC指针），绘制成折线图，可以看函数的调用情况</font></p>
+<p><font style="color:rgb(51, 51, 51);">使用Unidbg的ReadHook，监控这个函数的地址范围</font></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">traceAESRead</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">ReadHook</span> <span class="variable">readHook</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReadHook</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hook</span><span class="params">(Backend backend, <span class="type">long</span> address, <span class="type">int</span> size, Object user)</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">now</span> <span class="operator">=</span> emulator.getBackend().reg_read(Arm64Const.UC_ARM64_REG_PC).intValue();</span><br><span class="line">            <span class="keyword">if</span>((now &gt; <span class="keyword">module</span>.base) &amp; (now &lt; (<span class="keyword">module</span>.base + <span class="keyword">module</span>.size)))&#123;</span><br><span class="line">                System.out.println(now - <span class="keyword">module</span>.base);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onAttach</span><span class="params">(UnHook unHook)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">detach</span><span class="params">()</span> &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    emulator.getBackend().hook_add_new(readHook, <span class="keyword">module</span>.base+<span class="number">0x8b2c</span>, <span class="keyword">module</span>.base+<span class="keyword">module</span>.size+<span class="number">0x9080</span>, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>trade函数放在调用函数前执行，将打印出来的地址放到一个文件里，用python执行</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/05.png"
+                      alt="05"
+                ></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"></span><br><span class="line"><span class="built_in">input</span> = numpy.loadtxt(<span class="string">&quot;trace.txt&quot;</span>, <span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(<span class="built_in">range</span>(<span class="built_in">len</span>(<span class="built_in">input</span>)), <span class="built_in">input</span>)</span><br><span class="line"><span class="comment"># 限制Y</span></span><br><span class="line">plt.ylim(<span class="number">23500</span>,<span class="number">29000</span>)</span><br><span class="line">plt.plot(<span class="built_in">range</span>(<span class="built_in">len</span>(<span class="built_in">input</span>)), <span class="built_in">input</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/06.png"
+                      alt="06"
+                ></p>
+<p>三次分组，每次分组执行都一样10轮调用，跳到24000即 0x5dc0 的位置</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/07.png"
+                      alt="07"
+                ></p>
+<p>调用的函数是 Bangcle_WB_LAES_encrypt ，这里就是aes的加密逻辑了，查找引用看参数来源</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/08.png"
+                      alt="08"
+                ></p>
+<p>把 Bangcle_WB_LAES_encrypt; 作为参数传给了 Bangcle_CRYPTO_cbc128_encrypt，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">Bangcle_CRYPTO_cbc128_encrypt</span><span class="params">(</span></span><br><span class="line"><span class="params">        __int64 input_data,</span></span><br><span class="line"><span class="params">        __int64 buff,</span></span><br><span class="line"><span class="params">        <span class="type">int</span> input_data_len,</span></span><br><span class="line"><span class="params">        __int64 iv,</span></span><br><span class="line"><span class="params">        __int64 key,</span></span><br><span class="line"><span class="params">        <span class="type">void</span> (__fastcall *Bangcle_WB_LAES_encrypt)(__int64, __int64, __int64, <span class="type">unsigned</span> <span class="type">int</span> *))</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v12; <span class="comment">// [xsp+4Ch] [xbp+4Ch] BYREF</span></span><br><span class="line">  __int64 iv_1; <span class="comment">// [xsp+50h] [xbp+50h]</span></span><br><span class="line">  <span class="type">int</span> i; <span class="comment">// [xsp+5Ch] [xbp+5Ch]</span></span><br><span class="line"></span><br><span class="line">  v12 = <span class="number">0</span>;</span><br><span class="line">  iv_1 = iv;</span><br><span class="line">  <span class="keyword">while</span> ( input_data_len &gt; <span class="number">15</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">15</span>; ++i )</span><br><span class="line">      *(_BYTE *)(buff + i) = *(_BYTE *)(input_data + i) ^ *(_BYTE *)(iv_1 + i);</span><br><span class="line">    Bangcle_WB_LAES_encrypt(buff, buff, key, &amp;v12);</span><br><span class="line">    iv_1 = buff;</span><br><span class="line">    input_data_len -= <span class="number">16</span>;</span><br><span class="line">    input_data += <span class="number">16LL</span>;</span><br><span class="line">    buff += <span class="number">16LL</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> v12;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="unidbg调试函数"><a href="#unidbg调试函数" class="headerlink" title="unidbg调试函数"></a>unidbg调试函数</h2><p>使用unidbg对 Bangcle_CRYPTO_cbc128_encrypt 进行hook查看参数</p>
+<p>参数一跟我们一开始前面的明文hex对比<br>8b8d8089212822818d23298d23298180218229882280238883808a2a2a238082</p>
+<p>后面填充了16字节的 9b，这里填充是固定的，有兴趣的可以自己探索</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mx0</span><br><span class="line"></span><br><span class="line">&gt;-----------------------------------------------------------------------------&lt;</span><br><span class="line">[<span class="number">01</span>:<span class="number">24</span>:<span class="number">35</span> <span class="number">310</span>]x0=RW@<span class="number">0x12353060</span>, md5=<span class="number">630</span>d2fa2c2528055ad2374d1d4f9419b, hex=<span class="number">8b</span>8d8089212822818d23298d23298180218229882280238883808a2a2a2380829b9b9b9b9b9b9b9b9b9b9b9b9b9b9b9b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">size: <span class="number">112</span></span><br><span class="line"><span class="number">0000</span>: <span class="number">8B</span> <span class="number">8</span>D <span class="number">80</span> <span class="number">89</span> <span class="number">21</span> <span class="number">28</span> <span class="number">22</span> <span class="number">81</span> <span class="number">8</span>D <span class="number">23</span> <span class="number">29</span> <span class="number">8</span>D <span class="number">23</span> <span class="number">29</span> <span class="number">81</span> <span class="number">80</span>    ....!(<span class="string">&quot;..#).#)..</span></span><br><span class="line"><span class="string">0010: 21 82 29 88 22 80 23 88 83 80 8A 2A 2A 23 80 82    !.).&quot;</span>.#....**#..</span><br><span class="line"><span class="number">0020</span>: <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span> <span class="number">9B</span>    ................</span><br><span class="line"><span class="number">0030</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0040</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0050</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0060</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line">^-----------------------------------------------------------------------------^</span><br></pre></td></tr></table></figure>
+
+<p>参数二是空的，用来存放结果的</p>
+<p>参数三是 0x30，明文填充后的长度</p>
+<p>参数四是 iv</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mx3</span><br><span class="line"></span><br><span class="line">&gt;-----------------------------------------------------------------------------&lt;</span><br><span class="line">[<span class="number">01</span>:<span class="number">34</span>:<span class="number">12</span> <span class="number">007</span>]x3=RW@<span class="number">0x12054000</span>[libc++.so]<span class="number">0x4000</span>, md5=d2b01352c3f52a790b79eb18ddc8938c, hex=99303a3a32343a3992923a3b3a999292000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</span><br><span class="line">size: <span class="number">112</span></span><br><span class="line"><span class="number">0000</span>: <span class="number">99</span> <span class="number">30</span> 3A 3A <span class="number">32</span> <span class="number">34</span> 3A <span class="number">39</span> <span class="number">92</span> <span class="number">92</span> 3A 3B 3A <span class="number">99</span> <span class="number">92</span> <span class="number">92</span>    <span class="number">.0</span>::<span class="number">24</span>:<span class="number">9.</span>.:;:...</span><br><span class="line"><span class="number">0010</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0020</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0030</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0040</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0050</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0060</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line">^-----------------------------------------------------------------------------^</span><br></pre></td></tr></table></figure>
+
+<p>参数五看不出是啥，也没跟key对应，需要在往上看来源，这里注意参数五出来的是指针，需要打印指针的内存</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">m0x123580c0 <span class="number">176</span></span><br><span class="line"></span><br><span class="line">&gt;-----------------------------------------------------------------------------&lt;</span><br><span class="line">[<span class="number">01</span>:<span class="number">56</span>:<span class="number">59</span> <span class="number">956</span>]RW@<span class="number">0x123580c0</span>, md5=070a52023ae19a58ba6af416776beb5f, hex=8cc1bbc96bc566b80528b0777044afe8475bb7b8d7f563bb1d906c77817f05f1ee0c4b61cf4fd3619a744038a4b0f887036de86538dacfb2d951843df75d3cf5fb0ead3988157a3f2a2211ba9c18e9fe73d212241f0183a05d757ea66e80f0d8260b251051b1d44bb07252166917c70eecdd96f9a9d03d09ae5748d5002b811a35457064266861a73891d7fdc5f1286f87a52a68d300c4019fede9401c704ad4edd9095dc91e3780123c14cbb663a1e4</span><br><span class="line">size: <span class="number">176</span></span><br><span class="line"><span class="number">0000</span>: 8C C1 BB C9 6B C5 <span class="number">66</span> B8 <span class="number">05</span> <span class="number">28</span> B0 <span class="number">77</span> <span class="number">70</span> <span class="number">44</span> AF E8    ....k.f..(.wpD..</span><br><span class="line"><span class="number">0010</span>: <span class="number">47</span> 5B B7 B8 D7 F5 <span class="number">63</span> BB <span class="number">1D</span> <span class="number">90</span> 6C <span class="number">77</span> <span class="number">81</span> <span class="number">7F</span> <span class="number">05</span> F1    G[....c...lw....</span><br><span class="line"><span class="number">0020</span>: EE 0C 4B <span class="number">61</span> CF <span class="number">4F</span> D3 <span class="number">61</span> 9A <span class="number">74</span> <span class="number">40</span> <span class="number">38</span> A4 B0 F8 <span class="number">87</span>    ..Ka.O.a.t@<span class="number">8.</span>...</span><br><span class="line"><span class="number">0030</span>: <span class="number">03</span> <span class="number">6D</span> E8 <span class="number">65</span> <span class="number">38</span> DA CF B2 D9 <span class="number">51</span> <span class="number">84</span> <span class="number">3D</span> F7 <span class="number">5D</span> 3C F5    .m.e8....Q.=.]&lt;.</span><br><span class="line"><span class="number">0040</span>: FB 0E AD <span class="number">39</span> <span class="number">88</span> <span class="number">15</span> 7A <span class="number">3F</span> 2A <span class="number">22</span> <span class="number">11</span> BA 9C <span class="number">18</span> E9 FE    ..<span class="number">.9</span>..z?*<span class="string">&quot;......</span></span><br><span class="line"><span class="string">0050: 73 D2 12 24 1F 01 83 A0 5D 75 7E A6 6E 80 F0 D8    s..$....]u~.n...</span></span><br><span class="line"><span class="string">0060: 26 0B 25 10 51 B1 D4 4B B0 72 52 16 69 17 C7 0E    &amp;.%.Q..K.rR.i...</span></span><br><span class="line"><span class="string">0070: EC DD 96 F9 A9 D0 3D 09 AE 57 48 D5 00 2B 81 1A    ......=..WH..+..</span></span><br><span class="line"><span class="string">0080: 35 45 70 64 26 68 61 A7 38 91 D7 FD C5 F1 28 6F    5Epd&amp;ha.8.....(o</span></span><br><span class="line"><span class="string">0090: 87 A5 2A 68 D3 00 C4 01 9F ED E9 40 1C 70 4A D4    ..*h.......@.pJ.</span></span><br><span class="line"><span class="string">00A0: ED D9 09 5D C9 1E 37 80 12 3C 14 CB B6 63 A1 E4    ...]..7..&lt;...c..</span></span><br><span class="line"><span class="string">^-----------------------------------------------------------------------------^</span></span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/09.png"
+                      alt="09"
+                ></p>
+<p>就sub_3BA8和sub_47BC调用了v19，既上面的参数五</p>
+<p>其实是在 sub_3BA8 对key做了一个异或</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( i = <span class="number">4</span>; i &lt; str_data_len; ++i )</span><br><span class="line">    *(_BYTE *)(*(_QWORD *)buff + i - <span class="number">4LL</span>) = str_data[i] ^ str_data[i % <span class="number">3</span>];</span><br><span class="line">*(_DWORD *)(buff + <span class="number">8</span>) = str_data_len - <span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+
+<p>key的长度是180字节，这里出来的结果是176个字节，所以这里就是密钥编排了，可以对这个函数hook，在返回前打印，因为key是固定的，所以可以直接拿编排后的使用。这里出来的结果就是上面的参数五了</p>
+<p>好了，参数来源有了，回到上面继续看 Bangcle_CRYPTO_cbc128_encrypt 的逻辑，明文长度填充后是48，刚好3个分组，每次明文加密后会作为iv进行下一分组的加密</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">v12 = <span class="number">0</span>;</span><br><span class="line">iv_1 = iv;</span><br><span class="line"><span class="keyword">while</span> ( input_data_len &gt; <span class="number">15</span> )&#123;</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">15</span>; ++i )</span><br><span class="line">      *(_BYTE *)(buff + i) = *(_BYTE *)(input_data + i) ^ *(_BYTE *)(iv_1 + i);</span><br><span class="line">    Bangcle_WB_LAES_encrypt(buff, buff, key, &amp;v12);</span><br><span class="line">    iv_1 = buff;</span><br><span class="line">    input_data_len -= <span class="number">16</span>;</span><br><span class="line">    input_data += <span class="number">16LL</span>;</span><br><span class="line">    buff += <span class="number">16LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>跟进Bangcle_WB_LAES_encrypt</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">Bangcle_WB_LAES_encrypt</span><span class="params">(__int64 input_data, __int64 buff, __int64 *key_state)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// [COLLAPSED LOCAL DECLARATIONS. PRESS NUMPAD &quot;+&quot; TO EXPAND]</span></span><br><span class="line"></span><br><span class="line">  key_state_1 = *key_state;</span><br><span class="line">  round_count = *((_DWORD *)key_state + <span class="number">4</span>) / <span class="number">32</span> + <span class="number">6</span>;</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">15</span>; ++i )</span><br><span class="line">    *(&amp;v36 + i) = (<span class="number">16</span></span><br><span class="line">                 * (byte_B248[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * (*(_BYTE *)(input_data + i) &gt;&gt; <span class="number">4</span>)) ^ (*(<span class="type">unsigned</span> __int8 *)(key_state_1 + i) &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>)) ^ (byte_B248[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * *(_BYTE *)(input_data + i)) ^ *(_BYTE *)(key_state_1 + i) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>);</span><br><span class="line">  <span class="keyword">for</span> ( j = <span class="number">1</span>; j &lt; round_count; ++j )</span><br><span class="line">  &#123;</span><br><span class="line">    v20 = HIBYTE(dword_B548[v36]);</span><br><span class="line">    v21 = BYTE2(dword_B548[v36]);</span><br><span class="line">    v22 = BYTE1(dword_B548[v36]);</span><br><span class="line">    v23 = dword_B548[v36];</span><br><span class="line">    v24 = HIBYTE(dword_B548[v40]);</span><br><span class="line">    v25 = BYTE2(dword_B548[v40]);</span><br><span class="line">    v26 = BYTE1(dword_B548[v40]);</span><br><span class="line">    v27 = dword_B548[v40];</span><br><span class="line">    v28 = HIBYTE(dword_B548[v44]);</span><br><span class="line">    v29 = BYTE2(dword_B548[v44]);</span><br><span class="line">    v30 = BYTE1(dword_B548[v44]);</span><br><span class="line">    v31 = dword_B548[v44];</span><br><span class="line">    v32 = HIBYTE(dword_B548[v48]);</span><br><span class="line">    v33 = BYTE2(dword_B548[v48]);</span><br><span class="line">    v34 = BYTE1(dword_B548[v48]);</span><br><span class="line">    v35 = dword_B548[v48];</span><br><span class="line">    v4 = HIBYTE(dword_B948[v41]);</span><br><span class="line">    v5 = BYTE2(dword_B948[v41]);</span><br><span class="line">    v6 = BYTE1(dword_B948[v41]);</span><br><span class="line">    v7 = dword_B948[v41];</span><br><span class="line">    v8 = HIBYTE(dword_B948[v45]);</span><br><span class="line">    v9 = BYTE2(dword_B948[v45]);</span><br><span class="line">    v10 = BYTE1(dword_B948[v45]);</span><br><span class="line">    v11 = dword_B948[v45];</span><br><span class="line">    v12 = HIBYTE(dword_B948[v49]);</span><br><span class="line">    v13 = BYTE2(dword_B948[v49]);</span><br><span class="line">    v14 = BYTE1(dword_B948[v49]);</span><br><span class="line">    v15 = dword_B948[v49];</span><br><span class="line">    v16 = HIBYTE(dword_B948[v37]);</span><br><span class="line">    v17 = BYTE2(dword_B948[v37]);</span><br><span class="line">    v18 = BYTE1(dword_B948[v37]);</span><br><span class="line">    v19 = dword_B948[v37];</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">15</span>; ++i )</span><br><span class="line">      *(&amp;v20 + i) = (<span class="number">16</span></span><br><span class="line">                   * (byte_B348[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * ((<span class="type">unsigned</span> __int8)*(&amp;v20 + i) &gt;&gt; <span class="number">4</span>)) ^ ((<span class="type">unsigned</span> __int8)*(&amp;v4 + i) &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>)) ^ (byte_B348[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * *(&amp;v20 + i)) ^ *(&amp;v4 + i) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>);</span><br><span class="line">    v4 = HIBYTE(dword_BD48[v46]);</span><br><span class="line">    v5 = BYTE2(dword_BD48[v46]);</span><br><span class="line">    v6 = BYTE1(dword_BD48[v46]);</span><br><span class="line">    v7 = dword_BD48[v46];</span><br><span class="line">    v8 = HIBYTE(dword_BD48[v50]);</span><br><span class="line">    v9 = BYTE2(dword_BD48[v50]);</span><br><span class="line">    v10 = BYTE1(dword_BD48[v50]);</span><br><span class="line">    v11 = dword_BD48[v50];</span><br><span class="line">    v12 = HIBYTE(dword_BD48[v38]);</span><br><span class="line">    v13 = BYTE2(dword_BD48[v38]);</span><br><span class="line">    v14 = BYTE1(dword_BD48[v38]);</span><br><span class="line">    v15 = dword_BD48[v38];</span><br><span class="line">    v16 = HIBYTE(dword_BD48[v42]);</span><br><span class="line">    v17 = BYTE2(dword_BD48[v42]);</span><br><span class="line">    v18 = BYTE1(dword_BD48[v42]);</span><br><span class="line">    v19 = dword_BD48[v42];</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">15</span>; ++i )</span><br><span class="line">      *(&amp;v20 + i) = (<span class="number">16</span></span><br><span class="line">                   * (byte_B348[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * ((<span class="type">unsigned</span> __int8)*(&amp;v20 + i) &gt;&gt; <span class="number">4</span>)) ^ ((<span class="type">unsigned</span> __int8)*(&amp;v4 + i) &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>)) ^ (byte_B348[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * *(&amp;v20 + i)) ^ *(&amp;v4 + i) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>);</span><br><span class="line">    v4 = HIBYTE(dword_C148[v51]);</span><br><span class="line">    v5 = BYTE2(dword_C148[v51]);</span><br><span class="line">    v6 = BYTE1(dword_C148[v51]);</span><br><span class="line">    v7 = dword_C148[v51];</span><br><span class="line">    v8 = HIBYTE(dword_C148[v39]);</span><br><span class="line">    v9 = BYTE2(dword_C148[v39]);</span><br><span class="line">    v10 = BYTE1(dword_C148[v39]);</span><br><span class="line">    v11 = dword_C148[v39];</span><br><span class="line">    v12 = HIBYTE(dword_C148[v43]);</span><br><span class="line">    v13 = BYTE2(dword_C148[v43]);</span><br><span class="line">    v14 = BYTE1(dword_C148[v43]);</span><br><span class="line">    v15 = dword_C148[v43];</span><br><span class="line">    v16 = HIBYTE(dword_C148[v47]);</span><br><span class="line">    v17 = BYTE2(dword_C148[v47]);</span><br><span class="line">    v18 = BYTE1(dword_C148[v47]);</span><br><span class="line">    v19 = dword_C148[v47];</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">15</span>; ++i )</span><br><span class="line">      *(&amp;v20 + i) = (<span class="number">16</span></span><br><span class="line">                   * (byte_B348[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * ((<span class="type">unsigned</span> __int8)*(&amp;v20 + i) &gt;&gt; <span class="number">4</span>)) ^ ((<span class="type">unsigned</span> __int8)*(&amp;v4 + i) &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>)) ^ (byte_B348[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * *(&amp;v20 + i)) ^ *(&amp;v4 + i) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>);</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">15</span>; ++i )</span><br><span class="line">      *(&amp;v36 + i) = (<span class="number">16</span></span><br><span class="line">                   * (byte_B348[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * ((<span class="type">unsigned</span> __int8)*(&amp;v20 + i) &gt;&gt; <span class="number">4</span>)) ^ (*(<span class="type">unsigned</span> __int8 *)(key_state_1 + <span class="number">16</span> * j + i) &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>)) ^ (byte_B348[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * *(&amp;v20 + i)) ^ *(_BYTE *)(key_state_1 + <span class="number">16</span> * j + i) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  v20 = byte_C548[v36];</span><br><span class="line">  v21 = byte_C548[v41];</span><br><span class="line">  v22 = byte_C548[v46];</span><br><span class="line">  v23 = byte_C548[v51];</span><br><span class="line">  v24 = byte_C548[v40];</span><br><span class="line">  v25 = byte_C548[v45];</span><br><span class="line">  v26 = byte_C548[v50];</span><br><span class="line">  v27 = byte_C548[v39];</span><br><span class="line">  v28 = byte_C548[v44];</span><br><span class="line">  v29 = byte_C548[v49];</span><br><span class="line">  v30 = byte_C548[v38];</span><br><span class="line">  v31 = byte_C548[v43];</span><br><span class="line">  v32 = byte_C548[v48];</span><br><span class="line">  v33 = byte_C548[v37];</span><br><span class="line">  v34 = byte_C548[v42];</span><br><span class="line">  v35 = byte_C548[v47];</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; ; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    result = (<span class="type">unsigned</span> <span class="type">int</span>)i;</span><br><span class="line">    <span class="keyword">if</span> ( i &gt; <span class="number">15</span> )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    *(_BYTE *)(buff + i) = (<span class="number">16</span></span><br><span class="line">                          * (byte_B448[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * ((<span class="type">unsigned</span> __int8)*(&amp;v20 + i) &gt;&gt; <span class="number">4</span>)) ^ (*(<span class="type">unsigned</span> __int8 *)(key_state_1 + <span class="number">16</span> * j + i) &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>)) ^ (byte_B448[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * *(&amp;v20 + i)) ^ *(_BYTE *)(key_state_1 + <span class="number">16</span> * j + i) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到里面的dword_B548，dword_B948等等都是一些大表</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/10.png"
+                      alt="10"
+                ></p>
+<p>在还原算法时候可以直接拿来用。</p>
+<p>既然 Bangcle_WB_LAES_encrypt 是加密的地方了，那应该或多或少有aes影子</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/11.png"
+                      alt="11"
+                ></p>
+<p>可以先看以下round_count是不是真的是10</p>
+<p>round_count &#x3D; *((_DWORD *)data_ptr + 4) &#x2F; 32 + 6;</p>
+<p>用unidbg查看，这里是_DWORD类型，每4个字节一组，查看第4*4的字节位置截取4字节</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mx2</span><br><span class="line"></span><br><span class="line">&gt;-----------------------------------------------------------------------------&lt;</span><br><span class="line">[<span class="number">02</span>:<span class="number">20</span>:<span class="number">49</span> <span class="number">310</span>]x2=unidbg@<span class="number">0xe4fff530</span>, md5=<span class="number">70</span>dda4f32687556b499d15b8cca17ed6, hex=c080351200000000b0000000040000008000000001000000000000000000000000000000000000007c5d00120000000000000000000000001000000030000000603035120000000000000000ffffffffe0f5ffe400000000000000000000000010f6ffe4000000004c8f001200000000</span><br><span class="line">size: <span class="number">112</span></span><br><span class="line"><span class="number">0000</span>: C0 <span class="number">80</span> <span class="number">35</span> <span class="number">12</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> B0 <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">04</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    .<span class="number">.5</span>.............</span><br><span class="line"><span class="number">0010</span>: <span class="number">80</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0020</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">7</span>C <span class="number">5</span>D <span class="number">00</span> <span class="number">12</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ........|]......</span><br><span class="line"><span class="number">0030</span>: <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">10</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">30</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ...........<span class="number">.0</span>...</span><br><span class="line"><span class="number">0040</span>: <span class="number">60</span> <span class="number">30</span> <span class="number">35</span> <span class="number">12</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> FF FF FF FF    `<span class="number">05.</span>............</span><br><span class="line"><span class="number">0050</span>: E0 F5 FF E4 <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ................</span><br><span class="line"><span class="number">0060</span>: <span class="number">10</span> F6 FF E4 <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">4</span>C <span class="number">8F</span> <span class="number">00</span> <span class="number">12</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    ........L.......</span><br><span class="line">^-----------------------------------------------------------------------------^</span><br></pre></td></tr></table></figure>
+
+<p>80 00 00 00 就是我们要的，记得转为小端序 00 00 00 80，对应的十进制是128，计算结果是 128&#x2F;32+6 &#x3D; 10</p>
+<p>for ( j &#x3D; 1; j &lt; round_count; ++j ) 刚好9轮</p>
+<p>整个看下来多多少少能看出来，一开始就使用input_data和key_state进行异或，可以标记为初始<font style="color:rgb(51, 51, 51);">轮密钥加</font></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">15</span>; ++i )</span><br><span class="line">    *(&amp;v36 + i) = (<span class="number">16</span> * (byte_B248[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * (*(_BYTE *)(input_data + i) &gt;&gt; <span class="number">4</span>)) ^ (*(<span class="type">unsigned</span> __int8 *)(key_state_1 + i) &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>)) ^ (byte_B248[(<span class="type">unsigned</span> __int8)(<span class="number">16</span> * *(_BYTE *)(input_data + i)) ^ *(_BYTE *)(key_state_1 + i) &amp; <span class="number">0xF</span>] &gt;&gt; <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>每个for循环结束前的异或也是<font style="color:rgb(51, 51, 51);">轮密钥加，中间整块就是字节替换，循环左移，列混淆</font></p>
+<p><font style="color:rgb(51, 51, 51);">for循环结束后</font></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">v20 = byte_C548[v36];</span><br><span class="line">v21 = byte_C548[v41];</span><br><span class="line">v22 = byte_C548[v46];</span><br><span class="line">v23 = byte_C548[v51];</span><br><span class="line">v24 = byte_C548[v40];</span><br><span class="line">v25 = byte_C548[v45];</span><br><span class="line">v26 = byte_C548[v50];</span><br><span class="line">v27 = byte_C548[v39];</span><br><span class="line">v28 = byte_C548[v44];</span><br><span class="line">v29 = byte_C548[v49];</span><br><span class="line">v30 = byte_C548[v38];</span><br><span class="line">v31 = byte_C548[v43];</span><br><span class="line">v32 = byte_C548[v48];</span><br><span class="line">v33 = byte_C548[v37];</span><br><span class="line">v34 = byte_C548[v42];</span><br><span class="line">v35 = byte_C548[v47];</span><br></pre></td></tr></table></figure>
+
+<p>编排后就是 字节替换和循环左移了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v36	v40	v44	v48  	v36	v40	v44	v48</span><br><span class="line">v37	v41	v45	v49 ==&gt; v41	v45	v49	v37</span><br><span class="line">v38	v42	v46	v50 	v46	v50	v38	v42</span><br><span class="line">v39	v43	v47	v51		v51	v39	v43	v47</span><br></pre></td></tr></table></figure>
+
+<p>最后结束前就是<font style="color:rgb(51, 51, 51);">轮密钥加</font></p>
+<p><font style="color:rgb(51, 51, 51);">这个加密看下来很顺滑，没有混淆过，扔给gpd就能让它给出对应的python代码了。</font></p>
+<p><font style="color:rgb(51, 51, 51);">其中几个点，比如</font></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v20 = HIBYTE(dword_B548[v36]);</span><br><span class="line">v21 = BYTE2(dword_B548[v36]);</span><br><span class="line">v22 = BYTE1(dword_B548[v36]);</span><br><span class="line">v23 = dword_B548[v36];</span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(64, 64, 64);">假设一个</font><font style="color:rgb(64, 64, 64);"> </font><code>&lt;font style=&quot;color:rgb(64, 64, 64);&quot;&gt;DWORD&lt;/font&gt;</code><font style="color:rgb(64, 64, 64);"> </font><font style="color:rgb(64, 64, 64);">的值为</font><font style="color:rgb(64, 64, 64);"> </font><code>&lt;font style=&quot;color:rgb(64, 64, 64);&quot;&gt;0xAABBCCDD&lt;/font&gt;</code><font style="color:rgb(64, 64, 64);">，它的字节结构如下：</font></p>
+<table>
+<thead>
+<tr>
+<th><strong>字节位置</strong></th>
+<th><strong>字节值</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><font style="color:rgb(64, 64, 64);">字节 3</font></td>
+<td>AA</td>
+<td><font style="color:rgb(64, 64, 64);">最高有效字节</font></td>
+</tr>
+<tr>
+<td><font style="color:rgb(64, 64, 64);">字节 2</font></td>
+<td>BB</td>
+<td></td>
+</tr>
+<tr>
+<td><font style="color:rgb(64, 64, 64);">字节 1</font></td>
+<td>CC</td>
+<td></td>
+</tr>
+<tr>
+<td><font style="color:rgb(64, 64, 64);">字节 0</font></td>
+<td>DD</td>
+<td><font style="color:rgb(64, 64, 64);">最低有效字节</font></td>
+</tr>
+</tbody></table>
+<p>还有v20,v21,v22等都是连续存储的，通过v20的指针按偏移取后面的值</p>
+<p>上结果<br>0f02c75267dd7becc6b32f941837721f6f89610d4c49c3b5a8ddd649767e953de0a02e505b8e684fb5654137c266f12e</p>
+<p>跟unidbg跑出来的一样</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/34066/12.png"
+                      alt="12"
+                >  </p>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                某乎x-zse-96逆向
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/34066/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2025-03-08 01:12</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91/">安卓逆向</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Unidbg/">Unidbg</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                            <div class="article-prev">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/posts/31406/"
+                                   title="Apatch内核模块搭建到隐藏Frida注入"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                      <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                            <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Apatch内核模块搭建到隐藏Frida注入</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/45698/"
+                                   title="绕过libmsaoaidsec.so的Frida检测"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">绕过libmsaoaidsec.so的Frida检测</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D"><span class="nav-number">1.</span> <span class="nav-text">定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unidng%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">unidng分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">ida分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unidbg%E8%B0%83%E8%AF%95%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">unidbg调试函数</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2025
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">147.1k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D"><span class="nav-number">1.</span> <span class="nav-text">定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unidng%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">unidng分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">ida分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unidbg%E8%B0%83%E8%AF%95%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">unidbg调试函数</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
 
 <!-- common -->
 <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
