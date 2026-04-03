@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
     
         
-            
-        
     
     <script class="keep-theme-configurations">
     const KEEP = window.KEEP || {}
@@ -215,7 +213,7 @@
 
             <span class="meta-info-item article-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Sun Sep 15 2024 02:23:16 GMT+0800">2024-09-15 02:23:16</span>
+                <span class="pc" data-updated="Sun Nov 27 2022 23:41:58 GMT+0800">2022-11-27 23:41:58</span>
             </span>
         
 
@@ -268,21 +266,21 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20221127/01.webp"
+                     data-src="/../images/48808/01.png"
                       alt="01"
                 ></p>
 <p>当前报错位置已经断下来了，输入bt查看调用栈</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20221127/02.webp"
+                     data-src="/../images/48808/02.png"
                      
                 ></p>
 <p>用ida打开样本so，跳到 0x092b8 地址</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20221127/03.webp"
+                     data-src="/../images/48808/03.png"
                      
                 ></p>
 <p>先分析一下，查看GetObjectClass的文档</p>
@@ -293,27 +291,27 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20221127/04.webp"
+                     data-src="/../images/48808/04.png"
                      
                 ></p>
 <p>ida跳到0x0a554，转为汇编代码后，可以看到object是v24，也就是入参a2，</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20221127/05.webp"
+                     data-src="/../images/48808/05.png"
                      
                 ></p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20221127/06.webp"
+                     data-src="/../images/48808/06.png"
                      
                 ></p>
 <p>查看该函数的地址为0xa2ac，这跟我们一开始调用的地址一样的，在看当时传递的第二个object，确实传的0</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20221127/07.webp"
+                     data-src="/../images/48808/07.png"
                      
                 ></p>
 <p>可以通过jadx查看正确的对象</p>
@@ -600,7 +598,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">149.3k</span>
+                    <span class="item-value border-box word">149.6k</span>
                 </span>
             
 
@@ -842,6 +840,12 @@
         
             
 <script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/mathjax-loader.js" data-pjax></script>
 
         
     

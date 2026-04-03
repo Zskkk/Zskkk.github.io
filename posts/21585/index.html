@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
     
         
-            
-        
     
     <script class="keep-theme-configurations">
     const KEEP = window.KEEP || {}
@@ -266,56 +264,56 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210906/01.webp"
+                     data-src="/../images/21585/01.png"
                      
                 ></p>
 <p>通过百度知道java.net.NetworkInterface.getName()是检测vpn的api，用objection来hook查看一下</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210906/02.webp"
+                     data-src="/../images/21585/02.png"
                      
                 ></p>
 <p>发现当开关vpn时，会检测到tun0的网卡，可以用来监测是否开启vpn。<br>那用frida来hook修改tun0的返回值看看能不能绕过</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210906/03.webp"
+                     data-src="/../images/21585/03.png"
                      
                 ></p>
 <p>还是会闪退，怀疑检测点不止一个<br>NetworkCapabilities 也有检测vpn的<br>用objection hook一下 android.net.ConnectivityManager.getNetworkCapabilities</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210906/04.webp"
+                     data-src="/../images/21585/04.png"
                      
                 ></p>
 <p>通过查看文档知道，返回null即可</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210906/05.webp"
+                     data-src="/../images/21585/05.png"
                      
                 ></p>
 <p>用frida hook返回为null，还是闪退，用jadx打开查看报错位置</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210906/06.webp"
+                     data-src="/../images/21585/06.png"
                      
                 ></p>
 <p>这里返回null的话就无法调用后面的hasTransport方法，直接hook hasTransport修改返回值为false绕过</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210906/07.webp"
+                     data-src="/../images/21585/07.png"
                      
                 ></p>
 <p>开启vpn后app不闪退了，成功绕过</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210906/08.webp"
+                     data-src="/../images/21585/08.png"
                      
                 ></p>
 <p>完整代码</p>
@@ -598,7 +596,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">149.3k</span>
+                    <span class="item-value border-box word">149.6k</span>
                 </span>
             
 
@@ -840,6 +838,12 @@
         
             
 <script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/mathjax-loader.js" data-pjax></script>
 
         
     

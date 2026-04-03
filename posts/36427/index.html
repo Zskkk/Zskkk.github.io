@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
     
         
-            
-        
     
     <script class="keep-theme-configurations">
     const KEEP = window.KEEP || {}
@@ -266,60 +264,60 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/01.webp"
+                     data-src="/../images/36427/01.png"
                      
                 ></p>
 <p>打开charles抓包，抓包失败</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/02.webp"
+                     data-src="/../images/36427/02.png"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/03.webp"
+                     data-src="/../images/36427/03.png"
                      
                 ></p>
 <p>信任所有证书，都为空表示都信任</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/04.webp"
+                     data-src="/../images/36427/04.png"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/05.webp"
+                     data-src="/../images/36427/05.png"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/06.webp"
+                     data-src="/../images/36427/06.png"
                      
                 ></p>
 <p>因为图片是https的，修改一下ssl</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/07.webp"
+                     data-src="/../images/36427/07.png"
                      
                 ></p>
 <p>成功抓包<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/08.webp"
+                     data-src="/../images/36427/08.png"
                      
                 ></p>
 <h2 id="让客户端信任系统根证书目录中的证书"><a href="#让客户端信任系统根证书目录中的证书" class="headerlink" title="让客户端信任系统根证书目录中的证书"></a>让客户端信任系统根证书目录中的证书</h2><p>把证书校验重新开起来<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/09.webp"
+                     data-src="/../images/36427/09.png"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/10.webp"
+                     data-src="/../images/36427/10.png"
                      
                 ></p>
 <p>hook住checkServerTrusted，将其所有重载都置空；<br>使用spawn模式运行</p>
@@ -328,14 +326,14 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/11.webp"
+                     data-src="/../images/36427/11.png"
                      
                 ></p>
 <h2 id="过检验证书"><a href="#过检验证书" class="headerlink" title="过检验证书"></a>过检验证书</h2><p>把证书检验开启</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/12.webp"
+                     data-src="/../images/36427/12.png"
                      
                 ></p>
 <h2 id="objection绕过检测"><a href="#objection绕过检测" class="headerlink" title="objection绕过检测"></a>objection绕过检测</h2><p>使用objection，直接将SSL pinning给disable掉</p>
@@ -344,7 +342,7 @@
 <h1 id="ssl-pinning-服务器检验客户端证书"><a href="#ssl-pinning-服务器检验客户端证书" class="headerlink" title="ssl pinning+服务器检验客户端证书"></a>ssl pinning+服务器检验客户端证书</h1><p>注册页面抓包，证书不信任<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/13.webp"
+                     data-src="/../images/36427/13.png"
                      
                 ></p>
 <p>用frida hook掉他的一些检测，</p>
@@ -354,7 +352,7 @@
 <p>现在可以抓到包，证明请求发出去，那就是证书不对<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/14.webp"
+                     data-src="/../images/36427/14.png"
                      
                 ></p>
 <h2 id="dump-证书"><a href="#dump-证书" class="headerlink" title="dump 证书"></a>dump 证书</h2><p>先关掉vpn，让它正常发请求，并用脚本把证书导出</p>
@@ -363,7 +361,7 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/15.webp"
+                     data-src="/../images/36427/15.png"
                      
                 ></p>
 <h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>dump出证书到手机，并修改证书密码 </p>
@@ -371,44 +369,44 @@
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/16.webp"
+                     data-src="/../images/36427/16.png"
                      
                 ></p>
 <h2 id="charles导入证书"><a href="#charles导入证书" class="headerlink" title="charles导入证书"></a>charles导入证书</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull /sdcard/Download/com.ninemax.ncsearchnew.p12 /root/Desktop/</span><br></pre></td></tr></table></figure>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/17.webp"
+                     data-src="/../images/36427/17.png"
                      
                 ><br>再运行绕过本地校验脚本，成功抓包<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/18.webp"
+                     data-src="/../images/36427/18.png"
                      
                 ></p>
 <h1 id="混淆的okhhtp3抓包"><a href="#混淆的okhhtp3抓包" class="headerlink" title="混淆的okhhtp3抓包"></a>混淆的okhhtp3抓包</h1><p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/19.webp"
+                     data-src="/../images/36427/19.png"
                      
                 ></p>
 <p>通过它的官网知道是https，用的ca机构证书。不需要hook证书校验这一步<br>jadx打开搜索 CertificatePinner</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/20.webp"
+                     data-src="/../images/36427/20.png"
                      
                 ></p>
 <p>通过查看的CertificatePinner源码，和该app的代码对比，基本一样的逻辑，证书校验不通过就会抛异常</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/21.webp"
+                     data-src="/../images/36427/21.png"
                      
                 ><br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/22.webp"
+                     data-src="/../images/36427/22.png"
                      
                 ></p>
 <p>使用frida对其hook，置空</p>
@@ -416,14 +414,14 @@
 <p>charles设置443端口<br><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/23.webp"
+                     data-src="/../images/36427/23.png"
                      
                 ></p>
 <p>成功抓包</p>
 <p><img  
                      lazyload
                      alt="image"
-                     data-src="https://cdn.jsdelivr.net/gh/Zskkk/blog-images@master/20210925/24.webp"
+                     data-src="/../images/36427/24.png"
                      
                 ></p>
 
@@ -705,7 +703,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">149.3k</span>
+                    <span class="item-value border-box word">149.6k</span>
                 </span>
             
 
@@ -947,6 +945,12 @@
         
             
 <script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/mathjax-loader.js" data-pjax></script>
 
         
     
