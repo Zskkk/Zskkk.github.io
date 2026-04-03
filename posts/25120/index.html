@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="zsk">
+    <meta name="baidu-site-verification" content="codeva-FDuSf8Qgto" />
+    
+    <title>
+        
+            jadx-MCP + IDA-Pro-MCP + Large-Text-Viewer-MCP 配置指南 |
+        
+        zskのblog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/regular.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/solid.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/font/css/brands.min.css">
+    
+        
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"www.zskkk.cn","root":"/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"style":{"primary_color":"#0066cc","logo":"/images/logo.svg","favicon":"/images/logo.svg","avatar":"/images/head.svg","first_screen":{"enable":true,"header_transparent":true,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":true},"scroll":{"progress_bar":true,"percent":true}},"local_search":{"enable":true,"preload":true},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"pjax":{"enable":true},"lazyload":{"enable":true},"comment":{"enable":true,"use":"valine","valine":{"appid":"WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz","appkey":"4rZ6NwH5zAu6VEspHwVrgqOq","server_urls":null,"placeholder":"😜 尽情吐槽吧~"},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false}},"post":{"author_label":{"enable":true,"auto":true,"custom_label_list":["Trainee","Engineer","Architect"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"version":"3.8.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+<main class="page-container border-box">
+
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               zskのblog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+
+                
+
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+
+        <div class="article-content-container border-box">
+
+            
+
+            <div class="article-content-bottom border-box">
+                
+                    <div class="article-title">
+                        jadx-MCP + IDA-Pro-MCP + Large-Text-Viewer-MCP 配置指南
+                    </div>
+                
+
+                
+                    <div class="article-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/head.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author">
+                                <span class="name">zsk</span>
+                                
+                                    <span class="author-label">Lv4</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="article-meta-info-container border-box post">
+    <div class="article-meta-info border-box">
+        
+
+
+        
+            <span class="meta-info-item article-create-date">
+                <i class="icon fa-solid fa-calendar-check"></i>&nbsp;
+                <span class="pc">2026-04-03 09:49:08</span>
+                <span class="mobile">2026-04-03 09:49</span>
+            </span>
+
+            <span class="meta-info-item article-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="pc" data-updated="Fri Apr 03 2026 09:57:54 GMT+0800">2026-04-03 09:57:54</span>
+            </span>
+        
+
+        
+
+        
+
+        
+        
+            <span class="meta-info-item article-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.9k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>8 分钟</span>
+            </span>
+        
+        
+            <span class="meta-info-item article-pv">
+                <i class="icon fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="article-content keep-markdown-body">
+                    
+
+                    <p>本文介绍如何通过 MCP（Model Context Protocol）将 jadx、IDA Pro、Large-Text-Viewer 等逆向工具与 AI 大模型打通，实现 AI 驱动的自动化逆向分析工作流。适用于 Claude Code、Trae 等支持 MCP 的 AI 客户端。</p>
+<hr>
+<h2 id="环境与工具准备"><a href="#环境与工具准备" class="headerlink" title="环境与工具准备"></a>环境与工具准备</h2><p>开始之前，请确保已安装以下基础环境：</p>
+<ul>
+<li>Python 3.8+（推荐使用 Miniconda, uv 管理）</li>
+<li>Java Runtime（jadx 运行需要，建议下载自带 JRE 的版本）</li>
+<li>Git</li>
+<li>IDA Pro（用于二进制逆向分析）</li>
+<li>AI 客户端：Claude Code 或 Trae（任选其一）</li>
+</ul>
+<p>下载以下工具：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>下载地址</th>
+<th>说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a class="link"   target="_blank" rel="noopener" href="https://github.com/skylot/jadx" >jadx<i class="fas fa-external-link-alt"></i></a></td>
+<td><a class="link"   target="_blank" rel="noopener" href="https://github.com/skylot/jadx/tags" >Tags<i class="fas fa-external-link-alt"></i></a></td>
+<td>Android APK&#x2F;DEX 反编译器，将 APK 反编译为可读的 Java 源码</td>
+<td>建议下载带 JRE 的版本（<code>jadx-gui-x.x.x-with-jre-win</code>）</td>
+</tr>
+<tr>
+<td><a class="link"   target="_blank" rel="noopener" href="https://github.com/zinja-coder/jadx-ai-mcp" >jadx-ai-mcp<i class="fas fa-external-link-alt"></i></a></td>
+<td><a class="link"   target="_blank" rel="noopener" href="https://github.com/zinja-coder/jadx-ai-mcp/tags" >Tags<i class="fas fa-external-link-alt"></i></a></td>
+<td>jadx 的 MCP 桥接插件，使 AI 可直接查询反编译结果、搜索类&#x2F;方法&#x2F;字段、获取交叉引用</td>
+<td>需下载两个文件：<code>jadx-ai-mcp-x.x.x.jar</code>（jadx 插件）和 <code>jadx-mcp-server-x.x.x.zip</code>（MCP Server）</td>
+</tr>
+<tr>
+<td><a class="link"   target="_blank" rel="noopener" href="https://github.com/mrexodia/ida-pro-mcp" >IDA-Pro-MCP<i class="fas fa-external-link-alt"></i></a></td>
+<td><a class="link"   target="_blank" rel="noopener" href="https://github.com/mrexodia/ida-pro-mcp" >GitHub<i class="fas fa-external-link-alt"></i></a></td>
+<td>IDA Pro 的 MCP 桥接，让 AI 直接进行反汇编查看、伪代码生成、符号重命名等操作</td>
+<td>通过 pip 安装</td>
+</tr>
+<tr>
+<td><a class="link"   target="_blank" rel="noopener" href="https://github.com/songpengfei1111-dot/large-text-viewer/tree/dev_dev_mcp" >large-text-viewer-mcp<i class="fas fa-external-link-alt"></i></a></td>
+<td><a class="link"   target="_blank" rel="noopener" href="https://github.com/songpengfei1111-dot/large-text-viewer/tree/dev_dev_mcp" >GitHub<i class="fas fa-external-link-alt"></i></a></td>
+<td>针对超大 trace 文件提供高性能搜索和分段读取，让 AI 能与海量 trace 数据交互</td>
+<td>需要 Rust 编译环境</td>
+</tr>
+<tr>
+<td><a class="link"   target="_blank" rel="noopener" href="https://www.trae.ai/download" >Trae<i class="fas fa-external-link-alt"></i></a>（可选）</td>
+<td><a class="link"   target="_blank" rel="noopener" href="https://www.trae.ai/download" >官网<i class="fas fa-external-link-alt"></i></a></td>
+<td>字节跳动推出的 AI 编程 IDE，内置 MCP 支持，可作为 AI 客户端使用</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="一、jadx-MCP-配置"><a href="#一、jadx-MCP-配置" class="headerlink" title="一、jadx-MCP 配置"></a>一、jadx-MCP 配置</h2><p>jadx 是 Android 逆向中最常用的反编译工具之一。通过 jadx-ai-mcp 插件，AI 可以直接访问 jadx 的反编译结果，实现自动化的代码搜索、类分析、交叉引用查询等操作。</p>
+<h3 id="1-1-安装-jadx-ai-mcp-插件"><a href="#1-1-安装-jadx-ai-mcp-插件" class="headerlink" title="1.1 安装 jadx-ai-mcp 插件"></a>1.1 安装 jadx-ai-mcp 插件</h3><ol>
+<li>打开 jadx-gui，导航栏选择 <strong>插件 -&gt; Manage plugins -&gt; 安装插件</strong></li>
+<li>选择下载好的 <code>jadx-ai-mcp-6.3.0.jar</code></li>
+</ol>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/01.png"
+                      alt="安装插件"
+                ></p>
+<p>安装完成后，可以在插件列表中看到 jadx-ai-mcp：</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/02.png"
+                      alt="插件已安装"
+                ></p>
+<ol start="3">
+<li>在 jadx 中导入一个 APK 文件。部分版本会自动启动 MCP 服务，可通过 <strong>帮助 -&gt; 日志查看器</strong> 确认服务状态：</li>
+</ol>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/03.png"
+                      alt="日志查看器"
+                ></p>
+<ol start="4">
+<li>如果服务未自动启动，在导航栏 <strong>插件</strong> 中找到 jadx-mcp，选择 <strong>Server Status</strong> 手动启动：</li>
+</ol>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/04.png"
+                      alt="启动服务"
+                ><br><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/05.png"
+                      alt="服务运行中"
+                ></p>
+<h3 id="1-2-配置-jadx-mcp-server"><a href="#1-2-配置-jadx-mcp-server" class="headerlink" title="1.2 配置 jadx-mcp-server"></a>1.2 配置 jadx-mcp-server</h3><p>解压 <code>jadx-mcp-server-6.3.0.zip</code>，进入目录安装 Python 依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> jadx-mcp-server</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>确认 Python 解释器路径（后续配置 MCP 时需要用到）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&quot;import sys; print(sys.executable)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-在-AI-客户端中接入-MCP"><a href="#1-3-在-AI-客户端中接入-MCP" class="headerlink" title="1.3 在 AI 客户端中接入 MCP"></a>1.3 在 AI 客户端中接入 MCP</h3><h4 id="方式一：Trae"><a href="#方式一：Trae" class="headerlink" title="方式一：Trae"></a>方式一：Trae</h4><p>在 Trae 的 MCP 设置中添加以下配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;jadx-mcp-server&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;E:\\miniconda3\\python.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;D:\\jadx-gui-1.5.5-with-jre-win\\jadx-mcp-server\\jadx_mcp_server.py&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/06.png"
+                      alt="Trae MCP 配置"
+                ></p>
+<p>MCP 功能默认在 <strong>Builder with MCP</strong> 模式中可用：</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/07.png"
+                      alt="Builder with MCP"
+                ></p>
+<h4 id="方式二：Claude-Code"><a href="#方式二：Claude-Code" class="headerlink" title="方式二：Claude Code"></a>方式二：Claude Code</h4><p>Claude Code 支持两种 MCP 配置方式：</p>
+<table>
+<thead>
+<tr>
+<th>配置方式</th>
+<th>配置文件位置</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>全局配置</td>
+<td><code>C:\Users\&lt;用户名&gt;\.claude.json</code></td>
+<td>所有项目通用的 MCP 服务</td>
+</tr>
+<tr>
+<td>项目配置（推荐）</td>
+<td>项目根目录下 <code>.mcp.json</code></td>
+<td>仅当前项目使用，避免无关会话消耗 token</td>
+</tr>
+</tbody></table>
+<p>推荐使用项目配置。在项目根目录创建 <code>.mcp.json</code>，写入与上面相同的配置内容。</p>
+<p>启动 Claude Code 后，输入 <code>/mcp</code> 命令验证 <code>jadx-mcp-server</code> 是否加载成功：</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/08.png"
+                      alt="Claude Code MCP 状态"
+                ></p>
+<h3 id="1-4-功能验证"><a href="#1-4-功能验证" class="headerlink" title="1.4 功能验证"></a>1.4 功能验证</h3><p>在 AI 客户端中输入以下提示词测试 jadx-MCP 是否正常工作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 MCP jadx 进行查找，告诉我哪些类包含与&quot;加密&quot;相关的代码？</span><br></pre></td></tr></table></figure>
+
+<p>AI 将通过 MCP 调用 jadx 的搜索接口，自动分析反编译代码并返回结果：</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/09.png"
+                      alt="jadx MCP 测试结果"
+                ></p>
+<hr>
+<h2 id="二、IDA-Pro-MCP-配置"><a href="#二、IDA-Pro-MCP-配置" class="headerlink" title="二、IDA-Pro-MCP 配置"></a>二、IDA-Pro-MCP 配置</h2><p>IDA Pro 是二进制逆向分析的行业标准工具。通过 IDA-Pro-MCP，AI 可以直接读取 IDA 的反汇编视图、伪代码、函数列表等信息，甚至可以自动完成 CTF 题目的求解。</p>
+<h3 id="2-1-安装-IDA-Pro-MCP"><a href="#2-1-安装-IDA-Pro-MCP" class="headerlink" title="2.1 安装 IDA-Pro-MCP"></a>2.1 安装 IDA-Pro-MCP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果之前安装过旧版本，先卸载</span></span><br><span class="line">pip uninstall ida-pro-mcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确保 pip 为最新版</span></span><br><span class="line">pip install --upgrade pip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装最新版 IDA-Pro-MCP</span></span><br><span class="line">pip install --upgrade git+https://github.com/mrexodia/ida-pro-mcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 MCP Server 和 IDA 插件</span></span><br><span class="line">ida-pro-mcp --install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 MCP 配置文件</span></span><br><span class="line">ida-pro-mcp --config</span><br></pre></td></tr></table></figure>
+
+<p>生成配置时，选择 <strong>STDIO</strong> 类型：</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/11.png"
+                      alt="选择 STDIO"
+                ></p>
+<h3 id="2-2-配置-MCP-连接"><a href="#2-2-配置-MCP-连接" class="headerlink" title="2.2 配置 MCP 连接"></a>2.2 配置 MCP 连接</h3><p>将以下配置添加到 AI 客户端的 MCP 配置中（方式与 jadx-MCP 相同）：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;ida-pro-mcp&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;E:\\miniconda3\\python.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;E:\\miniconda3\\Lib\\site-packages\\ida_pro_mcp\\server.py&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--ida-rpc&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;http://127.0.0.1:13337&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-3-在-IDA-中启动-MCP-服务"><a href="#2-3-在-IDA-中启动-MCP-服务" class="headerlink" title="2.3 在 IDA 中启动 MCP 服务"></a>2.3 在 IDA 中启动 MCP 服务</h3><ol>
+<li>启动 IDA Pro，加载待分析的二进制文件</li>
+<li>通过菜单或快捷键 <code>Ctrl + Alt + M</code> 启动 MCP 服务</li>
+</ol>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/12.png"
+                      alt="启动 IDA MCP"
+                ></p>
+<p>启动成功后可以看到服务状态：</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/13.png"
+                      alt="IDA MCP 运行中"
+                ></p>
+<h3 id="2-4-功能验证"><a href="#2-4-功能验证" class="headerlink" title="2.4 功能验证"></a>2.4 功能验证</h3><p>以 CTF 题目为例，测试 IDA-MCP 的自动化分析能力。</p>
+<p>题目来源：<a class="link"   target="_blank" rel="noopener" href="https://www.qsnctf.com/" >青少年 CTF 平台<i class="fas fa-external-link-alt"></i></a> - EasyGo</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/15.png"
+                      alt="EasyGo 题目"
+                ></p>
+<p>在 AI 客户端中输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">只使用 MCP 中的 ida-pro-mcp，给出 IDA 中打开的 exe 的输入 flag 的正确值</span><br></pre></td></tr></table></figure>
+
+<p>AI 通过 MCP 自动分析 IDA 中的反汇编和伪代码，成功求解出 flag：</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/16.png"
+                      alt="AI 分析过程"
+                ></p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/17.png"
+                      alt="成功获取 flag"
+                ></p>
+<hr>
+<h2 id="三、Large-Text-Viewer-MCP-配置"><a href="#三、Large-Text-Viewer-MCP-配置" class="headerlink" title="三、Large-Text-Viewer-MCP 配置"></a>三、Large-Text-Viewer-MCP 配置</h2><p>在逆向分析中，Frida&#x2F;Stalker 等工具生成的 trace 文件往往有数百 MB 甚至数 GB，远超 AI 的上下文窗口限制。Large-Text-Viewer-MCP 通过提供高性能的搜索和分段读取接口，让 AI 能够与超大 trace 文件进行交互式分析。</p>
+<blockquote>
+<p>注意：AI 分析 trace 的效果取决于模型能力和提示词质量，实际效率因场景而异。</p>
+</blockquote>
+<h3 id="3-1-安装-Rust-环境"><a href="#3-1-安装-Rust-环境" class="headerlink" title="3.1 安装 Rust 环境"></a>3.1 安装 Rust 环境</h3><p>large-text-viewer 使用 Rust 编写，需要先安装 Rust 工具链。</p>
+<p>官方下载：<a class="link"   target="_blank" rel="noopener" href="https://rust-lang.org/tools/install/" >https://rust-lang.org/tools/install/<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果需要代理（根据网络环境决定）</span></span><br><span class="line"><span class="built_in">set</span> HTTP_PROXY=http://127.0.0.1:10808</span><br><span class="line"><span class="built_in">set</span> HTTPS_PROXY=http://127.0.0.1:10808</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行安装程序</span></span><br><span class="line">rustup-init.exe</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-构建-large-text-viewer"><a href="#3-2-构建-large-text-viewer" class="headerlink" title="3.2 构建 large-text-viewer"></a>3.2 构建 large-text-viewer</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> -b dev_dev_mcp https://github.com/songpengfei1111-dot/large-text-viewer.git</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> large-text-viewer</span><br><span class="line"></span><br><span class="line">cargo build --release</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/18.png"
+                      alt="构建完成"
+                ></p>
+<p>构建产物位于 <code>target/release/large-text-viewer.exe</code>，验证是否可正常运行：</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/19.png"
+                      alt="运行验证"
+                ></p>
+<h3 id="3-3-安装-traceSearch-MCP"><a href="#3-3-安装-traceSearch-MCP" class="headerlink" title="3.3 安装 traceSearch_MCP"></a>3.3 安装 traceSearch_MCP</h3><p>traceSearch_MCP 是 large-text-viewer 的 MCP 封装层，提供 Python MCP Server 接口。</p>
+<p>项目地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/songpengfei1111-dot/traceSearch_MCP" >https://github.com/songpengfei1111-dot/traceSearch_MCP<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/songpengfei1111-dot/traceSearch_MCP</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> traceSearch_MCP</span><br><span class="line"></span><br><span class="line">pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+
+<p>配置 MCP：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;large_text_viewer_mcp&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;python&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;D:\\xxxx\\traceSearch_MCP\\large_text_viewer_mcp.py&quot;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>验证 Claude Code 加载 MCP 成功：</p>
+<p><img  
+                     lazyload
+                     alt="image"
+                     data-src="/../images/25120/20.png"
+                      alt="MCP 加载成功"
+                ></p>
+<h3 id="3-4-Windows-适配"><a href="#3-4-Windows-适配" class="headerlink" title="3.4 Windows 适配"></a>3.4 Windows 适配</h3><p>traceSearch_MCP 项目自带的 <code>large-text-viewer</code> 是 Linux 版本，在 Windows 上无法直接使用，需要手动替换为之前构建的 Windows 版本：</p>
+<ol>
+<li>将构建好的可执行文件复制过去：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy D:\xxxx\large-text-viewer\target\release\large-text-viewer.exe D:\xxxx\traceSearch_MCP\target\release\large-text-viewer.exe</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>删除 traceSearch_MCP 中自带的 Linux 版 <code>large-text-viewer</code></p>
+</li>
+<li><p>修改代码中的路径引用。使用 VSCode 全局替换（注意不要替换路径中的内容）：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查找：  ./target/release/large-text-viewer</span><br><span class="line">替换为：D:\\xxxx\\traceSearch_MCP\\target\\release\\large-text-viewer.exe</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>必须使用绝对路径，否则 Claude Code 调用 MCP 时会找不到 large-text-viewer。</p>
+</blockquote>
+<ol start="4">
+<li>替换完成后，重启 MCP 服务使配置生效。</li>
+</ol>
+<h3 id="3-5-实战演示：AI-辅助分析算法-Trace"><a href="#3-5-实战演示：AI-辅助分析算法-Trace" class="headerlink" title="3.5 实战演示：AI 辅助分析算法 Trace"></a>3.5 实战演示：AI 辅助分析算法 Trace</h3><p>完成以上配置后，可以参考以下文章了解 Large-Text-Viewer-MCP 配合 IDA-Pro-MCP 分析算法 trace 的完整过程：</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-289797.htm" >看雪论坛 - 使用 AI+MCP 还原算法<i class="fas fa-external-link-alt"></i></a></p>
+<p>该文章详细演示了如何让 AI 通过 MCP 读取超大 trace 文件、搜索关键调用、结合 IDA 伪代码还原算法逻辑，附件中包含可直接使用的测试 trace 文件。</p>
+
+                </div>
+
+                
+                        <div class="article-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="post-title border-box text-ellipsis">
+                jadx-MCP + IDA-Pro-MCP + Large-Text-Viewer-MCP 配置指南
+            </div>
+
+            <div class="post-link border-box text-ellipsis">
+                posts/25120/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">zsk</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2026-04-03 09:49</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">
+                        <i class="fa-brands fa-creative-commons"></i>
+                        <i class="fa-brands fa-creative-commons-by"></i>
+                        <i class="fa-brands fa-creative-commons-nc"></i>
+                        <i class="fa-brands fa-creative-commons-sa"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="article-nav">
+                        
+                        
+                            <div class="article-next">
+                                <a class="next"
+                                   rel="next"
+                                   href="/posts/31406/"
+                                   title="Apatch内核模块搭建到隐藏Frida注入"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Apatch内核模块搭建到隐藏Frida注入</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                            <span class="right arrow-icon flex-center">
+                                      <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+    <div class="comments-container border-box">
+        <div id="comments-anchor" class="comment-area-title border-box">
+            <i class="fas fa-comments"></i>&nbsp;评论
+        </div>
+        
+            
+
+    <div class="valine-container">
+        <script data-pjax src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+          function loadValine() {
+
+            const config = {
+              el: '#vcomments',
+              appId: 'WxNQs5QEQtykF82Sb7nAjXRO-gzGzoHsz',
+              appKey: '4rZ6NwH5zAu6VEspHwVrgqOq',
+              meta: ['nick', 'mail', 'link'],
+              avatar: 'wavatar',
+              enableQQ: true,
+              placeholder: '😜 尽情吐槽吧~',
+              lang: 'zh-CN'.toLowerCase()
+            }
+
+            if ('') {
+              config.serverURLs = ''
+            }
+
+            new Valine(config)
+
+            function getAuthor(language) {
+              switch (language) {
+                case 'en':
+                  return 'Author'
+                case 'zh-CN':
+                  return '博主'
+                case 'zh-TW':
+                  return '站長'
+                default:
+                  return 'Master'
+              }
+            }
+
+            // Add "Author" identify
+            const getValineDomTimer = setInterval(() => {
+              const vcards = document.querySelectorAll('#vcomments .vcards .vcard')
+              if (vcards.length > 0) {
+                let author = 'zsk'
+
+                if (author) {
+                  for (let vcard of vcards) {
+                    const vnick_dom = vcard.querySelector('.vhead .vnick')
+                    const vnick = vnick_dom.innerHTML
+                    if (vnick === author) {
+                      vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                    }
+                  }
+                }
+                clearInterval(getValineDomTimer)
+              } else {
+                clearInterval(getValineDomTimer)
+              }
+            }, 2000)
+          }
+
+          if ('true' === 'true') {
+            const loadValineTimeout = setTimeout(() => {
+              loadValine()
+              clearTimeout(loadValineTimeout)
+            }, 1000)
+          } else {
+            window.addEventListener('DOMContentLoaded', loadValine)
+          }
+        </script>
+    </div>
+
+
+        
+    </div>
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%B7%A5%E5%85%B7%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">环境与工具准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81jadx-MCP-%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">一、jadx-MCP 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%AE%89%E8%A3%85-jadx-ai-mcp-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 安装 jadx-ai-mcp 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%85%8D%E7%BD%AE-jadx-mcp-server"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 配置 jadx-mcp-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%9C%A8-AI-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%AD%E6%8E%A5%E5%85%A5-MCP"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 在 AI 客户端中接入 MCP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9ATrae"><span class="nav-number">2.3.1.</span> <span class="nav-text">方式一：Trae</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9AClaude-Code"><span class="nav-number">2.3.2.</span> <span class="nav-text">方式二：Claude Code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%8A%9F%E8%83%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 功能验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81IDA-Pro-MCP-%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">二、IDA-Pro-MCP 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%AE%89%E8%A3%85-IDA-Pro-MCP"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 安装 IDA-Pro-MCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%85%8D%E7%BD%AE-MCP-%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 配置 MCP 连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%9C%A8-IDA-%E4%B8%AD%E5%90%AF%E5%8A%A8-MCP-%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 在 IDA 中启动 MCP 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E5%8A%9F%E8%83%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 功能验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Large-Text-Viewer-MCP-%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">三、Large-Text-Viewer-MCP 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AE%89%E8%A3%85-Rust-%E7%8E%AF%E5%A2%83"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 安装 Rust 环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%9E%84%E5%BB%BA-large-text-viewer"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 构建 large-text-viewer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%AE%89%E8%A3%85-traceSearch-MCP"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 安装 traceSearch_MCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Windows-%E9%80%82%E9%85%8D"><span class="nav-number">4.4.</span> <span class="nav-text">3.4 Windows 适配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%AE%9E%E6%88%98%E6%BC%94%E7%A4%BA%EF%BC%9AAI-%E8%BE%85%E5%8A%A9%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95-Trace"><span class="nav-number">4.5.</span> <span class="nav-text">3.5 实战演示：AI 辅助分析算法 Trace</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2026
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">zsk</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+                <div class="deploy-info info-item default">
+                    
+                        本站由 <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/deploy-provider/github.png"></span> 提供部署服务
+                        
+                </div>
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">149.3k</span>
+                </span>
+            
+
+            
+                <span class="count-box border-box uv">
+                    <span class="item-type border-box">访客数</span>
+                    <span class="item-value border-box uv" id="busuanzi_value_site_uv"></span>
+                </span>
+            
+
+            
+                <span class="count-box border-box pv">
+                    <span class="item-type border-box">访问量</span>
+                    <span class="item-value border-box pv" id="busuanzi_value_site_pv"></span>
+                </span>
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+            <li class="tools-item flex-center go-to-comments">
+                <i class="fas fa-comment"></i>
+                <span class="post-comments-count"></span>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+            <li class="tools-item go-to-comments-tablet flex-center">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%B7%A5%E5%85%B7%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">环境与工具准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81jadx-MCP-%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">一、jadx-MCP 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%AE%89%E8%A3%85-jadx-ai-mcp-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 安装 jadx-ai-mcp 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%85%8D%E7%BD%AE-jadx-mcp-server"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 配置 jadx-mcp-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%9C%A8-AI-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%AD%E6%8E%A5%E5%85%A5-MCP"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 在 AI 客户端中接入 MCP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9ATrae"><span class="nav-number">2.3.1.</span> <span class="nav-text">方式一：Trae</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9AClaude-Code"><span class="nav-number">2.3.2.</span> <span class="nav-text">方式二：Claude Code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%8A%9F%E8%83%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 功能验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81IDA-Pro-MCP-%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">二、IDA-Pro-MCP 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%AE%89%E8%A3%85-IDA-Pro-MCP"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 安装 IDA-Pro-MCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%85%8D%E7%BD%AE-MCP-%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 配置 MCP 连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%9C%A8-IDA-%E4%B8%AD%E5%90%AF%E5%8A%A8-MCP-%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 在 IDA 中启动 MCP 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E5%8A%9F%E8%83%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 功能验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Large-Text-Viewer-MCP-%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">三、Large-Text-Viewer-MCP 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AE%89%E8%A3%85-Rust-%E7%8E%AF%E5%A2%83"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 安装 Rust 环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%9E%84%E5%BB%BA-large-text-viewer"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 构建 large-text-viewer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%AE%89%E8%A3%85-traceSearch-MCP"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 安装 traceSearch_MCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Windows-%E9%80%82%E9%85%8D"><span class="nav-number">4.4.</span> <span class="nav-text">3.4 Windows 适配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%AE%9E%E6%88%98%E6%BC%94%E7%A4%BA%EF%BC%9AAI-%E8%BE%85%E5%8A%A9%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95-Trace"><span class="nav-number">4.5.</span> <span class="nav-text">3.5 实战演示：AI 辅助分析算法 Trace</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/dark-light-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/local-search.js"></script>
+
+
+<!-- code-block -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/code-block.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/lazyload.js"></script>
+
+
+<div class="pjax">
+    
+        <!-- post-helper -->
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/post-helper.js"></script>
+
+        <!-- toc -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/toc.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/copyright-info.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/post/share.js"></script>
+        
+    
+
+    <!-- category-page -->
+    
+
+    <!-- links-page -->
+    
+</div>
+
+<!-- pjax -->
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.8.1/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+        
+            
+<script class="custom-inject-js" src="/js/custom-1.js" data-pjax></script>
+
+        
+    
+
+</body>
+</html>
