@@ -234,12 +234,12 @@
         
         
             <span class="meta-info-item article-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.3k 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.2k 字</span>
             </span>
         
         
             <span class="meta-info-item article-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>10 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>9 分钟</span>
             </span>
         
         
@@ -269,13 +269,40 @@
                      data-src="/../images/17732/01.png"
                      
                 ></p>
-<p>K10是W40,W41,W42,W43拼起来的，我们已知K10，即已知W40,W41,W42,W43有没有办法求K9？如果可以，那么同理可以逆推到K0，即求得了主密钥<br /><br>$$W40 &#x3D; g(W39) \ xor \ W36$$<br>$$W41 &#x3D; W40 \ xor \ W37$$<br>$$W42 &#x3D; W41 \ xor \ W38$$<br>$$W43 &#x3D; W42 \ xor \ W39$$</p>
-<p><br />我们不妨先复习一下异或的基本性质，<strong>异或作用与比特位上，对应的比特位相同则为0，相异则为1</strong>。<br>$$0 \ xor \ 0 &#x3D; 0$$<br>$$1 \ xor \ 0 &#x3D; 1$$<br>$$0 \ xor \ 1 &#x3D; 1$$<br>$$1 \ xor \ 1 &#x3D; 0$$</p>
-<p>因为相同为0，相异为1，那么一个数和自身异或时，因为每个比特位都相同，所以结果为0。<br /><br>$$X \ xor \ X &#x3D; 0$$<br>而当某个数和0异或时，自身为0的比特0^0得0，自身为1的比特位1^0得1，这就导致结果和没异或前一样。<br>$$X \ xor \ 0 &#x3D; X$$</p>
+<p>K10是W40,W41,W42,W43拼起来的，我们已知K10，即已知W40,W41,W42,W43有没有办法求K9？如果可以，那么同理可以逆推到K0，即求得了主密钥<br /></p>
+$$W40 = g(W39) \ xor \ W36$$
+$$W41 = W40 \ xor \ W37$$
+$$W42 = W41 \ xor \ W38$$
+$$W43 = W42 \ xor \ W39$$
+
+<p><br />我们不妨先复习一下异或的基本性质，<strong>异或作用与比特位上，对应的比特位相同则为0，相异则为1</strong>。</p>
+$$0 \ xor \ 0 = 0$$
+$$1 \ xor \ 0 = 1$$
+$$0 \ xor \ 1 = 1$$
+$$1 \ xor \ 1 = 0$$
+
+
+<p>因为相同为0，相异为1，那么一个数和自身异或时，因为每个比特位都相同，所以结果为0。<br /></p>
+$$X \ xor \ X = 0$$
+<p>而当某个数和0异或时，自身为0的比特0^0得0，自身为1的比特位1^0得1，这就导致结果和没异或前一样。</p>
+$$X \ xor \ 0 = X$$
+
 <p>除此之外，异或并不看谁先谁后，A ^ B 与 B ^ A 显然无区别，即具有交换律。<br /></p>
-<p>$$X \ xor \ Y &#x3D; Y \ xor \ X$$</p>
-<p><br />看看异或的多角度理解：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31116687"><font color="blue">如何理解「异或」的含义</font></a>。<br />下面做变换，左右W42异或<br>$$W43 &#x3D; W42 \ xor \ W39$$<br>$$W42 \ xor \ W43 &#x3D; W42 \ xor \ W42 \ xor\  W39$$<br>$$W42 \ xor \ W43 &#x3D; 0 \ xor \ W39$$<br>$$W39 &#x3D; W42 \ xor \ W43$$</p>
-<p>K10中涉及到的四个式子均可以做变化<br>$$W36 &#x3D; g(W39) \ xor \ W40$$<br>$$W37 &#x3D; W40 \ xor \ W41$$<br>$$W38 &#x3D; W41 \ xor \ W42$$<br>$$W39 &#x3D; W42 \ xor \ W43$$</p>
+$$X \ xor \ Y = Y \ xor \ X$$
+
+<p><br />看看异或的多角度理解：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31116687"><font color="blue">如何理解「异或」的含义</font></a>。<br />下面做变换，左右W42异或</p>
+$$W43 = W42 \ xor \ W39$$
+$$W42 \ xor \ W43 = W42 \ xor \ W42 \ xor\  W39$$
+$$W42 \ xor \ W43 = 0 \ xor \ W39$$
+$$W39 = W42 \ xor \ W43$$
+
+
+<p>K10中涉及到的四个式子均可以做变化</p>
+$$W36 = g(W39) \ xor \ W40$$
+$$W37 = W40 \ xor \ W41$$
+$$W38 = W41 \ xor \ W42$$
+$$W39 = W42 \ xor \ W43$$
+
 <p>K10 &#x3D; 8821df9e5e9a36f31255d04529bedb5e，切成四块<br /></p>
 <center>W40 = 8821df9e</center>
 <center>W41 = 5e9a36f3</center>
