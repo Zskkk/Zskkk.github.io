@@ -10,7 +10,7 @@
     
     <title>
         
-            libjiagu.so 内存 Dump（libjiagu_vip_64.so） |
+            360加固libjiagu_vip_64.so内存Dump |
         
         zskのblog
     </title>
@@ -178,7 +178,7 @@
             <div class="article-content-bottom border-box">
                 
                     <div class="article-title">
-                        libjiagu.so 内存 Dump（libjiagu_vip_64.so）
+                        360加固libjiagu_vip_64.so内存Dump
                     </div>
                 
 
@@ -213,7 +213,7 @@
 
             <span class="meta-info-item article-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Mon Apr 20 2026 10:19:30 GMT+0800">2026-04-20 10:19:30</span>
+                <span class="pc" data-updated="Tue Apr 21 2026 23:36:14 GMT+0800">2026-04-21 23:36:14</span>
             </span>
         
 
@@ -262,10 +262,8 @@
 
                     <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>360加固商业版（libjiagu_vip_64.so）会在运行时自解密代码段，磁盘上的 SO 文件是加密的，IDA 无法直接分析。文章记录如何通过 Frida 从内存中 dump 出解密后的 SO，并在 IDA 中正确加载分析。</p>
 <h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
-<li>Frida 15.2.2（魔改去特征版）</li>
 <li>目标 App：com.lucky.luckyclient（jiagu 加固）</li>
 <li>版本: 5.5.40</li>
-<li>设备：pixel 3</li>
 </ul>
 <h2 id="第一步：确认加固类型"><a href="#第一步：确认加固类型" class="headerlink" title="第一步：确认加固类型"></a>第一步：确认加固类型</h2><p>用最简单的 dlopen 监控脚本，观察加载了哪些 SO：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hook_dlopen</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">Interceptor</span>.<span class="title function_">attach</span>(<span class="title class_">Module</span>.<span class="title function_">findExportByName</span>(<span class="literal">null</span>, <span class="string">&quot;android_dlopen_ext&quot;</span>), &#123;</span><br><span class="line">        <span class="attr">onEnter</span>: <span class="keyword">function</span>(<span class="params">args</span>) &#123;</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">fileName</span> = args[<span class="number">0</span>].<span class="title function_">readCString</span>();</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;dlopen: &quot;</span> + <span class="variable language_">this</span>.<span class="property">fileName</span>);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">onLeave</span>: <span class="keyword">function</span>(<span class="params">retval</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;loaded: &quot;</span> + <span class="variable language_">this</span>.<span class="property">fileName</span> + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">setImmediate</span>(hook_dlopen);</span><br></pre></td></tr></table></figure>
@@ -315,7 +313,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(frida15) λ python dump.<span class="property">py</span></span><br><span class="line"><span class="attr">dlopen</span>: <span class="regexp">/system/</span>framework/oat/arm64/org.<span class="property">apache</span>.<span class="property">http</span>.<span class="property">legacy</span>.<span class="property">odex</span></span><br><span class="line"><span class="attr">dlopen</span>: <span class="regexp">/data/</span>app/~~6Vv5vvy2YluInaYi8sWXzQ==<span class="regexp">/com.lucky.luckyclient-_g8ZZzNrB3vdy9F9hQOAjA==/</span>oat/arm64/base.<span class="property">odex</span></span><br><span class="line"><span class="attr">dlopen</span>: <span class="regexp">/data/</span>data/com.<span class="property">lucky</span>.<span class="property">luckyclient</span>/.<span class="property">jiagu</span>/libjiagu_vip_64.<span class="property">so</span></span><br><span class="line"><span class="attr">dlopen</span>: <span class="regexp">/data/</span>app/~~6Vv5vvy2YluInaYi8sWXzQ==<span class="regexp">/com.lucky.luckyclient-_g8ZZzNrB3vdy9F9hQOAjA==/</span>lib/arm64/libjgdtc.<span class="property">so</span></span><br><span class="line">dumping libjiagu_vip_64.<span class="property">so</span> base=<span class="number">0x7099c1d000</span> size=<span class="number">3776512</span></span><br><span class="line">fixed <span class="number">44</span> pages <span class="keyword">with</span> <span class="title class_">Memory</span>.<span class="property">protect</span></span><br><span class="line">[*] dumped <span class="number">3776512</span> bytes to libjiagu_vip_64_dump.<span class="property">so</span></span><br><span class="line">dump sent to python</span><br><span class="line">=== <span class="title class_">Exception</span>: access-violation ===</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="IDA-加载-Dump-文件"><a href="#IDA-加载-Dump-文件" class="headerlink" title="IDA 加载 Dump 文件"></a>IDA 加载 Dump 文件</h2><ol>
+<h3 id="IDA-加载-Dump-文件"><a href="#IDA-加载-Dump-文件" class="headerlink" title="IDA 加载 Dump 文件"></a>IDA 加载 Dump 文件</h3><ol>
 <li>IDA 打开 <code>libjiagu_vip_64_dump.so</code></li>
 <li>Processor type 选择 <strong>ARM Little-endian [ARM]</strong><br><img  
                      lazyload
@@ -344,6 +342,14 @@
                 ></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ROM:0000000000256964  LDR   X8, [X8]</span><br><span class="line">ROM:0000000000256968  BLR   X8        ← 崩溃点：X8 为 null</span><br><span class="line">ROM:000000000025696C  MOV   W2, #2    ← lr 指向这里</span><br></pre></td></tr></table></figure>
 
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>libjiagu_vip_64.so 的职责：</p>
+<ul>
+<li>自解密（磁盘加密 → 内存解密）</li>
+<li>反调试 &#x2F; 反Frida 检测</li>
+<li>dlopen libjgdtc.so</li>
+</ul>
+<p>libjiagu_vip_64.so  →  360加固主壳（含反Frida）</br><br>libjgdtc.so         →  安全检测库（加载时触发主壳的检测流程）</p>
+
                 </div>
 
                 
@@ -351,7 +357,7 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="post-title border-box text-ellipsis">
-                libjiagu.so 内存 Dump（libjiagu_vip_64.so）
+                360加固libjiagu_vip_64.so内存Dump
             </div>
 
             <div class="post-link border-box text-ellipsis">
@@ -560,7 +566,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E5%8A%A0%E5%9B%BA%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">第一步：确认加固类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%B4%A9%E6%BA%83%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">第二步：定位崩溃点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E4%BB%8E%E7%A3%81%E7%9B%98-pull-SO"><span class="nav-number">5.</span> <span class="nav-text">第三步：从磁盘 pull SO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%86%85%E5%AD%98-Dump%EF%BC%88%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">第四步：内存 Dump（关键步骤）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dump-%E8%84%9A%E6%9C%AC"><span class="nav-number">6.1.</span> <span class="nav-text">Dump 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dump-%E6%97%B6%E6%9C%BA"><span class="nav-number">6.2.</span> <span class="nav-text">Dump 时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-%E6%8E%A5%E6%94%B6%E8%84%9A%E6%9C%AC"><span class="nav-number">6.3.</span> <span class="nav-text">Python 接收脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA-%E5%8A%A0%E8%BD%BD-Dump-%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">IDA 加载 Dump 文件</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E5%8A%A0%E5%9B%BA%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">第一步：确认加固类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%B4%A9%E6%BA%83%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">第二步：定位崩溃点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E4%BB%8E%E7%A3%81%E7%9B%98-pull-SO"><span class="nav-number">5.</span> <span class="nav-text">第三步：从磁盘 pull SO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%86%85%E5%AD%98-Dump%EF%BC%88%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">第四步：内存 Dump（关键步骤）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dump-%E8%84%9A%E6%9C%AC"><span class="nav-number">6.1.</span> <span class="nav-text">Dump 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dump-%E6%97%B6%E6%9C%BA"><span class="nav-number">6.2.</span> <span class="nav-text">Dump 时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-%E6%8E%A5%E6%94%B6%E8%84%9A%E6%9C%AC"><span class="nav-number">6.3.</span> <span class="nav-text">Python 接收脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IDA-%E5%8A%A0%E8%BD%BD-Dump-%E6%96%87%E4%BB%B6"><span class="nav-number">6.4.</span> <span class="nav-text">IDA 加载 Dump 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol>
     </div>
 </div>
 
@@ -606,7 +612,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">153.4k</span>
+                    <span class="item-value border-box word">153.5k</span>
                 </span>
             
 
@@ -749,7 +755,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E5%8A%A0%E5%9B%BA%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">第一步：确认加固类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%B4%A9%E6%BA%83%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">第二步：定位崩溃点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E4%BB%8E%E7%A3%81%E7%9B%98-pull-SO"><span class="nav-number">5.</span> <span class="nav-text">第三步：从磁盘 pull SO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%86%85%E5%AD%98-Dump%EF%BC%88%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">第四步：内存 Dump（关键步骤）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dump-%E8%84%9A%E6%9C%AC"><span class="nav-number">6.1.</span> <span class="nav-text">Dump 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dump-%E6%97%B6%E6%9C%BA"><span class="nav-number">6.2.</span> <span class="nav-text">Dump 时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-%E6%8E%A5%E6%94%B6%E8%84%9A%E6%9C%AC"><span class="nav-number">6.3.</span> <span class="nav-text">Python 接收脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDA-%E5%8A%A0%E8%BD%BD-Dump-%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">IDA 加载 Dump 文件</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E5%8A%A0%E5%9B%BA%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">第一步：确认加固类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%B4%A9%E6%BA%83%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">第二步：定位崩溃点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E4%BB%8E%E7%A3%81%E7%9B%98-pull-SO"><span class="nav-number">5.</span> <span class="nav-text">第三步：从磁盘 pull SO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%86%85%E5%AD%98-Dump%EF%BC%88%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">第四步：内存 Dump（关键步骤）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dump-%E8%84%9A%E6%9C%AC"><span class="nav-number">6.1.</span> <span class="nav-text">Dump 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dump-%E6%97%B6%E6%9C%BA"><span class="nav-number">6.2.</span> <span class="nav-text">Dump 时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-%E6%8E%A5%E6%94%B6%E8%84%9A%E6%9C%AC"><span class="nav-number">6.3.</span> <span class="nav-text">Python 接收脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IDA-%E5%8A%A0%E8%BD%BD-Dump-%E6%96%87%E4%BB%B6"><span class="nav-number">6.4.</span> <span class="nav-text">IDA 加载 Dump 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol>
     </div>
 </div>
 
