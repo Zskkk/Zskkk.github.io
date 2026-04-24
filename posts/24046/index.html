@@ -213,7 +213,7 @@
 
             <span class="meta-info-item article-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="pc" data-updated="Sun Apr 19 2026 12:34:24 GMT+0800">2026-04-19 12:34:24</span>
+                <span class="pc" data-updated="Fri Apr 24 2026 10:30:09 GMT+0800">2026-04-24 10:30:09</span>
             </span>
         
 
@@ -261,7 +261,7 @@
                     
 
                     <blockquote>
-<p>环境：Ubuntu 20.04 + AOSP 12 + Pixel 4 XL (coral)<br>fart12 源码下载：<a class="link"   target="_blank" rel="noopener" href="https://pan.baidu.com/s/1A6FZofr-7ClnPofrFDd1gA" >fart12-lite.zip<i class="fas fa-external-link-alt"></i></a>（提取码: 2hww)</p>
+<p>环境：Ubuntu 20.04 + AOSP 12 + Pixel 4 XL (coral)<br>fart12 源码下载：<a class="link"   target="_blank" rel="noopener" href="https://pan.baidu.com/s/1ER0FX2TMNtF-UeFJ2b3r5Q" >fart12-lite.zip<i class="fas fa-external-link-alt"></i></a>（提取码: wghs)</p>
 </blockquote>
 <h3 id="编译-AOSP-12-准备"><a href="#编译-AOSP-12-准备" class="headerlink" title="编译 AOSP 12 准备"></a>编译 AOSP 12 准备</h3><h4 id="系统环境初始化"><a href="#系统环境初始化" class="headerlink" title="系统环境初始化"></a>系统环境初始化</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 更新并安装 AOSP 编译必须的依赖包</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev \</span><br><span class="line">gcc-multilib g++-multilib libc6-dev-i386 libncurses5 lib32ncurses5-dev \</span><br><span class="line">x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils \</span><br><span class="line">xsltproc unzip fontconfig bc kmod cpio libncurses5 python3</span><br><span class="line"></span><br><span class="line"># 安装 OpenJDK 11 (Android 12 必须使用 JDK 11)</span><br><span class="line">sudo apt-get install openjdk-11-jdk</span><br></pre></td></tr></table></figure>
 
@@ -334,7 +334,7 @@
 
 <p><em>如果这里依然显示 no permissions，请再次执行第二步的 <em><code>_sudo udevadm trigger_</code></em> 即可。</em></p>
 <p><strong>开始全量刷机</strong>： 确保你处于 <code>~/aosp12</code> 目录下，且之前已经执行过 <code>lunch</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># -w 代表清空所有数据（必须要，否则容易无限重启）</span><br><span class="line">fastboot flashall -w</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># -w 代表清空所有数据</span><br><span class="line">fastboot flashall -w</span><br></pre></td></tr></table></figure>
 
 
 
@@ -677,7 +677,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">151.7k</span>
+                    <span class="item-value border-box word">151.6k</span>
                 </span>
             
 
